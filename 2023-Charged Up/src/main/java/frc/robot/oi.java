@@ -6,9 +6,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class OI extends SubsystemBase {
+public class oi extends SubsystemBase {
   /** Creates a new OI. */
-  public OI() {}
+  public oi() {}
 
   @Override
   public void periodic() {
