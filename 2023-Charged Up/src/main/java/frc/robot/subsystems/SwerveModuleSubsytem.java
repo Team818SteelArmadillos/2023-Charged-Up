@@ -13,17 +13,37 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+
+
 public class SwerveModuleSubsytem extends SubsystemBase {
+  //private TalonFX frontleftdrive, frontrightdrive, backleftdrive, backrightdrive,  frontleftturn, frontrightturn, backleftturn, backrightturn;
+  private SwerveModule frontleftSM, frontrightSM, backleftSM, backrightSM;
+
+  public class SwerveModule {
+    private TalonFX m_drivemotor;
+    private TalonFX m_turningmotor;
+    private double m_lastAngle;
+    private double m_offset;
+    
+
+    public SwerveModule(int drivemotor, int turningmotor){
+      m_drivemotor = new TalonFX(drivemotor);
+      m_turningmotor = new TalonFX(turningmotor);
+
+    }
+  }
   /** Creates a new SwerveModuleSubsytem. */
   public SwerveModuleSubsytem() {
-    private final WPI_TalonSRX drivemotor;
-    private final WPI_TalonSRX turningmotor;
-
-    private final CANCoder m_turnEncoder;
+    //frontleftdrive = new TalonFX()
+    frontleftSM = new SwerveModule(1, 2);
+    frontrightSM = new SwerveModule(3, 4);
+    backleftSM = new SwerveModule(5, 6);
+    backrightSM = new SwerveModule(7, 8);
+    
   }
 
   private final PIDController m_turingPIDController =
-    new PIDController(Robot.m_constants.
+    new PIDController(0
       , 0, 0);
 
   @Override
