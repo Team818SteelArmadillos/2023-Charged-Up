@@ -43,8 +43,7 @@ public class SwerveModuleSubsytem extends SubsystemBase {
   }
 
   private final PIDController m_turingPIDController =
-    new PIDController(0
-      , 0, 0);
+    new PIDController(0, 0, 0);
 
   @Override
   public void periodic() {
