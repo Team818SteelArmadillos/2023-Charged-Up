@@ -17,10 +17,10 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
   public int pigeonOffset = 0;
 
-  Translation2d m_frontleftdriveLocation = new Translation2d(1, -1);//need to change to actually coordiantes from the center
-  Translation2d m_frontrightdriveLocation = new Translation2d(1, 1);
-  Translation2d m_backleftdriveLocation = new Translation2d(-1, -1);//need to change to actually coordiantes from the center
-  Translation2d m_backrightdriveLocation = new Translation2d(-1, 1);
+  Translation2d m_frontleftdriveLocation = new Translation2d(-10.62, 10.62);//need to change to actually coordiantes from the center
+  Translation2d m_frontrightdriveLocation = new Translation2d(10.62, 10.62);
+  Translation2d m_backleftdriveLocation = new Translation2d(-10.62, -10.62);//need to change to actually coordiantes from the center
+  Translation2d m_backrightdriveLocation = new Translation2d(10.62, -10.62);
 
   SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(m_frontleftdriveLocation, m_frontrightdriveLocation,
   m_backleftdriveLocation, m_backrightdriveLocation);
