@@ -104,4 +104,14 @@ public final class Constants {
 
     public static final int kDriverControllerPort = 0;
   }
+
+  public static double degreesToFalcon(double degrees, double gearRatio){
+    double ticks = degrees/ (360.0/ (gearRatio * 2048.0));
+    return ticks;
+  }
+  
+  public static double falconToDegrees(double counts, double gearRatio){
+    return counts * (360.0 / (2048));
+  }
+
 }
