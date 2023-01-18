@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   public static Constants m_constants;
+  public static CTREConfigs ctreConfigs;
+
 
 
   /**
@@ -27,6 +29,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
 
     m_constants = new Constants();
+    ctreConfigs = new CTREConfigs();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
   }

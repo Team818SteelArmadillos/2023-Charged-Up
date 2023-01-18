@@ -114,4 +114,19 @@ public final class Constants {
     return counts * (360.0 / (2048));
   }
 
+  public static double falconToRPM(double velocityCounts, double gearRatio) {
+
+    double motorRPM = velocityCounts * (600.0 / 2048.0);        
+    double mechRPM = motorRPM / gearRatio;
+    return mechRPM;
+
 }
+
+  public static double falconToMPS(double velocitycounts, double circumference, double gearRatio){
+
+    double wheelRPM = falconToRPM(velocitycounts, gearRatio);
+    double wheelMPS = (wheelRPM * circumference) / 60;
+    return wheelMPS;
+
+}
+} 
