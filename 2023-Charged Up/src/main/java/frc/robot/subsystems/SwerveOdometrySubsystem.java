@@ -4,35 +4,35 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.sensors.Pigeon2;
+import java.lang.reflect.Method;
 
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-public class SwerveDriveSubsystem extends SubsystemBase {
-
-  public final Pigeon2 m_Pigeon2 = ;
-
-  public int pigeonOffset = 0;
-
-  Translation2d m_frontleftdriveLocation = new Translation2d(-10.62, 10.62);//need to change to actually coordiantes from the center
-  Translation2d m_frontrightdriveLocation = new Translation2d(10.62, 10.62);
-  Translation2d m_backleftdriveLocation = new Translation2d(-10.62, -10.62);//need to change to actually coordiantes from the center
-  Translation2d m_backrightdriveLocation = new Translation2d(10.62, -10.62);
-
-  SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(m_frontleftdriveLocation, m_frontrightdriveLocation,
-  m_backleftdriveLocation, m_backrightdriveLocation);
-
-  public final SwerveModuleState moduleStates = m_kinematics.toSwerveModuleStates(powers);
+import frc.robot.Robot;
+import frc.robot.Constants.DriveConstants.*;
 
 
-
-  public SwerveDriveSubsystem() {
+public class SwerveOdometrySubsystem extends SubsystemBase {
+  public static Timer odometryTimer = new Timer();
+  private static double timer;
+  
+   
+  private static void coordinates() {
+    timer = odometryTimer.get();
+    odometryTimer.stop();
+    odometryTimer.reset();
+    odometryTimer.start();
+    int trueMovement = Math.atan(Robot.m_oi.getleftYAxis()/Robot.m_oi.getleftXAxis());
+  }
+    private static double[] deltaRobot(){
+      double speed1 = timer * ((FRONTRIGHTDRIVEMOTOR.getSelectedSensorVelocity() * DISTANCEPERPULSE * VELOCITYCALCULATIONPERSECOND)/GEARRATIO);
+      double speed2 = timer * ((FRONTLEFTDRIVEMOTOR.getSelectedSensorVelocity() * DISTANCEPERPULSE * VELOCITYCALCULATIONPERSECOND)/GEARRATIO);
+      double speed3 = timer * ((BACKRIGHTDRIVEMOTOR.getSelectedSensorVelocity() * DISTANCEPERPULSE * VELOCITYCALCULATIONPERSECOND)/GEARRATIO);
+      double speed4 = timer * ((BACKLEFTDRIVEMOTOR.getSelectedSensorVelocity() * DISTANCEPERPULSE * VELOCITYCALCULATIONPERSECOND)/GEARRATIO);
+      double angle1 = falconToDegrees(FRONTRIGHTDRIVEMOTOR.getSelectedSensorVelocity());
+    }
 
   }
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
