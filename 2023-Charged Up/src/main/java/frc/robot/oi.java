@@ -2,8 +2,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 
-import static frc.robot.Constants.*;
-
 public class OI {
 
     private static XboxController driveController;
@@ -11,8 +9,8 @@ public class OI {
 
     //public OI () 
     static {
-      driveController = new XboxController(DRIVER_CONTROLLER_PORT);
-      operatorController = new XboxController(OPERATOR_CONTROLLER_PORT);
+      driveController = new XboxController(Constants.driverControllerPort);
+      operatorController = new XboxController(Constants.operatorControllerPort);
     }
 
     public static XboxController getDriver() {
@@ -22,5 +20,4 @@ public class OI {
     public static XboxController getOperator() {
       return operatorController;
     }
-
 }

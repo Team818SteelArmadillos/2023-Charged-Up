@@ -14,14 +14,20 @@ package frc.robot;
  */
 public final class Constants {
 
-  // Controller 
-    public static int DRIVER_CONTROLLER_PORT = 1;
-    public static int OPERATOR_CONTROLLER_PORT = 2;
-  
-  //
+    // Controller Ports
+    public static final int driverControllerPort = 1;
+    public static final int operatorControllerPort = 2;
+    
+    // Arm Motor Ports
+    public static final int[] armMotorPorts = {0, 0, 0};
 
-  //
-
-
-
+    // Operator Values 
+    public static final double pP = 0.5;
+    public static final double pivotI = 0;
+    public static final double pivotD = 1;
+    
+    // Conversion Factors
+    public static final double ticksToDegrees = 0.087890625; 
+    /* 360 degrees divided by 4096 ticks 
+    Multiply given ticks by this constant */
 }
