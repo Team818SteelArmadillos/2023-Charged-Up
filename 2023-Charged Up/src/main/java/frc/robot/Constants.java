@@ -39,7 +39,7 @@ public final class Constants {
     }
     
     public static double falconToDegrees(double counts){
-      return counts * (360.0 / PULSEPERREVOLUTION);
+      return (counts * (360.0 / PULSEPERREVOLUTION))%360;
     }
 
     public static double falconToRPM(double velocityCounts) {
