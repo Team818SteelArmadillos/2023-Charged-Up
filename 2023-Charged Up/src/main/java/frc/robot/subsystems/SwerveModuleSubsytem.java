@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -16,6 +18,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.CTREModuleState;
 import frc.robot.Constants;
 import frc.robot.Robot;
 
@@ -49,12 +52,31 @@ public class SwerveModuleSubsytem extends SubsystemBase {
       m_driveInverted = driveInverted;
       m_cancoderInverted = cancoderInverted;
 
-      
+      configCanCoder();
+      configDriveMotor();
+      configTurningMotor();
 
+      
+      
     }
 
-    public void setDesiredState(SwerveModule desiredState, boolean openLoop){
-      //this is used to optimize the time to get to get to desired angle
+    public void setDesiredState(Rotation2d angle, double speed, boolean openLoop ){
+
+      SwerveModuleState desiredState = new SwerveModuleState(speed, angle);
+
+      desiredState = CTREModuleState.optimize(desiredState, getState().angle);
+
+      if(openLoop){
+        m_drivemotor.set(ControlMode.PercentOutput, desiredState.speedMetersPerSecond/1);//replace 1 with the max speed
+      } else{
+        m_drivemotor.set(ControlMode.Velocity, Constants.mpsToFalcon(desiredState.speedMetersPerSecond, 0, 0),
+         DemandType.ArbitraryFeedForward, feedforward.calculate(desiredState.speedMetersPerSecond));
+      }
+
+     double newAngle = (Math.abs(desiredState.speedMetersPerSecond) <= (0)) ? m_lastAngle : angle.getDegrees();
+     m_turningmotor.set(ControlMode.Position, Constants.degreesToFalcon(newAngle, m_lastAngle));
+     
+     m_lastAngle = newAngle;
     }
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 1, 2); //put the robot characteristics from sysID here
@@ -122,8 +144,6 @@ public class SwerveModuleSubsytem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-  }
-  private void configTurningMotor(){
     
     
   }
