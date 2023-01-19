@@ -19,12 +19,22 @@ public final class Constants {
     public static final int operatorControllerPort = 2;
     
     // Arm Motor Ports
-    public static final int[] armMotorPorts = {0, 0, 0};
+    public static final int[] pivotingMotorPorts = {0, 0, 0};
+    public static final int telscopingMotorPort = 0;
 
     // Operator Values 
     public static final double pP = 0.5;
     public static final double pivotI = 0;
     public static final double pivotD = 1;
+
+    //Telescoping Values
+    public static final double minLen = 0;
+    public static final double maxLen = 0;
+    public static final double telSlope = 1; //assuming the extension is linear, the slope defining the line
+    public static final double tP = 0.5;
+    public static final double tI = 0;
+    public static final double tD = 1;
+
     
     // Conversion Factors
     public static final double ticksToDegrees = 0.087890625; 

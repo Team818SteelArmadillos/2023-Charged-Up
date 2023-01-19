@@ -22,9 +22,9 @@ public class PivotingArmSubsystem extends SubsystemBase {
     // Initialize here
     static {
         // motor stuff
-        pm1 = new TalonSRX(Constants.armMotorPorts[0]);
-        pm2 = new VictorSPX(Constants.armMotorPorts[1]);
-        pm3 = new VictorSPX(Constants.armMotorPorts[2]);
+        pm1 = new TalonSRX(Constants.pivotingMotorPorts[0]);
+        pm2 = new VictorSPX(Constants.pivotingMotorPorts[1]);
+        pm3 = new VictorSPX(Constants.pivotingMotorPorts[2]);
 
         pm2.follow(pm1); 
         pm3.follow(pm1); //makes motors 2 and 3 follow 1 so that only 1 needs to be set
@@ -33,7 +33,7 @@ public class PivotingArmSubsystem extends SubsystemBase {
         PID = new PIDController(Constants.pP, Constants.pivotI, Constants.pivotD);
         
         //encoder stuff
-        encoder = new Encoder(0, 0, 0);
+        encoder = new Encoder(0, 0, 0); //these encoder paramters are undefined since
         encoder.reset();
 
     }
