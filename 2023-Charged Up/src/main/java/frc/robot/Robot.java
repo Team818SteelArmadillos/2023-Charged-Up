@@ -20,10 +20,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static Constants m_constants;
   public static CTREConfigs ctreConfigs;
-<<<<<<< HEAD
   public static SwerveModuleSubsytem m_swerveModuleSubsystem;
-=======
->>>>>>> develop
 
 
 
@@ -36,10 +33,7 @@ public class Robot extends TimedRobot {
 
     m_constants = new Constants();
     ctreConfigs = new CTREConfigs();
-<<<<<<< HEAD
     m_swerveModuleSubsystem = new SwerveModuleSubsytem();
-=======
->>>>>>> develop
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
   }
