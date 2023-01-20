@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-<<<<<<< HEAD
 import com.ctre.phoenix.sensors.Pigeon2;
 
 import edu.wpi.first.math.geometry.Translation2d;
@@ -37,7 +36,6 @@ public class SwerveOdometrySubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-=======
 import java.lang.reflect.Method;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -87,6 +85,5 @@ public class SwerveOdometrySubsystem extends SubsystemBase {
     double[] delta = deltaRobot();
     coordinates[0]+=delta[0];
     coordinates[1]+=delta[1];
->>>>>>> d1dbb523443519dcd5c07642069adf1dab0bb377
   }
 }

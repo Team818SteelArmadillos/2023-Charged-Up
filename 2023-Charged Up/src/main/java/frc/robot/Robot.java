@@ -17,14 +17,11 @@ import frc.robot.subsystems.SwerveModuleSubsytem;
  * project.
  */
 public class Robot extends TimedRobot {
-<<<<<<< Updated upstream
   private Command m_autonomousCommand;
-=======
   public static Constants m_constants;
   public static CTREConfigs ctreConfigs;
   public static SwerveModuleSubsytem m_swerveModuleSubsystem;
 
->>>>>>> Stashed changes
 
 
   /**
@@ -33,13 +30,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-<<<<<<< Updated upstream
-=======
 
     m_constants = new Constants();
     ctreConfigs = new CTREConfigs();
     m_swerveModuleSubsystem = new SwerveModuleSubsytem();
->>>>>>> Stashed changes
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
   }
