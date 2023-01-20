@@ -4,9 +4,18 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 public final class Constants {
+<<<<<<< HEAD
 
   public static final 
 
+=======
+  public static class oi{
+    //Gamepad ports
+    public static final int gamePadDriverPort = 0;
+    public static final int gamePadOperatorPort = 1;
+  }
+  public static final class DriveConstants {
+>>>>>>> developed
 
   public static final class ModuleConstants {
 
