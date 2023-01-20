@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
 import org.opencv.core.Mat;
@@ -17,6 +13,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.Constants.ModuleConstants;
 import frc.robot.subsystems.SwerveModuleSubsytem.SwerveModule;
 import m_pigeon2.getYaw;
 
@@ -38,7 +35,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   public void drive(Translation2d translation, double rotation, boolean field, boolean isOpenLoop){
 
     SwerveModuleState[] swerveModuleStates = 
-      Constants.swerveKinematics.toSwerveModuleStates(
+      ModuleConstants.swerveKinematics.toSwerveModuleStates(
         field ? ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation, getYaw())
           : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
 
@@ -60,7 +57,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
 
   public void setChassisSpeeds(ChassisSpeeds targetSpeeds){
-    setModuleStates(Constants.swerveKinematics.toSwerveModuleStates(targetSpeeds));
+    setModuleStates(ModuleConstants.swerveKinematics.toSwerveModuleStates(targetSpeeds));
   }
 
   public Pose2d getPose(){

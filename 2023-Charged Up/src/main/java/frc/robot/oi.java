@@ -1,17 +1,5 @@
 package frc.robot;
 
-<<<<<<< HEAD
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-import frc.robot.Constants;
-
-public class oi {
-
-
-    }
-=======
 //Imports
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -157,4 +145,3 @@ public class oi {
     return gamePadOperator.getRightStickButton();
   }
 }
->>>>>>> developed
