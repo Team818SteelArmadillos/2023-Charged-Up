@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.CTREModuleState;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants;
 
 
 
@@ -74,7 +76,7 @@ public class SwerveModuleSubsytem extends SubsystemBase {
       }
 
      double newAngle = (Math.abs(desiredState.speedMetersPerSecond) <= (0)) ? m_lastAngle : angle.getDegrees();
-     m_turningmotor.set(ControlMode.Position, Constants.degreesToFalcon(newAngle, m_lastAngle));
+     m_turningmotor.set(ControlMode.Position, DriveConstants.degreesToFalcon(newAngle));
      
      m_lastAngle = newAngle;
     }
@@ -82,7 +84,7 @@ public class SwerveModuleSubsytem extends SubsystemBase {
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 1, 2); //put the robot characteristics from sysID here
 
     private void resetToAbsolute() {
-      m_turningmotor.setSelectedSensorPosition(Constants.degreesToFalcon(getCanCoder().getDegrees(), 2048));
+      m_turningmotor.setSelectedSensorPosition(DriveConstants.degreesToFalcon(getCanCoder().getDegrees()));
     }
 
     private Rotation2d getCanCoder() {
@@ -116,12 +118,12 @@ public class SwerveModuleSubsytem extends SubsystemBase {
 
     public SwerveModuleState getState(){
       double velocity = Constants.falconToMPS(m_drivemotor.getSelectedSensorPosition(), 0, 1); //replace 0 to circumfrence, and 1 with gear ratio
-      Rotation2d angle = Rotation2d.fromDegrees(Constants.falconToDegrees(m_turningmotor.getSelectedSensorPosition(), 0));//get gear ratio from turning motor
+      Rotation2d angle = Rotation2d.fromDegrees(DriveConstants.falconToDegrees(m_turningmotor.getSelectedSensorPosition()));//get gear ratio from turning motor
       return new SwerveModuleState(velocity, angle);
     }
 
     public void zeroModule(){
-      m_turningmotor.setSelectedSensorPosition(Constants.degreesToFalcon(m_offset, 0));//get gear ratio for turning motor
+      m_turningmotor.setSelectedSensorPosition(DriveConstants.degreesToFalcon(m_offset));//get gear ratio for turning motor
     }
   }
   /** Creates a new SwerveModuleSubsytem. */
