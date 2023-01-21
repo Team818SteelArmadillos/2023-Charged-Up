@@ -125,6 +125,9 @@ public class SwerveModuleSubsytem extends SubsystemBase {
     public void zeroModule(){
       m_turningmotor.setSelectedSensorPosition(DriveConstants.degreesToFalcon(m_offset));//get gear ratio for turning motor
     }
+    public void moduleNumber(){
+      return 
+    }
   }
   /** Creates a new SwerveModuleSubsytem. */
   public SwerveModuleSubsytem() {

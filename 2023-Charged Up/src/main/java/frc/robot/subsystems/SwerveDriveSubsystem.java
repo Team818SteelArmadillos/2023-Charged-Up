@@ -20,12 +20,15 @@ import m_pigeon2.getYaw;
 public class SwerveDriveSubsystem extends SubsystemBase {
   public SwerveOdometrySubsystem m_swerveodometry;
   public SwerveModule[] m_swerveModules;
+  public SwerveModuleState[] m_swerveModuleStates;
+  Pigeon2 m_pigeon2 = new Pigeon2(1);
+  SwerveModuleState moduleState;
   
   
   
 
   public SwerveDriveSubsystem() {
-  Pigeon2 m_pigeon2 = new Pigeon2(1);// replace the 1 with the port number of the pigeon2
+  // replace the 1 with the port number of the pigeon2
   m_swerveodometry = new SwerveOdometrySubsystem();// place in the yaw and kinematics
   
   
@@ -42,7 +45,8 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, 1);// replace 1 with max speed
 
     for(SwerveModule module : m_swerveModules){
-      module.setDesiredState(1, 1, false);
+      Rotation2d fillerRotation = new Rotation2d();
+      module.setDesiredState(fillerRotation, 1, false);
     }
   }
 
@@ -65,12 +69,11 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   }
 
   public void resetOdometry(Pose2d pose){
-    m_swerveodometry.resetPostion(pose, degrees);
+    m_swerveodometry.resetPostion(pose);
   }
 
   public double getAngle(){
-    double angle = m_pigeon2.getYaw();
-  }
+    double angle = m_pigeon2.getYaw();  }
 
   public double getNonContinuousGyro(){
     return getAngle() % 360;
@@ -79,18 +82,18 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   public SwerveModule[] getStates(){
     SwerveModuleState[] states = new SwerveModuleState[4];
 
-    for(SwerveModuleState mod : m_swerveModules){
-      states[mod.moduleNumber] = mod.getState();
+    for(SwerveModuleState moduleState : m_swerveModuleStates){
+      states[] = SwerveModuleSubsytem.desiredState();
     }
     return states;
   }
 
   public Rotation2d getYaw() {
-    return (Constants.InVERT_GYRO) ? Rotation2d.fromDegrees(360 - (m_gyro.getYaw())) : Rotation2d.fromDegrees(m_gyro.getYaw());
+    return (Constants.INVERT_GYRO) ? Rotation2d.fromDegrees(360 - (m_pigeon2.getYaw())) : Rotation2d.fromDegrees(m_pigeon2.getYaw());
   }
 
   public void resetGyro() {
-    m_gyro.setYaw(0);
+    m_pigeon2.setYaw(0);
   }
 
   public void zeroModules(){
@@ -140,7 +143,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       yawMod = yaw;
     }
 
-    m_gyro.setYaw(yawMod);
+    m_pigeon2.setYaw(yawMod);
   }
 
   @Override
