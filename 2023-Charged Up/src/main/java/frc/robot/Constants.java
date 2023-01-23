@@ -35,7 +35,9 @@ public final class Constants {
     public static final double tI = 0;
     public static final double tD = 1;
 
-    
+    // Piston Claw Values
+    public static final int[] clawPistonPort = {0, 1, 0}; // Copied from 2022 Rapid React Code (needs to be tested more??)
+
     // Conversion Factors
     public static final double ticksToDegrees = 0.087890625; 
     /* 360 degrees divided by 4096 ticks 
