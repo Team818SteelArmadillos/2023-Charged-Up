@@ -11,7 +11,7 @@ import frc.robot.Constants;
 
 
 public class PivotingArmSubsystem extends SubsystemBase {
-    public static TalonSRX  pm1; // pivoting motor 1
+    public static TalonSRX pm1; // pivoting motor 1
     public static VictorSPX pm2;
     public static VictorSPX pm3;
     
@@ -35,7 +35,6 @@ public class PivotingArmSubsystem extends SubsystemBase {
         //encoder stuff
         encoder = new Encoder(0, 0, 0); //these encoder paramters are undefined since
         encoder.reset();
-
     }
 
     public static void setPivotAngle(double setpointAngle) {

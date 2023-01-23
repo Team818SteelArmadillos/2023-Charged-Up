@@ -27,7 +27,6 @@ public class TelescopingArmSubsystem extends SubsystemBase {
         //encoder stuff
         encoder = new Encoder(0, 0, 0);
         encoder.reset();
-
     }
 
     public static void setArmLength(double setpointLength) {
