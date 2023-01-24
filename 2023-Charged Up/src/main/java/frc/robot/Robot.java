@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.SwerveModuleSubsytem;
 
 /**
@@ -21,7 +22,7 @@ public class Robot extends TimedRobot {
   public static Constants m_constants;
   public static CTREConfigs ctreConfigs;
   public static SwerveModuleSubsytem m_swerveModuleSubsystem;
-
+  public static SwerveDriveSubsystem m_SwerveDriveSubsystem;
 
 
   /**
@@ -31,6 +32,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
 
+    m_swerveModuleSubsystem = new SwerveModuleSubsytem();
+    m_SwerveDriveSubsystem = new SwerveDriveSubsystem();
     m_constants = new Constants();
     ctreConfigs = new CTREConfigs();
     m_swerveModuleSubsystem = new SwerveModuleSubsytem();

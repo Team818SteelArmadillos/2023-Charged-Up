@@ -9,16 +9,21 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 import frc.robot.subsystems.SwerveModuleSubsytem.SwerveModule;
+import frc.robot.subsystems.SwerveModuleSubsytem;
 import m_pigeon2.getYaw;
+import frc.robot.Constants.DriveConstants.*;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
-  public SwerveOdometrySubsystem m_swerveodometry;
+  public SwerveDriveOdometry m_swerveodometry;
   public SwerveModule[] m_swerveModules;
   public SwerveModuleState[] m_swerveModuleStates;
   Pigeon2 m_pigeon2 = new Pigeon2(1);
@@ -26,15 +31,16 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   
   
   
+  
 
   public SwerveDriveSubsystem() {
   // replace the 1 with the port number of the pigeon2
-  m_swerveodometry = new SwerveOdometrySubsystem();// place in the yaw and kinematics
+  m_swerveodometry = new SwerveDriveOdometry(DriveConstants.swerveKinematics, getYaw(), getPosition(), new Pose2d(5.0, 13.5, new Rotation2d()));// place in the yaw and kinematics
   
   
-  };
-
   }
+
+  
   public void drive(Translation2d translation, double rotation, boolean field, boolean isOpenLoop){
 
     SwerveModuleState[] swerveModuleStates = 
@@ -57,6 +63,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
       mod.setDesiredState(null, 0, false);
     }
   }
+  
 
 
 
@@ -67,29 +74,39 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   public Pose2d getPose(){
     return m_swerveodometry.getPoseMeters();//doesn't exist yet because it isn't made
   }
+  public SwerveModulePosition[] getPosition(){
+    SwerveModulePosition m_frontLeftSMlocation = new SwerveModulePosition(-0.6223, 0.6223, 0);
+    SwerveModulePosition m_frontRightSMlocation = new SwerveModulePosition(0.6223, 0.6223, 0);
+    SwerveModulePosition m_backLeftSMlocation = new Translation2d(-0.6223, -0.6223);
+    SwerveModulePosition m_backrightSMlocation = new Translation2d(0.6223, -0.6223);
+    SwerveModulePosition[] SwerveModulePositionArray = {m_frontLeftSMlocation, m_frontRightSMlocation, m_backLeftSMlocation, m_backrightSMlocation}; 
+    return SwerveModulePositionArray;
+  }
 
   public void resetOdometry(Pose2d pose){
-    m_swerveodometry.resetPostion(pose);
+    m_swerveodometry.resetPosition(m_pigeon2.getYaw(),,pose);
   }
 
   public double getAngle(){
-    double angle = m_pigeon2.getYaw();  }
+    double angle = m_pigeon2.getYaw();  
+    return angle;
+  }
 
   public double getNonContinuousGyro(){
     return getAngle() % 360;
   }
 
-  public SwerveModule[] getStates(){
-    SwerveModuleState[] states = new SwerveModuleState[4];
+  public SwerveModuleState[] getStates(){
+    SwerveModuleState[] m_swerveModuleStates = new SwerveModuleState[4];
 
     for(SwerveModuleState moduleState : m_swerveModuleStates){
-      states[] = SwerveModuleSubsytem.desiredState();
+      moduleState = SwerveModuleSubsytem.SwerveModule.getDesiredState();
     }
-    return states;
+    return m_swerveModuleStates;
   }
 
   public Rotation2d getYaw() {
-    return (Constants.INVERT_GYRO) ? Rotation2d.fromDegrees(360 - (m_pigeon2.getYaw())) : Rotation2d.fromDegrees(m_pigeon2.getYaw());
+    return (Constants.kGyroReversed) ? Rotation2d.fromDegrees(360 - (m_pigeon2.getYaw())) : Rotation2d.fromDegrees(m_pigeon2.getYaw());
   }
 
   public void resetGyro() {

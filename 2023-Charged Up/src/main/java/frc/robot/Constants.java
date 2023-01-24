@@ -5,6 +5,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 
 public final class Constants {
 
+  public static final boolean kGyroReversed = false;
+
   public static class oi{
     //Gamepad ports
     public static final int gamePadDriverPort = 0;
@@ -96,6 +98,7 @@ public final class Constants {
     public static final int FRONTLEFTENCODER = 12;
     public static final int BACKRIGHTENCODER = 13;
     public static final int BACKLEFTENCODER = 14;
+    
 
     public static final int PIGEONPORT = 0;
 

@@ -15,6 +15,8 @@ import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,9 +30,9 @@ import frc.robot.Constants;
 
 public class SwerveModuleSubsytem extends SubsystemBase {
   //private TalonFX frontleftdrive, frontrightdrive, backleftdrive, backrightdrive,  frontleftturn, frontrightturn, backleftturn, backrightturn;
-  private SwerveModule frontleftSM, frontrightSM, backleftSM, backrightSM;
+  public SwerveModule frontleftSM, frontrightSM, backleftSM, backrightSM;
 
-  public class SwerveModule {
+  public static class SwerveModule {
     public int m_moduleNumber;
     private TalonFX m_drivemotor;
     private TalonFX m_turningmotor;
@@ -40,6 +42,7 @@ public class SwerveModuleSubsytem extends SubsystemBase {
     private boolean m_turningInverted;
     private boolean m_driveInverted;
     private boolean m_cancoderInverted;
+    public static SwerveModuleState desiredState;
     
 
     public SwerveModule(int moduleNumber, int drivemotor,   int turningmotor, int cancoder, double lastAngle, 
@@ -64,7 +67,7 @@ public class SwerveModuleSubsytem extends SubsystemBase {
 
     public void setDesiredState(Rotation2d angle, double speed, boolean openLoop ){
 
-      SwerveModuleState desiredState = new SwerveModuleState(speed, angle);
+      desiredState = new SwerveModuleState(speed, angle);
 
       desiredState = CTREModuleState.optimize(desiredState, getState().angle);
 
@@ -87,6 +90,9 @@ public class SwerveModuleSubsytem extends SubsystemBase {
       m_turningmotor.setSelectedSensorPosition(DriveConstants.degreesToFalcon(getCanCoder().getDegrees()));
     }
 
+    public static SwerveModuleState getDesiredState(){
+      return desiredState;
+    }
     private Rotation2d getCanCoder() {
       return Rotation2d.fromDegrees(m_cancoder.getAbsolutePosition());
     }
@@ -115,6 +121,7 @@ public class SwerveModuleSubsytem extends SubsystemBase {
     public double getDriveEncoder(){
       return m_drivemotor.getSelectedSensorPosition();
     }
+    
 
     public SwerveModuleState getState(){
       double velocity = Constants.falconToMPS(m_drivemotor.getSelectedSensorPosition(), 0, 1); //replace 0 to circumfrence, and 1 with gear ratio
@@ -126,7 +133,7 @@ public class SwerveModuleSubsytem extends SubsystemBase {
       m_turningmotor.setSelectedSensorPosition(DriveConstants.degreesToFalcon(m_offset));//get gear ratio for turning motor
     }
     public void moduleNumber(){
-      return 
+      return ;
     }
   }
   /** Creates a new SwerveModuleSubsytem. */
