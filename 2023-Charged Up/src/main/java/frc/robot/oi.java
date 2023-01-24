@@ -2,7 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 
-public class OI {
+public class oi {
 
     private static XboxController driveController;
     private static XboxController operatorController;
