@@ -8,7 +8,7 @@ import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.DriveConstants.*;
 
-
+/*
 public class SwerveOdometrySubsystem extends SubsystemBase {
   public static Timer odometryTimer = new Timer();
   private static double timer;
@@ -20,7 +20,7 @@ public class SwerveOdometrySubsystem extends SubsystemBase {
    
   public static double[] getCoordinates() {
     return coordinates;
-  }
+  } 
     private static double[] deltaRobot(){
       double speed1 = timer * ((FRONTRIGHTDRIVEMOTOR.getSelectedSensorVelocity() * DriveConstants.DISTANCEPERPULSE * DriveConstants.VELOCITYCALCULATIONPERSECOND)/DriveConstants.GEARRATIO);
       double speed2 = timer * ((FRONTLEFTDRIVEMOTOR.getSelectedSensorVelocity() * DriveConstants.DISTANCEPERPULSE * DriveConstants.VELOCITYCALCULATIONPERSECOND)/DriveConstants.GEARRATIO);
@@ -52,3 +52,4 @@ public class SwerveOdometrySubsystem extends SubsystemBase {
     coordinates[1]+=delta[1];
   }
 }
+*/

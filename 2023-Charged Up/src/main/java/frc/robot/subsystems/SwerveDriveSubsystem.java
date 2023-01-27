@@ -75,16 +75,16 @@ public class SwerveDriveSubsystem extends SubsystemBase {
     return m_swerveodometry.getPoseMeters();//doesn't exist yet because it isn't made
   }
   public SwerveModulePosition[] getPosition(){
-    SwerveModulePosition m_frontLeftSMlocation = new SwerveModulePosition(-0.6223, 0.6223, 0);
-    SwerveModulePosition m_frontRightSMlocation = new SwerveModulePosition(0.6223, 0.6223, 0);
-    SwerveModulePosition m_backLeftSMlocation = new Translation2d(-0.6223, -0.6223);
-    SwerveModulePosition m_backrightSMlocation = new Translation2d(0.6223, -0.6223);
+    SwerveModulePosition m_frontLeftSMlocation = new SwerveModulePosition(-0.6223, new Rotation2d());
+    SwerveModulePosition m_frontRightSMlocation = new SwerveModulePosition(0.6223, new Rotation2d());
+    SwerveModulePosition m_backLeftSMlocation = new SwerveModulePosition(-0.6223, new Rotation2d());
+    SwerveModulePosition m_backrightSMlocation = new SwerveModulePosition(0.6223, new Rotation2d());
     SwerveModulePosition[] SwerveModulePositionArray = {m_frontLeftSMlocation, m_frontRightSMlocation, m_backLeftSMlocation, m_backrightSMlocation}; 
     return SwerveModulePositionArray;
   }
 
   public void resetOdometry(Pose2d pose){
-    m_swerveodometry.resetPosition(m_pigeon2.getYaw(),,pose);
+    m_swerveodometry.resetPosition(new Rotation2d(),getPosition(),pose);
   }
 
   public double getAngle(){
