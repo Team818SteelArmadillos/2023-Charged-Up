@@ -41,13 +41,18 @@ public class LEDSubsystem extends SubsystemBase {
 
         // example to interact
         /*
-            public static setLEDs(double r, double g, double b) {
-                candle.setLEDs(r, g, b);
+            public static void setLEDs(boolean aButtonPressed, boolean bButtonPressed) {
+                if (aButtonPressed) { 
+                    candle.setLEDs(166, 77, 255); 
+                }
+                else if (bButtonPressed) { 
+                    candle.setLEDs(255, 195, 77);
+                }   
             }
 
-            in the command class, you could create a method that takes in two booleans
-            that represent the a button press and the b button press and then use the if else
-            statement above to set the LEDs accordingly
+            in the command class, use the periodic method to get the a button and b button booleans and 
+            from the controller as parameters for the setLEDs method above. This will get the current state of 
+            the a and b buttons on the controller and set the LEDs accordingly
         */
 
     }
