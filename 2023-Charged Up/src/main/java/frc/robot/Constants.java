@@ -12,6 +12,7 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
+
 public final class Constants {
 
     // Controller Ports
@@ -38,8 +39,11 @@ public final class Constants {
     // Piston Claw Values
     public static final int[] clawPistonPort = {0, 1, 0}; // Copied from 2022 Rapid React Code (needs to be tested more??)
 
+    // Pivoting Arm Angles
+    public static final int[] armAngles = {0, };
+
     // Conversion Factors
-    public static final double ticksToDegrees = 0.087890625; 
+    public static final double ticksToDegrees = 0.087890625;
     /* 360 degrees divided by 4096 ticks 
     Multiply given ticks by this constant */
 }
