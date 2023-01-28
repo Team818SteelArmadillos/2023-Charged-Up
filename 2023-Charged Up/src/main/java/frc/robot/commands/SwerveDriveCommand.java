@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
 public class SwerveDriveCommand extends CommandBase {
@@ -31,15 +32,15 @@ public class SwerveDriveCommand extends CommandBase {
     m_swerveDriveSubsystem = swerveDriveSubsystem;
     addRequirements(m_swerveDriveSubsystem);
 
-    m_driverController = driverController;
+    m_driverController = Robot.m_oi.gamePadDriver;
     m_driveAxis = XboxController.Axis.kLeftY.value;
-    m_strafeAxis = strafeAxis;
+    m_strafeAxis = Robot.m_oi.gamePadDriver.getRawAxis(kLeftX.value);
     m_rotationAxis = rotationAxis;
     m_fieldRelative = fieldRelative;
     m_openLoop = openLoop;
 
-    m_xAxisARateLimiter = new SlewRateLimiter(2); //replace the 2 with the a rate limiter from constants
-    m_yAxisARateLimiter = new SlewRateLimiter(2);
+    m_xAxisARateLimiter = new SlewRateLimiter(20); //replace the 2 with the a rate limiter from constants
+    m_yAxisARateLimiter = new SlewRateLimiter(20);
   }
 
   // Called when the command is initially scheduled.
@@ -68,7 +69,7 @@ public class SwerveDriveCommand extends CommandBase {
         double xAxisFiltered = m_xAxisARateLimiter.calculate(xAxisSquared);
 
         /* Input variables into drive methods */
-        m_translation = new Translation2d(yAxisFiltered, xAxisFiltered).times(5);//replace the 5 with the max speed constant
+        m_translation = new Translation2d(yAxisFiltered, xAxisFiltered).times();//replace the 5 with the max speed constant
         m_rotation = rAxisSquared * 5 * 0.5;//replace the 5 with the max angular velocitt constant value
         m_swerveDriveSubsystem.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
   }

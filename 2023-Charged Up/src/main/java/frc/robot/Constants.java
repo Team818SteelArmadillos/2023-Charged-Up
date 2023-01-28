@@ -15,7 +15,7 @@ public final class Constants {
   
   public static final class ModuleConstants {
 
-    public static final double kDriveGearRatio = 7.13;
+    public static final double kDriveGearRatio = 6.67;
 
     public static final double kPModuleTurnController = 8.1; //8.3 // TUNE: 8.2142
     public static final double kIModuleTurnController = 0; // DO NOT USE
@@ -29,13 +29,13 @@ public final class Constants {
     public static final double kDModuleDriveController = 0;
 
 
-    public static final int kDriveFXEncoderCPR = 2048;
-    public static final int kTurningCANcoderCPR = 4096;
+    public static final int kDriveFXEncoderCPR = 360;
+    public static final int kTurningCANcoderCPR = 2048;
     public static final double kWheelDiameterMeters = 0.1016; // 4 inches
-    public static final double kWheelCircumferenceMeters =
+    public static final double kWheelCircumferenceMeters = 
         kWheelDiameterMeters * Math.PI; // C = D * pi
     public static final double kDrivetoMetersPerSecond =
-        (10 * kWheelCircumferenceMeters) / (kDriveGearRatio * 2048);
+        (10 * kWheelCircumferenceMeters) / (kDriveGearRatio * 360);
 
     public static final int kFrontLeftDriveMotorPort = 18;
     public static final int kRearLeftDriveMotorPort = 6;
@@ -67,16 +67,16 @@ public final class Constants {
     public static final boolean kFrontRightDriveEncoderReversed = true;
     public static final boolean kRearRightDriveEncoderReversed = true;
     
-    public static final double kTrackWidth = 0.57785;
-        // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = 0.57785;
-        // Distance between front and back wheels on robot
+    public static final double kTrackWidth = 0.5969;
+    // Distance between centers of right and left wheels on robot
+    public static final double kWheelBase = 0.6223;
+    // Distance between front and back wheels on robot
     public static final SwerveDriveKinematics swerveKinematics =
-          new SwerveDriveKinematics(
-            new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-            new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-            new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+        new SwerveDriveKinematics(
+            new Translation2d(kWheelBase / 0.6223, kTrackWidth / 0.5969),
+            new Translation2d(kWheelBase / 0.6223, -kTrackWidth / 0.5969),
+            new Translation2d(-kWheelBase / 0.6223, kTrackWidth / 0.5969),
+            new Translation2d(-kWheelBase / 0.6223, -kTrackWidth / 0.5969));
     
     public static final boolean kGyroReversed = false;
   }
@@ -103,23 +103,23 @@ public final class Constants {
 
     public static final int PIGEONPORT = 0;
 
-    public static final double GEARRATIO = 6.55;
+    public static final double GEARRATIO = 6.67;
     public static final int WHEELDIAMETER = 4;
     public static final double WHEELCIRCUMFERENCE = WHEELDIAMETER * Math.PI;
     public static final int PULSEPERREVOLUTION  = 2048;
     public static final double DISTANCEPERPULSE = WHEELCIRCUMFERENCE / PULSEPERREVOLUTION;
     public static final int VELOCITYCALCULATIONPERSECOND = 10;
 
-    public static final double kTrackWidth = 0.57785;
+    public static final double kTrackWidth = 0.5969;
     // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = 0.57785;
+    public static final double kWheelBase = 0.6223;
     // Distance between front and back wheels on robot
     public static final SwerveDriveKinematics swerveKinematics =
         new SwerveDriveKinematics(
-            new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-            new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-            new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+            new Translation2d(kWheelBase / 0.6223, kTrackWidth / 0.5969),
+            new Translation2d(kWheelBase / 0.6223, -kTrackWidth / 0.5969),
+            new Translation2d(-kWheelBase / 0.6223, kTrackWidth / 0.5969),
+            new Translation2d(-kWheelBase / 0.6223, -kTrackWidth / 0.5969));
 
     public static final boolean kGyroReversed = false;
 

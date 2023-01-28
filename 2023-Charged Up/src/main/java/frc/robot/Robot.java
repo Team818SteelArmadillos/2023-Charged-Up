@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import frc.robot.commands.SwerveDriveCommand;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.SwerveModuleSubsytem;
 
@@ -21,8 +23,10 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   public static Constants m_constants;
   public static CTREConfigs ctreConfigs;
+  public static oi m_oi;
   public static SwerveModuleSubsytem m_swerveModuleSubsystem;
   public static SwerveDriveSubsystem m_SwerveDriveSubsystem;
+  public static SwerveDriveCommand m_SwerveDriveCommand;
 
 
   /**
@@ -34,9 +38,10 @@ public class Robot extends TimedRobot {
 
     m_swerveModuleSubsystem = new SwerveModuleSubsytem();
     m_SwerveDriveSubsystem = new SwerveDriveSubsystem();
+    m_oi = new oi();
+    //m_SwerveDriveCommand = new SwerveDriveCommand(m_SwerveDriveSubsystem, m_oi.gamePadDriver, m_oi.gamePadDriver., m_oi.gamePadDriver.getLeftY(), m_oi.gamePadDriver, isAutonomousEnabled(), isAutonomous());
     m_constants = new Constants();
     ctreConfigs = new CTREConfigs();
-    m_swerveModuleSubsystem = new SwerveModuleSubsytem();
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
   }
@@ -90,7 +95,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    //SwerveDriveCommand.schedule();
+  }
 
   @Override
   public void testInit() {

@@ -19,7 +19,6 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 import frc.robot.subsystems.SwerveModuleSubsytem.SwerveModule;
 import frc.robot.subsystems.SwerveModuleSubsytem;
-import m_pigeon2.getYaw;
 import frc.robot.Constants.DriveConstants.*;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
@@ -48,7 +47,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
         field ? ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation, getYaw())
           : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
 
-    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, 1);// replace 1 with max speed
+    SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, 11.5);// replace 1 with max speed
 
     for(SwerveModule module : m_swerveModules){
       Rotation2d fillerRotation = new Rotation2d();
@@ -57,7 +56,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   }
 
   public void setModuleStates(SwerveModuleState[] desiredState){
-    SwerveDriveKinematics.desaturateWheelSpeeds(desiredState, 1);//replace 1 with max speed
+    SwerveDriveKinematics.desaturateWheelSpeeds(desiredState, 11.5);//replace 1 with max speed
 
     for(SwerveModule mod: m_swerveModules){
       mod.setDesiredState(null, 0, false);

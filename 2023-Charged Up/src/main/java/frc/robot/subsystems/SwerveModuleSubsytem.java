@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -18,6 +20,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.CTREModuleState;
@@ -34,9 +37,10 @@ public class SwerveModuleSubsytem extends SubsystemBase {
 
   public static class SwerveModule {
     public int m_moduleNumber;
-    private TalonFX m_drivemotor;
-    private TalonFX m_turningmotor;
+    private TalonSRX m_drivemotor;
+    private TalonSRX m_turningmotor;
     private CANCoder m_cancoder;
+    private Encoder m_driveEncoder;
     private double m_lastAngle;
     private double m_offset;
     private boolean m_turningInverted;
@@ -46,11 +50,12 @@ public class SwerveModuleSubsytem extends SubsystemBase {
     
 
     public SwerveModule(int moduleNumber, int drivemotor,   int turningmotor, int cancoder, double lastAngle, 
-      double offset, boolean turningInverted, boolean driveInverted, boolean cancoderInverted){
+      double offset, boolean turningInverted, boolean driveInverted, boolean cancoderInverted, int ChannelA, int ChannelB){
       m_moduleNumber = moduleNumber;
-      m_drivemotor = new TalonFX(drivemotor);
-      m_turningmotor = new TalonFX(turningmotor);
+      m_drivemotor = new TalonSRX(drivemotor);
+      m_turningmotor = new TalonSRX(turningmotor);
       m_cancoder = new CANCoder(cancoder);
+      m_driveEncoder = new Encoder(ChannelA, ChannelB);
       m_lastAngle = lastAngle; //change to get state in order to get angle
       m_offset = offset;
       m_turningInverted = turningInverted;
@@ -74,7 +79,7 @@ public class SwerveModuleSubsytem extends SubsystemBase {
       if(openLoop){
         m_drivemotor.set(ControlMode.PercentOutput, desiredState.speedMetersPerSecond/1);//replace 1 with the max speed
       } else{
-        m_drivemotor.set(ControlMode.Velocity, Constants.mpsToFalcon(desiredState.speedMetersPerSecond, 0, 0),
+        m_drivemotor.set(ControlMode.Velocity, Constants.mpsToFalcon(desiredState.speedMetersPerSecond, 4, 6.67),
          DemandType.ArbitraryFeedForward, feedforward.calculate(desiredState.speedMetersPerSecond));
       }
 
@@ -105,7 +110,7 @@ public class SwerveModuleSubsytem extends SubsystemBase {
 
     private void configTurningMotor() {
       m_turningmotor.configFactoryDefault();
-      m_turningmotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
+      //m_turningmotor.configAllSettings(TalonSRXConfigurationon);
       m_turningmotor.setInverted(m_turningInverted);
       m_turningmotor.setNeutralMode(NeutralMode.Coast);
       resetToAbsolute();
@@ -113,18 +118,18 @@ public class SwerveModuleSubsytem extends SubsystemBase {
 
     private void configDriveMotor() {
       m_drivemotor.configFactoryDefault();
-      m_drivemotor.configAllSettings(Robot.ctreConfigs.swerveDriveFXConfig);
+      //m_drivemotor.configAllSettings(Robot.ctreConfigs.swerveDriveFXConfig);
       m_drivemotor.setInverted(m_driveInverted);
       m_drivemotor.setNeutralMode(NeutralMode.Brake);
       resetToAbsolute();
     }
     public double getDriveEncoder(){
-      return m_drivemotor.getSelectedSensorPosition();
+      return m_driveEncoder.getRaw();
     }
     
 
     public SwerveModuleState getState(){
-      double velocity = Constants.falconToMPS(m_drivemotor.getSelectedSensorPosition(), 0, 1); //replace 0 to circumfrence, and 1 with gear ratio
+      double velocity = Constants.falconToMPS(m_driveEncoder.getRaw(), 4, 1); //replace 0 to circumfrence, and 1 with gear ratio
       Rotation2d angle = Rotation2d.fromDegrees(DriveConstants.falconToDegrees(m_turningmotor.getSelectedSensorPosition()));//get gear ratio from turning motor
       return new SwerveModuleState(velocity, angle);
     }
@@ -139,10 +144,10 @@ public class SwerveModuleSubsytem extends SubsystemBase {
   /** Creates a new SwerveModuleSubsytem. */
   public SwerveModuleSubsytem() {
     //frontleftdrive = new TalonFX()
-    frontleftSM = new SwerveModule(0, 1, 2, 3, 0, 0, true, true, true);
-    frontrightSM = new SwerveModule(0, 3, 4, 5, 0, 0, true, true, true);
-    backleftSM = new SwerveModule(0, 5, 6, 7, 0, 0, true, true, true);
-    backrightSM = new SwerveModule(0, 7, 8, 9, 0, 0, true, true, true);
+    frontleftSM = new SwerveModule(0, 1, 2, 3, 0, 0, true, true, true, 0, 1);
+    frontrightSM = new SwerveModule(0, 3, 4, 5, 0, 0, true, true, true, 2, 3);
+    backleftSM = new SwerveModule(0, 5, 6, 7, 0, 0, true, true, true, 4, 5);
+    backrightSM = new SwerveModule(0, 7, 8, 9, 0, 0, true, true, true, 6, 7);
     
   }
 

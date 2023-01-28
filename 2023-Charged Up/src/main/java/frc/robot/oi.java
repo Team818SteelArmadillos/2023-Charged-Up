@@ -7,7 +7,7 @@ import static frc.robot.Constants.oi.*;
 
 public class oi {
   //defines GamePad
-  XboxController gamePadOperator, gamePadDriver;
+  public XboxController gamePadOperator, gamePadDriver;
 
   public oi() {
     
