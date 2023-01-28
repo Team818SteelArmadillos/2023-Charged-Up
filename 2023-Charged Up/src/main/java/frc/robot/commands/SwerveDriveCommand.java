@@ -50,9 +50,9 @@ public class SwerveDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double yAxis = -m_driverController.getRawAxis(m_driveAxis);
-    double xAxis = -m_driverController.getRawAxis(m_strafeAxis);
-    double rAxis = -m_driverController.getRawAxis(m_rotationAxis);
+    double yAxis = -m_driverController.getLeftY();
+    double xAxis = -m_driverController.getLeftX();
+    double rAxis = -Robot.m_oi.gamePadDriver.getLeftX();
         
         /* Deadbands */
         yAxis = (Math.abs(yAxis) < 10) ? 0 : yAxis; //replace the 10 with stick deadband
