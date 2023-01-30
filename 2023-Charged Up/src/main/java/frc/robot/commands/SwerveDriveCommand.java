@@ -20,24 +20,23 @@ public class SwerveDriveCommand extends CommandBase {
    
   private SwerveDriveSubsystem m_swerveDriveSubsystem;
   private XboxController m_driverController;
-  private int m_driveAxis;
-  private int m_strafeAxis;
-  private int m_rotationAxis;
+  private double m_driveAxis;
+  private double m_strafeAxis;
+  private double m_rotationAxis;
 
   private SlewRateLimiter m_xAxisARateLimiter;
   private SlewRateLimiter m_yAxisARateLimiter;
   //private double 
   /** Creates a new SwerveDriveCommand. */
-  public SwerveDriveCommand(SwerveDriveSubsystem swerveDriveSubsystem, XboxController driverController, int driveAxis, int strafeAxis, int rotationAxis, boolean fieldRelative, boolean openLoop) {
-    m_swerveDriveSubsystem = swerveDriveSubsystem;
+  public SwerveDriveCommand() {
     addRequirements(m_swerveDriveSubsystem);
 
     m_driverController = Robot.m_oi.gamePadDriver;
-    m_driveAxis = XboxController.Axis.kLeftY.value;
-    m_strafeAxis = Robot.m_oi.gamePadDriver.getRawAxis(kLeftX.value);
-    m_rotationAxis = rotationAxis;
-    m_fieldRelative = fieldRelative;
-    m_openLoop = openLoop;
+    m_driveAxis = Robot.m_oi.gamePadDriver.getLeftY();
+    m_strafeAxis = Robot.m_oi.gamePadDriver.getLeftX();
+    m_rotationAxis = Robot.m_oi.gamePadDriver.getRightX();
+    m_fieldRelative = true;
+    m_openLoop = true;
 
     m_xAxisARateLimiter = new SlewRateLimiter(20); //replace the 2 with the a rate limiter from constants
     m_yAxisARateLimiter = new SlewRateLimiter(20);
@@ -69,8 +68,8 @@ public class SwerveDriveCommand extends CommandBase {
         double xAxisFiltered = m_xAxisARateLimiter.calculate(xAxisSquared);
 
         /* Input variables into drive methods */
-        m_translation = new Translation2d(yAxisFiltered, xAxisFiltered).times();//replace the 5 with the max speed constant
-        m_rotation = rAxisSquared * 5 * 0.5;//replace the 5 with the max angular velocitt constant value
+        m_translation = new Translation2d(yAxisFiltered, xAxisFiltered);//replace the 5 with the max speed constant
+        m_rotation = rAxisSquared * 10 * 10;//replace the 5 with the max angular velocitt constant value
         m_swerveDriveSubsystem.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
   }
 
