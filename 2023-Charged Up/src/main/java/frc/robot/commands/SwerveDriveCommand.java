@@ -20,9 +20,9 @@ public class SwerveDriveCommand extends CommandBase {
    
   private SwerveDriveSubsystem m_swerveDriveSubsystem;
   private XboxController m_driverController;
-  private int m_driveAxis;
-  private int m_strafeAxis;
-  private int m_rotationAxis;
+  private double m_driveAxis;
+  private double m_strafeAxis;
+  private double m_rotationAxis;
 
   private SlewRateLimiter m_xAxisARateLimiter;
   private SlewRateLimiter m_yAxisARateLimiter;
@@ -34,7 +34,8 @@ public class SwerveDriveCommand extends CommandBase {
 
     m_driverController = Robot.m_oi.gamePadDriver;
     m_driveAxis = XboxController.Axis.kLeftY.value;
-    m_strafeAxis = Robot.m_oi.gamePadDriver.getRawAxis(kLeftX.value);
+    m_strafeAxis = Robot.m_oi.getLeftXDriver()
+      ;
     m_rotationAxis = rotationAxis;
     m_fieldRelative = fieldRelative;
     m_openLoop = openLoop;
