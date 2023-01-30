@@ -28,17 +28,24 @@ public class SwerveDriveCommand extends CommandBase {
   private SlewRateLimiter m_yAxisARateLimiter;
   //private double 
   /** Creates a new SwerveDriveCommand. */
-  public SwerveDriveCommand(SwerveDriveSubsystem swerveDriveSubsystem, XboxController driverController, int driveAxis, int strafeAxis, int rotationAxis, boolean fieldRelative, boolean openLoop) {
-    m_swerveDriveSubsystem = swerveDriveSubsystem;
+  public SwerveDriveCommand() {
     addRequirements(m_swerveDriveSubsystem);
 
     m_driverController = Robot.m_oi.gamePadDriver;
+<<<<<<< HEAD
+    m_driveAxis = Robot.m_oi.gamePadDriver.getLeftY();
+    m_strafeAxis = Robot.m_oi.gamePadDriver.getLeftX();
+    m_rotationAxis = Robot.m_oi.gamePadDriver.getRightX();
+    m_fieldRelative = true;
+    m_openLoop = true;
+=======
     m_driveAxis = XboxController.Axis.kLeftY.value;
     m_strafeAxis = Robot.m_oi.getLeftXDriver()
       ;
     m_rotationAxis = rotationAxis;
     m_fieldRelative = fieldRelative;
     m_openLoop = openLoop;
+>>>>>>> df78dbd7b35f2cd83fd32af1cec22ec321dce3a3
 
     m_xAxisARateLimiter = new SlewRateLimiter(20); //replace the 2 with the a rate limiter from constants
     m_yAxisARateLimiter = new SlewRateLimiter(20);
@@ -71,7 +78,11 @@ public class SwerveDriveCommand extends CommandBase {
 
         /* Input variables into drive methods */
         m_translation = new Translation2d(yAxisFiltered, xAxisFiltered);//replace the 5 with the max speed constant
+<<<<<<< HEAD
         m_rotation = rAxisSquared * 5 * 0.5;//replace the 5 with the max angular velocitt constant value
+=======
+        m_rotation = rAxisSquared * 10 * 10;//replace the 5 with the max angular velocitt constant value
+>>>>>>> a4b71bba8d1732ceecd20fe94dc13d659bf1fa07
         m_swerveDriveSubsystem.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
   }
 
