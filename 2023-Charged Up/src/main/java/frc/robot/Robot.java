@@ -79,8 +79,8 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    TelescopingArmCommand.desiredState = 0;
-    TelescopingArmCommand.class. 
+    //TelescopingArmCommand.desiredState = 0;
+    //TelescopingArmCommand.class. 
 
   }
 

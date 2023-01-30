@@ -31,6 +31,9 @@ public final class Constants {
 
     //Telescoping Values
     public static final double minArmLength = 0;
+    public static final double midArmLength = 0;
+    public static final double maxArmLength = 0;
+
     public static final double ticksToFeet = 0;
     public static final double tP = 0.5;
     public static final double tI = 0;

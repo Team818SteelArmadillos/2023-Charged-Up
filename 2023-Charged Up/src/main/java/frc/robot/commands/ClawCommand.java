@@ -17,9 +17,9 @@ public class ClawCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (OI.getOperator().rightTrigger()){
-
-    }
+    //if (OI.getOperator().rightTrigger(null)){
+    //   break;
+    //}
   }
 
   // Called once the command ends or is interrupted.
