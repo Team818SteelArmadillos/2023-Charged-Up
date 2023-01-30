@@ -70,7 +70,7 @@ public class SwerveDriveCommand extends CommandBase {
         double xAxisFiltered = m_xAxisARateLimiter.calculate(xAxisSquared);
 
         /* Input variables into drive methods */
-        m_translation = new Translation2d(yAxisFiltered, xAxisFiltered).times();//replace the 5 with the max speed constant
+        m_translation = new Translation2d(yAxisFiltered, xAxisFiltered);//replace the 5 with the max speed constant
         m_rotation = rAxisSquared * 5 * 0.5;//replace the 5 with the max angular velocitt constant value
         m_swerveDriveSubsystem.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
   }
