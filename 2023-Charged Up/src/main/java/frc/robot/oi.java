@@ -145,5 +145,4 @@ public class oi {
     return gamePadOperator.getRightStickButton();
   }
 
-  public boolean[] 
 }

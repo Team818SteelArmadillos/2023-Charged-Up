@@ -32,20 +32,11 @@ public class SwerveDriveCommand extends CommandBase {
     addRequirements(m_swerveDriveSubsystem);
 
     m_driverController = Robot.m_oi.gamePadDriver;
-<<<<<<< HEAD
     m_driveAxis = Robot.m_oi.gamePadDriver.getLeftY();
     m_strafeAxis = Robot.m_oi.gamePadDriver.getLeftX();
     m_rotationAxis = Robot.m_oi.gamePadDriver.getRightX();
     m_fieldRelative = true;
     m_openLoop = true;
-=======
-    m_driveAxis = XboxController.Axis.kLeftY.value;
-    m_strafeAxis = Robot.m_oi.getLeftXDriver()
-      ;
-    m_rotationAxis = rotationAxis;
-    m_fieldRelative = fieldRelative;
-    m_openLoop = openLoop;
->>>>>>> df78dbd7b35f2cd83fd32af1cec22ec321dce3a3
 
     m_xAxisARateLimiter = new SlewRateLimiter(20); //replace the 2 with the a rate limiter from constants
     m_yAxisARateLimiter = new SlewRateLimiter(20);
