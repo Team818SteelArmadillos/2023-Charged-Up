@@ -14,11 +14,11 @@ public class BikeBreakSubsystem extends SubsystemBase {
         bikeBreak = new DoubleSolenoid(Constants.clawPistonPort[1], PneumaticsModuleType.CTREPCM, Constants.clawPistonPort[0], Constants.clawPistonPort[2]);
     }
 
-    public static void setIntakeForward() {
+    public static void setArmLocked() {
         bikeBreak.set(DoubleSolenoid.Value.kForward);
     }
 
-    public static void setInkateReverse() {
+    public static void setArmUnlocked() {
         bikeBreak.set(DoubleSolenoid.Value.kReverse);
     }
 

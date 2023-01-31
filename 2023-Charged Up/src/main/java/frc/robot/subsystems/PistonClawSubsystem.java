@@ -14,12 +14,20 @@ public class PistonClawSubsystem extends SubsystemBase {
         pistonClaw = new DoubleSolenoid(Constants.clawPistonPort[1], PneumaticsModuleType.CTREPCM, Constants.clawPistonPort[0], Constants.clawPistonPort[2]);
     }
 
-    public static void setIntakeForward() {
+    public static void setClawClosed() {
         pistonClaw.set(DoubleSolenoid.Value.kForward);
     }
 
-    public static void setInkateReverse() {
+    public static void setClawOpen() {
         pistonClaw.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public static boolean isOpen() {
+        if (pistonClaw.get() == DoubleSolenoid.Value.kForward) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

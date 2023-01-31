@@ -43,7 +43,7 @@ public final class Constants {
     public static final int[] clawPistonPort = {0, 1, 0}; // Copied from 2022 Rapid React Code (needs to be tested more??)
 
     // Pivoting Arm Angles
-    public static final int[] armAngles = {0, };
+    public static final int[] armAngles = {15, 30, 45, 90};
 
     // Conversion Factors
     public static final double ticksToDegrees = 0.087890625;

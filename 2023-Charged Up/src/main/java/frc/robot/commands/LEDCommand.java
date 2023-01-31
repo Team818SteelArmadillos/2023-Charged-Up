@@ -5,6 +5,7 @@ import frc.robot.OI;
 import frc.robot.subsystems.LEDSubsystem;
 
 public class LEDCommand extends CommandBase {
+    
     @Override
     public void initialize() {
       LEDSubsystem.setLEDs(OI.getOperator().getAButtonPressed());
@@ -14,7 +15,7 @@ public class LEDCommand extends CommandBase {
     @Override
     public void execute() {
       // not sure what to put here, will update
-      }
+    }
     
     // Called once the command ends or is interrupted.
     @Override

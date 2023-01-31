@@ -2,12 +2,10 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ClawWheelsSubsystem extends SubsystemBase {
-
     public static VictorSPX cwm1; //Claw wheel motor 1
     public static VictorSPX cwm2; 
     
@@ -21,6 +19,7 @@ public class ClawWheelsSubsystem extends SubsystemBase {
         cwm2.follow(cwm1);
     }
 
+    
     public static void setIntakeSpeed(double intakeSpeed) {
         //must calculate current length
         cwm1.set(ControlMode.PercentOutput, intakeSpeed);
