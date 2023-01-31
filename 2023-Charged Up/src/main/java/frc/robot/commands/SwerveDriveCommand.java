@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -18,7 +19,7 @@ public class SwerveDriveCommand extends CommandBase {
   private boolean m_fieldRelative;
   private boolean m_openLoop;
    
-  private SwerveDriveSubsystem m_swerveDriveSubsystem;
+  private SwerveDriveSubsystem m_swerveDriveSubsystem = Robot.m_SwerveDriveSubsystem;
   private XboxController m_driverController;
   private double m_driveAxis;
   private double m_strafeAxis;
@@ -32,9 +33,7 @@ public class SwerveDriveCommand extends CommandBase {
     addRequirements(m_swerveDriveSubsystem);
 
     m_driverController = Robot.m_oi.gamePadDriver;
-    m_driveAxis = Robot.m_oi.gamePadDriver.getLeftY();
-    m_strafeAxis = Robot.m_oi.gamePadDriver.getLeftX();
-    m_rotationAxis = Robot.m_oi.gamePadDriver.getRightX();
+    
     m_fieldRelative = true;
     m_openLoop = true;
 
@@ -44,24 +43,28 @@ public class SwerveDriveCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    Robot.m_SwerveDriveSubsystem.zeroModules();
+    Robot.m_SwerveDriveSubsystem.resetOdometry(new Pose2d());
+    Robot.m_SwerveDriveSubsystem.resetGyro();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double yAxis = -m_driverController.getLeftY();
-    double xAxis = -m_driverController.getLeftX();
-    double rAxis = -Robot.m_oi.gamePadDriver.getLeftX();
+    m_driveAxis = Robot.m_oi.gamePadDriver.getLeftY();
+    m_strafeAxis = Robot.m_oi.gamePadDriver.getLeftX();
+    m_rotationAxis = Robot.m_oi.gamePadDriver.getRightX();
         
         /* Deadbands */
-        yAxis = (Math.abs(yAxis) < 10) ? 0 : yAxis; //replace the 10 with stick deadband
-        xAxis = (Math.abs(xAxis) < 10) ? 0 : xAxis;
-        rAxis = (Math.abs(rAxis) < 10) ? 0 : rAxis;
+        m_driveAxis = (Math.abs(m_driveAxis) < 10) ? 0 : m_driveAxis; //replace the 10 with stick deadband
+        m_strafeAxis = (Math.abs(m_strafeAxis) < 10) ? 0 : m_strafeAxis;
+        m_rotationAxis = (Math.abs(m_rotationAxis) < 10) ? 0 : m_rotationAxis;
 
         /* Square joystick inputs */
-        double rAxisSquared = rAxis > 0 ? rAxis * rAxis : rAxis * rAxis * -1;
-        double xAxisSquared = xAxis > 0 ? xAxis * xAxis : xAxis * xAxis * -1;
-        double yAxisSquared = yAxis > 0 ? yAxis * yAxis : yAxis * yAxis * -1;
+        double rAxisSquared = m_rotationAxis > 0 ? m_rotationAxis * m_rotationAxis : m_rotationAxis * m_rotationAxis * -1;
+        double xAxisSquared = m_strafeAxis > 0 ? m_strafeAxis * m_strafeAxis : m_strafeAxis * m_strafeAxis * -1;
+        double yAxisSquared = m_driveAxis > 0 ? m_driveAxis * m_driveAxis : m_driveAxis * m_driveAxis * -1;
 
         /* Filter joystick inputs using slew rate limiter */
         double yAxisFiltered = m_yAxisARateLimiter.calculate(yAxisSquared);
@@ -69,11 +72,7 @@ public class SwerveDriveCommand extends CommandBase {
 
         /* Input variables into drive methods */
         m_translation = new Translation2d(yAxisFiltered, xAxisFiltered);//replace the 5 with the max speed constant
-<<<<<<< HEAD
-        m_rotation = rAxisSquared * 5 * 0.5;//replace the 5 with the max angular velocitt constant value
-=======
         m_rotation = rAxisSquared * 10 * 10;//replace the 5 with the max angular velocitt constant value
->>>>>>> a4b71bba8d1732ceecd20fe94dc13d659bf1fa07
         m_swerveDriveSubsystem.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
   }
 

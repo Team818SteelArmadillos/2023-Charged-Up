@@ -81,7 +81,7 @@ public class SwerveModuleSubsytem extends SubsystemBase {
      m_lastAngle = newAngle;
     }
 
-    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 1, 2); //put the robot characteristics from sysID here
+    SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 0, 0); //put the robot characteristics from sysID here
 
     private void resetToAbsolute() {
       m_turningmotor.setSelectedSensorPosition(DriveConstants.degreesToFalcon(getCanCoder().getDegrees()));

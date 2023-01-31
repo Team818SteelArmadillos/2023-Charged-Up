@@ -124,7 +124,7 @@ public final class Constants {
     public static final boolean kGyroReversed = false;
 
 
-    public static double degreesToFalcon(double degrees){
+    public static double degreesToFalcon(double degrees) {
       double ticks = degrees/ (360.0/ (GEARRATIO * 2048.0));
       return ticks;
     }

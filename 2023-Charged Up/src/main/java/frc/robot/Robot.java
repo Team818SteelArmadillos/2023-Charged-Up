@@ -19,12 +19,12 @@ import frc.robot.subsystems.SwerveModuleSubsytem;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  public static Constants m_constants;
-  public static CTREConfigs ctreConfigs;
-  public static oi m_oi;
-  public static SwerveModuleSubsytem m_swerveModuleSubsystem;
-  public static SwerveDriveSubsystem m_SwerveDriveSubsystem;
-  public static SwerveDriveCommand m_SwerveDriveCommand;
+  public static Constants m_constants = new Constants();;
+  public static CTREConfigs ctreConfigs  = new CTREConfigs();;
+  public static oi m_oi = new oi();
+  public static SwerveModuleSubsytem m_swerveModuleSubsystem = new SwerveModuleSubsytem();
+  public static SwerveDriveSubsystem m_SwerveDriveSubsystem = new SwerveDriveSubsystem();
+  public static SwerveDriveCommand m_SwerveDriveCommand = new SwerveDriveCommand();
 
 
   /**
@@ -34,12 +34,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
 
-    m_swerveModuleSubsystem = new SwerveModuleSubsytem();
-    m_SwerveDriveSubsystem = new SwerveDriveSubsystem();
-    m_oi = new oi();
-    //m_SwerveDriveCommand = new SwerveDriveCommand(m_SwerveDriveSubsystem, m_oi.gamePadDriver, m_oi.gamePadDriver., m_oi.gamePadDriver.getLeftY(), m_oi.gamePadDriver, isAutonomousEnabled(), isAutonomous());
-    m_constants = new Constants();
-    ctreConfigs = new CTREConfigs();
+    
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
   }
@@ -94,7 +89,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    //SwerveDriveCommand.schedule();
+    m_SwerveDriveCommand.schedule();
   }
 
   @Override

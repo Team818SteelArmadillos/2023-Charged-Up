@@ -14,15 +14,22 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
 import frc.robot.subsystems.SwerveModuleSubsytem.SwerveModule;
 
 public class SwerveDriveSubsystem extends SubsystemBase {
   public SwerveDriveOdometry m_swerveodometry;
-  public SwerveModule[] m_swerveModules;
+
+  public SwerveModule[] m_swerveModules = {
+    Robot.m_swerveModuleSubsystem.frontleftSM, 
+    Robot.m_swerveModuleSubsystem.frontrightSM,
+    Robot.m_swerveModuleSubsystem.backleftSM, 
+    Robot.m_swerveModuleSubsystem.backrightSM};
+
   public SwerveModuleState[] m_swerveModuleStates;
-  Pigeon2 m_pigeon2 = new Pigeon2(1);
+  Pigeon2 m_pigeon2 = new Pigeon2(0, "rio");
   SwerveModuleState moduleState;
   
   
@@ -46,9 +53,9 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, 11.5);// replace 1 with max speed
 
-    for(SwerveModule module : m_swerveModules){
+    for(int i=0; i<3; i++){
       Rotation2d fillerRotation = new Rotation2d();
-      module.setDesiredState(fillerRotation, 1, false);
+      m_swerveModules[i].setDesiredState(swerveModuleStates[i].angle, swerveModuleStates[i].speedMetersPerSecond, isOpenLoop);
     }
   }
 
@@ -73,7 +80,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   public SwerveModulePosition[] getPosition(){
     SwerveModulePosition m_frontLeftSMlocation = new SwerveModulePosition(-0.6223, new Rotation2d());
     SwerveModulePosition m_frontRightSMlocation = new SwerveModulePosition(0.6223, new Rotation2d());
-    SwerveModulePosition m_backLeftSMlocation = new SwerveModulePosition(-0.6223, new Rotation2d());
+    SwerveModulePosition m_backLeftSMlocation = new SwerveModulePosition(0.6223, new Rotation2d());
     SwerveModulePosition m_backrightSMlocation = new SwerveModulePosition(0.6223, new Rotation2d());
     SwerveModulePosition[] SwerveModulePositionArray = {m_frontLeftSMlocation, m_frontRightSMlocation, m_backLeftSMlocation, m_backrightSMlocation}; 
     return SwerveModulePositionArray;
