@@ -53,7 +53,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
 
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, 11.5);// replace 1 with max speed
 
-    for(int i=0; i<3; i++){
+    for(int i=0; i<4; i++){
       Rotation2d fillerRotation = new Rotation2d();
       m_swerveModules[i].setDesiredState(swerveModuleStates[i].angle, swerveModuleStates[i].speedMetersPerSecond, isOpenLoop);
     }
@@ -100,7 +100,7 @@ public class SwerveDriveSubsystem extends SubsystemBase {
   }
 
   public SwerveModuleState[] getStates(){
-    SwerveModuleState[] m_swerveModuleStates = new SwerveModuleState[4];
+    SwerveModuleState[] m_swerveModuleStates = new SwerveModuleState[3];
 
     for(SwerveModuleState moduleState : m_swerveModuleStates){
       moduleState = SwerveModuleSubsytem.SwerveModule.getDesiredState();

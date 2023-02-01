@@ -136,10 +136,10 @@ public class SwerveModuleSubsytem extends SubsystemBase {
   /** Creates a new SwerveModuleSubsytem. */
   public SwerveModuleSubsytem() {
     //frontleftdrive = new TalonFX()
-    frontleftSM = new SwerveModule(0, 1, 2, 3, 0, 0, true, true, true, 0, 1);
-    frontrightSM = new SwerveModule(0, 3, 4, 5, 0, 0, true, true, true, 2, 3);
-    backleftSM = new SwerveModule(0, 5, 6, 7, 0, 0, true, true, true, 4, 5);
-    backrightSM = new SwerveModule(0, 7, 8, 9, 0, 0, true, true, true, 6, 7);
+    frontleftSM = new SwerveModule(0, 5, 1, 1, 0, 0, true, true, true, 0, 1);
+    frontrightSM = new SwerveModule(1, 4, 10, 10, 0, 0, true, true, true, 2, 3);
+    backleftSM = new SwerveModule(2, 6, 2, 2, 0, 0, true, true, true, 4, 5);
+    backrightSM = new SwerveModule(3, 7, 3, 3, 0, 0, true, true, true, 6, 7);
     
   }
 

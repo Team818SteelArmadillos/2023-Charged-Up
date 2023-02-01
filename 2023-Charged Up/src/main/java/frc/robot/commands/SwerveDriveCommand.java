@@ -57,9 +57,9 @@ public class SwerveDriveCommand extends CommandBase {
     m_rotationAxis = Robot.m_oi.gamePadDriver.getRightX();
         
         /* Deadbands */
-        m_driveAxis = (Math.abs(m_driveAxis) < 10) ? 0 : m_driveAxis; //replace the 10 with stick deadband
-        m_strafeAxis = (Math.abs(m_strafeAxis) < 10) ? 0 : m_strafeAxis;
-        m_rotationAxis = (Math.abs(m_rotationAxis) < 10) ? 0 : m_rotationAxis;
+        m_driveAxis = (Math.abs(m_driveAxis) < 0.1) ? 0 : m_driveAxis; //replace the 10 with stick deadband
+        m_strafeAxis = (Math.abs(m_strafeAxis) < 0.1) ? 0 : m_strafeAxis;
+        m_rotationAxis = (Math.abs(m_rotationAxis) < 0.1) ? 0 : m_rotationAxis;
 
         /* Square joystick inputs */
         double rAxisSquared = m_rotationAxis > 0 ? m_rotationAxis * m_rotationAxis : m_rotationAxis * m_rotationAxis * -1;
