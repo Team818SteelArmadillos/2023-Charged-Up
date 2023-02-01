@@ -23,10 +23,11 @@ public class PivotingArmCommand extends CommandBase {
   @Override
   public void execute() {
     switch (_state) {
-      case 0: PivotingArmSubsystem.setPivotAngle(Constants.armAngles[0]);
-      case 1: PivotingArmSubsystem.setPivotAngle(Constants.armAngles[1]);
-      case 2: PivotingArmSubsystem.setPivotAngle(Constants.armAngles[2]);
-      case 3: PivotingArmSubsystem.setPivotAngle(Constants.armAngles[3]);
+      case 0:  PivotingArmSubsystem.setPivotAngle(Constants.armAngles[0]); break;
+      case 1:  PivotingArmSubsystem.setPivotAngle(Constants.armAngles[1]); break;
+      case 2:  PivotingArmSubsystem.setPivotAngle(Constants.armAngles[2]); break;
+      case 3:  PivotingArmSubsystem.setPivotAngle(Constants.armAngles[3]); break;
+      default: break;
     }
   }
 

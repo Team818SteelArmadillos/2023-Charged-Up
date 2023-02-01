@@ -29,10 +29,10 @@ public class TelescopingArmCommand extends CommandBase {
     @Override
     public void execute() {
         switch (_state) {
-            case FULL_RETRACT: TelescopingArmSubsystem.setArmLength(0);
-            case LOW_GOAL: TelescopingArmSubsystem.setArmLength(Constants.minArmLength);
-            case MID_GOAL: TelescopingArmSubsystem.setArmLength(Constants.midArmLength);
-            case HIGH_GOAL: TelescopingArmSubsystem.setArmLength(Constants.maxArmLength);
+            case FULL_RETRACT: TelescopingArmSubsystem.setArmLength(0); break;
+            case LOW_GOAL:     TelescopingArmSubsystem.setArmLength(Constants.minArmLength); break;
+            case MID_GOAL:     TelescopingArmSubsystem.setArmLength(Constants.midArmLength); break;
+            case HIGH_GOAL:    TelescopingArmSubsystem.setArmLength(Constants.maxArmLength); break;
 			
             default: break;
         }
