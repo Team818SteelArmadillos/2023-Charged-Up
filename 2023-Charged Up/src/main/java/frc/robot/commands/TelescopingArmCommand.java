@@ -5,17 +5,10 @@ import frc.robot.Constants;
 import frc.robot.subsystems.TelescopingArmSubsystem;
 
 public class TelescopingArmCommand extends CommandBase { 
-
-    enum Telestate {
-        FULL_RETRACT,
-        LOW_GOAL,
-        MID_GOAL,
-        HIGH_GOAL
-    }
     
-    private Telestate _state;
+    private int _state;
 
-    public TelescopingArmCommand(Telestate state) {
+    public TelescopingArmCommand(int state) {
         _state = state;
     }
 
@@ -29,11 +22,10 @@ public class TelescopingArmCommand extends CommandBase {
     @Override
     public void execute() {
         switch (_state) {
-            case FULL_RETRACT: TelescopingArmSubsystem.setArmLength(0); break;
-            case LOW_GOAL:     TelescopingArmSubsystem.setArmLength(Constants.minArmLength); break;
-            case MID_GOAL:     TelescopingArmSubsystem.setArmLength(Constants.midArmLength); break;
-            case HIGH_GOAL:    TelescopingArmSubsystem.setArmLength(Constants.maxArmLength); break;
-			
+            case 0: TelescopingArmSubsystem.setArmLength(0); break;
+            case 1: TelescopingArmSubsystem.setArmLength(Constants.minArmLength); break;
+            case 2: TelescopingArmSubsystem.setArmLength(Constants.midArmLength); break;
+            case 3: TelescopingArmSubsystem.setArmLength(Constants.maxArmLength); break;		
             default: break;
         }
     }

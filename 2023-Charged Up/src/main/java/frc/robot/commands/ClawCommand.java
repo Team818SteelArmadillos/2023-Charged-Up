@@ -5,24 +5,22 @@ import frc.robot.subsystems.PistonClawSubsystem;
 
 public class ClawCommand extends CommandBase {
 
-  public static int _state;
-  public ClawCommand(int state) {
-    _state = state;
+  public ClawCommand() {
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
     if (PistonClawSubsystem.isOpen() == false) { 
       PistonClawSubsystem.setClawOpen();
     } else {
       PistonClawSubsystem.setClawClosed();
     }
+  }
+
+  // Called every time the scheduler runs while the command is scheduled.
+  @Override
+  public void execute() {
   }
 
   // Called once the command ends or is interrupted.

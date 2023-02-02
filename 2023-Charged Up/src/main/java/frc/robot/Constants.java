@@ -41,6 +41,8 @@ public final class Constants {
 
     // Piston Claw Values
     public static final int[] clawPistonPort = {0, 1, 0}; // Copied from 2022 Rapid React Code (needs to be tested more??)
+    public static final float clawWheelMaxSpeed = 0.50f;
+
 
     // Pivoting Arm Angles
     public static final int[] armAngles = {15, 30, 45, 90};
@@ -49,4 +51,7 @@ public final class Constants {
     public static final double ticksToDegrees = 0.087890625;
     /* 360 degrees divided by 4096 ticks 
     Multiply given ticks by this constant */
+
+    // Neo 550 Motor Stuff
+    public static final int neoAmpLimit = 20;
 }

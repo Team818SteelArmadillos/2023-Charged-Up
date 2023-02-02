@@ -2,15 +2,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClawWheelsSubsystem;
-import frc.robot.subsystems.PistonClawSubsystem;
-import frc.robot.OI;
+import frc.robot.Constants;
 
 public class ClawWheelCommand extends CommandBase {
-  
-  int _state;
 
-  public ClawWheelCommand(int state) {
-    _state = state;
+  public ClawWheelCommand() {
   }
 
   // Called when the command is initially scheduled.
@@ -21,6 +17,7 @@ public class ClawWheelCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    ClawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelMaxSpeed);
   }
 
   // Called once the command ends or is interrupted.
