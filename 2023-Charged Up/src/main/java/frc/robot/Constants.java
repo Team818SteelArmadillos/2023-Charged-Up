@@ -130,7 +130,8 @@ public final class Constants {
     }
     
     public static double falconToDegrees(double counts){
-      return (counts * (360.0 / PULSEPERREVOLUTION))%360;
+      //return (counts * (360.0 / PULSEPERREVOLUTION))%360;
+      return (360 / (GEARRATIO * 2048.0)) * counts;
     }
 
     public static double falconToRPM(double velocityCounts) {

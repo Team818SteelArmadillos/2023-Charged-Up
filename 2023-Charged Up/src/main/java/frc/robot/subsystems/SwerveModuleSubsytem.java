@@ -41,12 +41,12 @@ public class SwerveModuleSubsytem extends SubsystemBase {
     public static SwerveModuleState desiredState;
     
 
-    public SwerveModule(int moduleNumber, int drivemotor,   int turningmotor, int cancoder, double lastAngle, 
+    public SwerveModule(int moduleNumber, int drivemotor, int turningmotor, double lastAngle, 
       double offset, boolean turningInverted, boolean driveInverted, boolean cancoderInverted, int ChannelA, int ChannelB){
       m_moduleNumber = moduleNumber;
       m_drivemotor = new TalonSRX(drivemotor);
       m_turningmotor = new TalonSRX(turningmotor);
-      m_cancoder = new CANCoder(cancoder);
+      //m_cancoder = new CANCoder(cancoder);
       m_driveEncoder = new Encoder(ChannelA, ChannelB);
       m_lastAngle = lastAngle; //change to get state in order to get angle
       m_offset = offset;
@@ -54,7 +54,6 @@ public class SwerveModuleSubsytem extends SubsystemBase {
       m_driveInverted = driveInverted;
       m_cancoderInverted = cancoderInverted;
 
-      configCanCoder();
       configDriveMotor();
       configTurningMotor();
 
@@ -75,8 +74,11 @@ public class SwerveModuleSubsytem extends SubsystemBase {
          DemandType.ArbitraryFeedForward, feedforward.calculate(desiredState.speedMetersPerSecond));
       }
 
-     double newAngle = (Math.abs(desiredState.speedMetersPerSecond) <= (0)) ? m_lastAngle : angle.getDegrees();
+     //double newAngle = ((desiredState.speedMetersPerSecond) == (0)) ? m_lastAngle : angle.getDegrees();
+     double newAngle = angle.getDegrees();
      m_turningmotor.set(ControlMode.Position, DriveConstants.degreesToFalcon(newAngle));
+     
+     //m_turningmotor.set(ControlMode.PercentOutput, Robot.m_oi.gamePadDriver.getRightX());
      
      m_lastAngle = newAngle;
     }
@@ -84,21 +86,13 @@ public class SwerveModuleSubsytem extends SubsystemBase {
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 0, 0); //put the robot characteristics from sysID here
 
     private void resetToAbsolute() {
-      m_turningmotor.setSelectedSensorPosition(DriveConstants.degreesToFalcon(getCanCoder().getDegrees()));
+      m_turningmotor.setSelectedSensorPosition(m_turningmotor.getSelectedSensorPosition());
     }
 
     public static SwerveModuleState getDesiredState(){
       return desiredState;
     }
-    private Rotation2d getCanCoder() {
-      return Rotation2d.fromDegrees(m_cancoder.getAbsolutePosition());
-    }
 
-    private void configCanCoder(){
-      m_cancoder.configFactoryDefault();
-      m_cancoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
-      m_cancoder.configSensorDirection(m_cancoderInverted);
-    }
 
     private void configTurningMotor() {
       m_turningmotor.configFactoryDefault();
@@ -136,10 +130,10 @@ public class SwerveModuleSubsytem extends SubsystemBase {
   /** Creates a new SwerveModuleSubsytem. */
   public SwerveModuleSubsytem() {
     //frontleftdrive = new TalonFX()
-    frontleftSM = new SwerveModule(0, 5, 1, 1, 0, 0, true, true, true, 0, 1);
-    frontrightSM = new SwerveModule(1, 4, 10, 10, 0, 0, true, true, true, 2, 3);
-    backleftSM = new SwerveModule(2, 6, 2, 2, 0, 0, true, true, true, 4, 5);
-    backrightSM = new SwerveModule(3, 7, 3, 3, 0, 0, true, true, true, 6, 7);
+    frontleftSM = new SwerveModule(0, 5, 1,  0, 0, true, true, true, 0, 1);
+    frontrightSM = new SwerveModule(1, 4, 10,  0, 0, true, true, true, 2, 3);
+    backleftSM = new SwerveModule(2, 6, 2,  0, 0, true, true, true, 4, 5);
+    backrightSM = new SwerveModule(3, 7, 3, 0, 0, true, true, true, 6, 7);
     
   }
 

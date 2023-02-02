@@ -18,7 +18,7 @@ public class SwerveDriveCommand extends CommandBase {
   private Translation2d m_translation;
   private boolean m_fieldRelative;
   private boolean m_openLoop;
-   
+
   private SwerveDriveSubsystem m_swerveDriveSubsystem = Robot.m_SwerveDriveSubsystem;
   private XboxController m_driverController;
   private double m_driveAxis;
@@ -27,18 +27,21 @@ public class SwerveDriveCommand extends CommandBase {
 
   private SlewRateLimiter m_xAxisARateLimiter;
   private SlewRateLimiter m_yAxisARateLimiter;
-  //private double 
+  private SlewRateLimiter m_rAxisARateLimiter;
+
+  // private double
   /** Creates a new SwerveDriveCommand. */
   public SwerveDriveCommand() {
     addRequirements(m_swerveDriveSubsystem);
 
     m_driverController = Robot.m_oi.gamePadDriver;
-    
+
     m_fieldRelative = true;
     m_openLoop = true;
 
-    m_xAxisARateLimiter = new SlewRateLimiter(20); //replace the 2 with the a rate limiter from constants
+    m_xAxisARateLimiter = new SlewRateLimiter(20); // replace the 2 with the a rate limiter from constants
     m_yAxisARateLimiter = new SlewRateLimiter(20);
+    m_rAxisARateLimiter = new SlewRateLimiter(20);
   }
 
   // Called when the command is initially scheduled.
@@ -55,30 +58,32 @@ public class SwerveDriveCommand extends CommandBase {
     m_driveAxis = Robot.m_oi.gamePadDriver.getLeftY();
     m_strafeAxis = Robot.m_oi.gamePadDriver.getLeftX();
     m_rotationAxis = Robot.m_oi.gamePadDriver.getRightX();
-        
-        /* Deadbands */
-        m_driveAxis = (Math.abs(m_driveAxis) < 0.1) ? 0 : m_driveAxis; //replace the 10 with stick deadband
-        m_strafeAxis = (Math.abs(m_strafeAxis) < 0.1) ? 0 : m_strafeAxis;
-        m_rotationAxis = (Math.abs(m_rotationAxis) < 0.1) ? 0 : m_rotationAxis;
 
-        /* Square joystick inputs */
-        double rAxisSquared = m_rotationAxis > 0 ? m_rotationAxis * m_rotationAxis : m_rotationAxis * m_rotationAxis * -1;
-        double xAxisSquared = m_strafeAxis > 0 ? m_strafeAxis * m_strafeAxis : m_strafeAxis * m_strafeAxis * -1;
-        double yAxisSquared = m_driveAxis > 0 ? m_driveAxis * m_driveAxis : m_driveAxis * m_driveAxis * -1;
+    /* Deadbands */
+    m_driveAxis = (Math.abs(m_driveAxis) < 0.2) ? 0 : m_driveAxis; // replace the 10 with stick deadband
+    m_strafeAxis = (Math.abs(m_strafeAxis) < 0.2) ? 0 : m_strafeAxis;
+    m_rotationAxis = (Math.abs(m_rotationAxis) < 0.2) ? 0 : m_rotationAxis;
 
-        /* Filter joystick inputs using slew rate limiter */
-        double yAxisFiltered = m_yAxisARateLimiter.calculate(yAxisSquared);
-        double xAxisFiltered = m_xAxisARateLimiter.calculate(xAxisSquared);
+    /* Square joystick inputs */
+    double rAxisSquared = m_rotationAxis > 0 ? m_rotationAxis * m_rotationAxis : m_rotationAxis * m_rotationAxis * -1;
+    double xAxisSquared = m_strafeAxis > 0 ? m_strafeAxis * m_strafeAxis : m_strafeAxis * m_strafeAxis * -1;
+    double yAxisSquared = m_driveAxis > 0 ? m_driveAxis * m_driveAxis : m_driveAxis * m_driveAxis * -1;
 
-        /* Input variables into drive methods */
-        m_translation = new Translation2d(yAxisFiltered, xAxisFiltered);//replace the 5 with the max speed constant
-        m_rotation = rAxisSquared * 10 * 10;//replace the 5 with the max angular velocitt constant value
-        m_swerveDriveSubsystem.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
+    /* Filter joystick inputs using slew rate limiter */
+    double yAxisFiltered = m_yAxisARateLimiter.calculate(yAxisSquared);
+    double xAxisFiltered = m_xAxisARateLimiter.calculate(xAxisSquared);
+    double rAxisFiltered = m_rAxisARateLimiter.calculate(rAxisSquared);
+
+    /* Input variables into drive methods */
+    m_translation = new Translation2d(yAxisFiltered, xAxisFiltered);// replace the 5 with the max speed constant
+    m_rotation = rAxisFiltered * 1 * 1;// replace the 5 with the max angular velocitt constant value
+    m_swerveDriveSubsystem.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
