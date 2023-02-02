@@ -41,11 +41,13 @@ public final class Constants {
 
     // Piston Claw Values
     public static final int[] clawPistonPort = {0, 1, 0}; // Copied from 2022 Rapid React Code (needs to be tested more??)
-    public static final float clawWheelMaxSpeed = 0.50f;
+    public static final double clawWheelForawrdSpeed = 0.50;
+    public static final double clawWheelReverseSpeed = -0.50;
+
 
 
     // Pivoting Arm Angles
-    public static final int[] armAngles = {15, 30, 45, 90};
+    public static final int[] armAngles = {0, 30, 45, 90};
 
     // Conversion Factors
     public static final double ticksToDegrees = 0.087890625;

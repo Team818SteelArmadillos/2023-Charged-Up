@@ -6,7 +6,9 @@ import frc.robot.Constants;
 
 public class ClawWheelCommand extends CommandBase {
 
-  public ClawWheelCommand() {
+  int _state;
+  public ClawWheelCommand(int state) {
+    _state = state;
   }
 
   // Called when the command is initially scheduled.
@@ -17,7 +19,11 @@ public class ClawWheelCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ClawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelMaxSpeed);
+    if (_state == 0) {
+      ClawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelForawrdSpeed);
+    } else if (_state == 1) {
+      ClawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelReverseSpeed);
+    }
   }
 
   // Called once the command ends or is interrupted.
