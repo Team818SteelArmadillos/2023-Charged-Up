@@ -48,22 +48,22 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Bumpers (R1, R2, L1, L2)
-    if ( OI.getOperator().getRightBumper() ) { m_ClawCommand.schedule(); }
+    if ( OI.getOperator().getRightBumper() ) { m_ClawCommand.schedule(); } // R1
     
-    if ( OI.getOperator().getRightTriggerAxis() >= 0.01) {  }
+    if ( OI.getOperator().getRightTriggerAxis() >= 0.01) {  } // R2
 
-    if ( OI.getOperator().getLeftBumper() ) {  }
+    if ( OI.getOperator().getLeftBumper() ) {  } // L1
   
-    if ( OI.getOperator().getLeftTriggerAxis() >= 0.01 ) {  }
+    if ( OI.getOperator().getLeftTriggerAxis() >= 0.01 ) {  } // L2
     
     // A, B, X, Y Buttons
-    if ( OI.getOperator().getAButtonPressed() ) {  }
+    if ( OI.getOperator().getAButtonPressed() ) {  } // A
 
-    if ( OI.getOperator().getBButtonPressed() ) {  }
+    if ( OI.getOperator().getBButtonPressed() ) {  } // B
     
-    if ( OI.getOperator().getXButtonPressed() ) {  }
+    if ( OI.getOperator().getXButtonPressed() ) {  } // X
 
-    if ( OI.getOperator().getYButtonPressed() ) {  }
+    if ( OI.getOperator().getYButtonPressed() ) {  } // Y
     
     // DPAD ?
   }
