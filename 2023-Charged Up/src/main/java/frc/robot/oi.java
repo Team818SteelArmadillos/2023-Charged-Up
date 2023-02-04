@@ -6,12 +6,11 @@ package frc.robot;
 
 //Imports
 import edu.wpi.first.wpilibj.XboxController;
-
 import static frc.robot.Constants.oi.*;
 
 public class oi {
   //defines GamePad
-  XboxController gamePadOperator, gamePadDriver;
+  public XboxController gamePadOperator, gamePadDriver;
 
   public oi() {
     
