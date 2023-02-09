@@ -1,182 +1,211 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
+/**
+ * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants should be declared
+ * globally (i.e. public static). Do not put anything functional in this class.
+ *
+ * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * constants are needed, to reduce verbosity.
+ */
 public final class Constants {
 
-  
+   /*============================
+               Swerve 
+    ==============================*/
+
+    /* CAN IDs */
+    public static final int BACK_LEFT_DRIVE = 6; //Josh
+    public static final int BACK_LEFT_ENCODER = 2; //Gary 
+    public static final int BACK_LEFT_AZIMUTH = 2 ; //Tracy
+
+    public static final int BACK_RIGHT_DRIVE = 7; //Happy
+    public static final int BACK_RIGHT_ENCODER = 3; //Bre
+    public static final int BACK_RIGHT_AZIMUTH = 3; //Samuel
+
+    public static final int FRONT_RIGHT_DRIVE = 4; //Keith
+    public static final int FRONT_RIGHT_ENCODER = 10; //Freddy Mercury
+    public static final int FRONT_RIGHT_AZIMUTH = 10; //Beth
+
+    public static final int FRONT_LEFT_DRIVE = 5; //Chad
+    public static final int FRONT_LEFT_ENCODER = 1; //Jonathan 
+    public static final int FRONT_LEFT_AZIMUTH = 1; //Geraldine
+
+    public static final int PIGEON = 0;
+
+    /* CANCoder offsets */
+    public static double FRONT_LEFT_OFFSET = 0; // -158
+    public static double FRONT_RIGHT_OFFSET = 0; // -286
+    public static double BACK_LEFT_OFFSET = 0; // -90
+    public static double BACK_RIGHT_OFFSET = 0; // -197
+
+    public static double FRONT_LEFT_MULTIPLIER = 1; // 
+    public static double FRONT_RIGHT_MULTIPLIER = 1; // 
+    public static double BACK_LEFT_MULTIPLIER = 1; // 
+    public static double BACK_RIGHT_MULTIPLIER = 1; // 
+
+    
+
+    /* Azimuth reversed */
+    public static boolean FRONT_LEFT_AZIMUTH_REVERSED = false;
+    public static boolean FRONT_RIGHT_AZIMUTH_REVERSED = false;
+    public static boolean BACK_LEFT_AZIMUTH_REVERSED = false;
+    public static boolean BACK_RIGHT_AZIMUTH_REVERSED = false;
+
+    /* Drive motors reversed */
+    public static boolean FRONT_LEFT_DRIVE_REVERSED = true;
+    public static boolean FRONT_RIGHT_DRIVE_REVERSED = true;
+    public static boolean BACK_LEFT_DRIVE_REVERSED = true;
+    public static boolean BACK_RIGHT_DRIVE_REVERSED = true;
+
+    /* CANCoders reversed */
+    public static boolean FRONT_LEFT_CANCODER_REVERSED = false;
+    public static boolean FRONT_RIGHT_CANCODER_REVERSED = false;
+    public static boolean BACK_LEFT_CANCODER_REVERSED = false;
+    public static boolean BACK_RIGHT_CANCODER_REVERSED = false;
+
+    /* Gyro reversed */
+    public static final boolean INVERT_GYRO = false;
+
+    /* Encoder Ticks per Revolution */
+    public static final int AZIMUTH_TICKS_PER_REVOLUTION = 4096;
+
+    /* Angle Motor PID Values */
+    public static final double AZIMUTH_P = 1;
+    public static final double AZIMUTH_I = 0.0;
+    public static final double AZIMUTH_D = 0.0;
+    public static final double AZIMUTH_F = 0.0;
+
+    /* Drive Motor PID Values */
+    public static final double DRIVE_P = 0.0; 
+    public static final double DRIVE_I = 0.0;
+    public static final double DRIVE_D = 0.0;
+    public static final double DRIVE_F = 0.0;
+
+    /* Drive Motor Characterization Values */
+    public static final double DRIVE_S = (0.48665 / 12); //Values from SysId divided by 12 to convert to volts for CTRE
+    public static final double DRIVE_V = (2.4132 / 12);
+    public static final double DRIVE_A = (0.06921 / 12);
+
+    /* Azimuth Current Limiting */
+    public static final int AZIMUTH_CONTINUOUS_CURRENT_LIMIT = 25; // amps
+    public static final int AZIMUTH_PEAK_CURRENT_LIMIT = 40; // amps
+    public static final int AZIMUTH_PEAK_CURRENT_DURATION = 100; // milliseconds
+    public static final boolean AZIMUTH_ENABLE_CURRENT_LIMIT = true;
+
+    /* Drive Current Limiting */
+    public static final int DRIVE_CONTINUOUS_CURRENT_LIMIT = 35; // amps
+    public static final int DRIVE_PEAK_CURRENT_LIMIT = 60; // amps
+    public static final int DRIVE_PEAK_CURRENT_DURATION = 100; // milliseconds
+    public static final boolean DRIVE_ENABLE_CURRENT_LIMIT = true;
+
+    /* Neutral Modes */
+    public static final NeutralMode AZIMUTH_NEUTRAL_MODE = NeutralMode.Coast ;
+    public static final NeutralMode DRIVE_NEUTRAL_MODE = NeutralMode.Brake;
+
+    /* Swerve Gear Ratios */
+    public static final double DRIVE_GEAR_RATIO = (6.67 / 1.0); //6.86:1 from SDS
+    public static final double AZIMUTH_GEAR_RATIO = 1/1;//(12.8 / 1.0); //12.8:1 from SDS
+
+    /* Swerve Profiling Values */
+    public static final double MAX_SPEED = (Units.feetToMeters(10)); //meters per second (theoretical from SDS) TBD CHANGED
+    public static final double MAX_ANGULAR_VELOCITY = Math.PI * 4.12; //radians per second (theoretical calculation)
+    public static final double TURN_IN_PLACE_SPEED = 0.5;
+    public static final double A_RATE_LIMITER = 2.0; //Slew Rate Limiter Constant
+
+    /* Auto Swerve profiling */
+    public static final double AUTO_MAX_SPEED = Units.feetToMeters(4.9);
+    public static final double AUTO_MAX_ACCELERATION_MPS_SQUARED = 3;
+    public static final double AUTO_P_X_CONTROLLER = 0.1; 
+    public static final double AUTO_P_Y_CONTROLLER = 1.4884;
+    public static final double AUTO_P_THETA_CONTROLLER = 2.8;
+    public static final double FOUR_BALL_MAX_SPEED = Units.feetToMeters(12.0);
+    public static final double FOUR_BALL_MAX_ACCELERATION = 5;
+    public static final double WACK_MAX_SPEED = Units.feetToMeters(15.0);
+    public static final double WACK_MAX_ACCELERATION = 5;
+    
+    /* Constraint for the motion profilied robot angle controller */
+    public static final TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS =
+        new TrapezoidProfile.Constraints(
+            Math.PI, (Math.PI * Math.PI));
 
 
-  public static final boolean kGyroReversed = false;
+    /*============================
+               Kinematics
+    ==============================*/
 
-  public static class oi{
-    //Gamepad ports
-    public static final int gamePadDriverPort = 0;
-    public static final int gamePadOperatorPort = 1;
+    public static final double DRIVETRAIN_WIDTH = Units.inchesToMeters(24.5);
+    public static final double DRIVETRAIN_LENGTH = Units.inchesToMeters(25.5);
+    public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
+    public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
+
+    public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
+        new Translation2d(DRIVETRAIN_LENGTH / 2.0, DRIVETRAIN_WIDTH / 2.0),
+        new Translation2d(DRIVETRAIN_LENGTH / 2.0, -DRIVETRAIN_WIDTH / 2.0),
+        new Translation2d(-DRIVETRAIN_LENGTH / 2.0, DRIVETRAIN_WIDTH / 2.0),
+        new Translation2d(-DRIVETRAIN_LENGTH / 2.0, -DRIVETRAIN_WIDTH / 2.0));
+
+
+    /*============================
+                Misc.
+    ==============================*/
+
+    public static final double OPEN_LOOP_RAMP = 0.25;
+    public static final double CLOSED_LOOP_RAMP = 0.0;
+
+     /* CTRE Configs */
+     public static final int FEEDER_CONTINUOUS_CURRENT_LIMIT = 15;
+     public static final int FEEDER_PEAK_CURRENT_LIMIT = 20;
+     public static final double FEEDER_PEAK_CURRENT_DURATION = 0.1;
+     public static final boolean FEEDER_ENABLE_CURRENT_LIMIT = true;
+ 
+     /* Feeder neutral mode */
+    public static final NeutralMode FEEDER_NEUTRAL_MODE = NeutralMode.Brake;
+
+    /* Feeder PID */
+    public static final double FEEDER_P = 0.01;
+    public static final double FEEDER_I = 0.0;
+    public static final double FEEDER_D = 0.4;
+    public static final double FEEDER_F = 0.046;
+
+    /* Inversions */
+    public static final boolean INVERT_FEEDER = false;
+
+    /* Feeder Constants */
+    public static final double TARGET_FEEDER_RPM = 3000;
+    public static final double FEEDER_PERCENT_OUTPUT = 0.9;
+
+     /*============================
+         Controller Constants
+    ==============================*/
+
+    /* Controller Constants */
+    public static final double STICK_DEADBAND = 0.1;
+    public static final int DRIVER_PORT = 0;
+    public static final int OPERATOR_PORT = 1;
+    public static final int TEST_PORT = 5;
+    public static final double OP_RUMBLE_PERCENT = 0.4;
+    public static final double DRIVER_RUMBLE_PERCENT = 0.4;
+    public static final RumbleType DRIVER_RUMBLE_LEFT = RumbleType.kLeftRumble;
+    public static final RumbleType OP_RUMBLE_LEFT = RumbleType.kLeftRumble;
+    public static final RumbleType DRIVER_RUMBLE_RIGHT = RumbleType.kRightRumble;
+    public static final RumbleType OP_RUMBLE_RIGHT = RumbleType.kRightRumble;
+    public static final double DRIVING_INTAKE_RUMBLE = 0.3;
+
+
+  public static class OperatorConstants {
+    public static final int kDriverControllerPort = 0;
   }
-  
-  public static final class ModuleConstants {
-
-    public static final double kDriveGearRatio = 6.67;
-
-    public static final double kPModuleTurnController = 8.1; //8.3 // TUNE: 8.2142
-    public static final double kIModuleTurnController = 0; // DO NOT USE
-    public static final double kDModuleTurnController = 0; // TUNE
-
-    public static final double kMaxModuleAngularSpeedRadiansPerSecond = 3 * Math.PI;
-    public static final double kMaxModuleAngularAccelerationRadiansPerSecondSquared = 6 * Math.PI;
-
-    public static final double kPModuleDriveController = 1; // TUNE
-    public static final double kIModuleDriveController = 0; // DO NOT USE
-    public static final double kDModuleDriveController = 0;
-
-
-    public static final int kDriveFXEncoderCPR = 360;
-    public static final int kTurningCANcoderCPR = 2048;
-    public static final double kWheelDiameterMeters = 0.1016; // 4 inches
-    public static final double kWheelCircumferenceMeters = 
-        kWheelDiameterMeters * Math.PI; // C = D * pi
-    public static final double kDrivetoMetersPerSecond =
-        (10 * kWheelCircumferenceMeters) / (kDriveGearRatio * 360);
-
-    public static final int kFrontLeftDriveMotorPort = 18;
-    public static final int kRearLeftDriveMotorPort = 6;
-    public static final int kFrontRightDriveMotorPort = 4;
-    public static final int kRearRightDriveMotorPort = 23;
-    
-    public static final int kFrontLeftTurningMotorPort = 1;
-    public static final int kRearLeftTurningMotorPort = 7;
-    public static final int kFrontRightTurningMotorPort = 3;
-    public static final int kRearRightTurningMotorPort = 25;
-    
-    public static final int kFrontLeftTurningEncoderPort = 22;
-    public static final int kRearLeftTurningEncoderPort = 10;
-    public static final int kFrontRightTurningEncoderPort = 9;
-    public static final int kRearRightTurningEncoderPort = 8;
-    
-    public static final double kFrontLeftAngleZero = 79.45;
-    public static final double kRearLeftAngleZero = 121.38;
-    public static final double kFrontRightAngleZero = -104.68;
-    public static final double kRearRightAngleZero = 23.54;
-    
-    public static final boolean kFrontLeftTurningEncoderReversed = false;
-    public static final boolean kRearLeftTurningEncoderReversed = false;
-    public static final boolean kFrontRightTurningEncoderReversed = false;
-    public static final boolean kRearRightTurningEncoderReversed = false;
-    
-    public static final boolean kFrontLeftDriveEncoderReversed = false;
-    public static final boolean kRearLeftDriveEncoderReversed = false;
-    public static final boolean kFrontRightDriveEncoderReversed = true;
-    public static final boolean kRearRightDriveEncoderReversed = true;
-    
-    public static final double kTrackWidth = 0.5969;
-    // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = 0.6223;
-    // Distance between front and back wheels on robot
-    public static final SwerveDriveKinematics swerveKinematics =
-        new SwerveDriveKinematics(
-            new Translation2d(kWheelBase / 0.6223, kTrackWidth / 0.5969),
-            new Translation2d(kWheelBase / 0.6223, -kTrackWidth / 0.5969),
-            new Translation2d(-kWheelBase / 0.6223, kTrackWidth / 0.5969),
-            new Translation2d(-kWheelBase / 0.6223, -kTrackWidth / 0.5969));
-    
-    public static final boolean kGyroReversed = false;
-  }
-
-  public static class DriveConstants {
-    public static final int FRONTRIGHTDRIVEMOTOR = 1;
-    public static final int FRONTLEFTDRIVEMOTOR = 2;
-    public static final int BACKRIGHTDRIVEMOTOR = 3;
-    public static final int BACKLEFTDRIVEMOTOR = 4;
-    public static final int BACKUPDRIVEMOTOR = 5;
-
-
-    public static final int FRONTRIGHTTURNMOTOR = 6;
-    public static final int FRONTLEFTTURNMOTOR = 7;
-    public static final int BACKRIGHTTURNMOTOR = 8;
-    public static final int BACKLEFTTURNMOTOR = 9;
-    public static final int BACKUPTURNMOTOR = 10;
-
-    public static final int FRONTRIGHTENCODER = 11;
-    public static final int FRONTLEFTENCODER = 12;
-    public static final int BACKRIGHTENCODER = 13;
-    public static final int BACKLEFTENCODER = 14;
-    
-
-    public static final int PIGEONPORT = 0;
-
-    public static final double GEARRATIO = 6.67;
-    public static final int WHEELDIAMETER = 4;
-    public static final double WHEELCIRCUMFERENCE = WHEELDIAMETER * Math.PI;
-    public static final int PULSEPERREVOLUTION  = 2048;
-    public static final double DISTANCEPERPULSE = WHEELCIRCUMFERENCE / PULSEPERREVOLUTION;
-    public static final int VELOCITYCALCULATIONPERSECOND = 10;
-
-    public static final double kTrackWidth = 0.5969;
-    // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = 0.6223;
-    // Distance between front and back wheels on robot
-    public static final SwerveDriveKinematics swerveKinematics =
-        new SwerveDriveKinematics(
-            new Translation2d(kWheelBase / 0.6223, kTrackWidth / 0.5969),
-            new Translation2d(kWheelBase / 0.6223, -kTrackWidth / 0.5969),
-            new Translation2d(-kWheelBase / 0.6223, kTrackWidth / 0.5969),
-            new Translation2d(-kWheelBase / 0.6223, -kTrackWidth / 0.5969));
-
-    public static final boolean kGyroReversed = false;
-
-
-    public static double degreesToFalcon(double degrees) {
-      double ticks = degrees/ (360.0/ (GEARRATIO * 2048.0));
-      return ticks;
-    }
-    
-    public static double falconToDegrees(double counts){
-      //return (counts * (360.0 / PULSEPERREVOLUTION))%360;
-      return (360 / (GEARRATIO * 2048.0)) * counts;
-    }
-
-    public static double falconToRPM(double velocityCounts) {
-
-      double motorRPM = velocityCounts * (600.0 / 2048.0);        
-      double mechRPM = motorRPM / GEARRATIO;
-      return mechRPM;
-
-    }
-
-      public static double falconToMPS(double velocitycounts, double circumference){
-        return falconToRPM(velocitycounts) * circumference / 60;
-    }
-  }
-
-  public static double falconToRPM(double velocityCounts, double gearRatio) {
-
-    double motorRPM = velocityCounts * (600.0 / 2048.0);        
-    double mechRPM = motorRPM / gearRatio;
-    return mechRPM;
-
 }
-
-  public static double falconToMPS(double velocitycounts, double circumference, double gearRatio){
-
-    double wheelRPM = falconToRPM(velocitycounts, gearRatio);
-    double wheelMPS = (wheelRPM * circumference) / 60;
-    return wheelMPS;
-
-}
-
-
-  public static double rpmToFalcon(double RPM, double gearRatio){
-    double motorRPM = RPM * gearRatio;
-    double sensorCounts = motorRPM * (2048.0/ 600.0);
-    return sensorCounts;
-  }
-
-
-  public static double mpsToFalcon(double velocity, double circumference, double gearRatio){
-    double wheelRPM = ((velocity * 60) / circumference);
-    double wheelVelocity = rpmToFalcon(wheelRPM, gearRatio);
-    return wheelVelocity;
-  }
-} 
