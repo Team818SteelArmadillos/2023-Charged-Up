@@ -81,6 +81,9 @@ public final class Constants {
 
     /* Encoder Ticks per Revolution */
     public static final int AZIMUTH_TICKS_PER_REVOLUTION = 4096;
+    public static final int DRIVE_TICKS_PER_REVOLUTION = 4096;
+    public static final double CODE_LOOPS_PER_MIN = 600.0;
+
 
     /* Angle Motor PID Values */
     public static final double AZIMUTH_P = 1;
@@ -164,28 +167,6 @@ public final class Constants {
 
     public static final double OPEN_LOOP_RAMP = 0.25;
     public static final double CLOSED_LOOP_RAMP = 0.0;
-
-     /* CTRE Configs */
-     public static final int FEEDER_CONTINUOUS_CURRENT_LIMIT = 15;
-     public static final int FEEDER_PEAK_CURRENT_LIMIT = 20;
-     public static final double FEEDER_PEAK_CURRENT_DURATION = 0.1;
-     public static final boolean FEEDER_ENABLE_CURRENT_LIMIT = true;
- 
-     /* Feeder neutral mode */
-    public static final NeutralMode FEEDER_NEUTRAL_MODE = NeutralMode.Brake;
-
-    /* Feeder PID */
-    public static final double FEEDER_P = 0.01;
-    public static final double FEEDER_I = 0.0;
-    public static final double FEEDER_D = 0.4;
-    public static final double FEEDER_F = 0.046;
-
-    /* Inversions */
-    public static final boolean INVERT_FEEDER = false;
-
-    /* Feeder Constants */
-    public static final double TARGET_FEEDER_RPM = 3000;
-    public static final double FEEDER_PERCENT_OUTPUT = 0.9;
 
      /*============================
          Controller Constants

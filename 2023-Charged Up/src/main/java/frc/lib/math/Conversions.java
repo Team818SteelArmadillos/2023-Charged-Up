@@ -24,7 +24,7 @@ public class Conversions {
 
     public static double falconToDegrees(double counts, double gearRatio) {
 
-        return counts * (360.0 / (gearRatio * 4096.0));
+        return counts * (360.0 / (gearRatio * Constants.AZIMUTH_TICKS_PER_REVOLUTION));
 
     }
 
@@ -40,7 +40,7 @@ public class Conversions {
 
     public static double degreesToFalcon(double degrees, double gearRatio) {
 
-        double ticks =  degrees / (360.0 / (gearRatio * 4096.0));
+        double ticks =  degrees / (360.0 / (gearRatio * Constants.AZIMUTH_TICKS_PER_REVOLUTION));
         return ticks;
 
     }
@@ -57,7 +57,7 @@ public class Conversions {
 
     public static double falconToRPM(double velocityCounts, double gearRatio) {
 
-        double motorRPM = velocityCounts * (600.0 / 2048.0);        
+        double motorRPM = velocityCounts * (Constants.CODE_LOOPS_PER_MIN / Constants.DRIVE_TICKS_PER_REVOLUTION);        
         double mechRPM = motorRPM / gearRatio;
         return mechRPM;
 
@@ -76,7 +76,7 @@ public class Conversions {
     public static double RPMToFalcon(double RPM, double gearRatio) {
 
         double motorRPM = RPM * gearRatio;
-        double sensorCounts = motorRPM * (2048.0 / 600.0);
+        double sensorCounts = motorRPM * (Constants.DRIVE_TICKS_PER_REVOLUTION / 600.0); 
         return sensorCounts;
 
     }
