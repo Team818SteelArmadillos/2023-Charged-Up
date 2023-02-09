@@ -50,6 +50,8 @@ public class SwerveDriveCommand extends CommandBase {
     Robot.m_SwerveDriveSubsystem.zeroModules();
     Robot.m_SwerveDriveSubsystem.resetOdometry(new Pose2d());
     Robot.m_SwerveDriveSubsystem.resetGyro();
+    Robot.m_SwerveDriveSubsystem.logData();
+   // Robot.m_swerveModuleSubsystem.logData();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

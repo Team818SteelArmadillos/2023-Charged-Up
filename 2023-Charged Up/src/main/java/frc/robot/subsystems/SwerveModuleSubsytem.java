@@ -15,6 +15,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.CTREModuleState;
 import frc.robot.Constants;
@@ -126,6 +127,10 @@ public class SwerveModuleSubsytem extends SubsystemBase {
     public void moduleNumber(){
       return ;
     }
+    public void logData(){
+      SmartDashboard.putNumber("Drive Encoders", getDriveEncoder());
+      SmartDashboard.putNumber("Last Angle", m_lastAngle);  
+    }
   }
   /** Creates a new SwerveModuleSubsytem. */
   public SwerveModuleSubsytem() {
@@ -136,6 +141,7 @@ public class SwerveModuleSubsytem extends SubsystemBase {
     backrightSM = new SwerveModule(3, 7, 3, 0, 0, true, true, true, 6, 7);
     
   }
+  
 
   
 
