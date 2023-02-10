@@ -57,5 +57,5 @@ public final class Constants {
     Multiply given ticks by this constant */
 
     // Neo 550 Motor Stuff
-    public static final int neoAmpLimit = 20;
+    public static final int neoAmpLimit = 20 /*AMPs*/; // Cannot forget units!
 }
