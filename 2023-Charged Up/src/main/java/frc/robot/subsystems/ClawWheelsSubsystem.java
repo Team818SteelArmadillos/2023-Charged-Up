@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -18,7 +16,7 @@ public class ClawWheelsSubsystem extends SubsystemBase {
         // motor stuff
         cwm1 = new CANSparkMax(Constants.clawWheelMotorPort[0], MotorType.kBrushless);
         cwm2 = new CANSparkMax(Constants.clawWheelMotorPort[1], MotorType.kBrushless);
-
+        
         cwm1.setSmartCurrentLimit(Constants.neoAmpLimit);
         cwm2.setSmartCurrentLimit(Constants.neoAmpLimit);
         

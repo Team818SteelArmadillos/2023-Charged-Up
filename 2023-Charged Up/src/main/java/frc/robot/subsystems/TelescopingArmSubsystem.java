@@ -31,7 +31,7 @@ public class TelescopingArmSubsystem extends SubsystemBase {
 
     public static void setArmLength(double setpointLength) {
         //must calculate current length
-        currentLength = Constants.minArmLength + ( encoder.getRaw() * Constants.ticksToFeet );    
+        currentLength = Constants.armLengths[0] + ( encoder.getRaw() * Constants.ticksToFeet );    
         tm.set(ControlMode.PercentOutput, PID.calculate(currentLength, setpointLength));
     }
     

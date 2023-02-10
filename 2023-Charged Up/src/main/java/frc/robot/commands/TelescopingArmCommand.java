@@ -22,10 +22,11 @@ public class TelescopingArmCommand extends CommandBase {
     @Override
     public void execute() {
         switch (_state) {
-            case 0: TelescopingArmSubsystem.setArmLength(0); break;
-            case 1: TelescopingArmSubsystem.setArmLength(Constants.minArmLength); break;
-            case 2: TelescopingArmSubsystem.setArmLength(Constants.midArmLength); break;
-            case 3: TelescopingArmSubsystem.setArmLength(Constants.maxArmLength); break;		
+            case 0: TelescopingArmSubsystem.setArmLength(Constants.armLengths[0]); break;
+            case 1: TelescopingArmSubsystem.setArmLength(Constants.armLengths[1]); break;
+            case 2: TelescopingArmSubsystem.setArmLength(Constants.armLengths[2]); break;
+            case 3: TelescopingArmSubsystem.setArmLength(Constants.armLengths[3]); break;
+            case 4: TelescopingArmSubsystem.setArmLength(Constants.armLengths[4]); break;		
             default: break;
         }
     }

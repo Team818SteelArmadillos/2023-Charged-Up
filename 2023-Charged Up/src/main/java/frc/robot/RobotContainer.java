@@ -4,11 +4,8 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 
 /**
@@ -24,8 +21,11 @@ public class RobotContainer {
 
   //private final DriveTrainCommand m_autoCommand = new DriveTrainCommand();
   
+  //tank drive command instance
+  private final static DriveTrainCommand m_DriveTrainCommand = new DriveTrainCommand();
+  
   //ClawCommand instances
-  private final ClawCommand m_ClawCommand = new ClawCommand();
+  private final static ClawCommand m_ClawCommand = new ClawCommand();
 
   //ClawWheelCommand instances
   private final ClawWheelCommand m_ClawWheelForwardCommand = new ClawWheelCommand(0);
@@ -35,13 +35,15 @@ public class RobotContainer {
   private final TelescopingArmCommand m_TelescopingArmZeroCommand = new TelescopingArmCommand(0);
   private final TelescopingArmCommand m_TelescopingArmLowCommand = new TelescopingArmCommand(1);
   private final TelescopingArmCommand m_TelescopingArmMediumCommand = new TelescopingArmCommand(2);
-  private final TelescopingArmCommand m_TelescopingArmHighCommand = new TelescopingArmCommand(3);
+  private final TelescopingArmCommand m_TelescopingGrabHighCommand = new TelescopingArmCommand(3);
+  private final TelescopingArmCommand m_TelescopingArmHighCommand = new TelescopingArmCommand(4);
   
   //PivotingArmCommand instances for different arm angles
-  private final PivotingArmCommand m_PivotingArmGroundCommand = new PivotingArmCommand(0); // Sets angle to 15 deg
-  private final PivotingArmCommand m_PivotingArmMediumCommand = new PivotingArmCommand(1); // sets angle to 45 deg
-  private final PivotingArmCommand m_PivotingArmHighCommand = new PivotingArmCommand(2); // sets angle to 90 dm_eg
-  private final PivotingArmCommand m_PivotingArmRestingCommand = new PivotingArmCommand(3); // Sets angle to 30 deg
+  private final PivotingArmCommand m_PivotingArmGroundCommand = new PivotingArmCommand(0); // Sets angle to 0 deg
+  private final PivotingArmCommand m_PivotingArmMediumCommand = new PivotingArmCommand(1); // sets angle to 30 deg
+  private final PivotingArmCommand m_PivotingArmHighCommand = new PivotingArmCommand(2); // sets angle to 45 dm_eg
+  private final PivotingArmCommand m_PivotingGrabHighCommand = new PivotingArmCommand(3); // sets angle to 45 dm_eg
+  private final PivotingArmCommand m_PivotingArmRestingCommand = new PivotingArmCommand(4); // Sets angle to 90 deg
   
   public RobotContainer() {
     configureButtonBindings();
@@ -63,11 +65,23 @@ public class RobotContainer {
 
     if ( OI.getOperator().getBButtonPressed() ) { Commands.parallel(m_PivotingArmMediumCommand, m_TelescopingArmMediumCommand); } // B
     
-    if ( OI.getOperator().getXButtonPressed() ) {  } // X
+    if ( OI.getOperator().getXButtonPressed() ) { Commands.parallel(m_PivotingGrabHighCommand, m_TelescopingGrabHighCommand); } // X
 
     if ( OI.getOperator().getYButtonPressed() ) { Commands.parallel(m_PivotingArmHighCommand, m_TelescopingArmHighCommand); } // Y
     
     // DPAD ?
   }
 
+  public static Command getAutonInit() {
+    return m_ClawCommand;
+  }
+  
+  public static Command getAutonPeriodic() {
+    return m_ClawCommand;
+  }
+
+  public static Command getDriveTrainCommand() {
+    return m_DriveTrainCommand;
+  }
+  
 }

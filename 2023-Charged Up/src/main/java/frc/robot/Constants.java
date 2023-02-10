@@ -15,6 +15,10 @@ package frc.robot;
 
 public final class Constants {
 
+    //Drive Ports
+    public static final int[] MOTOR_PORTS_RIGHT = {1, 2};
+    public static final int[] MOTOR_PORTS_LEFT = {3, 4};
+    
     // Controller Ports
     public static final int driverControllerPort = 1;
     public static final int operatorControllerPort = 2;
@@ -30,9 +34,7 @@ public final class Constants {
     public static final double pivotD = 1;
 
     //Telescoping Values
-    public static final double minArmLength = 0;
-    public static final double midArmLength = 0;
-    public static final double maxArmLength = 0;
+    public static final double armLengths[] = {0, 0, 0, 0, 0};
 
     public static final double ticksToFeet = 0;
     public static final double tP = 0.5;
@@ -47,7 +49,7 @@ public final class Constants {
 
 
     // Pivoting Arm Angles
-    public static final int[] armAngles = {0, 30, 45, 90};
+    public static final int[] armAngles = {0, 30, 45, 67, 90};
 
     // Conversion Factors
     public static final double ticksToDegrees = 0.087890625;
