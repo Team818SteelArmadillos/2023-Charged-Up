@@ -177,7 +177,6 @@ public final class Constants {
     /* Controller Constants */
     public static final double STICK_DEADBAND = 0.1;
     public static final int DRIVER_PORT = 0;
-    public static final int OPERATOR_PORT = 1;
     public static final int TEST_PORT = 5;
     public static final double OP_RUMBLE_PERCENT = 0.4;
     public static final double DRIVER_RUMBLE_PERCENT = 0.4;
@@ -190,11 +189,8 @@ public final class Constants {
 
 
     //Drive Ports
-    public static final int[] MOTOR_PORTS_RIGHT = {1, 2};
-    public static final int[] MOTOR_PORTS_LEFT = {3, 4};
     
     // Controller Ports
-    public static final int driverControllerPort = 1;
     public static final int operatorControllerPort = 2;
     
     // Arm Motor Ports

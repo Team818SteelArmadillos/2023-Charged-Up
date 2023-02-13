@@ -9,7 +9,6 @@ public class OI {
 
     //public OI () 
     static {
-      driveController = new XboxController(Constants.driverControllerPort);
       operatorController = new XboxController(Constants.operatorControllerPort);
     }
 

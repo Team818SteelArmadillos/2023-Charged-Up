@@ -106,7 +106,6 @@ public class RobotContainer {
 
   /* Controllers */
   private final XboxController m_driverController = new XboxController(Constants.DRIVER_PORT);
-  private final XboxController m_opController = new XboxController(Constants.OPERATOR_PORT);
 
   /* Drive Axes */
   private final int m_translationAxis = XboxController.Axis.kLeftY.value;
