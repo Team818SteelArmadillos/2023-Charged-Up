@@ -21,9 +21,6 @@ public class RobotContainer {
 
   //private final DriveTrainCommand m_autoCommand = new DriveTrainCommand();
   
-  //tank drive command instance
-  public final DriveTrainCommand m_DriveTrainCommand = new DriveTrainCommand();
-  
   //ClawCommand instances
   public final ClawCommand m_ClawCommand = new ClawCommand();
 

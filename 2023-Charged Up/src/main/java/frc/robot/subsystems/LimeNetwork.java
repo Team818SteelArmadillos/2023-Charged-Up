@@ -37,6 +37,21 @@ public class LimeNetwork extends SubsystemBase {
     area = ta.getDouble(0.0);
   }
 
+  public static double getTX() {
+    updateValues();
+    return x;
+  }
+  
+  public static double getTY() {
+    updateValues();
+    return y;
+  }
+
+  public static double getTA() {
+    updateValues();
+    return area;
+  }
+
   public static double[] values() {
     updateValues();
     double[] values = {x, y, area};
