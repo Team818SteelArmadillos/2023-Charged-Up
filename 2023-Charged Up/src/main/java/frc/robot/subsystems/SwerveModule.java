@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
@@ -19,8 +19,8 @@ public class SwerveModule {
     public int m_moduleNumber;
     private double m_offset;
     private double m_coeff;
-    private TalonSRX m_azimuthMotor;
-    private TalonSRX m_driveMotor;
+    private TalonFX m_azimuthMotor;
+    private TalonFX m_driveMotor;
     private CANCoder m_canCoder;
     private double m_lastAngle;
     private boolean m_turningInverted;
@@ -53,8 +53,8 @@ public class SwerveModule {
         m_coeff = encoderCoeff;
 
         m_canCoder = new CANCoder(canCoder);
-        m_azimuthMotor = new TalonSRX(azimuthMotor);
-        m_driveMotor = new TalonSRX(driveMotor);
+        m_azimuthMotor = new TalonFX(azimuthMotor);
+        m_driveMotor = new TalonFX(driveMotor);
 
         configCanCoder();
         configTurningMotor();
@@ -128,7 +128,7 @@ public class SwerveModule {
 
     private void configTurningMotor() {
         m_azimuthMotor.configFactoryDefault();
-        m_azimuthMotor.configAllSettings(Robot.ctreConfigs.swerveAngleSRXConfig);
+        m_azimuthMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
         m_azimuthMotor.setInverted(m_turningInverted);
         m_azimuthMotor.setNeutralMode(Constants.AZIMUTH_NEUTRAL_MODE);
         resetToAbsolute();
@@ -145,7 +145,7 @@ public class SwerveModule {
 
     private void configDriveMotor() {        
         m_driveMotor.configFactoryDefault();
-        m_driveMotor.configAllSettings(Robot.ctreConfigs.swerveDriveSRXConfig);
+        m_driveMotor.configAllSettings(Robot.ctreConfigs.swerveDriveFXConfig);
         m_driveMotor.setInverted(m_driveInverted);
         m_driveMotor.setNeutralMode(Constants.DRIVE_NEUTRAL_MODE);
         m_driveMotor.setSelectedSensorPosition(0);

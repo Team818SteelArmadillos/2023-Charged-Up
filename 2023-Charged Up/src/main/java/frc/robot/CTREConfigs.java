@@ -11,8 +11,8 @@ import com.ctre.phoenix.sensors.SensorTimeBase;
 
 public final class CTREConfigs {
 
-    public TalonSRXConfiguration swerveAngleSRXConfig;
-    public TalonSRXConfiguration swerveDriveSRXConfig;
+    public TalonFXConfiguration swerveAngleFXConfig;
+    public TalonFXConfiguration swerveDriveFXConfig;
     public CANCoderConfiguration swerveCanCoderConfig;
     public PigeonIMUConfiguration swervePigeonConfig;
     public static TalonFXConfiguration feederFXConfig;
@@ -22,8 +22,8 @@ public final class CTREConfigs {
 
 
     public CTREConfigs(){
-        swerveAngleSRXConfig = new TalonSRXConfiguration();
-        swerveDriveSRXConfig = new TalonSRXConfiguration();
+        swerveAngleFXConfig = new TalonFXConfiguration();
+        swerveDriveFXConfig = new TalonFXConfiguration();
         swerveCanCoderConfig = new CANCoderConfiguration();
         feederFXConfig = new TalonFXConfiguration();
         shooterFXConfig = new TalonFXConfiguration();
@@ -37,15 +37,15 @@ public final class CTREConfigs {
         //     Constants.AZIMUTH_PEAK_CURRENT_LIMIT, 
         //     Constants.AZIMUTH_PEAK_CURRENT_DURATION);
 
-        swerveAngleSRXConfig.slot0.kP = Constants.AZIMUTH_P;
-        swerveAngleSRXConfig.slot0.kI = Constants.AZIMUTH_I;
-        swerveAngleSRXConfig.slot0.kD = Constants.AZIMUTH_D;
-        swerveAngleSRXConfig.slot0.kF = Constants.AZIMUTH_F;
+        swerveAngleFXConfig.slot0.kP = Constants.AZIMUTH_P;
+        swerveAngleFXConfig.slot0.kI = Constants.AZIMUTH_I;
+        swerveAngleFXConfig.slot0.kD = Constants.AZIMUTH_D;
+        swerveAngleFXConfig.slot0.kF = Constants.AZIMUTH_F;
 
         if (Constants.AZIMUTH_ENABLE_CURRENT_LIMIT) {
-            swerveAngleSRXConfig.continuousCurrentLimit = Constants.AZIMUTH_CONTINUOUS_CURRENT_LIMIT;
-            swerveAngleSRXConfig.peakCurrentLimit = Constants.AZIMUTH_PEAK_CURRENT_LIMIT;
-            swerveAngleSRXConfig.peakCurrentDuration = Constants.AZIMUTH_PEAK_CURRENT_DURATION;
+            swerveAngleFXConfig.supplyCurrLimit.currentLimit = Constants.AZIMUTH_CONTINUOUS_CURRENT_LIMIT;
+            swerveAngleFXConfig.supplyCurrLimit.triggerThresholdCurrent = Constants.AZIMUTH_PEAK_CURRENT_LIMIT;
+            swerveAngleFXConfig.supplyCurrLimit.triggerThresholdTime = Constants.AZIMUTH_PEAK_CURRENT_DURATION;
         }
 
         //swerveAngleSRXConfig.continuousCurrentLimit = (int) angleSupplyLimit.currentLimit;
@@ -59,21 +59,21 @@ public final class CTREConfigs {
         //     Constants.DRIVE_PEAK_CURRENT_LIMIT, 
         //     Constants.DRIVE_PEAK_CURRENT_DURATION);
 
-        swerveDriveSRXConfig.slot0.kP = Constants.DRIVE_P;
-        swerveDriveSRXConfig.slot0.kI = Constants.DRIVE_I;
-        swerveDriveSRXConfig.slot0.kD = Constants.DRIVE_D;
-        swerveDriveSRXConfig.slot0.kF = Constants.DRIVE_F;    
+        swerveDriveFXConfig.slot0.kP = Constants.DRIVE_P;
+        swerveDriveFXConfig.slot0.kI = Constants.DRIVE_I;
+        swerveDriveFXConfig.slot0.kD = Constants.DRIVE_D;
+        swerveDriveFXConfig.slot0.kF = Constants.DRIVE_F;    
 
         if (Constants.DRIVE_ENABLE_CURRENT_LIMIT) {
-            swerveDriveSRXConfig.continuousCurrentLimit = Constants.DRIVE_CONTINUOUS_CURRENT_LIMIT;
-            swerveDriveSRXConfig.peakCurrentLimit = Constants.DRIVE_PEAK_CURRENT_LIMIT;
-            swerveDriveSRXConfig.peakCurrentDuration = Constants.DRIVE_PEAK_CURRENT_DURATION;
+            swerveAngleFXConfig.supplyCurrLimit.currentLimit = Constants.DRIVE_CONTINUOUS_CURRENT_LIMIT;
+            swerveAngleFXConfig.supplyCurrLimit.triggerThresholdCurrent = Constants.DRIVE_PEAK_CURRENT_LIMIT;
+            swerveAngleFXConfig.supplyCurrLimit.triggerThresholdTime  = Constants.DRIVE_PEAK_CURRENT_DURATION;
         }
 
 
         //swerveDriveSRXConfig.initializationStrategy = SensorInitializationStrategy.BootToZero;
-        swerveDriveSRXConfig.openloopRamp = Constants.OPEN_LOOP_RAMP;
-        swerveDriveSRXConfig.closedloopRamp = Constants.CLOSED_LOOP_RAMP;
+        swerveDriveFXConfig.openloopRamp = Constants.OPEN_LOOP_RAMP;
+        swerveDriveFXConfig.closedloopRamp = Constants.CLOSED_LOOP_RAMP;
 
         
         /* Swerve CANCoder Configuration */

@@ -120,17 +120,17 @@ public final class Constants {
     public static final NeutralMode DRIVE_NEUTRAL_MODE = NeutralMode.Brake;
 
     /* Swerve Gear Ratios */
-    public static final double DRIVE_GEAR_RATIO = (6.67 / 1.0); //6.86:1 from SDS
+    public static final double DRIVE_GEAR_RATIO = (6.65 / 1.0); //6.86:1 from SDS
     public static final double AZIMUTH_GEAR_RATIO = 1/1;//(12.8 / 1.0); //12.8:1 from SDS
 
     /* Swerve Profiling Values */
-    public static final double MAX_SPEED = (Units.feetToMeters(10)); //meters per second (theoretical from SDS) TBD CHANGED
+    public static final double MAX_SPEED = (Units.feetToMeters(17.01)); //meters per second (theoretical from SDS) TBD CHANGED
     public static final double MAX_ANGULAR_VELOCITY = Math.PI * 4.12; //radians per second (theoretical calculation)
     public static final double TURN_IN_PLACE_SPEED = 0.5;
     public static final double A_RATE_LIMITER = 2.0; //Slew Rate Limiter Constant
 
     /* Auto Swerve profiling */
-    public static final double AUTO_MAX_SPEED = Units.feetToMeters(4.9);
+    public static final double AUTO_MAX_SPEED = Units.feetToMeters(17.01);
     public static final double AUTO_MAX_ACCELERATION_MPS_SQUARED = 3;
     public static final double AUTO_P_X_CONTROLLER = 0.1; 
     public static final double AUTO_P_Y_CONTROLLER = 1.4884;
@@ -150,8 +150,8 @@ public final class Constants {
                Kinematics
     ==============================*/
 
-    public static final double DRIVETRAIN_WIDTH = Units.inchesToMeters(24.5);
-    public static final double DRIVETRAIN_LENGTH = Units.inchesToMeters(25.5);
+    public static final double DRIVETRAIN_WIDTH = Units.inchesToMeters(26);
+    public static final double DRIVETRAIN_LENGTH = Units.inchesToMeters(26);
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
