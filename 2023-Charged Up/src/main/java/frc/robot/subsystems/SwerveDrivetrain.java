@@ -50,7 +50,7 @@ public class SwerveDrivetrain extends SubsystemBase {
                              Constants.FRONT_LEFT_DRIVE_REVERSED,
                              Constants.FRONT_LEFT_CANCODER_REVERSED,
                              Constants.FRONT_LEFT_MULTIPLIER),
-            new SwerveModule(1,
+           new SwerveModule(1,
                              Constants.FRONT_RIGHT_OFFSET,
                              Constants.FRONT_RIGHT_AZIMUTH,
                              Constants.FRONT_RIGHT_DRIVE,
@@ -128,7 +128,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.MAX_SPEED);
         
         for(SwerveModule mod : m_swerveModules){
-            mod.setDesiredState(desiredStates[mod.m_moduleNumber], false);
+            mod.setDesiredState(desiredStates[mod.m_moduleNumber], true); // 
         }
     }
 
