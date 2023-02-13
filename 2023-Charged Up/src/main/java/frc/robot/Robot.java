@@ -18,6 +18,7 @@ public class Robot extends TimedRobot {
 
   //private Command m_autonInit;
   private Command m_autonPeriodic;
+  public static CTREConfigs ctreConfigs;
 
   private RobotContainer m_robotContainer;
 
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    ctreConfigs = new CTREConfigs();
     m_robotContainer = new RobotContainer();
   }
 
@@ -86,7 +88,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    m_robotContainer.m_DriveTrainCommand.schedule();
+   
   }
 
   @Override

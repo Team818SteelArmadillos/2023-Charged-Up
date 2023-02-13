@@ -7,6 +7,17 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.*;
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.commands.SwerveDrive;
+import frc.robot.subsystems.SwerveDrivetrain;
+ 
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -20,9 +31,6 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   //private final DriveTrainCommand m_autoCommand = new DriveTrainCommand();
-  
-  //tank drive command instance
-  public final DriveTrainCommand m_DriveTrainCommand = new DriveTrainCommand();
   
   //ClawCommand instances
   public final ClawCommand m_ClawCommand = new ClawCommand();
@@ -46,10 +54,24 @@ public class RobotContainer {
   public final PivotingArmCommand m_PivotingArmRestingCommand = new PivotingArmCommand(4); // Sets angle to 90 deg
   
   public RobotContainer() {
+
+    /* Set Drive as default command*/
+    boolean fieldRelative = true;
+    boolean openLoop = true;
+    m_swerveDrivetrain.setDefaultCommand(new SwerveDrive(m_swerveDrivetrain, 
+      m_driverController, m_translationAxis, m_strafeAxis, m_rotationAxis, fieldRelative, openLoop));
+    
+      m_swerveDrivetrain.zeroModules();
+    /* Initialize diagnostics subystem */
+    //m_diagnostics = new Diagnostics(m_swerveDrivetrain, m_climber, m_intake, m_feeder, m_shooter, m_actuator);
+    
+    /* Configure the button bindings */
     configureButtonBindings();
   }
 
   private void configureButtonBindings() {
+    
+    m_zeroGyro.onTrue(new InstantCommand(() -> m_swerveDrivetrain.resetGyro()));
 
     // Bumpers (R1, R2, L1, L2)
     if ( OI.getOperator().getRightBumper() ) { m_ClawCommand.schedule(); } // R1
@@ -78,6 +100,47 @@ public class RobotContainer {
   
   public Command getAutonPeriodic() {
     return m_ClawCommand;
+  }
+
+  private static SendableChooser<Command> autoChooser;
+
+  /* Controllers */
+  private final XboxController m_driverController = new XboxController(Constants.DRIVER_PORT);
+  private final XboxController m_opController = new XboxController(Constants.OPERATOR_PORT);
+
+  /* Drive Axes */
+  private final int m_translationAxis = XboxController.Axis.kLeftY.value;
+  private final int m_strafeAxis = XboxController.Axis.kLeftX.value;
+  private final int m_rotationAxis = XboxController.Axis.kRightX.value;
+
+  /* Driver Buttons */
+  private final JoystickButton m_zeroGyro = new JoystickButton(m_driverController, XboxController.Button.kX.value);
+
+
+  /* Subsystems */
+  private final SwerveDrivetrain m_swerveDrivetrain = new SwerveDrivetrain();
+
+
+  /**
+   * Use this method to define your button->command mappings. Buttons can be created by
+   * instantiating a {@link GenericHID} or one of its subclasses ({@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   */
+
+
+  /**
+   * 
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   * 
+   */
+
+  public Command getAutonomousCommand() {
+
+    return autoChooser.getSelected();
+
   }
   
 }
