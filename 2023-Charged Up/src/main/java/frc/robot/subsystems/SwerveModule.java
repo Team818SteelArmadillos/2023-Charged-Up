@@ -51,10 +51,9 @@ public class SwerveModule {
         m_driveInverted = driveInverted;
         m_canCoderInverted = canCoderInverted;
         m_coeff = encoderCoeff;
-
-        m_canCoder = new CANCoder(canCoder);
-        m_azimuthMotor = new TalonFX(azimuthMotor);
-        m_driveMotor = new TalonFX(driveMotor);
+        m_canCoder = new CANCoder(canCoder, Constants.CAN_BUS_DRIVE);
+        m_azimuthMotor = new TalonFX(azimuthMotor, Constants.CAN_BUS_DRIVE);
+        m_driveMotor = new TalonFX(driveMotor, Constants.CAN_BUS_DRIVE);
 
         configCanCoder();
         configTurningMotor();

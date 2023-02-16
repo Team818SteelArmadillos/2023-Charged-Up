@@ -44,6 +44,12 @@ public final class Constants {
     public static final int FRONT_LEFT_ENCODER = 1; //Jonathan 
     public static final int FRONT_LEFT_AZIMUTH = 1; //Geraldine
 
+    public static final int THROUGH_BORE_ENCODER = 10;
+
+    /*Can Bus */
+
+    public static final String CAN_BUS_DRIVE = "CANivore";
+
     public static final int PIGEON = 0;
 
     /* CANCoder offsets */
@@ -185,8 +191,6 @@ public final class Constants {
     public static final RumbleType DRIVER_RUMBLE_RIGHT = RumbleType.kRightRumble;
     public static final RumbleType OP_RUMBLE_RIGHT = RumbleType.kRightRumble;
     public static final double DRIVING_INTAKE_RUMBLE = 0.3;
-
-
 
     //Drive Ports
     
