@@ -12,6 +12,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 
+
 public class SwerveDriveCommand extends CommandBase {
   private double m_rotation;
   private Translation2d m_translation;
@@ -69,7 +70,7 @@ public class SwerveDriveCommand extends CommandBase {
 
         /* Input variables into drive methods */
         m_translation = new Translation2d(yAxisFiltered, xAxisFiltered);//replace the 5 with the max speed constant
-        m_rotation = rAxisSquared * 10 * 10;//replace the 5 with the max angular velocitt constant value
+        m_rotation = rAxisSquared * Constants.MAX_ANGULAR_VELOCITY; //replace the 5 with the max angular velocitt constant value
         m_swerveDriveSubsystem.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
   }
 

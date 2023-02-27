@@ -89,8 +89,7 @@ public final class Constants {
     /* Angle Motor PID Values */
     public static final double AZIMUTH_P = 12.105;
     public static final double AZIMUTH_I = 0.0;
-    public static final double AZIMUTH_D = 20.05
-    ;
+    public static final double AZIMUTH_D = 20.05;
     public static final double AZIMUTH_F = 0.0;
 
     /* Drive Motor PID Values */
