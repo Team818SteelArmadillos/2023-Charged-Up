@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.SwerveDrivetrain;
 
 public class SwerveDriveCommand extends CommandBase {
   private double m_rotation;
@@ -18,7 +18,7 @@ public class SwerveDriveCommand extends CommandBase {
   private boolean m_fieldRelative;
   private boolean m_openLoop;
    
-  private SwerveDriveSubsystem m_swerveDriveSubsystem;
+  private SwerveDrivetrain m_swerveDriveSubsystem;
   private XboxController m_driverController;
   private double m_driveAxis;
   private double m_strafeAxis;

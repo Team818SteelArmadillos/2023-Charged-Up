@@ -21,7 +21,7 @@ public class SwerveDrivetrain extends SubsystemBase {
     public SwerveDriveOdometry m_swerveOdometry;
     public SwerveModule[] m_swerveModules;
     public SwerveModulePosition[] m_modulePositions;
-    public WPI_PigeonIMU m_gyro;
+    public static WPI_PigeonIMU m_gyro;
 
     /**
      * 
@@ -210,7 +210,7 @@ public class SwerveDrivetrain extends SubsystemBase {
      * 
      */
 
-    public Rotation2d getYaw() {
+    public static Rotation2d getYaw() {
         return (Constants.INVERT_GYRO) ? Rotation2d.fromDegrees(360 - (m_gyro.getYaw())%360) 
                                              : Rotation2d.fromDegrees((m_gyro.getYaw())%360);
     }

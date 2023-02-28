@@ -32,7 +32,7 @@ public class ManualPathPlanning extends SubsystemBase {
       rotation = difAngle > 0 ? -(Math.pow(5, -0.2*(difAngle-7.5)) - Constants.MAX_ANGULAR_VELOCITY): -(Math.pow(5, 0.2*(difAngle+7.5)) - Constants.MAX_ANGULAR_VELOCITY);
     }
 
-    Translation2d autonTrans = new Translation2d(slopeX * scale, slopeY * scale);
+    Translation2d autonTrans = new Translation2d(slopeX * scale, slopeY * scale); //dumb
 
     m_swerveDriveSubsystem.drive(autonTrans, rotation, true, true);
 
