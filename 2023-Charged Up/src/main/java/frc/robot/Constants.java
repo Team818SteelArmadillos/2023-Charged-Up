@@ -28,21 +28,21 @@ public final class Constants {
     ==============================*/
 
     /* CAN IDs */
-    public static final int BACK_LEFT_DRIVE = 6; //Josh
-    public static final int BACK_LEFT_ENCODER = 2; //Gary 
-    public static final int BACK_LEFT_AZIMUTH = 2 ; //Tracy
+    public static final int BACK_LEFT_DRIVE = 7; //Josh
+    public static final int BACK_LEFT_ENCODER = 11; //Gary 
+    public static final int BACK_LEFT_AZIMUTH = 6 ; //Tracy
 
-    public static final int BACK_RIGHT_DRIVE = 7; //Happy
-    public static final int BACK_RIGHT_ENCODER = 3; //Bre
-    public static final int BACK_RIGHT_AZIMUTH = 3; //Samuel
+    public static final int BACK_RIGHT_DRIVE = 4; //Happy
+    public static final int BACK_RIGHT_ENCODER = 10; //Bre
+    public static final int BACK_RIGHT_AZIMUTH = 5; //Samuel
 
-    public static final int FRONT_RIGHT_DRIVE = 4; //Keith
-    public static final int FRONT_RIGHT_ENCODER = 10; //Freddy Mercury
-    public static final int FRONT_RIGHT_AZIMUTH = 10; //Beth
+    public static final int FRONT_RIGHT_DRIVE = 2; //Keith
+    public static final int FRONT_RIGHT_ENCODER = 9; //Freddy Mercury
+    public static final int FRONT_RIGHT_AZIMUTH = 3; //Beth
 
-    public static final int FRONT_LEFT_DRIVE = 5; //Chad
-    public static final int FRONT_LEFT_ENCODER = 1; //Jonathan 
-    public static final int FRONT_LEFT_AZIMUTH = 1; //Geraldine
+    public static final int FRONT_LEFT_DRIVE = 1; //Chad
+    public static final int FRONT_LEFT_ENCODER = 8; //Jonathan 
+    public static final int FRONT_LEFT_AZIMUTH = 0; //Geraldine
 
     public static final int THROUGH_BORE_ENCODER = 10;
 
@@ -50,13 +50,13 @@ public final class Constants {
 
     public static final String CAN_BUS_DRIVE = "CANivore";
 
-    public static final int PIGEON = 0;
+    public static final int PIGEON = 12;
 
     /* CANCoder offsets */
-    public static double FRONT_LEFT_OFFSET = 0; // -158
-    public static double FRONT_RIGHT_OFFSET = 0; // -286
-    public static double BACK_LEFT_OFFSET = 0; // -90
-    public static double BACK_RIGHT_OFFSET = 0; // -197
+    public static double FRONT_LEFT_OFFSET = 286.2; // -158
+    public static double FRONT_RIGHT_OFFSET = 174.1; // -286
+    public static double BACK_LEFT_OFFSET = 327.4; // -90
+    public static double BACK_RIGHT_OFFSET = 100.1; // -197
 
     public static double FRONT_LEFT_MULTIPLIER = 1; // 
     public static double FRONT_RIGHT_MULTIPLIER = 1; // 
@@ -66,37 +66,36 @@ public final class Constants {
     
 
     /* Azimuth reversed */
-    public static boolean FRONT_LEFT_AZIMUTH_REVERSED = false;
-    public static boolean FRONT_RIGHT_AZIMUTH_REVERSED = false;
-    public static boolean BACK_LEFT_AZIMUTH_REVERSED = false;
-    public static boolean BACK_RIGHT_AZIMUTH_REVERSED = false;
+    public static boolean FRONT_LEFT_AZIMUTH_REVERSED = true;
+    public static boolean FRONT_RIGHT_AZIMUTH_REVERSED = true;
+    public static boolean BACK_LEFT_AZIMUTH_REVERSED = true;
+    public static boolean BACK_RIGHT_AZIMUTH_REVERSED = true;
 
     /* Drive motors reversed */
-    public static boolean FRONT_LEFT_DRIVE_REVERSED = true;
-    public static boolean FRONT_RIGHT_DRIVE_REVERSED = true;
-    public static boolean BACK_LEFT_DRIVE_REVERSED = true;
-    public static boolean BACK_RIGHT_DRIVE_REVERSED = true;
+    public static boolean FRONT_LEFT_DRIVE_REVERSED = false;
+    public static boolean FRONT_RIGHT_DRIVE_REVERSED = false;
+    public static boolean BACK_LEFT_DRIVE_REVERSED = false;
+    public static boolean BACK_RIGHT_DRIVE_REVERSED = false;
 
     /* CANCoders reversed */
-    public static boolean FRONT_LEFT_CANCODER_REVERSED = false;
-    public static boolean FRONT_RIGHT_CANCODER_REVERSED = false;
-    public static boolean BACK_LEFT_CANCODER_REVERSED = false;
-    public static boolean BACK_RIGHT_CANCODER_REVERSED = false;
+    public static boolean FRONT_LEFT_CANCODER_REVERSED = true;
+    public static boolean FRONT_RIGHT_CANCODER_REVERSED = true;
+    public static boolean BACK_LEFT_CANCODER_REVERSED = true;
+    public static boolean BACK_RIGHT_CANCODER_REVERSED = true;
 
     /* Gyro reversed */
     public static final boolean INVERT_GYRO = false;
 
     /* Encoder Ticks per Revolution */
-    public static final int AZIMUTH_TICKS_PER_REVOLUTION = 4096;
+    public static final int AZIMUTH_TICKS_PER_REVOLUTION = 4096; // 21074 withvgear ratio 360 deg
     public static final int DRIVE_TICKS_PER_REVOLUTION = 4096;
     public static final double CODE_LOOPS_PER_MIN = 600.0;
 
 
     /* Angle Motor PID Values */
-    public static final double AZIMUTH_P = 12.105;
+    public static final double AZIMUTH_P = 0.5;
     public static final double AZIMUTH_I = 0.0;
-    public static final double AZIMUTH_D = 20.05
-    ;
+    public static final double AZIMUTH_D = 0.0;
     public static final double AZIMUTH_F = 0.0;
 
     /* Drive Motor PID Values */
@@ -128,7 +127,7 @@ public final class Constants {
 
     /* Swerve Gear Ratios */
     public static final double DRIVE_GEAR_RATIO = (6.65 / 1.0); //6.86:1 from SDS
-    public static final double AZIMUTH_GEAR_RATIO = 1/1;//(12.8 / 1.0); //12.8:1 from SDS
+    public static final double AZIMUTH_GEAR_RATIO = (10.29/2.0);//(12.8 / 1.0); //12.8:1 from SDS
 
     /* Swerve Profiling Values */
     public static final double MAX_SPEED = (Units.feetToMeters(17.01)); //meters per second (theoretical from SDS) TBD CHANGED

@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
@@ -88,9 +89,10 @@ public class SwerveModule {
                              feedforward.calculate(desiredState.speedMetersPerSecond));
         }
 
-        double angle = desiredState.angle.getDegrees();//(Math.abs(desiredState.speedMetersPerSecond) <= (Constants.MAX_SPEED * 0.01)) ? m_lastAngle : desiredState.angle.getDegrees(); //Prevent rotating module if speed is less then 1%. Prevents Jittering.
+        double angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.MAX_SPEED * 0.01)) ? m_lastAngle : desiredState.angle.getDegrees(); //Prevent rotating module if speed is less then 1%. Prevents Jittering.
        
         m_azimuthMotor.set(ControlMode.Position, Conversions.degreesToFalcon(angle, Constants.AZIMUTH_GEAR_RATIO));
+       
         SmartDashboard.putNumber("Target angle", angle);
         SmartDashboard.putNumber("Target Encoder Value", Conversions.degreesToFalcon(angle, Constants.AZIMUTH_GEAR_RATIO));
         m_lastAngle = angle;
@@ -131,7 +133,9 @@ public class SwerveModule {
         m_azimuthMotor.setInverted(m_turningInverted);
         m_azimuthMotor.setNeutralMode(Constants.AZIMUTH_NEUTRAL_MODE);
         resetToAbsolute();
-        m_azimuthMotor.setSelectedSensorPosition(0);
+        //m_azimuthMotor.configRemoteFeedbackFilter(m_canCoder, 0);
+        //m_azimuthMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.RemoteSensor0, 1, 0);
+        //m_azimuthMotor.setSelectedSensorPosition(0);
 
         m_azimuthMotor.configSelectedFeedbackCoefficient(m_coeff);
     }
@@ -156,17 +160,17 @@ public class SwerveModule {
      * 
      */
 
-    public Rotation2d getCanCoder() {
-        return Rotation2d.fromDegrees(/*m_canCoder.getAbsolutePosition()*/ getModuleAngle());
+     public Rotation2d getCanCoder() {
+        return Rotation2d.fromDegrees(m_canCoder.getAbsolutePosition());
     }
 
     public double getModuleAngle(){
-        return (360+(360.0*((m_azimuthMotor.getSelectedSensorPosition()%Constants.AZIMUTH_TICKS_PER_REVOLUTION)/Constants.AZIMUTH_TICKS_PER_REVOLUTION)))%360;
-    }
+        return (360+(360.0*((getCandcoderAbsPos()%Constants.AZIMUTH_TICKS_PER_REVOLUTION)/Constants.AZIMUTH_TICKS_PER_REVOLUTION)))%360;
+     }
 
     public double getCandcoderAbsPos() {
-        return m_azimuthMotor.getSelectedSensorPosition();
-    }
+        return m_canCoder.getAbsolutePosition();
+    }   
 
     /**
      * 
@@ -187,7 +191,7 @@ public class SwerveModule {
      public SwerveModuleState getState() {
 
         double velocity = Conversions.falconToMPS(m_driveMotor.getSelectedSensorVelocity(), Constants.WHEEL_CIRCUMFERENCE, Constants.DRIVE_GEAR_RATIO);
-        Rotation2d angle = Rotation2d.fromDegrees(Conversions.falconToDegrees(m_azimuthMotor.getSelectedSensorPosition(), Constants.AZIMUTH_GEAR_RATIO));
+        Rotation2d angle = Rotation2d.fromDegrees(Conversions.falconToDegrees(getCandcoderAbsPos(), Constants.AZIMUTH_GEAR_RATIO));
         return new SwerveModuleState(velocity, angle);
 
     }

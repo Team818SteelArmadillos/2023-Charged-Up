@@ -61,7 +61,7 @@ public class RobotContainer {
     m_swerveDrivetrain.setDefaultCommand(new SwerveDrive(m_swerveDrivetrain, 
       m_driverController, m_translationAxis, m_strafeAxis, m_rotationAxis, fieldRelative, openLoop));
     
-      m_swerveDrivetrain.zeroModules();
+      //m_swerveDrivetrain.zeroModules();
     /* Initialize diagnostics subystem */
     //m_diagnostics = new Diagnostics(m_swerveDrivetrain, m_climber, m_intake, m_feeder, m_shooter, m_actuator);
     
