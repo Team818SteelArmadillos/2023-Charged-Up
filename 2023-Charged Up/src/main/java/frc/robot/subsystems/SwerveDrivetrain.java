@@ -15,6 +15,8 @@ import frc.robot.Constants;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveDrivetrain extends SubsystemBase {
@@ -113,7 +115,6 @@ public class SwerveDrivetrain extends SubsystemBase {
         for(SwerveModule module : m_swerveModules){
             module.setDesiredState(swerveModuleStates[module.m_moduleNumber], isOpenLoop);
         }
-
 
     }
 
