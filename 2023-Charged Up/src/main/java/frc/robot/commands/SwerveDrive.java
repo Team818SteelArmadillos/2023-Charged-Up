@@ -46,7 +46,7 @@ public class SwerveDrive extends CommandBase {
         addRequirements(m_swerveDrivetrain);
 
         m_driverController = driverController;
-        m_driveAxis = XboxController.Axis.kLeftY.value;
+        m_driveAxis = driveAxis;
         m_strafeAxis = strafeAxis;
         m_rotationAxis = rotationAxis;
         m_fieldRelative = fieldRelative;

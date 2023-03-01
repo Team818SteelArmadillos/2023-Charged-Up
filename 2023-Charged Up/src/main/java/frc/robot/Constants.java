@@ -53,10 +53,10 @@ public final class Constants {
     public static final int PIGEON = 12;
 
     /* CANCoder offsets */
-    public static double FRONT_LEFT_OFFSET = 286.2; // -158
-    public static double FRONT_RIGHT_OFFSET = 174.1; // -286
-    public static double BACK_LEFT_OFFSET = 327.4; // -90
-    public static double BACK_RIGHT_OFFSET = 100.1; // -197
+    public static double FRONT_LEFT_OFFSET = 284.6; // -158
+    public static double FRONT_RIGHT_OFFSET = 172.8; // -286
+    public static double BACK_LEFT_OFFSET = 325.2; // -90
+    public static double BACK_RIGHT_OFFSET = 100. ; // -197
 
     public static double FRONT_LEFT_MULTIPLIER = 1; // 
     public static double FRONT_RIGHT_MULTIPLIER = 1; // 
@@ -72,10 +72,10 @@ public final class Constants {
     public static boolean BACK_RIGHT_AZIMUTH_REVERSED = true;
 
     /* Drive motors reversed */
-    public static boolean FRONT_LEFT_DRIVE_REVERSED = false;
-    public static boolean FRONT_RIGHT_DRIVE_REVERSED = false;
-    public static boolean BACK_LEFT_DRIVE_REVERSED = false;
-    public static boolean BACK_RIGHT_DRIVE_REVERSED = false;
+    public static boolean FRONT_LEFT_DRIVE_REVERSED = true;
+    public static boolean FRONT_RIGHT_DRIVE_REVERSED = true;
+    public static boolean BACK_LEFT_DRIVE_REVERSED = true;
+    public static boolean BACK_RIGHT_DRIVE_REVERSED = true;
 
     /* CANCoders reversed */
     public static boolean FRONT_LEFT_CANCODER_REVERSED = true;
@@ -87,13 +87,13 @@ public final class Constants {
     public static final boolean INVERT_GYRO = false;
 
     /* Encoder Ticks per Revolution */
-    public static final int AZIMUTH_TICKS_PER_REVOLUTION = 4096; // 21074 withvgear ratio 360 deg
-    public static final int DRIVE_TICKS_PER_REVOLUTION = 4096;
+    public static final int AZIMUTH_TICKS_PER_REVOLUTION = 2048; // 21074 withvgear ratio 360 deg
+    public static final int DRIVE_TICKS_PER_REVOLUTION = 2048;
     public static final double CODE_LOOPS_PER_MIN = 600.0;
 
 
     /* Angle Motor PID Values */
-    public static final double AZIMUTH_P = 0.5;
+    public static final double AZIMUTH_P = 0.45;
     public static final double AZIMUTH_I = 0.0;
     public static final double AZIMUTH_D = 0.0;
     public static final double AZIMUTH_F = 0.0;
@@ -127,7 +127,7 @@ public final class Constants {
 
     /* Swerve Gear Ratios */
     public static final double DRIVE_GEAR_RATIO = (6.65 / 1.0); //6.86:1 from SDS
-    public static final double AZIMUTH_GEAR_RATIO = (10.29/2.0);//(12.8 / 1.0); //12.8:1 from SDS
+    public static final double AZIMUTH_GEAR_RATIO = (10.29/1.0);//(12.8 / 1.0); //12.8:1 from SDS
 
     /* Swerve Profiling Values */
     public static final double MAX_SPEED = (Units.feetToMeters(17.01)); //meters per second (theoretical from SDS) TBD CHANGED
@@ -180,7 +180,7 @@ public final class Constants {
     ==============================*/
 
     /* Controller Constants */
-    public static final double STICK_DEADBAND = 0.1;
+    public static final double STICK_DEADBAND = 0.3;
     public static final int DRIVER_PORT = 0;
     public static final int TEST_PORT = 5;
     public static final double OP_RUMBLE_PERCENT = 0.4;

@@ -164,10 +164,6 @@ public class SwerveModule {
         return Rotation2d.fromDegrees(m_canCoder.getAbsolutePosition());
     }
 
-    public double getModuleAngle(){
-        return (360+(360.0*((getCandcoderAbsPos()%Constants.AZIMUTH_TICKS_PER_REVOLUTION)/Constants.AZIMUTH_TICKS_PER_REVOLUTION)))%360;
-     }
-
     public double getCandcoderAbsPos() {
         return m_canCoder.getAbsolutePosition();
     }   
@@ -191,7 +187,7 @@ public class SwerveModule {
      public SwerveModuleState getState() {
 
         double velocity = Conversions.falconToMPS(m_driveMotor.getSelectedSensorVelocity(), Constants.WHEEL_CIRCUMFERENCE, Constants.DRIVE_GEAR_RATIO);
-        Rotation2d angle = Rotation2d.fromDegrees(Conversions.falconToDegrees(getCandcoderAbsPos(), Constants.AZIMUTH_GEAR_RATIO));
+        Rotation2d angle = Rotation2d.fromDegrees(Conversions.falconToDegrees(m_azimuthMotor.getSelectedSensorPosition(), Constants.AZIMUTH_GEAR_RATIO));
         return new SwerveModuleState(velocity, angle);
 
     }
