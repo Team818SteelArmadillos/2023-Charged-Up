@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -42,6 +43,11 @@ public class PivotingArmSubsystem extends SubsystemBase {
     public static void setPivotAngle(double setpointAngle) {
         currentAngle = encoder.get() * Constants.ticksToDegrees; // Converts the ticks from encoder to degrees
         pm1.set(ControlMode.PercentOutput, PID.calculate(currentAngle, setpointAngle));
+    }
+
+    public static void setPivotSpeed(double pivotSpeed) {
+        pm1.set(ControlMode.PercentOutput, pivotSpeed);
+        SmartDashboard.putNumber("pivotingEncoder", encoder.get());
     }
 
 }

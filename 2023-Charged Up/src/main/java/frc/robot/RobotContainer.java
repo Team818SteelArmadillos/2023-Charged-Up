@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.SwerveDrive;
+import frc.robot.subsystems.BikeBreakSubsystem;
+import frc.robot.subsystems.PivotingArmSubsystem;
 import frc.robot.subsystems.SwerveDrivetrain;
  
 
@@ -32,6 +34,26 @@ public class RobotContainer {
 
   //private final DriveTrainCommand m_autoCommand = new DriveTrainCommand();
   
+  /* Controllers */
+  private final XboxController m_driverController = new XboxController(Constants.DRIVER_PORT);
+
+  /* Drive Axes */
+  private final int m_translationAxis = XboxController.Axis.kLeftY.value;
+  private final int m_strafeAxis = XboxController.Axis.kLeftX.value;
+  private final int m_rotationAxis = XboxController.Axis.kRightX.value;
+
+  /* Driver Buttons */
+  private final JoystickButton m_zeroGyro = new JoystickButton(m_driverController, XboxController.Button.kX.value);
+
+
+  /* Subsystems */
+  private final SwerveDrivetrain m_swerveDrivetrain = new SwerveDrivetrain();
+  private final PivotingArmSubsystem m_pivotingArmSubsystem = new PivotingArmSubsystem();
+  private final BikeBreakSubsystem m_bikeBreakSubsystem = new BikeBreakSubsystem();
+
+  //BikeBreakCommand instances
+  public final BikeBreakCommand m_bikeBreakPeriodicCommand = new BikeBreakCommand(m_bikeBreakSubsystem);
+
   //ClawCommand instances
   public final ClawCommand m_ClawCommand = new ClawCommand();
 
@@ -47,12 +69,14 @@ public class RobotContainer {
   public final TelescopingArmCommand m_TelescopingArmHighCommand = new TelescopingArmCommand(4);
   
   //PivotingArmCommand instances for different arm angles
-  public final PivotingArmCommand m_PivotingArmGroundCommand = new PivotingArmCommand(0); // Sets angle to 0 deg
-  public final PivotingArmCommand m_PivotingArmMediumCommand = new PivotingArmCommand(1); // sets angle to 30 deg
-  public final PivotingArmCommand m_PivotingArmHighCommand = new PivotingArmCommand(2); // sets angle to 45 dm_eg
-  public final PivotingArmCommand m_PivotingGrabHighCommand = new PivotingArmCommand(3); // sets angle to 45 dm_eg
-  public final PivotingArmCommand m_PivotingArmRestingCommand = new PivotingArmCommand(4); // Sets angle to 90 deg
-  
+  public final PivotingArmCommand m_PivotingArmGroundCommand = new PivotingArmCommand(0, m_pivotingArmSubsystem); // Sets angle to 0 deg
+  public final PivotingArmCommand m_PivotingArmMediumCommand = new PivotingArmCommand(1, m_pivotingArmSubsystem); // sets angle to 30 deg
+  public final PivotingArmCommand m_PivotingArmHighCommand = new PivotingArmCommand(2, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
+  public final PivotingArmCommand m_PivotingGrabHighCommand = new PivotingArmCommand(3, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
+  public final PivotingArmCommand m_PivotingArmRestingCommand = new PivotingArmCommand(4, m_pivotingArmSubsystem); // Sets angle to 90 deg
+  public final PivotingArmCommand m_PivotArmSlow = new PivotingArmCommand(5, m_pivotingArmSubsystem); //sets pivoting speed to 20%
+  public final PivotingArmCommand m_DontPivotArm = new PivotingArmCommand(6, m_pivotingArmSubsystem);
+
   public RobotContainer() {
 
     /* Set Drive as default command*/
@@ -60,6 +84,7 @@ public class RobotContainer {
     boolean openLoop = true;
     m_swerveDrivetrain.setDefaultCommand(new SwerveDrive(m_swerveDrivetrain, 
       m_driverController, m_translationAxis, m_strafeAxis, m_rotationAxis, fieldRelative, openLoop));
+    m_bikeBreakSubsystem.setDefaultCommand(m_bikeBreakPeriodicCommand);
     
       //m_swerveDrivetrain.zeroModules();
     /* Initialize diagnostics subystem */
@@ -83,6 +108,8 @@ public class RobotContainer {
     if ( OI.getOperator().getLeftTriggerAxis() >= 0.01 ) { m_ClawWheelReverseCommand.schedule(); } // L2
     
     // A, B, X, Y Buttons
+    
+    /*
     if ( OI.getOperator().getAButtonPressed() ) { Commands.parallel(m_PivotingArmGroundCommand, m_TelescopingArmLowCommand); } // A
 
     if ( OI.getOperator().getBButtonPressed() ) { Commands.parallel(m_PivotingArmMediumCommand, m_TelescopingArmMediumCommand); } // B
@@ -90,7 +117,9 @@ public class RobotContainer {
     if ( OI.getOperator().getXButtonPressed() ) { Commands.parallel(m_PivotingGrabHighCommand, m_TelescopingGrabHighCommand); } // X
 
     if ( OI.getOperator().getYButtonPressed() ) { Commands.parallel(m_PivotingArmHighCommand, m_TelescopingArmHighCommand); } // Y
-    
+    */
+
+
     // DPAD ?
   }
 
@@ -104,20 +133,7 @@ public class RobotContainer {
 
   private static SendableChooser<Command> autoChooser;
 
-  /* Controllers */
-  private final XboxController m_driverController = new XboxController(Constants.DRIVER_PORT);
-
-  /* Drive Axes */
-  private final int m_translationAxis = XboxController.Axis.kLeftY.value;
-  private final int m_strafeAxis = XboxController.Axis.kLeftX.value;
-  private final int m_rotationAxis = XboxController.Axis.kRightX.value;
-
-  /* Driver Buttons */
-  private final JoystickButton m_zeroGyro = new JoystickButton(m_driverController, XboxController.Button.kX.value);
-
-
-  /* Subsystems */
-  private final SwerveDrivetrain m_swerveDrivetrain = new SwerveDrivetrain();
+  
 
 
   /**

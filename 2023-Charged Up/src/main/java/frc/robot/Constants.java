@@ -44,7 +44,7 @@ public final class Constants {
     public static final int FRONT_LEFT_ENCODER = 8; //Jonathan 
     public static final int FRONT_LEFT_AZIMUTH = 0; //Geraldine
 
-    public static final int THROUGH_BORE_ENCODER = 10;
+    public static final int THROUGH_BORE_ENCODER = 0;
 
     /*Can Bus */
 
@@ -215,7 +215,7 @@ public final class Constants {
     public static final double tD = 1;
 
     // Piston Claw Values
-    public static final int[] clawPistonPort = {0, 17, 1}; // Copied from 2022 Rapid React Code (needs to be tested more??)
+    public static final int[] clawPistonPort = {17, 7, 6}; // Copied from 2022 Rapid React Code (needs to be tested more??)
     public static final double clawWheelForawrdSpeed = 0.50;
     public static final double clawWheelReverseSpeed = -0.50;
 
