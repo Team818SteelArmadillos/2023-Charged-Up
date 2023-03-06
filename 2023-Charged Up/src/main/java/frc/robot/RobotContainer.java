@@ -7,14 +7,19 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.*;
+
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.event.BooleanEvent;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.SwerveDrive;
 import frc.robot.subsystems.BikeBreakSubsystem;
 import frc.robot.subsystems.PivotingArmSubsystem;
@@ -77,6 +82,8 @@ public class RobotContainer {
   public final PivotingArmCommand m_PivotArmSlow = new PivotingArmCommand(5, m_pivotingArmSubsystem); //sets pivoting speed to 20%
   public final PivotingArmCommand m_DontPivotArm = new PivotingArmCommand(6, m_pivotingArmSubsystem);
 
+  //public Trigger operatorX = new Trigger(OI.getOperator().x());
+
   public RobotContainer() {
 
     /* Set Drive as default command*/
@@ -85,6 +92,7 @@ public class RobotContainer {
     m_swerveDrivetrain.setDefaultCommand(new SwerveDrive(m_swerveDrivetrain, 
       m_driverController, m_translationAxis, m_strafeAxis, m_rotationAxis, fieldRelative, openLoop));
     m_bikeBreakSubsystem.setDefaultCommand(m_bikeBreakPeriodicCommand);
+    
     
       //m_swerveDrivetrain.zeroModules();
     /* Initialize diagnostics subystem */

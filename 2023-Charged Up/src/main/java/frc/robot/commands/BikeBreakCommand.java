@@ -23,10 +23,10 @@ public class BikeBreakCommand extends CommandBase {
     public void execute() {
       if ( OI.getOperator().getXButtonPressed() ) { BikeBreakSubsystem.setArmUnlocked(); } // X
       if ( OI.getOperator().getYButtonPressed() ) { BikeBreakSubsystem.setArmLocked(); } // Y
-      if(OI.getOperator().getAButtonPressed()){
+      
+      if(Math.abs(OI.getOperator().getLeftY()) > 0.01){
         PivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY());
-      }
-      if(OI.getOperator().getAButtonReleased()){
+      } else {
         PivotingArmSubsystem.setPivotSpeed(0);
       }
     }
