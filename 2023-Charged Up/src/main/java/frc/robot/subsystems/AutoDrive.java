@@ -14,7 +14,7 @@ import frc.robot.Constants;
 
 public class AutoDrive extends SubsystemBase {
   
-  public Translation2d autoDrive(double goalX, double goalY, double posX, double posY){
+  public static Translation2d autoDrive(double goalX, double goalY, double posX, double posY){
    //Finding distance from position to target
    double distance = Math.sqrt(Math.pow(goalX - posX, 2) + Math.pow(goalY - posY, 2));
    //Converting slope to unit vector for controller values

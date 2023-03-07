@@ -4,10 +4,13 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.AutoDrive;
+import frc.robot.subsystems.SwerveDrivetrain;
+
 import java.io.*;
 
 
@@ -42,8 +45,12 @@ public class ManualPathPlanningCommand extends CommandBase {
     for(var i = 0; i < coordinates.length; i++){
       while(!Commandfinished){
         switch((int)coordinates[i][0]){
+          //issues with static references, autonrun might need to be an object???
+          //still not sure how to actually call drive method, is the swerve drive object created before auton?
           case 0:
-            AutoDrive.autoDrive(coordinates[i][1], coordinates[i][2]); //needs robotpos x, y from kinematics library??
+            m_swerveDrivetrain.drive(AutoDrive.autoDrive(coordinates[i][1], coordinates[i][2], SwerveDrivetrain.getPose().getX(), SwerveDrivetrain.getPose().getY())); 
+          case 1:
+            AutoDrive.autorotate(coordinates[i][1]); //Assumed rotation if coordinates[i][0] = 1, coordinates[i][1] should contain desired direction.
         }
       }
     }

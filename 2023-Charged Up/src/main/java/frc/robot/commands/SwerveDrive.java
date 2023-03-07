@@ -3,9 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.subsystems.SwerveDrivetrain;
-import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -18,7 +16,7 @@ public class SwerveDrive extends CommandBase {
     private boolean m_fieldRelative;
     private boolean m_openLoop;
     
-    private SwerveDrivetrain m_swerveDrivetrain;
+    public SwerveDrivetrain m_swerveDrivetrain;
     private XboxController m_driverController;
     private int m_driveAxis;
     private int m_strafeAxis;
