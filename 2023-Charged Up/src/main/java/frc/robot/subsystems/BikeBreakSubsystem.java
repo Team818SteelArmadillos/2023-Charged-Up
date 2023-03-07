@@ -24,7 +24,7 @@ public class BikeBreakSubsystem extends SubsystemBase {
     }
 
     public static boolean isOpen() {
-        if (bikeBreak.get() == DoubleSolenoid.Value.kForward) {
+        if (bikeBreak.get() == DoubleSolenoid.Value.kReverse) {
             return true;
         } else {
             return false;

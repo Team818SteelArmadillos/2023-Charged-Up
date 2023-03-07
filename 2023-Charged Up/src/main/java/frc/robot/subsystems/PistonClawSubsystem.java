@@ -23,7 +23,7 @@ public class PistonClawSubsystem extends SubsystemBase {
     }
 
     public static boolean isOpen() {
-        if (pistonClaw.get() == DoubleSolenoid.Value.kForward) {
+        if (pistonClaw.get() == DoubleSolenoid.Value.kReverse) {
             return true;
         } else {
             return false;
