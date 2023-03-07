@@ -4,29 +4,32 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.AutoDrive;
+import java.io.*;
 
 
-public class pathAutonCommand extends CommandBase {
+public class ManualPathPlanningCommand extends CommandBase {
+  static int AutonNumber;
+  /** Creates a new ManualPathPlanningCommand. */
+  double[][] coordinates = new double[5][3];
+  public ManualPathPlanningCommand() {
   
-public double[][] list = new double[2][3] ;
-  /** Creates a new pathAutonCommand. */
-  
-  public pathAutonCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
   }
-
+  public static void changeAuton(int autonNumber){
+    AutonNumber = autonNumber;
+  }
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    
-    
-    
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override

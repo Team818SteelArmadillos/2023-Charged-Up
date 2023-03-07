@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import java.lang.reflect.Method;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.commands.ManualPathPlanningCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -15,13 +19,21 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  private SendableChooser<Method> m_chooser;
 
   //private Command m_autonInit;
   private Command m_autonPeriodic;
   public static CTREConfigs ctreConfigs;
 
   private RobotContainer m_robotContainer;
+  {
 
+  m_chooser = new SendableChooser<Void>();
+  m_chooser.setDefaultOption("Auton1", ManualPathPlanningCommand.changeAuton(1));
+  m_chooser.addOption("Auton2", ManualPathPlanningCommand.changeAuton(2));
+
+  SmartDashboard.putData(m_chooser);
+  }
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
