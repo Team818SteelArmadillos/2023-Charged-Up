@@ -174,6 +174,7 @@ public final class Constants {
 
     public static final double OPEN_LOOP_RAMP = 0.25;
     public static final double CLOSED_LOOP_RAMP = 0.0;
+    public static final double LIMELIGHT_GROUNDOFFSET = 20.75;
 
      /*============================
          Controller Constants
