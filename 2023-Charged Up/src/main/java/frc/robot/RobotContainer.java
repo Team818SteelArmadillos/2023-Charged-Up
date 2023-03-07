@@ -24,6 +24,7 @@ import frc.robot.commands.SwerveDrive;
 import frc.robot.subsystems.BikeBreakSubsystem;
 import frc.robot.subsystems.PivotingArmSubsystem;
 import frc.robot.subsystems.SwerveDrivetrain;
+import frc.robot.subsystems.TelescopingArmSubsystem;
  
 
 /**
@@ -38,6 +39,11 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   //private final DriveTrainCommand m_autoCommand = new DriveTrainCommand();
+  
+  //variables
+  boolean facingForward;
+  boolean fieldRelative;
+  boolean openLoop;
   
   /* Controllers */
   private final XboxController m_driverController = new XboxController(Constants.DRIVER_PORT);
@@ -54,10 +60,11 @@ public class RobotContainer {
   /* Subsystems */
   private final SwerveDrivetrain m_swerveDrivetrain = new SwerveDrivetrain();
   private final PivotingArmSubsystem m_pivotingArmSubsystem = new PivotingArmSubsystem();
+  private final TelescopingArmSubsystem m_telescopingArmSubsystem = new TelescopingArmSubsystem();
   private final BikeBreakSubsystem m_bikeBreakSubsystem = new BikeBreakSubsystem();
 
   //BikeBreakCommand instances
-  public final BikeBreakCommand m_bikeBreakPeriodicCommand = new BikeBreakCommand(m_bikeBreakSubsystem);
+  public final BikeBreakCommand m_bikeBreakPeriodicCommand = new BikeBreakCommand();
 
   //ClawCommand instances
   public final ClawCommand m_ClawCommand = new ClawCommand();
@@ -79,20 +86,28 @@ public class RobotContainer {
   public final PivotingArmCommand m_PivotingArmHighCommand = new PivotingArmCommand(2, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
   public final PivotingArmCommand m_PivotingGrabHighCommand = new PivotingArmCommand(3, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
   public final PivotingArmCommand m_PivotingArmRestingCommand = new PivotingArmCommand(4, m_pivotingArmSubsystem); // Sets angle to 90 deg
-  public final PivotingArmCommand m_PivotArmSlow = new PivotingArmCommand(5, m_pivotingArmSubsystem); //sets pivoting speed to 20%
-  public final PivotingArmCommand m_DontPivotArm = new PivotingArmCommand(6, m_pivotingArmSubsystem);
-
+  
+  //reversed pivoting arm commands
+  public final PivotingArmCommand r_PivotingArmGroundCommand = new PivotingArmCommand(5, m_pivotingArmSubsystem); // Sets angle to 0 deg
+  public final PivotingArmCommand r_PivotingArmMediumCommand = new PivotingArmCommand(6, m_pivotingArmSubsystem); // sets angle to 30 deg
+  public final PivotingArmCommand r_PivotingArmHighCommand = new PivotingArmCommand(7, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
+  public final PivotingArmCommand r_PivotingGrabHighCommand = new PivotingArmCommand(8, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
+  public final PivotingArmCommand r_PivotingArmRestingCommand = new PivotingArmCommand(9, m_pivotingArmSubsystem); // Sets angle to 90 deg
+  
   //public Trigger operatorX = new Trigger(OI.getOperator().x());
+  
+  
 
   public RobotContainer() {
 
     /* Set Drive as default command*/
     boolean fieldRelative = true;
     boolean openLoop = true;
+    
     m_swerveDrivetrain.setDefaultCommand(new SwerveDrive(m_swerveDrivetrain, 
       m_driverController, m_translationAxis, m_strafeAxis, m_rotationAxis, fieldRelative, openLoop));
-    m_bikeBreakSubsystem.setDefaultCommand(m_bikeBreakPeriodicCommand);
-    
+
+    m_zeroGyro.onTrue(new InstantCommand(() -> m_swerveDrivetrain.resetGyro()));
     
       //m_swerveDrivetrain.zeroModules();
     /* Initialize diagnostics subystem */
@@ -102,33 +117,42 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
-  private void configureButtonBindings() {
-    
-    m_zeroGyro.onTrue(new InstantCommand(() -> m_swerveDrivetrain.resetGyro()));
+  public void configureButtonBindings() {
 
-    // Bumpers (R1, R2, L1, L2)
-    if ( OI.getOperator().getRightBumper() ) { m_ClawCommand.schedule(); } // R1
-    
-    if ( OI.getOperator().getRightTriggerAxis() >= 0.01) { m_ClawWheelForwardCommand.schedule(); } // R2
+    //pivoting arm controls
+    if (OI.getOperator().getL1Button() == false) {
+      if ( OI.getOperator().getCrossButtonPressed() ) { Commands.parallel(m_PivotingArmGroundCommand, m_TelescopingArmLowCommand); } // A
+      if ( OI.getOperator().getCircleButtonPressed() ) { Commands.parallel(m_PivotingArmMediumCommand, m_TelescopingArmMediumCommand); } // B
+      if ( OI.getOperator().getSquareButtonPressed() ) { Commands.parallel(m_PivotingGrabHighCommand, m_TelescopingGrabHighCommand); } // X
+      if ( OI.getOperator().getTriangleButtonPressed() ) { Commands.parallel(m_PivotingArmHighCommand, m_TelescopingArmHighCommand); } // Y  
+    } else {
+      if ( OI.getOperator().getCrossButtonPressed() ) { Commands.parallel(r_PivotingArmGroundCommand, m_TelescopingArmLowCommand); } // A
+      if ( OI.getOperator().getCircleButtonPressed() ) { Commands.parallel(r_PivotingArmMediumCommand, m_TelescopingArmMediumCommand); } // B
+      if ( OI.getOperator().getSquareButtonPressed() ) { Commands.parallel(r_PivotingGrabHighCommand, m_TelescopingGrabHighCommand); } // X
+      if ( OI.getOperator().getTriangleButtonPressed() ) { Commands.parallel(r_PivotingArmHighCommand, m_TelescopingArmHighCommand); } // Y  
+    }
 
-    if ( OI.getOperator().getLeftBumper() ) { Commands.parallel(m_PivotingArmRestingCommand, m_TelescopingArmZeroCommand); } // L1
-  
-    if ( OI.getOperator().getLeftTriggerAxis() >= 0.01 ) { m_ClawWheelReverseCommand.schedule(); } // L2
-    
-    // A, B, X, Y Buttons
-    
-    /*
-    if ( OI.getOperator().getAButtonPressed() ) { Commands.parallel(m_PivotingArmGroundCommand, m_TelescopingArmLowCommand); } // A
+    //joystick controls
+      if ( Math.abs(OI.getOperator().getLeftY()) > 0.01 ) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); }
+      if ( Math.abs(OI.getOperator().getRightY()) > 0.01 ) { m_telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY()); }
 
-    if ( OI.getOperator().getBButtonPressed() ) { Commands.parallel(m_PivotingArmMediumCommand, m_TelescopingArmMediumCommand); } // B
-    
-    if ( OI.getOperator().getXButtonPressed() ) { Commands.parallel(m_PivotingGrabHighCommand, m_TelescopingGrabHighCommand); } // X
+    //bumper and trigger controls
+      if ( OI.getOperator().getR1ButtonPressed()) { m_ClawCommand.schedule(); }
+      if ( OI.getOperator().getR2ButtonPressed()) { m_ClawWheelForwardCommand.schedule(); }
+      if ( OI.getOperator().getL2ButtonPressed()) { m_ClawWheelReverseCommand.schedule(); }
+      if ( OI.getOperator().getTouchpadPressed()) { m_bikeBreakPeriodicCommand.schedule(); }
 
-    if ( OI.getOperator().getYButtonPressed() ) { Commands.parallel(m_PivotingArmHighCommand, m_TelescopingArmHighCommand); } // Y
+      //if ( OI.getOperator().) { m_ClawCommand.schedule(); }
+
+    // I LOVE TO CODE ANDN FDSFJ SFDIERIVTEINVE INTESFJIGE BSDFY PAWREWTS
+
+   /* 
+    if ( OI.getOperator().getR2Button() ) { m_ClawCommand.schedule(); } // R1
+    if ( OI.getOperator().getR1ButtonPressed()) { m_ClawWheelForwardCommand.schedule(); } // R2
+    if ( OI.getOperator().getL2Button() ) { Commands.parallel(m_PivotingArmRestingCommand, m_TelescopingArmZeroCommand); } // L1
+    if ( OI.getOperator().getL1ButtonPressed() ) { m_ClawWheelReverseCommand.schedule(); } // L2
     */
 
-
-    // DPAD ?
   }
 
   public Command getAutonInit() {

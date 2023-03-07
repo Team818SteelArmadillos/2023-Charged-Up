@@ -6,11 +6,8 @@ import frc.robot.subsystems.BikeBreakSubsystem;
 import frc.robot.subsystems.PivotingArmSubsystem;
 
 public class BikeBreakCommand extends CommandBase {
-    
-  public static int _state;
 
-  public BikeBreakCommand (BikeBreakSubsystem sub) {
-    addRequirements(sub);
+  public BikeBreakCommand () {
   }
 
   @Override
@@ -21,13 +18,10 @@ public class BikeBreakCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-      if ( OI.getOperator().getXButtonPressed() ) { BikeBreakSubsystem.setArmUnlocked(); } // X
-      if ( OI.getOperator().getYButtonPressed() ) { BikeBreakSubsystem.setArmLocked(); } // Y
-      
-      if(Math.abs(OI.getOperator().getLeftY()) > 0.01){
-        PivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY());
+      if (BikeBreakSubsystem.isOpen()){
+        BikeBreakSubsystem.setArmLocked();
       } else {
-        PivotingArmSubsystem.setPivotSpeed(0);
+        BikeBreakSubsystem.setArmUnlocked();
       }
     }
     

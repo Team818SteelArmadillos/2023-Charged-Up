@@ -11,7 +11,7 @@ public class PistonClawSubsystem extends SubsystemBase {
 
     // Initialize here
     static {
-        pistonClaw = new DoubleSolenoid(Constants.clawPistonPort[1], PneumaticsModuleType.CTREPCM, Constants.clawPistonPort[0], Constants.clawPistonPort[2]);
+        pistonClaw = new DoubleSolenoid(Constants.pneumaticPistonPort, PneumaticsModuleType.CTREPCM, Constants.pneumaticPorts[5], Constants.pneumaticPorts[4]);
     }
 
     public static void setClawClosed() {

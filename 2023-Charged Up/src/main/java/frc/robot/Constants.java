@@ -198,7 +198,7 @@ public final class Constants {
     
     // Arm Motor Ports
     public static final int[] pivotingMotorPorts = {13, 14, 15};
-    public static final int telscopingMotorPort = 0;
+    public static final int telscopingMotorPort = 16;
     public static final int[] clawWheelMotorPort = {0, 0};
 
     // Operator Values 
@@ -214,12 +214,13 @@ public final class Constants {
     public static final double tI = 0;
     public static final double tD = 1;
 
+    // Pneumatic ports
+    public static final int pneumaticPistonPort = 17; // Copied from 2022 Rapid React Code (needs to be tested more??)
+    public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
+
     // Piston Claw Values
-    public static final int[] clawPistonPort = {17, 7, 6}; // Copied from 2022 Rapid React Code (needs to be tested more??)
     public static final double clawWheelForawrdSpeed = 0.50;
     public static final double clawWheelReverseSpeed = -0.50;
-
-
 
     // Pivoting Arm Angles
     public static final int[] armAngles = {0, 30, 45, 67, 90};

@@ -12,7 +12,7 @@ public class BikeBreakSubsystem extends SubsystemBase {
 
     // Initialize here
     static {
-        bikeBreak = new DoubleSolenoid(Constants.clawPistonPort[0], PneumaticsModuleType.CTREPCM, Constants.clawPistonPort[1], Constants.clawPistonPort[2]);
+        bikeBreak = new DoubleSolenoid(Constants.pneumaticPistonPort, PneumaticsModuleType.CTREPCM, Constants.pneumaticPorts[6], Constants.pneumaticPorts[7]);
     }
 
     public static void setArmLocked() {
@@ -21,6 +21,14 @@ public class BikeBreakSubsystem extends SubsystemBase {
 
     public static void setArmUnlocked() {
         bikeBreak.set(Value.kReverse);
+    }
+
+    public static boolean isOpen() {
+        if (bikeBreak.get() == DoubleSolenoid.Value.kForward) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
