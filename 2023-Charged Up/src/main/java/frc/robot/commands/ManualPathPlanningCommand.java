@@ -13,6 +13,7 @@ import java.io.*;
 
 public class ManualPathPlanningCommand extends CommandBase {
   static int AutonNumber;
+  public static boolean Commandfinished = false;
   
   //First slot is for declaring either coordinate, rotation, or other types of movement. Other is for coordinates or additonal data depending on movement type.
   static double[][] coordinates = new double[5][3];
@@ -38,7 +39,14 @@ public class ManualPathPlanningCommand extends CommandBase {
     }
   }
   public static void autonRun(){
-    
+    for(var i = 0; i < coordinates.length; i++){
+      while(!Commandfinished){
+        switch((int)coordinates[i][0]){
+          case 0:
+            AutoDrive.autoDrive(coordinates[i][1], coordinates[i][2]); //needs robotpos x, y from kinematics library??
+        }
+      }
+    }
   }
   // Called when the command is initially scheduled.
   @Override
