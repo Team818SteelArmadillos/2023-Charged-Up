@@ -14,13 +14,17 @@ import frc.robot.subsystems.SwerveDrivetrain;
 import java.io.*;
 
 
+
 public class ManualPathPlanningCommand extends CommandBase {
   static int AutonNumber;
   public static boolean Commandfinished = false;
+  private SwerveDrivetrain m_swerveDrivetrain;
+  private AutoDrive m_autoDrive;
   
   //First slot is for declaring either coordinate, rotation, or other types of movement. Other is for coordinates or additonal data depending on movement type.
   static double[][] coordinates = new double[5][3];
   public ManualPathPlanningCommand() {
+    addRequirements(m_swerveDrivetrain, m_autoDrive);
   }
   public static void chooseAuton(){
     AutonNumber = Robot.m_chooser.getSelected();
@@ -41,16 +45,16 @@ public class ManualPathPlanningCommand extends CommandBase {
       }
     }
   }
-  public static void autonRun(){
+  public void autonRun(){
     for(var i = 0; i < coordinates.length; i++){
       while(!Commandfinished){
         switch((int)coordinates[i][0]){
           //issues with static references, autonrun might need to be an object???
           //still not sure how to actually call drive method, is the swerve drive object created before auton?
           case 0:
-            m_swerveDrivetrain.drive(AutoDrive.autoDrive(coordinates[i][1], coordinates[i][2], SwerveDrivetrain.getPose().getX(), SwerveDrivetrain.getPose().getY())); 
+            m_swerveDrivetrain.drive(AutoDrive.autoDrive(coordinates[i][1], coordinates[i][2], m_swerveDrivetrain.getPose().getX(), m_swerveDrivetrain.getPose().getY())); 
           case 1:
-            AutoDrive.autorotate(coordinates[i][1]); //Assumed rotation if coordinates[i][0] = 1, coordinates[i][1] should contain desired direction.
+            m_autoDrive.autorotate(coordinates[i][1]); //Assumed rotation if coordinates[i][0] = 1, coordinates[i][1] should contain desired direction.
         }
       }
     }
