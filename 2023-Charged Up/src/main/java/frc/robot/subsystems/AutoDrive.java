@@ -13,8 +13,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.Constants;
 
 public class AutoDrive extends SubsystemBase {
-    m_swerveDriveSubsystem.drive(autonTrans, rotation, true, true);
-  }
+  
   public Translation2d autoDrive(double goalX, double goalY, double posX, double posY){
    //Finding distance from position to target
    double distance = Math.sqrt(Math.pow(goalX - posX, 2) + Math.pow(goalY - posY, 2));

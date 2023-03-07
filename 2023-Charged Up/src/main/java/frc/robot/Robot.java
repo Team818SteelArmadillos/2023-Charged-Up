@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-  private SendableChooser<Method> m_chooser;
+  public static SendableChooser<Integer> m_chooser;
 
   //private Command m_autonInit;
   private Command m_autonPeriodic;
@@ -28,9 +28,7 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
   {
 
-  m_chooser = new SendableChooser<Void>();
-  m_chooser.setDefaultOption("Auton1", ManualPathPlanningCommand.changeAuton(1));
-  m_chooser.addOption("Auton2", ManualPathPlanningCommand.changeAuton(2));
+  m_chooser = new SendableChooser<Integer>();
 
   SmartDashboard.putData(m_chooser);
   }
@@ -44,6 +42,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     ctreConfigs = new CTREConfigs();
     m_robotContainer = new RobotContainer();
+    m_chooser.setDefaultOption("Default", 0);
+    m_chooser.addOption("Auton1", 1);
+    SmartDashboard.putData("Auton Choices", m_chooser);
   }
 
   /**
@@ -73,6 +74,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     //m_autonInit = m_robotContainer.getAutonInit();
+    ManualPathPlanningCommand.chooseAuton();
     m_autonPeriodic.schedule();
   }
 
@@ -80,6 +82,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     //m_autonPeriodic = m_robotContainer.getAutonPeriodic();
+    ManualPathPlanningCommand.autonRun();
     m_autonPeriodic.schedule();
   }
 
