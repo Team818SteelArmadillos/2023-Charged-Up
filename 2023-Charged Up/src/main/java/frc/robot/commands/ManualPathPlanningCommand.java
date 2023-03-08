@@ -4,29 +4,29 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.AutoDrive;
 import frc.robot.subsystems.SwerveDrivetrain;
 
-import java.io.*;
-
 
 
 public class ManualPathPlanningCommand extends CommandBase {
   static int AutonNumber;
-  private SwerveDrivetrain m_swerveDrivetrain;
-  private AutoDrive m_autoDrive;
-  private int commandIndex = 0;
-  public static boolean commandFinished = false;
-  
-  //First slot is for declaring either coordinate, rotation, or other types of movement. Other is for coordinates or additonal data depending on movement type.
+  private static SwerveDrivetrain m_swerveDrivetrain;
+  private static AutoDrive m_autoDrive;
+  private static int commandIndex = 0;
   static double[][] coordinates = new double[5][3];
+
+  //First slot is for declaring either coordinate, rotation, or other types of movement. Other is for coordinates or additonal data depending on movement type.
+  
   public ManualPathPlanningCommand() {
     addRequirements(m_swerveDrivetrain, m_autoDrive);
   }
+  /**Inserts a string of numbers to the coordinates list. Coordinates are in sets of 3; 
+  first digit declares the type of data (0 is coordinates, 1 is rotation, 5 ends auton, etc), 
+  the second and third digits are to offer necessary data. For example, coordinates require an
+  x and y, rotation requires the desired direction of the robot. */
   public static void chooseAuton(){
     AutonNumber = Robot.m_chooser.getSelected();
     String autonCoords = "000000000000000";
@@ -46,11 +46,10 @@ public class ManualPathPlanningCommand extends CommandBase {
       }
     }
   }
-  public void autonRun(){
+  public static void AutonRun(){
     for(var i = 0; i < coordinates.length; i++){
-      if(commandFinished){
+      if(checkStatus(coordinates, commandIndex)){
         commandIndex=+1;
-        commandFinished = false;
       }
       switch((int)coordinates[commandIndex][0]){
         //issues with static references, autonrun might need to be an object???
@@ -63,6 +62,17 @@ public class ManualPathPlanningCommand extends CommandBase {
         
       }
     }
+  }
+
+  public static boolean checkStatus(double[][] coordinates, int index){
+    //checking if command is complete
+    switch((int)coordinates[index][0]){
+      case 0:
+        return Math.sqrt(Math.pow(Math.abs(m_swerveDrivetrain.getPose().getX() - coordinates[index][1]), 2) + Math.pow(Math.abs(m_swerveDrivetrain.getPose().getY() - coordinates[index][2]), 2)) < .5;
+      case 1:
+        return SwerveDrivetrain.getYaw().getDegrees() - coordinates[index][1] < 1;
+    }
+    return false;
   }
   // Called when the command is initially scheduled.
   @Override
@@ -83,6 +93,6 @@ public class ManualPathPlanningCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     
-    return coordinates[commandIndex][0] == 5;
+    return commandIndex == coordinates.length;
   }
 }

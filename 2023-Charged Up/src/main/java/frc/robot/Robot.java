@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import java.lang.reflect.Method;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -25,7 +23,6 @@ public class Robot extends TimedRobot {
   private Command m_autonPeriodic;
   public static CTREConfigs ctreConfigs;
 
-  private RobotContainer m_robotContainer;
   {
 
   m_chooser = new SendableChooser<Integer>();
@@ -41,7 +38,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     ctreConfigs = new CTREConfigs();
-    m_robotContainer = new RobotContainer();
+    new RobotContainer();
     m_chooser.setDefaultOption("Default", 0);
     m_chooser.addOption("Auton1", 1);
     SmartDashboard.putData("Auton Choices", m_chooser);
@@ -82,7 +79,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     //m_autonPeriodic = m_robotContainer.getAutonPeriodic();
-    ManualPathPlanningCommand.autonRun();
+    ManualPathPlanningCommand.AutonRun();
     m_autonPeriodic.schedule();
   }
 

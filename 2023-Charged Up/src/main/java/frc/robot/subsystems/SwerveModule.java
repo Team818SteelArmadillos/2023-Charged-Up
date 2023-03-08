@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import frc.lib.math.Conversions;
@@ -22,7 +21,6 @@ public class SwerveModule {
     private TalonFX m_azimuthMotor;
     private TalonFX m_driveMotor;
     private CANCoder m_canCoder;
-    private double m_lastAngle;
     private boolean m_turningInverted;
     private boolean m_driveInverted;
     private boolean m_canCoderInverted;
@@ -60,7 +58,7 @@ public class SwerveModule {
         configTurningMotor();
         configDriveMotor();   
 
-        m_lastAngle = getState().angle.getDegrees();
+        getState().angle.getDegrees();
 
         m_azimuthMotor.configSelectedFeedbackCoefficient(encoderCoeff);
 
@@ -94,7 +92,6 @@ public class SwerveModule {
         m_azimuthMotor.set(ControlMode.Position, Conversions.degreesToFalcon(angle, Constants.AZIMUTH_GEAR_RATIO));
         SmartDashboard.putNumber("Target angle", angle);
         SmartDashboard.putNumber("Target Encoder Value", Conversions.degreesToFalcon(angle, Constants.AZIMUTH_GEAR_RATIO));
-        m_lastAngle = angle;
 
     }
 
