@@ -13,10 +13,10 @@ public class AutoDrive extends SubsystemBase {
   public static Translation2d autoDrive(double goalX, double goalY, double posX, double posY){
    //Finding distance from position to target
    double distance = Math.sqrt(Math.pow(goalX - posX, 2) + Math.pow(goalY - posY, 2));
-   //Converting slope to unit vector for controller values
+   //Converting slope to unit vector
    double slopeX = Math.cos(goalX - posX);
    double slopeY = Math.sin(goalY - posY);
-   //Filtering distance to prevent overrun. If over/underrun change equation or value 8 to increase/decrease time at full speed.
+   //Filtering distance to prevent overrun. 
    double scale = distance < 8 ? (Math.pow(1/2 * distance, 1/3)) : 1; 
    Translation2d autonTrans = new Translation2d(slopeX * scale, slopeY * scale);
     return autonTrans;

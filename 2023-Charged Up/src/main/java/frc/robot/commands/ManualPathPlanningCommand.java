@@ -17,45 +17,48 @@ public class ManualPathPlanningCommand extends CommandBase {
   private static AutoDrive m_autoDrive;
   private static int commandIndex = 0;
   static double[][] coordinates = new double[5][3];
-
-  //First slot is for declaring either coordinate, rotation, or other types of movement. Other is for coordinates or additonal data depending on movement type.
   
   public ManualPathPlanningCommand() {
     addRequirements(m_swerveDrivetrain, m_autoDrive);
   }
-  /**Inserts a string of numbers to the coordinates list. Coordinates are in sets of 3; 
-  first digit declares the type of data (0 is coordinates, 1 is rotation, 5 ends auton, etc), 
-  the second and third digits are to offer necessary data. For example, coordinates require an
-  x and y, rotation requires the desired direction of the robot. */
+
+  /**Coordinates are in sets of 3:
+   * Number 1 ditates command type:
+   *  0 for coordinates
+   *  1 for rotation
+   *  5 for last command
+   * Remaining slots clarify command:
+   *  Insert coordinates for coordinates
+   *  Insert desired direction for rotation
+   * Leave unnecessary slots as 0s,
+  */
   public static void chooseAuton(){
-    AutonNumber = Robot.m_chooser.getSelected();
-    String autonCoords = "000000000000000";
-    //silly little solution
-    switch(AutonNumber){
+    String autonCoords;
+    switch(Robot.m_chooser.getSelected()){
       case 0:
-      autonCoords = "045056032081092";
+      autonCoords = "0450560320810925";
       case 1:
-      autonCoords = "055058032082092";
+      autonCoords = "0550580320820925";
+      default:
+      autonCoords = "5000000000000000";
     }
-    //should put the above string into the earlier declared list. Local decleration could fix this, but could create problems with it being local? I also assume theres some way to quickly insert all values at once but I couldn't find documentation.
     int y = 0;
-    for(var i = 0; i < 4; i++){
-      for(var x = 0; x < 2; x++){
+    for(var i = 0; i < 5; i++){
+      for(var x = 0; x < 3; x++){
         coordinates[i][x] = autonCoords.charAt(y) - 0;
         y+=1;
       }
     }
   }
+
   public static void AutonRun(){
     for(var i = 0; i < coordinates.length; i++){
       if(checkStatus(coordinates, commandIndex)){
         commandIndex=+1;
       }
       switch((int)coordinates[commandIndex][0]){
-        //issues with static references, autonrun might need to be an object???
-        //still not sure how to actually call drive method, is the swerve drive object created before auton?
-        
         case 0:
+        //open loop might be more accurate??
           m_swerveDrivetrain.drive(AutoDrive.autoDrive(coordinates[commandIndex][1], coordinates[commandIndex][2], m_swerveDrivetrain.getPose().getX(), m_swerveDrivetrain.getPose().getY()), 0, true, true); 
         case 1:
           m_swerveDrivetrain.drive(null, m_autoDrive.autorotate(coordinates[commandIndex][1]), true, true); //Assumed rotation if coordinates[i][0] = 1, coordinates[i][1] should contain desired direction.
@@ -65,7 +68,6 @@ public class ManualPathPlanningCommand extends CommandBase {
   }
 
   public static boolean checkStatus(double[][] coordinates, int index){
-    //checking if command is complete
     switch((int)coordinates[index][0]){
       case 0:
         return Math.sqrt(Math.pow(Math.abs(m_swerveDrivetrain.getPose().getX() - coordinates[index][1]), 2) + Math.pow(Math.abs(m_swerveDrivetrain.getPose().getY() - coordinates[index][2]), 2)) < .5;
