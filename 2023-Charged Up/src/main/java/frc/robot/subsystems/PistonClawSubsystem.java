@@ -22,8 +22,12 @@ public class PistonClawSubsystem extends SubsystemBase {
         pistonClaw.set(DoubleSolenoid.Value.kReverse);
     }
 
+    public static void toggle() {
+        pistonClaw.toggle();
+    }
+
     public static boolean isOpen() {
-        if (pistonClaw.get() == DoubleSolenoid.Value.kForward) {
+        if (pistonClaw.get().equals(DoubleSolenoid.Value.kForward)) {
             return true;
         } else {
             return false;

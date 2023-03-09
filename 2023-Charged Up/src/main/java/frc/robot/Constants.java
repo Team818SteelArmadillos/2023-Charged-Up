@@ -200,7 +200,7 @@ public final class Constants {
     // Arm Motor Ports
     public static final int[] pivotingMotorPorts = {13, 14, 15};
     public static final int telscopingMotorPort = 16;
-    public static final int[] clawWheelMotorPort = {0, 0};
+    public static final int[] clawWheelMotorPort = {20, 21};
 
     // Operator Values 
     public static final double pP = 0.5;
@@ -220,16 +220,11 @@ public final class Constants {
     public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
 
     // Piston Claw Values
-    public static final double clawWheelForawrdSpeed = 0.50;
-    public static final double clawWheelReverseSpeed = -0.50;
+    public static final double clawWheelForawrdSpeed = 0.20;
+    public static final double clawWheelReverseSpeed = -0.20;
 
     // Pivoting Arm Angles
     public static final int[] armAngles = {0, 30, 45, 67, 90};
-
-    // Conversion Factors
-    public static final double ticksToDegrees = 0.087890625;
-    /* 360 degrees divided by 4096 ticks 
-    Multiply given ticks by this constant */
 
     // Neo 550 Motor Stuff
     public static final int neoAmpLimit = 20 /*AMPs*/; // Cannot forget units!

@@ -1,8 +1,10 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClawWheelsSubsystem;
 import frc.robot.Constants;
+import frc.robot.OI;
 
 public class ClawWheelCommand extends CommandBase {
 
@@ -20,10 +22,11 @@ public class ClawWheelCommand extends CommandBase {
   @Override
   public void execute() {
     if (_state == 0) {
-      ClawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelForawrdSpeed);
-    } else if (_state == 1) {
-      ClawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelReverseSpeed);
+      ClawWheelsSubsystem.setIntakeSpeed( OI.getOperator().getR2Axis());
+    } else {
+      ClawWheelsSubsystem.setIntakeSpeed( -(OI.getOperator().getL2Axis()) );
     }
+    SmartDashboard.putNumber("R2 Axis", OI.getOperator().getR2Axis());
   }
 
   // Called once the command ends or is interrupted.

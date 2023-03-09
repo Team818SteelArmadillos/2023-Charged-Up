@@ -20,7 +20,7 @@ public class PivotingArmCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    BikeBreakSubsystem.setArmLocked();
+    //BikeBreakSubsystem.setArmLocked();
     
     //creates a reversed arm angles list from constants
     for (int i = 0; i < Constants.armAngles.length; i++) {
@@ -48,15 +48,13 @@ public class PivotingArmCommand extends CommandBase {
       case 9:  PivotingArmSubsystem.setPivotAngle(revArmAngles[4]); break;
       default: break;
     }
-
-    
     
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    BikeBreakSubsystem.setArmLocked();
+    //BikeBreakSubsystem.setArmLocked();
   }
 
   // Returns true when the command should end.

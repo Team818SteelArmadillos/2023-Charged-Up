@@ -38,16 +38,21 @@ public class PivotingArmSubsystem extends SubsystemBase {
         //encoder stuff
         encoder = new DutyCycleEncoder(Constants.THROUGH_BORE_ENCODER); //these encoder paramters are undefined since
         encoder.reset();
+        SmartDashboard.putNumber( "Pivoting Arm Encoder", encoder.get() );
     }
 
     public static void setPivotAngle(double setpointAngle) {
-        currentAngle = encoder.get() * Constants.ticksToDegrees; // Converts the ticks from encoder to degrees
+        currentAngle = encoder.get() * 360; // Converts the encoder rotation values to degrees
         pm1.set(ControlMode.PercentOutput, PID.calculate(currentAngle, setpointAngle));
     }
 
     public static void setPivotSpeed(double pivotSpeed) {
         pm1.set(ControlMode.PercentOutput, pivotSpeed);
         SmartDashboard.putNumber("pivotingEncoder", encoder.get());
+    }
+
+    public static void resetPivotingEncoder() {
+        encoder.reset();
     }
 
 }

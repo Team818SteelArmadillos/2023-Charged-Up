@@ -64,7 +64,7 @@ public class RobotContainer {
   private final BikeBreakSubsystem m_bikeBreakSubsystem = new BikeBreakSubsystem();
 
   //BikeBreakCommand instances
-  public final BikeBreakCommand m_bikeBreakPeriodicCommand = new BikeBreakCommand();
+  public final BikeBreakCommand m_bikeBreakPeriodicCommand = new BikeBreakCommand(m_bikeBreakSubsystem);
 
   //ClawCommand instances
   public final ClawCommand m_ClawCommand = new ClawCommand();
@@ -120,27 +120,27 @@ public class RobotContainer {
   public void configureButtonBindings() {
 
     //pivoting arm controls
-    if (OI.getOperator().getL1Button() == false) {
-      if ( OI.getOperator().getCrossButtonPressed() ) { Commands.parallel(m_PivotingArmGroundCommand, m_TelescopingArmLowCommand); } // A
-      if ( OI.getOperator().getCircleButtonPressed() ) { Commands.parallel(m_PivotingArmMediumCommand, m_TelescopingArmMediumCommand); } // B
-      if ( OI.getOperator().getSquareButtonPressed() ) { Commands.parallel(m_PivotingGrabHighCommand, m_TelescopingGrabHighCommand); } // X
-      if ( OI.getOperator().getTriangleButtonPressed() ) { Commands.parallel(m_PivotingArmHighCommand, m_TelescopingArmHighCommand); } // Y  
+    if (OI.getOperator().L1().getAsBoolean() == false) {
+      OI.getOperator().cross().onTrue( Commands.parallel(m_PivotingArmGroundCommand, m_TelescopingArmLowCommand) );
+      OI.getOperator().circle().onTrue( Commands.parallel(m_PivotingArmMediumCommand, m_TelescopingArmMediumCommand) );
+      OI.getOperator().square().onTrue( Commands.parallel(m_PivotingGrabHighCommand, m_TelescopingGrabHighCommand) );
+      OI.getOperator().triangle().onTrue( Commands.parallel(m_PivotingArmHighCommand, m_TelescopingArmHighCommand) );
     } else {
-      if ( OI.getOperator().getCrossButtonPressed() ) { Commands.parallel(r_PivotingArmGroundCommand, m_TelescopingArmLowCommand); } // A
-      if ( OI.getOperator().getCircleButtonPressed() ) { Commands.parallel(r_PivotingArmMediumCommand, m_TelescopingArmMediumCommand); } // B
-      if ( OI.getOperator().getSquareButtonPressed() ) { Commands.parallel(r_PivotingGrabHighCommand, m_TelescopingGrabHighCommand); } // X
-      if ( OI.getOperator().getTriangleButtonPressed() ) { Commands.parallel(r_PivotingArmHighCommand, m_TelescopingArmHighCommand); } // Y  
+      OI.getOperator().cross().onTrue( Commands.parallel(r_PivotingArmGroundCommand, m_TelescopingArmLowCommand) );
+      OI.getOperator().circle().onTrue( Commands.parallel(r_PivotingArmMediumCommand, m_TelescopingArmMediumCommand) );
+      OI.getOperator().square().onTrue( Commands.parallel(r_PivotingGrabHighCommand, m_TelescopingGrabHighCommand) );
+      OI.getOperator().triangle().onTrue( Commands.parallel(r_PivotingArmHighCommand, m_TelescopingArmHighCommand) ); 
     }
 
     //joystick controls
-      if ( Math.abs(OI.getOperator().getLeftY()) > 0.01 ) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); }
-      if ( Math.abs(OI.getOperator().getRightY()) > 0.01 ) { m_telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY()); }
+    if ( Math.abs(OI.getOperator().getLeftY()) > 0.01 ) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); }
+    if ( Math.abs(OI.getOperator().getRightY()) > 0.01 ) { m_telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY()); }
 
     //bumper and trigger controls
-      if ( OI.getOperator().getR1ButtonPressed()) { m_ClawCommand.schedule(); }
-      if ( OI.getOperator().getR2ButtonPressed()) { m_ClawWheelForwardCommand.schedule(); }
-      if ( OI.getOperator().getL2ButtonPressed()) { m_ClawWheelReverseCommand.schedule(); }
-      if ( OI.getOperator().getTouchpadPressed()) { m_bikeBreakPeriodicCommand.schedule(); }
+    if ( OI.getOperator().getR2Axis() > 0.01) { m_ClawWheelForwardCommand.schedule(); }
+    if ( OI.getOperator().getL2Axis() > 0.01) { m_ClawWheelReverseCommand.schedule(); }
+    OI.getOperator().L1().onTrue(m_ClawCommand);
+    OI.getOperator().touchpad().onTrue(m_bikeBreakPeriodicCommand);
 
       //if ( OI.getOperator().) { m_ClawCommand.schedule(); }
 

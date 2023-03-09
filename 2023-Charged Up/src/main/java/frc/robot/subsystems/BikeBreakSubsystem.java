@@ -23,8 +23,12 @@ public class BikeBreakSubsystem extends SubsystemBase {
         bikeBreak.set(Value.kReverse);
     }
 
+    public static void toggle() {
+        bikeBreak.toggle();
+    }
+
     public static boolean isOpen() {
-        if (bikeBreak.get() == DoubleSolenoid.Value.kForward) {
+        if (bikeBreak.get().equals(DoubleSolenoid.Value.kForward)) {
             return true;
         } else {
             return false;

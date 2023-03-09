@@ -1,20 +1,18 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
-import frc.robot.subsystems.BikeBreakSubsystem;
+import frc.robot.subsystems.TelescopingArmSubsystem;
 import frc.robot.subsystems.PivotingArmSubsystem;
 
-public class BikeBreakCommand extends CommandBase {
+public class EncoderCommand extends CommandBase {
 
-  public BikeBreakCommand (BikeBreakSubsystem sub) {
-    addRequirements(sub);
+  public EncoderCommand() {
   }
 
   @Override
     public void initialize() {
-      BikeBreakSubsystem.toggle();
+      
     }
   
     // Called every time the scheduler runs while the command is scheduled.
@@ -30,6 +28,6 @@ public class BikeBreakCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-      return false;
+    return false;
   }
 }

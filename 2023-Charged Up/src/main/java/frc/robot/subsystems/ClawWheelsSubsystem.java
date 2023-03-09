@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -20,14 +21,21 @@ public class ClawWheelsSubsystem extends SubsystemBase {
         cwm1.setSmartCurrentLimit(Constants.neoAmpLimit);
         cwm2.setSmartCurrentLimit(Constants.neoAmpLimit);
         
+        
         cwm2.setInverted(true);
-        cwm2.follow(cwm1);
     }
 
     
     public static void setIntakeSpeed(double intakeSpeed) {
         //must calculate current length
-        cwm1.set(intakeSpeed);
+        double _intakeSpeed;
+
+        _intakeSpeed = 0.2 * (intakeSpeed + 1);
+
+        cwm1.set(_intakeSpeed);
+        cwm2.set(_intakeSpeed);
+        SmartDashboard.putNumber("_IntakeSpeed", _intakeSpeed);
+        
     }
     
 }
