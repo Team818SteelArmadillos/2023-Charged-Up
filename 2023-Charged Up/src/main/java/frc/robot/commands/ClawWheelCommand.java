@@ -9,8 +9,11 @@ import frc.robot.OI;
 public class ClawWheelCommand extends CommandBase {
 
   int _state;
-  public ClawWheelCommand(int state) {
+  private ClawWheelsSubsystem clawWheelsSubsystem;
+  
+  public ClawWheelCommand(int state, ClawWheelsSubsystem sub) {
     _state = state;
+    clawWheelsSubsystem = sub;
   }
 
   // Called when the command is initially scheduled.
@@ -22,9 +25,9 @@ public class ClawWheelCommand extends CommandBase {
   @Override
   public void execute() {
     if (_state == 0) {
-      ClawWheelsSubsystem.setIntakeSpeed(1);
+      clawWheelsSubsystem.setIntakeSpeed(1);
     } else {
-      ClawWheelsSubsystem.setIntakeSpeed(-0.5);
+      clawWheelsSubsystem.setIntakeSpeed(-0.5);
     }
     SmartDashboard.putNumber("R2 Axis", OI.getOperator().getR2Axis());
   }
@@ -32,7 +35,7 @@ public class ClawWheelCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    ClawWheelsSubsystem.setIntakeSpeed(0);
+    clawWheelsSubsystem.setIntakeSpeed(0);
   }
 
   // Returns true when the command should end.
@@ -40,13 +43,6 @@ public class ClawWheelCommand extends CommandBase {
   public boolean isFinished() {
     
     return false;
-    /*
-    if ( OI.getOperator().R2().getAsBoolean() == false || OI.getOperator().L2().getAsBoolean() == false) {
-      return true;
-    } else {
-      return false;
-    }
-    */
 
   }
      

@@ -8,8 +8,10 @@ import frc.robot.subsystems.PivotingArmSubsystem;
 
 public class BikeBreakCommand extends CommandBase {
 
-  public BikeBreakCommand () {
+  private BikeBreakSubsystem bikeBreakSubsystem;
 
+  public BikeBreakCommand (BikeBreakSubsystem sub) {
+    bikeBreakSubsystem = sub;
   }
 
   @Override
@@ -19,7 +21,7 @@ public class BikeBreakCommand extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-      
+      bikeBreakSubsystem.toggle();
     }
     
     // Called once the command ends or is interrupted.

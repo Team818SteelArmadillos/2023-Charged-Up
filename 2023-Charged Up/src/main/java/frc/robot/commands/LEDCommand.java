@@ -6,9 +6,15 @@ import frc.robot.subsystems.LEDSubsystem;
 
 public class LEDCommand extends CommandBase {
     
+    private LEDSubsystem ledSubsystem;
+
+    public LEDCommand(LEDSubsystem sub) {
+      ledSubsystem = sub;
+    }
+
     @Override
     public void initialize() {
-      LEDSubsystem.setLEDs( OI.getOperator().square().getAsBoolean() );
+      ledSubsystem.setLEDs( OI.getOperator().square().getAsBoolean() );
     }
   
     // Called every time the scheduler runs while the command is scheduled.
