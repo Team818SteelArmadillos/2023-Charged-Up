@@ -11,10 +11,12 @@ public class PivotingArmCommand extends CommandBase {
 
   public static int _state;
   public static int[] revArmAngles;
+  private PivotingArmSubsystem pivotingArmSubsystem;
 
   public PivotingArmCommand (int state, PivotingArmSubsystem sub) {
     addRequirements(sub);
     _state = state;
+    pivotingArmSubsystem = sub;
   }
   
   // Called when the command is initially scheduled.
@@ -34,18 +36,18 @@ public class PivotingArmCommand extends CommandBase {
 
     switch (_state) {
       //forward angles
-      case 0:  PivotingArmSubsystem.setPivotAngle(Constants.armAngles[0]); break;
-      case 1:  PivotingArmSubsystem.setPivotAngle(Constants.armAngles[1]); break;
-      case 2:  PivotingArmSubsystem.setPivotAngle(Constants.armAngles[2]); break;
-      case 3:  PivotingArmSubsystem.setPivotAngle(Constants.armAngles[3]); break;
-      case 4:  PivotingArmSubsystem.setPivotAngle(Constants.armAngles[4]); break;
+      case 0:  pivotingArmSubsystem.setPivotAngle(Constants.armAngles[0]); break;
+      case 1:  pivotingArmSubsystem.setPivotAngle(Constants.armAngles[1]); break;
+      case 2:  pivotingArmSubsystem.setPivotAngle(Constants.armAngles[2]); break;
+      case 3:  pivotingArmSubsystem.setPivotAngle(Constants.armAngles[3]); break;
+      case 4:  pivotingArmSubsystem.setPivotAngle(Constants.armAngles[4]); break;
 
       //reversed angles
-      case 5:  PivotingArmSubsystem.setPivotAngle(revArmAngles[0]); break;
-      case 6:  PivotingArmSubsystem.setPivotAngle(revArmAngles[1]); break;
-      case 7:  PivotingArmSubsystem.setPivotAngle(revArmAngles[2]); break;
-      case 8:  PivotingArmSubsystem.setPivotAngle(revArmAngles[3]); break;
-      case 9:  PivotingArmSubsystem.setPivotAngle(revArmAngles[4]); break;
+      case 5:  pivotingArmSubsystem.setPivotAngle(revArmAngles[0]); break;
+      case 6:  pivotingArmSubsystem.setPivotAngle(revArmAngles[1]); break;
+      case 7:  pivotingArmSubsystem.setPivotAngle(revArmAngles[2]); break;
+      case 8:  pivotingArmSubsystem.setPivotAngle(revArmAngles[3]); break;
+      case 9:  pivotingArmSubsystem.setPivotAngle(revArmAngles[4]); break;
       default: break;
     }
     
@@ -60,7 +62,7 @@ public class PivotingArmCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return PivotingArmSubsystem.PID.atSetpoint();
+    return pivotingArmSubsystem.PID.atSetpoint();
   }
      
 }

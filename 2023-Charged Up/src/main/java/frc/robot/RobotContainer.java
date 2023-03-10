@@ -22,9 +22,13 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.BikeBreakSubsystem;
 import frc.robot.subsystems.ClawWheelsSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.LimeNetwork;
+import frc.robot.subsystems.Pathplanning;
 import frc.robot.subsystems.PistonClawSubsystem;
 import frc.robot.subsystems.PivotingArmSubsystem;
 import frc.robot.subsystems.SwerveDrivetrain;
+import frc.robot.subsystems.SwerveModule;
 import frc.robot.subsystems.TelescopingArmSubsystem;
  
 
@@ -59,34 +63,24 @@ public class RobotContainer {
 
 
   /* Subsystems */
-  private final SwerveDrivetrain m_swerveDrivetrain = new SwerveDrivetrain();
+  private final BikeBreakSubsystem m_bikeBreakSubsystem = new BikeBreakSubsystem();
+  private final ClawWheelsSubsystem m_clawWheelsSubsystem = new ClawWheelsSubsystem();
+  private final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
+  private final LimeNetwork m_limeNetwork = new LimeNetwork();
+  private final Pathplanning m_pathplanning = new Pathplanning();
+  private final PistonClawSubsystem m_PistonClawSubsystem = new PistonClawSubsystem();
   private final PivotingArmSubsystem m_pivotingArmSubsystem = new PivotingArmSubsystem();
-  private final TelescopingArmSubsystem m_telescopingArmSubsystem = new TelescopingArmSubsystem();
+  private final SwerveDrivetrain m_swerveDrivetrain = new SwerveDrivetrain();
+  private final TelescopingArmSubsystem m_telescopingArmSubsystem = new TelescopingArmSubsystem();  
 
-  //TelescopingArmCommand instances for different lengths
-  public final TelescopingArmCommand m_TelescopingArmZeroCommand = new TelescopingArmCommand(0);
-  public final TelescopingArmCommand m_TelescopingArmLowCommand = new TelescopingArmCommand(1);
-  public final TelescopingArmCommand m_TelescopingArmMediumCommand = new TelescopingArmCommand(2);
-  public final TelescopingArmCommand m_TelescopingGrabHighCommand = new TelescopingArmCommand(3);
-  public final TelescopingArmCommand m_TelescopingArmHighCommand = new TelescopingArmCommand(4);
-  
-  //PivotingArmCommand instances for different arm angles
-  public final PivotingArmCommand m_PivotingArmGroundCommand = new PivotingArmCommand(0, m_pivotingArmSubsystem); // Sets angle to 0 deg
-  public final PivotingArmCommand m_PivotingArmMediumCommand = new PivotingArmCommand(1, m_pivotingArmSubsystem); // sets angle to 30 deg
-  public final PivotingArmCommand m_PivotingArmHighCommand = new PivotingArmCommand(2, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
-  public final PivotingArmCommand m_PivotingGrabHighCommand = new PivotingArmCommand(3, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
-  public final PivotingArmCommand m_PivotingArmRestingCommand = new PivotingArmCommand(4, m_pivotingArmSubsystem); // Sets angle to 90 deg
-  
-  //reversed pivoting arm commands
-  public final PivotingArmCommand r_PivotingArmGroundCommand = new PivotingArmCommand(5, m_pivotingArmSubsystem); // Sets angle to 0 deg
-  public final PivotingArmCommand r_PivotingArmMediumCommand = new PivotingArmCommand(6, m_pivotingArmSubsystem); // sets angle to 30 deg
-  public final PivotingArmCommand r_PivotingArmHighCommand = new PivotingArmCommand(7, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
-  public final PivotingArmCommand r_PivotingGrabHighCommand = new PivotingArmCommand(8, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
-  public final PivotingArmCommand r_PivotingArmRestingCommand = new PivotingArmCommand(9, m_pivotingArmSubsystem); // Sets angle to 90 deg
-  
-  //public Trigger operatorX = new Trigger(OI.getOperator().x());
-  
-  
+  /*///
+          Commands
+  ///*/
+  private final BikeBreakCommand m_BikeBreakCommand = new BikeBreakCommand(m_bikeBreakSubsystem);
+  private final ClawCommand m_ClawCommand = new ClawCommand(m_PistonClawSubsystem);
+
+  private final ClawWheelCommand m_ClawWheelForwardCommand = new ClawWheelCommand(m_clawWheelsSubsystem, 0);
+  private final ClawWheelCommand m_ClawWheelReverseCommand = new ClawWheelCommand(m_clawWheelsSubsystem, 1);
 
   public RobotContainer() {
 
@@ -125,10 +119,10 @@ public class RobotContainer {
     
     if ( Math.abs(OI.getOperator().getLeftY()) > 0.01 ) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); }
     if ( Math.abs(OI.getOperator().getRightY()) > 0.01 ) { m_telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY()); }
-    OI.getOperator().L1().onTrue( new ClawCommand() );
-    OI.getOperator().touchpad().onTrue( new BikeBreakCommand() );
-    OI.getOperator().R2().whileTrue( new ClawWheelCommand(0) );
-    OI.getOperator().L2().whileTrue( new ClawWheelCommand(1) );
+    OI.getOperator().L1().onTrue( m_ClawCommand );
+    OI.getOperator().touchpad().whileTrue( m_BikeBreakCommand );
+    OI.getOperator().R2().whileTrue( m_ClawWheelForwardCommand );
+    OI.getOperator().L2().whileTrue( m_ClawWheelReverseCommand );
     
 
   }

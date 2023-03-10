@@ -13,7 +13,7 @@ public class BikeBreakSubsystem extends SubsystemBase {
     // Initialize here
     public BikeBreakSubsystem() {
         bikeBreak = new DoubleSolenoid(Constants.pneumaticPistonPort, PneumaticsModuleType.CTREPCM, Constants.pneumaticPorts[6], Constants.pneumaticPorts[7]);
-        bikeBreak.set(Value.kReverse);
+        setArmLocked();
     }
 
     public void setArmLocked() {
@@ -29,11 +29,7 @@ public class BikeBreakSubsystem extends SubsystemBase {
     }
 
     public boolean isOpen() {
-        if (bikeBreak.get().equals(DoubleSolenoid.Value.kForward)) {
-            return true;
-        } else {
-            return false;
-        }
+        return bikeBreak.get().equals(Value.kReverse);
     }
 
 }

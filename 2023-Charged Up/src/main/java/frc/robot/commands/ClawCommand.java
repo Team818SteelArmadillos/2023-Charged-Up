@@ -7,13 +7,16 @@ import frc.robot.subsystems.PistonClawSubsystem;
 
 public class ClawCommand extends CommandBase {
 
-  public ClawCommand() {
+  private PistonClawSubsystem pistonClawSubsystem;
+  public ClawCommand(PistonClawSubsystem sub) {
+    addRequirements(sub);
+    pistonClawSubsystem = sub;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    PistonClawSubsystem.toggle();
+    pistonClawSubsystem.toggle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
