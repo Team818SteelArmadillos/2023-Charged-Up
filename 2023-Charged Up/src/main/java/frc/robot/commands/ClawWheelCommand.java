@@ -22,9 +22,9 @@ public class ClawWheelCommand extends CommandBase {
   @Override
   public void execute() {
     if (_state == 0) {
-      ClawWheelsSubsystem.setIntakeSpeed( OI.getOperator().getR2Axis());
+      ClawWheelsSubsystem.setIntakeSpeed(1);
     } else {
-      ClawWheelsSubsystem.setIntakeSpeed( -(OI.getOperator().getL2Axis()) );
+      ClawWheelsSubsystem.setIntakeSpeed(-0.5);
     }
     SmartDashboard.putNumber("R2 Axis", OI.getOperator().getR2Axis());
   }
@@ -32,12 +32,22 @@ public class ClawWheelCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    ClawWheelsSubsystem.setIntakeSpeed(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    
     return false;
+    /*
+    if ( OI.getOperator().R2().getAsBoolean() == false || OI.getOperator().L2().getAsBoolean() == false) {
+      return true;
+    } else {
+      return false;
+    }
+    */
+
   }
      
 }

@@ -20,8 +20,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.SwerveDrive;
 import frc.robot.subsystems.BikeBreakSubsystem;
+import frc.robot.subsystems.ClawWheelsSubsystem;
+import frc.robot.subsystems.PistonClawSubsystem;
 import frc.robot.subsystems.PivotingArmSubsystem;
 import frc.robot.subsystems.SwerveDrivetrain;
 import frc.robot.subsystems.TelescopingArmSubsystem;
@@ -61,17 +62,6 @@ public class RobotContainer {
   private final SwerveDrivetrain m_swerveDrivetrain = new SwerveDrivetrain();
   private final PivotingArmSubsystem m_pivotingArmSubsystem = new PivotingArmSubsystem();
   private final TelescopingArmSubsystem m_telescopingArmSubsystem = new TelescopingArmSubsystem();
-  private final BikeBreakSubsystem m_bikeBreakSubsystem = new BikeBreakSubsystem();
-
-  //BikeBreakCommand instances
-  public final BikeBreakCommand m_bikeBreakPeriodicCommand = new BikeBreakCommand(m_bikeBreakSubsystem);
-
-  //ClawCommand instances
-  public final ClawCommand m_ClawCommand = new ClawCommand();
-
-  //ClawWheelCommand instances
-  public final ClawWheelCommand m_ClawWheelForwardCommand = new ClawWheelCommand(0);
-  public final ClawWheelCommand m_ClawWheelReverseCommand = new ClawWheelCommand(1);
 
   //TelescopingArmCommand instances for different lengths
   public final TelescopingArmCommand m_TelescopingArmZeroCommand = new TelescopingArmCommand(0);
@@ -120,7 +110,7 @@ public class RobotContainer {
   public void configureButtonBindings() {
 
     //pivoting arm controls
-    if (OI.getOperator().L1().getAsBoolean() == false) {
+    /*if (OI.getOperator().L1().getAsBoolean() == false) {
       OI.getOperator().cross().onTrue( Commands.parallel(m_PivotingArmGroundCommand, m_TelescopingArmLowCommand) );
       OI.getOperator().circle().onTrue( Commands.parallel(m_PivotingArmMediumCommand, m_TelescopingArmMediumCommand) );
       OI.getOperator().square().onTrue( Commands.parallel(m_PivotingGrabHighCommand, m_TelescopingGrabHighCommand) );
@@ -131,36 +121,16 @@ public class RobotContainer {
       OI.getOperator().square().onTrue( Commands.parallel(r_PivotingGrabHighCommand, m_TelescopingGrabHighCommand) );
       OI.getOperator().triangle().onTrue( Commands.parallel(r_PivotingArmHighCommand, m_TelescopingArmHighCommand) ); 
     }
-
-    //joystick controls
+    */
+    
     if ( Math.abs(OI.getOperator().getLeftY()) > 0.01 ) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); }
     if ( Math.abs(OI.getOperator().getRightY()) > 0.01 ) { m_telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY()); }
+    OI.getOperator().L1().onTrue( new ClawCommand() );
+    OI.getOperator().touchpad().onTrue( new BikeBreakCommand() );
+    OI.getOperator().R2().whileTrue( new ClawWheelCommand(0) );
+    OI.getOperator().L2().whileTrue( new ClawWheelCommand(1) );
+    
 
-    //bumper and trigger controls
-    if ( OI.getOperator().getR2Axis() > 0.01) { m_ClawWheelForwardCommand.schedule(); }
-    if ( OI.getOperator().getL2Axis() > 0.01) { m_ClawWheelReverseCommand.schedule(); }
-    OI.getOperator().L1().onTrue(m_ClawCommand);
-    OI.getOperator().touchpad().onTrue(m_bikeBreakPeriodicCommand);
-
-      //if ( OI.getOperator().) { m_ClawCommand.schedule(); }
-
-    // I LOVE TO CODE ANDN FDSFJ SFDIERIVTEINVE INTESFJIGE BSDFY PAWREWTS
-
-   /* 
-    if ( OI.getOperator().getR2Button() ) { m_ClawCommand.schedule(); } // R1
-    if ( OI.getOperator().getR1ButtonPressed()) { m_ClawWheelForwardCommand.schedule(); } // R2
-    if ( OI.getOperator().getL2Button() ) { Commands.parallel(m_PivotingArmRestingCommand, m_TelescopingArmZeroCommand); } // L1
-    if ( OI.getOperator().getL1ButtonPressed() ) { m_ClawWheelReverseCommand.schedule(); } // L2
-    */
-
-  }
-
-  public Command getAutonInit() {
-    return m_ClawCommand;
-  }
-  
-  public Command getAutonPeriodic() {
-    return m_ClawCommand;
   }
 
   private static SendableChooser<Command> autoChooser;

@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.TelescopingArmSubsystem;
@@ -7,15 +8,17 @@ import frc.robot.subsystems.TelescopingArmSubsystem;
 public class TelescopingArmCommand extends CommandBase { 
     
     private int _state;
+    private TelescopingArmSubsystem telescopingArmSubsystem;
 
-    public TelescopingArmCommand(int state) {
-        _state = state;
+    public TelescopingArmCommand(TelescopingArmSubsystem sub) {
+        addRequirements(sub);
+        telescopingArmSubsystem = sub;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        TelescopingArmSubsystem.setArmLength(0);
+        //TelescopingArmSubsystem.setArmLength(0);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

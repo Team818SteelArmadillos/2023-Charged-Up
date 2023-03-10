@@ -14,16 +14,16 @@ import frc.robot.Constants;
 
 
 public class PivotingArmSubsystem extends SubsystemBase {
-    public static TalonSRX pm1; // pivoting motor 1
-    public static TalonSRX pm2;
-    public static TalonSRX pm3;
+    public TalonSRX pm1; // pivoting motor 1
+    public TalonSRX pm2;
+    public TalonSRX pm3;
     
-    public static PIDController PID;
-    public static DutyCycleEncoder encoder; // = new Encoder(0, 0, 0); // LETS CODE THIS THING!!
-    public static double currentAngle; 
+    public PIDController PID;
+    public DutyCycleEncoder encoder; // = new Encoder(0, 0, 0); // LETS CODE THIS THING!!
+    public double currentAngle; 
     
     // Initialize here
-    static {
+    public PivotingArmSubsystem() {
         // motor stuff
         pm1 = new TalonSRX(Constants.pivotingMotorPorts[0]);
         pm2 = new TalonSRX(Constants.pivotingMotorPorts[1]);
@@ -41,17 +41,17 @@ public class PivotingArmSubsystem extends SubsystemBase {
         SmartDashboard.putNumber( "Pivoting Arm Encoder", encoder.get() );
     }
 
-    public static void setPivotAngle(double setpointAngle) {
+    public void setPivotAngle(double setpointAngle) {
         currentAngle = encoder.get() * 360; // Converts the encoder rotation values to degrees
         pm1.set(ControlMode.PercentOutput, PID.calculate(currentAngle, setpointAngle));
     }
 
-    public static void setPivotSpeed(double pivotSpeed) {
+    public void setPivotSpeed(double pivotSpeed) {
         pm1.set(ControlMode.PercentOutput, pivotSpeed);
         SmartDashboard.putNumber("pivotingEncoder", encoder.get());
     }
 
-    public static void resetPivotingEncoder() {
+    public void resetPivotingEncoder() {
         encoder.reset();
     }
 

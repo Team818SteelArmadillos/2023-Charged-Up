@@ -12,13 +12,13 @@ import frc.robot.Constants;
 
 public class TelescopingArmSubsystem extends SubsystemBase {
 
-    public static TalonFX tm; //telescoping motor
+    public TalonFX tm; //telescoping motor
     
-    public static PIDController PID;
-    public static double currentLength; 
+    public PIDController PID;
+    public double currentLength; 
     
     // Initialize here
-    static {
+    public TelescopingArmSubsystem() {
         // motor stuff
         tm = new TalonFX(Constants.telscopingMotorPort);
 
@@ -26,17 +26,17 @@ public class TelescopingArmSubsystem extends SubsystemBase {
         PID = new PIDController(Constants.tP, Constants.tI, Constants.tD);
     }
 
-    public static void setArmLength(double setpointLength) {
+    public void setArmLength(double setpointLength) {
         //must calculate current length
         currentLength = Constants.armLengths[0] + ( tm.getSelectedSensorPosition() * Constants.ticksToFeet );    
         tm.set(ControlMode.PercentOutput, PID.calculate(currentLength, setpointLength));
     }
     
-    public static void setSpeed(double speed) {
+    public void setSpeed(double speed) {
         tm.set(ControlMode.PercentOutput, speed);
     }
 
-    public static void resetTelescopingEncoder() {
+    public void resetTelescopingEncoder() {
         
     }
 }

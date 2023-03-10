@@ -8,26 +8,27 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class BikeBreakSubsystem extends SubsystemBase {
     
-    static DoubleSolenoid bikeBreak;
+     DoubleSolenoid bikeBreak;
 
     // Initialize here
-    static {
+    public BikeBreakSubsystem() {
         bikeBreak = new DoubleSolenoid(Constants.pneumaticPistonPort, PneumaticsModuleType.CTREPCM, Constants.pneumaticPorts[6], Constants.pneumaticPorts[7]);
-    }
-
-    public static void setArmLocked() {
-        bikeBreak.set(Value.kForward);
-    }
-
-    public static void setArmUnlocked() {
         bikeBreak.set(Value.kReverse);
     }
 
-    public static void toggle() {
+    public void setArmLocked() {
+        bikeBreak.set(Value.kForward);
+    }
+
+    public void setArmUnlocked() {
+        bikeBreak.set(Value.kReverse);
+    }
+
+    public void toggle() {
         bikeBreak.toggle();
     }
 
-    public static boolean isOpen() {
+    public boolean isOpen() {
         if (bikeBreak.get().equals(DoubleSolenoid.Value.kForward)) {
             return true;
         } else {

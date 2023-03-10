@@ -12,14 +12,14 @@ public class LEDSubsystem extends SubsystemBase {
     static CANdleConfiguration config;
     static boolean toggle;
     
-    static { 
+    public LEDSubsystem() { 
         CANdle candle = new CANdle(0);
         CANdleConfiguration config = new CANdleConfiguration();
         config.stripType = LEDStripType.RGB;
         candle.configAllSettings(config);
     }
 
-    public static void setLEDs(boolean aButtonPressed) {
+    public void setLEDs(boolean aButtonPressed) {
         if (aButtonPressed) {
             toggle = true;
         }

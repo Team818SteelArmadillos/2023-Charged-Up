@@ -11,19 +11,19 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class LimeNetwork extends SubsystemBase {
 
   // Limelight network table
-  private static NetworkTable limeTable;
+  private NetworkTable limeTable;
 
   // Limelight network entries
-  private static NetworkTableEntry tx;
-  private static NetworkTableEntry ty;
-  private static NetworkTableEntry ta;
+  private NetworkTableEntry tx;
+  private NetworkTableEntry ty;
+  private NetworkTableEntry ta;
 
   //read values periodically
-  private static double x = 0.0;    
-  private static double y = 0.0;    
-  private static double area = 0.0; 
+  private double x = 0.0;    
+  private double y = 0.0;    
+  private double area = 0.0; 
 
-  static {
+  public LimeNetwork() {
     limeTable = NetworkTableInstance.getDefault().getTable("limelight");
 
     tx = limeTable.getEntry("tx");
@@ -31,28 +31,28 @@ public class LimeNetwork extends SubsystemBase {
     ta = limeTable.getEntry("ta");
   }
 
-  public static void updateValues() {
+  public void updateValues() {
     x = tx.getDouble(0.0);
     y = ty.getDouble(0.0);
     area = ta.getDouble(0.0);
   }
 
-  public static double getTX() {
+  public  double getTX() {
     updateValues();
     return x;
   }
   
-  public static double getTY() {
+  public  double getTY() {
     updateValues();
     return y;
   }
 
-  public static double getTA() {
+  public  double getTA() {
     updateValues();
     return area;
   }
 
-  public static double[] values() {
+  public  double[] values() {
     updateValues();
     double[] values = {x, y, area};
     return values;

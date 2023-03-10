@@ -14,7 +14,6 @@ public class ClawCommand extends CommandBase {
   @Override
   public void initialize() {
     PistonClawSubsystem.toggle();
-    SmartDashboard.putBoolean("Is claw open" , PistonClawSubsystem.isOpen());
   }
 
   // Called every time the scheduler runs while the command is scheduled.
