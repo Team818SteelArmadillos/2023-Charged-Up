@@ -233,4 +233,9 @@ public final class Constants {
     public static final double armSlewRate = 78;
     // Neo 550 Motor Stuff
     public static final int neoAmpLimit = 20 /*AMPs*/; // Cannot forget units!
+
+    //Falcon 500 Motor Limit
+    //public static final int falcon500MaxLimit = x; /*rotations - x is a placeholder */
+    //public static final int falcon500MinLimit = y; 
+    public static final int boreEncoder = 0;
 }
