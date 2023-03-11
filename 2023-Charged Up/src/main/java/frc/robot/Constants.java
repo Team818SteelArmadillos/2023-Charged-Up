@@ -204,11 +204,10 @@ public final class Constants {
     public static final int telscopingMotorPort = 16;
     public static final int[] clawWheelMotorPort = {20, 21};
 
-    // pivoting motor Values 
-    public static final double pP = -0.05;
+    // Operator Values 
+    public static final double pP = 0.5;
     public static final double pivotI = 0;
-    public static final double pivotD = 0;
-    public static final double pPIDTolerance = 2;
+    public static final double pivotD = 1;
 
     //Telescoping Values
     public static final double armLengths[] = {0, 0, 0, 0, 0};
@@ -223,14 +222,13 @@ public final class Constants {
     public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
 
     // Piston Claw Values
-    public static final double clawWheelForawrdSpeed = 0.20;
+    public static final double clawWheelForwardSpeed = 0.20;
     public static final double clawWheelReverseSpeed = -0.20;
 
     // Pivoting Arm Angles
     public static final int[] armAngles = {0, 30, 45, 67, 90};
     public static final int[] revArmAngles = {0, -30, -45, -67, -90};
-    public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
-    public static final double armSlewRate = 78;
+
     // Neo 550 Motor Stuff
     public static final int neoAmpLimit = 20 /*AMPs*/; // Cannot forget units!
 
@@ -238,4 +236,10 @@ public final class Constants {
     //public static final int falcon500MaxLimit = x; /*rotations - x is a placeholder */
     //public static final int falcon500MinLimit = y; 
     public static final int boreEncoder = 0;
+
+    //Charging Station PID Values
+    public static final double csP = 0;
+    public static final double csI = 0;
+    public static final double csD = 0;
+    public static final double csTolerance = 5;
 }

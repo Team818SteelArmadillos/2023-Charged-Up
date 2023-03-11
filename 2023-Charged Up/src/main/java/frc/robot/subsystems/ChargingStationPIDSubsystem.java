@@ -7,6 +7,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.Pigeon2;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 import edu.wpi.first.math.controller.PIDController;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 
 //im desperately trying to figure out how to PID lol - casey
@@ -22,18 +25,19 @@ public class ChargingStationPIDSubsystem extends SubsystemBase {
     public double currentPitch;
     public double goalPitch = 0;
     public PIDController pid;
-    public double dm; //placeholder for driving motors
+    public TalonFX dm; //placeholder for driving motors
 
     //initialize here! 😂
     public ChargingStationPIDSubsystem() {
         SmartDashboard.putNumber("Pitch", pigeon.getPitch());
         currentPitch = pigeon.getPitch();
         pid = new PIDController(Constants.csP, Constants.csI, Constants.csD);
-        
-}
+        pid.setTolerance(Constants.csTolerance);
+        pid.reset();
+    }
 
-public void fixPitch(){
-    dm.set(ControlMode.PercentOutput, pid.calculate(currentPitch, goalPitch));
-}
-        
+    public void fixPitch() {
+        dm.set(ControlMode.PercentOutput, pid.calculate(currentPitch, goalPitch));
+    }
+
 }
