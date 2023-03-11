@@ -19,23 +19,13 @@ public class LEDSubsystem extends SubsystemBase {
         candle.configAllSettings(config);
     }
 
-    public void setLEDs(boolean aButtonPressed) {
-        if (aButtonPressed) {
-            toggle = true;
-        }
-
-        if (aButtonPressed && toggle == true) {
-            toggle = false;
-        }
-
-        if (toggle == true) {
-            candle.setLEDs(166, 77, 255);
-        }
-
-        else {
-            candle.setLEDs(255, 230, 102);
-        }
+    public void setLEDsViolet() {        
+        candle.setLEDs(166, 77, 255);
     }
 
+    public void setLEDsPink() {
+        candle.setLEDs(255, 230, 102);
     }
+
+}
 

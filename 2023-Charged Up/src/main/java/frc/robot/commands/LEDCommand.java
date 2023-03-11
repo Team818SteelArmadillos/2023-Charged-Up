@@ -7,6 +7,7 @@ import frc.robot.subsystems.LEDSubsystem;
 public class LEDCommand extends CommandBase {
     
     private LEDSubsystem ledSubsystem;
+    private boolean toggle;
 
     public LEDCommand(LEDSubsystem sub) {
       ledSubsystem = sub;
@@ -14,13 +15,21 @@ public class LEDCommand extends CommandBase {
 
     @Override
     public void initialize() {
-      ledSubsystem.setLEDs( OI.getOperator().square().getAsBoolean() );
+
+      if (OI.getOperator().povRight().getAsBoolean() && toggle == false) {
+        toggle = true;
+        ledSubsystem.setLEDsViolet();
+      }
+      else if (OI.getOperator().povRight().getAsBoolean() && toggle == true) {
+        toggle = false;
+        ledSubsystem.setLEDsPink();
+      }
+
     }
   
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-      // not sure what to put here, will update
     }
     
     // Called once the command ends or is interrupted.
