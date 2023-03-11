@@ -207,8 +207,7 @@ public final class Constants {
     // pivoting motor Values 
     public static final double pP = -0.025;
     public static final double pivotI = 0;
-    public static final double pivotD = 0;
-    public static final double pPIDTolerance = 2;
+    public static final double pivotD = 1;
 
     //Telescoping Values
     public static final double armLengths[] = {0, 0, 0, 0, 0};
@@ -223,7 +222,7 @@ public final class Constants {
     public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
 
     // Piston Claw Values
-    public static final double clawWheelForawrdSpeed = 0.20;
+    public static final double clawWheelForwardSpeed = 0.20;
     public static final double clawWheelReverseSpeed = -0.20;
 
     // Pivoting Arm Angles
@@ -243,9 +242,9 @@ public final class Constants {
     //public static final int falcon500MinLimit = y; 
     public static final int boreEncoder = 0;
 
-    //PID values for Charging Station
+    //Charging Station PID Values
     public static final double csP = 0;
     public static final double csI = 0;
     public static final double csD = 0;
-    public static final double csTolerance = 0;
+    public static final double csTolerance = 5;
 }

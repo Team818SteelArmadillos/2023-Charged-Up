@@ -19,7 +19,7 @@ public class TelescopingArmSubsystem extends SubsystemBase {
     public double currentLength; 
     //public DutyCycleEncoder encoder;
 
-    // Initialize herems
+    // Initialize
     public TelescopingArmSubsystem() {
         // motor stuff
         tm = new TalonFX(Constants.telscopingMotorPort);
