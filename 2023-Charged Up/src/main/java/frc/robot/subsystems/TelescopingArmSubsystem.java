@@ -44,7 +44,7 @@ public class TelescopingArmSubsystem extends SubsystemBase {
         tm.set(ControlMode.PercentOutput, speed);
     }
 
-    public void resetTelescopingEncoder() {
+    public static void resetTelescopingEncoder() {
         
     }
 }

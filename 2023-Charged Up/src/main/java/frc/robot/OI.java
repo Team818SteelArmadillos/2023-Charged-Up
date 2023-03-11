@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class OI {
 
-    private static XboxController driveController;
+    private static CommandXboxController driveController;
     private static CommandXboxController operatorController;
 
     //public OI () 
@@ -13,7 +13,7 @@ public class OI {
       operatorController = new CommandXboxController(Constants.operatorControllerPort);
     }
 
-    public static XboxController getDriver() {
+    public static CommandXboxController getDriver() {
       return driveController;
     }
 

@@ -19,7 +19,7 @@ public class PivotingArmSubsystem extends SubsystemBase {
     public TalonSRX pm3;
     
     public PIDController PID;
-    public DutyCycleEncoder encoder; // = new Encoder(0, 0, 0); // LETS CODE THIS THING!!
+    public static DutyCycleEncoder encoder; // = new Encoder(0, 0, 0); // LETS CODE THIS THING!!
     public double currentAngle; 
     
     // Initialize here
@@ -34,11 +34,15 @@ public class PivotingArmSubsystem extends SubsystemBase {
 
         //pid stuff
         PID = new PIDController(Constants.pP, Constants.pivotI, Constants.pivotD);
-        
+        PID.setTolerance(Constants.pPIDTolerance);
+        PID.reset();
+
         //encoder stuff
         encoder = new DutyCycleEncoder(Constants.THROUGH_BORE_ENCODER); //these encoder paramters are undefined since
-        encoder.reset();
+        //encoder.reset();
         SmartDashboard.putNumber( "Pivoting Arm Encoder", encoder.get() );
+
+        
     }
 
     public void setPivotAngle(double setpointAngle) {
@@ -51,8 +55,15 @@ public class PivotingArmSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("pivotingEncoder", encoder.get());
     }
 
-    public void resetPivotingEncoder() {
+    public static void resetEncoder() {
         encoder.reset();
     }
 
+    public double getEncoder() {
+        return encoder.get();
+    }
+
+    public double getAngle() {
+        return getEncoder() * 360;
+    }
 }
