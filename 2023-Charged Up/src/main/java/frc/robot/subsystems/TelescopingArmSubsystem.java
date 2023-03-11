@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -16,10 +17,9 @@ public class TelescopingArmSubsystem extends SubsystemBase {
     
     public PIDController PID;
     public double currentLength; 
-    public double rotations;
-    //public CANEncoder = encoder;
+    public DutyCycleEncoder encoder;
 
-    // Initialize here
+    // Initialize herems
     public TelescopingArmSubsystem() {
         // motor stuff
         tm = new TalonFX(Constants.telscopingMotorPort);
@@ -28,7 +28,10 @@ public class TelescopingArmSubsystem extends SubsystemBase {
         PID = new PIDController(Constants.tP, Constants.tI, Constants.tD);
 
         //grabs rotations of motor
-        //encoder = new 
+        encoder = new DutyCycleEncoder(Constants.boreEncoder);
+        encoder.reset();
+        encoder.setDistancePerRotation(1);
+        SmartDashboard.putNumber("Telescoping Arm Rotations", encoder.getDistance());
     }
 
     public void setArmLength(double setpointLength) {

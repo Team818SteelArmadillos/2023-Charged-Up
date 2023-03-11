@@ -235,4 +235,5 @@ public final class Constants {
     //Falcon 500 Motor Limit
     //public static final int falcon500MaxLimit = x; /*rotations - x is a placeholder */
     //public static final int falcon500MinLimit = y; 
+    public static final int boreEncoder = 0;
 }
