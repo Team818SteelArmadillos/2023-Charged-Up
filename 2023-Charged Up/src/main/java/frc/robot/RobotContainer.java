@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.BikeBreakSubsystem;
 import frc.robot.subsystems.ClawWheelsSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimeNetwork;
@@ -63,7 +62,6 @@ public class RobotContainer {
 
 
   /* Subsystems */
-  private final BikeBreakSubsystem m_BikeBreakSubsystem = new BikeBreakSubsystem();
   private final ClawWheelsSubsystem m_ClawWheelsSubsystem = new ClawWheelsSubsystem();
   private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
   private final LimeNetwork m_LimeNetwork = new LimeNetwork();
@@ -82,7 +80,7 @@ public class RobotContainer {
   public final TelescopingArmCommand m_TelescopingArmHighCommand = new TelescopingArmCommand(4, m_telescopingArmSubsystem);
 
   //pivoting manual command
-  public final PivotingArmCommand m_PivotingArmCommand = new PivotingArmCommand(m_pivotingArmSubsystem, m_BikeBreakSubsystem);
+  public final PivotingArmCommand m_PivotingArmCommand = new PivotingArmCommand(m_pivotingArmSubsystem);
 
   /*
   public final PivotingArmCommand m_manualPivotingArmCommand = new PivotingArmCommand(-1, m_pivotingArmSubsystem, m_BikeBreakSubsystem);
@@ -106,7 +104,7 @@ public class RobotContainer {
   public final ClawCommand m_ClawCommand = new ClawCommand(m_pistonClawSubsystem);
 
   //bikebreak command
-  public final BikeBreakCommand m_BikeBreakCommand = new BikeBreakCommand(m_BikeBreakSubsystem);
+  final BikeBreakCommand m_BikeBreakCommand = new BikeBreakCommand(m_pivotingArmSubsystem);
 
   //claw wheel commands
   public final ClawWheelCommand m_ClawWheelReverseCommand = new ClawWheelCommand(0, m_ClawWheelsSubsystem);
@@ -163,7 +161,7 @@ public class RobotContainer {
     */
 
     //if (Math.abs( OI.getOperator().getLeftY() ) > 0.05) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); } else {m_pivotingArmSubsystem.setPivotSpeed(0);}
-    OI.getOperator().x().whileTrue(m_EncoderCommand);
+    //OI.getOperator().x().whileTrue(m_EncoderCommand);
     OI.getOperator().leftBumper().whileTrue( m_ClawCommand );
     OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );
     OI.getOperator().rightTrigger().whileTrue( m_ClawWheelReverseCommand );

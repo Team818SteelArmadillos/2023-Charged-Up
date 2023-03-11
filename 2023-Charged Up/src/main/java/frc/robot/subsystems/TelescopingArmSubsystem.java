@@ -17,7 +17,7 @@ public class TelescopingArmSubsystem extends SubsystemBase {
     
     public PIDController PID;
     public double currentLength; 
-    public DutyCycleEncoder encoder;
+    //public DutyCycleEncoder encoder;
 
     // Initialize herems
     public TelescopingArmSubsystem() {
@@ -28,10 +28,12 @@ public class TelescopingArmSubsystem extends SubsystemBase {
         PID = new PIDController(Constants.tP, Constants.tI, Constants.tD);
 
         //grabs rotations of motor
+        /*
         encoder = new DutyCycleEncoder(Constants.boreEncoder);
         encoder.reset();
         encoder.setDistancePerRotation(1);
         SmartDashboard.putNumber("Telescoping Arm Rotations", encoder.getDistance());
+        */
     }
 
     public void setArmLength(double setpointLength) {

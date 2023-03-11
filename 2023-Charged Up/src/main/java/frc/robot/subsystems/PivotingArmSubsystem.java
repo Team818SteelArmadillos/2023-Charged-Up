@@ -6,8 +6,11 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -20,7 +23,10 @@ public class PivotingArmSubsystem extends SubsystemBase {
     
     public PIDController PID;
     public static DutyCycleEncoder encoder; // = new Encoder(0, 0, 0); // LETS CODE THIS THING!!
-    public double currentAngle; 
+    //public double currentAngle; 
+    public int armCounts;
+    
+    public DoubleSolenoid bikeBreak;
     
     // Initialize here
     public PivotingArmSubsystem() {
@@ -42,20 +48,36 @@ public class PivotingArmSubsystem extends SubsystemBase {
         //encoder.reset();
         SmartDashboard.putNumber( "Pivoting Arm Encoder", encoder.get() );
 
+        bikeBreak = new DoubleSolenoid(Constants.pneumaticPistonPort, PneumaticsModuleType.CTREPCM, Constants.pneumaticPorts[6], Constants.pneumaticPorts[7]);
+        setArmLocked();
+
+        armCounts = 0;
         
     }
 
     public void setPivotAngle(double setpointAngle) {
-        currentAngle = encoder.get() * 360; // Converts the encoder rotation values to degrees
-        pm1.set(ControlMode.PercentOutput, PID.calculate(currentAngle, setpointAngle));
+
+        double pidOutput = PID.calculate(getAngle(), setpointAngle);
+
+        if (PID.atSetpoint())  { 
+            armCounts++;
+        } else {
+            armCounts = 0;
+        }
+        
+        if (armCounts > Constants.armSetpointCoutner) { 
+            setArmLocked(); 
+        } else {
+            setArmUnlocked();
+        pm1.set(ControlMode.PercentOutput, pidOutput);
+        } 
     }
 
     public void setPivotSpeed(double pivotSpeed) {
         pm1.set(ControlMode.PercentOutput, pivotSpeed);
-        SmartDashboard.putNumber("pivotingEncoder", encoder.get());
     }
 
-    public static void resetEncoder() {
+    public void resetEncoder() {
         encoder.reset();
     }
 
@@ -64,6 +86,26 @@ public class PivotingArmSubsystem extends SubsystemBase {
     }
 
     public double getAngle() {
-        return getEncoder() * 360;
+        return (getEncoder() * 360) - Constants.encoderOvershoot;
+    }
+
+    public void setArmUnlocked() {
+        bikeBreak.set(Value.kForward);
+    }
+
+    public void setArmLocked() {
+        bikeBreak.set(Value.kReverse);
+    }
+
+    public void toggle() {
+        bikeBreak.toggle();
+    }
+
+    public boolean isBikeBreakEngaged() {
+        if (bikeBreak.get().equals(DoubleSolenoid.Value.kForward)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
