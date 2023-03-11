@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.OI;
 import frc.robot.subsystems.TelescopingArmSubsystem;
 
 public class TelescopingArmCommand extends CommandBase { 
@@ -26,6 +27,7 @@ public class TelescopingArmCommand extends CommandBase {
     @Override
     public void execute() {
         switch (_state) {
+            case -1: telescopingArmSubsystem.setSpeed( OI.getOperator().getRightY() );
             case 0: telescopingArmSubsystem.setArmLength(Constants.armLengths[0]); break;
             case 1: telescopingArmSubsystem.setArmLength(Constants.armLengths[1]); break;
             case 2: telescopingArmSubsystem.setArmLength(Constants.armLengths[2]); break;

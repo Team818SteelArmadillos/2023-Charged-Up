@@ -73,25 +73,29 @@ public class RobotContainer {
   private final TelescopingArmSubsystem m_telescopingArmSubsystem = new TelescopingArmSubsystem();
   
   //TelescopingArmCommand instances for different lengths
+  public final TelescopingArmCommand m_manualTelescopingArmCommand = new TelescopingArmCommand(-1, m_telescopingArmSubsystem);
   public final TelescopingArmCommand m_TelescopingArmZeroCommand = new TelescopingArmCommand(0, m_telescopingArmSubsystem);
   public final TelescopingArmCommand m_TelescopingArmLowCommand = new TelescopingArmCommand(1, m_telescopingArmSubsystem);
   public final TelescopingArmCommand m_TelescopingArmMediumCommand = new TelescopingArmCommand(2, m_telescopingArmSubsystem);
   public final TelescopingArmCommand m_TelescopingGrabHighCommand = new TelescopingArmCommand(3, m_telescopingArmSubsystem);
   public final TelescopingArmCommand m_TelescopingArmHighCommand = new TelescopingArmCommand(4, m_telescopingArmSubsystem);
 
+  //pivoting manual command
+  public final PivotingArmCommand m_manualPivotingArmCommand = new PivotingArmCommand(-1, m_pivotingArmSubsystem, m_BikeBreakSubsystem);
+  
   //PivotingArmCommand instances for different arm angles
-  public final PivotingArmCommand m_PivotingArmGroundCommand = new PivotingArmCommand(0, m_pivotingArmSubsystem); // Sets angle to 0 deg
-  public final PivotingArmCommand m_PivotingArmMediumCommand = new PivotingArmCommand(1, m_pivotingArmSubsystem); // sets angle to 30 deg
-  public final PivotingArmCommand m_PivotingArmHighCommand = new PivotingArmCommand(2, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
-  public final PivotingArmCommand m_PivotingGrabHighCommand = new PivotingArmCommand(3, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
-  public final PivotingArmCommand m_PivotingArmRestingCommand = new PivotingArmCommand(4, m_pivotingArmSubsystem); // Sets angle to 90 deg
+  public final PivotingArmCommand m_PivotingArmGroundCommand = new PivotingArmCommand(0, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // Sets angle to 0 deg
+  public final PivotingArmCommand m_PivotingArmMediumCommand = new PivotingArmCommand(1, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 30 deg
+  public final PivotingArmCommand m_PivotingArmHighCommand = new PivotingArmCommand(2, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 45 dm_eg
+  public final PivotingArmCommand m_PivotingGrabHighCommand = new PivotingArmCommand(3, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 45 dm_eg
+  public final PivotingArmCommand m_PivotingArmRestingCommand = new PivotingArmCommand(4, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // Sets angle to 90 deg
   
   //reversed pivoting arm commands
-  public final PivotingArmCommand r_PivotingArmGroundCommand = new PivotingArmCommand(5, m_pivotingArmSubsystem); // Sets angle to 0 deg
-  public final PivotingArmCommand r_PivotingArmMediumCommand = new PivotingArmCommand(6, m_pivotingArmSubsystem); // sets angle to 30 deg
-  public final PivotingArmCommand r_PivotingArmHighCommand = new PivotingArmCommand(7, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
-  public final PivotingArmCommand r_PivotingGrabHighCommand = new PivotingArmCommand(8, m_pivotingArmSubsystem); // sets angle to 45 dm_eg
-  public final PivotingArmCommand r_PivotingArmRestingCommand = new PivotingArmCommand(9, m_pivotingArmSubsystem); // Sets angle to 90 deg
+  public final PivotingArmCommand r_PivotingArmGroundCommand = new PivotingArmCommand(5, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // Sets angle to 0 deg
+  public final PivotingArmCommand r_PivotingArmMediumCommand = new PivotingArmCommand(6, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 30 deg
+  public final PivotingArmCommand r_PivotingArmHighCommand = new PivotingArmCommand(7, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 45 dm_eg
+  public final PivotingArmCommand r_PivotingGrabHighCommand = new PivotingArmCommand(8, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 45 dm_eg
+  public final PivotingArmCommand r_PivotingArmRestingCommand = new PivotingArmCommand(9, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // Sets angle to 90 deg
   
   //claw command
   public final ClawCommand m_ClawCommand = new ClawCommand(m_pistonClawSubsystem);
@@ -102,9 +106,9 @@ public class RobotContainer {
   //claw wheel commands
   public final ClawWheelCommand m_ClawWheelReverseCommand = new ClawWheelCommand(0, m_ClawWheelsSubsystem);
   public final ClawWheelCommand m_ClawWheelForwardCommand = new ClawWheelCommand(1, m_ClawWheelsSubsystem);
-  
-  
-  
+ 
+ //led command
+  public final LEDCommand m_LEDColorCommand = new LEDCommand(m_LedSubsystem);
 
   public RobotContainer() {
 
@@ -141,8 +145,8 @@ public class RobotContainer {
     }
     */
     
-    if ( Math.abs(OI.getOperator().getLeftY()) > 0.2 ) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); } else { m_pivotingArmSubsystem.setPivotSpeed(0); }
-    if ( Math.abs(OI.getOperator().getRightY()) > 0.2 ) { m_telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY()); } else { m_telescopingArmSubsystem.setSpeed(0); }
+    OI.getOperator().axisGreaterThan(Constants.leftYAxis, 0.1).onTrue(m_manualPivotingArmCommand);
+    OI.getOperator().axisGreaterThan(Constants.rightYAxis, 0.1).onTrue(m_manualTelescopingArmCommand);
     OI.getOperator().leftBumper().whileTrue( m_ClawCommand );
     OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );
     OI.getOperator().rightTrigger().whileTrue( m_ClawWheelReverseCommand );

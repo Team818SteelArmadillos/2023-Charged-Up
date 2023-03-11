@@ -16,7 +16,9 @@ public class TelescopingArmSubsystem extends SubsystemBase {
     
     public PIDController PID;
     public double currentLength; 
-    
+    public double rotations;
+    //public CANEncoder = encoder;
+
     // Initialize here
     public TelescopingArmSubsystem() {
         // motor stuff
@@ -24,6 +26,9 @@ public class TelescopingArmSubsystem extends SubsystemBase {
 
         //pid stuff
         PID = new PIDController(Constants.tP, Constants.tI, Constants.tD);
+
+        //grabs rotations of motor
+        //encoder = new 
     }
 
     public void setArmLength(double setpointLength) {

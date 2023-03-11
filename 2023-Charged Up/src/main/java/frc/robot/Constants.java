@@ -191,6 +191,8 @@ public final class Constants {
     public static final RumbleType DRIVER_RUMBLE_RIGHT = RumbleType.kRightRumble;
     public static final RumbleType OP_RUMBLE_RIGHT = RumbleType.kRightRumble;
     public static final double DRIVING_INTAKE_RUMBLE = 0.3;
+    public static final int leftYAxis = 1;
+    public static final int rightYAxis = 5;
 
     //Drive Ports
     
@@ -225,7 +227,12 @@ public final class Constants {
 
     // Pivoting Arm Angles
     public static final int[] armAngles = {0, 30, 45, 67, 90};
+    public static final int[] revArmAngles = {0, -30, -45, -67, -90};
 
     // Neo 550 Motor Stuff
     public static final int neoAmpLimit = 20 /*AMPs*/; // Cannot forget units!
+
+    //Falcon 500 Motor Limit
+    //public static final int falcon500MaxLimit = x; /*rotations - x is a placeholder */
+    //public static final int falcon500MinLimit = y; 
 }
