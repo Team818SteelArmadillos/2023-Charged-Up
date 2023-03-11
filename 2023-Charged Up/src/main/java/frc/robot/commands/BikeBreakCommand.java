@@ -11,17 +11,18 @@ public class BikeBreakCommand extends CommandBase {
   private BikeBreakSubsystem bikeBreakSubsystem;
 
   public BikeBreakCommand (BikeBreakSubsystem sub) {
+    addRequirements(sub);
     bikeBreakSubsystem = sub;
   }
 
   @Override
     public void initialize() {
+      bikeBreakSubsystem.toggle();
     }
   
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-      bikeBreakSubsystem.toggle();
     }
     
     // Called once the command ends or is interrupted.

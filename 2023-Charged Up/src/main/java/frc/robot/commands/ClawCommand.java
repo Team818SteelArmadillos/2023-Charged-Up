@@ -10,6 +10,7 @@ public class ClawCommand extends CommandBase {
   PistonClawSubsystem pistonClawSubsystem;
 
   public ClawCommand(PistonClawSubsystem sub) {
+    addRequirements(sub);
     pistonClawSubsystem = sub;
   }
 

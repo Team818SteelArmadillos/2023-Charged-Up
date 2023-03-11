@@ -140,12 +140,12 @@ public class RobotContainer {
     }
     */
     
-    if ( Math.abs(OI.getOperator().getLeftY()) > 0.01 ) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); }
-    if ( Math.abs(OI.getOperator().getRightY()) > 0.01 ) { m_telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY()); }
-    OI.getOperator().L1().onTrue( m_ClawCommand );
-    OI.getOperator().touchpad().onTrue( m_BikeBreakCommand );
-    OI.getOperator().R2().whileTrue( m_ClawWheelReverseCommand );
-    OI.getOperator().L2().whileTrue( m_ClawWheelForwardCommand );
+    if ( Math.abs(OI.getOperator().getLeftY()) > 0.2 ) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); } else { m_pivotingArmSubsystem.setPivotSpeed(0); }
+    if ( Math.abs(OI.getOperator().getRightY()) > 0.2 ) { m_telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY()); } else { m_telescopingArmSubsystem.setSpeed(0); }
+    OI.getOperator().leftBumper().whileTrue( m_ClawCommand );
+    OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );
+    OI.getOperator().rightTrigger().whileTrue( m_ClawWheelReverseCommand );
+    OI.getOperator().leftTrigger().whileTrue( m_ClawWheelForwardCommand );
     
 
   }

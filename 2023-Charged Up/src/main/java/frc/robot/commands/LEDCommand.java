@@ -14,7 +14,7 @@ public class LEDCommand extends CommandBase {
 
     @Override
     public void initialize() {
-      ledSubsystem.setLEDs( OI.getOperator().square().getAsBoolean() );
+      ledSubsystem.setLEDs( OI.getOperator().x().getAsBoolean() );
     }
   
     // Called every time the scheduler runs while the command is scheduled.

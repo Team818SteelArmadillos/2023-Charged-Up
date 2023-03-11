@@ -29,7 +29,6 @@ public class ClawWheelCommand extends CommandBase {
     } else {
       clawWheelsSubsystem.setIntakeSpeed(-0.5);
     }
-    SmartDashboard.putNumber("R2 Axis", OI.getOperator().getR2Axis());
   }
 
   // Called once the command ends or is interrupted.
