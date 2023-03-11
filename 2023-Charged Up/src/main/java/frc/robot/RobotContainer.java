@@ -10,6 +10,7 @@ import frc.robot.commands.*;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -81,6 +82,9 @@ public class RobotContainer {
   public final TelescopingArmCommand m_TelescopingArmHighCommand = new TelescopingArmCommand(4, m_telescopingArmSubsystem);
 
   //pivoting manual command
+  public final PivotingArmCommand m_PivotingArmCommand = new PivotingArmCommand(m_pivotingArmSubsystem, m_BikeBreakSubsystem);
+
+  /*
   public final PivotingArmCommand m_manualPivotingArmCommand = new PivotingArmCommand(-1, m_pivotingArmSubsystem, m_BikeBreakSubsystem);
   
   //PivotingArmCommand instances for different arm angles
@@ -96,7 +100,8 @@ public class RobotContainer {
   public final PivotingArmCommand r_PivotingArmHighCommand = new PivotingArmCommand(7, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 45 dm_eg
   public final PivotingArmCommand r_PivotingGrabHighCommand = new PivotingArmCommand(8, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 45 dm_eg
   public final PivotingArmCommand r_PivotingArmRestingCommand = new PivotingArmCommand(9, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // Sets angle to 90 deg
-  
+  */
+
   //claw command
   public final ClawCommand m_ClawCommand = new ClawCommand(m_pistonClawSubsystem);
 
@@ -110,12 +115,16 @@ public class RobotContainer {
  //led command
   public final LEDCommand m_LEDColorCommand = new LEDCommand(m_LedSubsystem);
 
+  //reset encoder command
+  public final EncoderCommand m_EncoderCommand = new EncoderCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
+
   public RobotContainer() {
 
     /* Set Drive as default command*/
     boolean fieldRelative = true;
     boolean openLoop = true;
     
+    m_pivotingArmSubsystem.setDefaultCommand(m_PivotingArmCommand);
     m_swerveDrivetrain.setDefaultCommand(new SwerveDrive(m_swerveDrivetrain, 
       m_driverController, m_translationAxis, m_strafeAxis, m_rotationAxis, fieldRelative, openLoop));
 
@@ -145,8 +154,16 @@ public class RobotContainer {
     }
     */
     
-    OI.getOperator().axisGreaterThan(Constants.leftYAxis, 0.1).onTrue(m_manualPivotingArmCommand);
-    OI.getOperator().axisGreaterThan(Constants.rightYAxis, 0.1).onTrue(m_manualTelescopingArmCommand);
+    /* 
+    OI.getOperator().axisGreaterThan(Constants.leftYAxis, 0.1).whileTrue(m_manualPivotingArmCommand);
+    OI.getOperator().axisLessThan(Constants.leftYAxis, -0.1).whileTrue(m_manualPivotingArmCommand);
+
+    OI.getOperator().axisGreaterThan(Constants.rightYAxis, 0.1).whileTrue(m_manualTelescopingArmCommand);
+    OI.getOperator().axisLessThan(Constants.rightYAxis, -0.1).whileTrue(m_manualTelescopingArmCommand);
+    */
+
+    //if (Math.abs( OI.getOperator().getLeftY() ) > 0.05) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); } else {m_pivotingArmSubsystem.setPivotSpeed(0);}
+    OI.getOperator().x().whileTrue(m_EncoderCommand);
     OI.getOperator().leftBumper().whileTrue( m_ClawCommand );
     OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );
     OI.getOperator().rightTrigger().whileTrue( m_ClawWheelReverseCommand );

@@ -7,12 +7,19 @@ import frc.robot.subsystems.PivotingArmSubsystem;
 
 public class EncoderCommand extends CommandBase {
 
-  public EncoderCommand() {
+  private PivotingArmSubsystem pivotingArmSubsystem;
+  private TelescopingArmSubsystem telescopingArmSubsystem;
+
+  public EncoderCommand(PivotingArmSubsystem sub, TelescopingArmSubsystem sub1) {
+    addRequirements(sub, sub1);
+    pivotingArmSubsystem = sub;
+    telescopingArmSubsystem = sub1;
   }
 
   @Override
     public void initialize() {
-      
+      pivotingArmSubsystem.resetEncoder();
+      telescopingArmSubsystem.resetTelescopingEncoder();
     }
   
     // Called every time the scheduler runs while the command is scheduled.
