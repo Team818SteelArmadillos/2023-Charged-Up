@@ -52,13 +52,12 @@ public class PivotingArmCommand extends CommandBase {
       setPoint = Constants.armAngles[1];
     } else if ( OI.getOperator().y().getAsBoolean() ) {
       setPoint = Constants.armAngles[2];
-    } else if ( OI.getOperator().x().getAsBoolean() ) {
-      setPoint = pivotingArmSubsystem.getAngle();
-    } else {
-      joystickOutput = ( Math.abs( rawJoystickOutput ) > 0.1 ) ? rawJoystickOutput : 0; 
+    } else if ( Math.abs( rawJoystickOutput ) > Constants.controllerDeadzone ) {
+      joystickOutput = rawJoystickOutput;
       setPoint = rateLimit.calculate(setPoint + joystickOutput);
+    } else {
+      // do nothing
     }
-    
   
     MathUtil.clamp(setPoint, Constants.pivotHardLimit, -Constants.pivotHardLimit);
     pivotingArmSubsystem.setPivotAngle(setPoint);
@@ -70,8 +69,6 @@ public class PivotingArmCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     //BikeBreakSubsystem.setArmLocked();
-    
-    pivotingArmSubsystem.setPivotSpeed(0);
     //bikeBreakSubsystem.setArmLocked();
   }
 

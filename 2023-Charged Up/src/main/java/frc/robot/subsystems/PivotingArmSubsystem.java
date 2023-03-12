@@ -65,18 +65,19 @@ public class PivotingArmSubsystem extends SubsystemBase {
 
         double pidOutput = PID.calculate(getAngle(), setpointAngle);
 
-        if (PID.atSetpoint())  { 
+        if ( PID.atSetpoint() )  {
             armCounts++;
         } else {
             armCounts = 0;
         }
         
-        if (armCounts > Constants.armSetpointCoutner) { 
+        if (armCounts > Constants.armSetpointCounter) { 
             setArmLocked(); 
         } else {
             setArmUnlocked();
             setPivotSpeed(pidOutput);
-        } 
+        }
+
     }
 
     public void setPivotSpeed(double pivotSpeed) {
