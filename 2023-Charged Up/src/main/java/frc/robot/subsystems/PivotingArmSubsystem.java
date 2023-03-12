@@ -57,6 +57,12 @@ public class PivotingArmSubsystem extends SubsystemBase {
 
     public void setPivotAngle(double setpointAngle) {
 
+        //Every time setPivotAngle is called, it must perform three functions.
+        //The first of which is to calculate the pidOutput based on the previously defined PID controller, given the current angle and desired angle
+        //The second function acts as a counter to see how long the arm has been within tolerance of the setpoint.
+        //Simply put, the third function checks if the arm has been at the setpoint for "long enough." If so, it locks the arm. Otherwise, it keeps it 
+        //unlocked and keeps moving toward its desired setpoint.
+
         double pidOutput = PID.calculate(getAngle(), setpointAngle);
 
         if (PID.atSetpoint())  { 
@@ -69,7 +75,7 @@ public class PivotingArmSubsystem extends SubsystemBase {
             setArmLocked(); 
         } else {
             setArmUnlocked();
-        pm1.set(ControlMode.PercentOutput, pidOutput);
+            setPivotSpeed(pidOutput);
         } 
     }
 

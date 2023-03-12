@@ -206,8 +206,9 @@ public final class Constants {
 
     // pivoting motor Values 
     public static final double pP = -0.025;
-    public static final double pivotI = 0;
-    public static final double pivotD = 1;
+    public static final double pivotI = 0.0;
+    public static final double pivotD = 1.0;
+    public static final double pPIDTolerance = 2.0;
 
     //Telescoping Values
     public static final double armLengths[] = {0, 0, 0, 0, 0};

@@ -41,7 +41,6 @@ public class ChargingStationPIDSubsystem extends SubsystemBase {
     }
 
 }
-package frc.robot.subsystems;
 
 //im desperately trying to figure out how to PID lol - casey
 //if you can add anything or help at all PLEASE DO
