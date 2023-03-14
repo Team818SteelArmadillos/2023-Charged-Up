@@ -71,16 +71,8 @@ public class RobotContainer {
   private final SwerveDrivetrain m_swerveDrivetrain = new SwerveDrivetrain();
   private final TelescopingArmSubsystem m_telescopingArmSubsystem = new TelescopingArmSubsystem();
   
-  //TelescopingArmCommand instances for different lengths
-  public final TelescopingArmCommand m_manualTelescopingArmCommand = new TelescopingArmCommand(-1, m_telescopingArmSubsystem);
-  public final TelescopingArmCommand m_TelescopingArmZeroCommand = new TelescopingArmCommand(0, m_telescopingArmSubsystem);
-  public final TelescopingArmCommand m_TelescopingArmLowCommand = new TelescopingArmCommand(1, m_telescopingArmSubsystem);
-  public final TelescopingArmCommand m_TelescopingArmMediumCommand = new TelescopingArmCommand(2, m_telescopingArmSubsystem);
-  public final TelescopingArmCommand m_TelescopingGrabHighCommand = new TelescopingArmCommand(3, m_telescopingArmSubsystem);
-  public final TelescopingArmCommand m_TelescopingArmHighCommand = new TelescopingArmCommand(4, m_telescopingArmSubsystem);
-
   //pivoting manual command
-  public final PivotingArmCommand m_PivotingArmCommand = new PivotingArmCommand(m_pivotingArmSubsystem);
+  public final ArmCommand m_PivotingArmCommand = new ArmCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
 
   /*
   public final PivotingArmCommand m_manualPivotingArmCommand = new PivotingArmCommand(-1, m_pivotingArmSubsystem, m_BikeBreakSubsystem);

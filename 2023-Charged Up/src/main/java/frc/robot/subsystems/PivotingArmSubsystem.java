@@ -93,7 +93,7 @@ public class PivotingArmSubsystem extends SubsystemBase {
     }
 
     public double getAngle() {
-        return (getEncoder() * 360) - Constants.encoderOvershoot;
+        return (getEncoder() * 360); //- Constants.encoderOvershoot;
     }
 
     public void setArmUnlocked() {

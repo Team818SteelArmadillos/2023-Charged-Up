@@ -19,7 +19,7 @@ public class EncoderCommand extends CommandBase {
   @Override
     public void initialize() {
       pivotingArmSubsystem.resetEncoder();
-      telescopingArmSubsystem.resetTelescopingEncoder();
+      telescopingArmSubsystem.resetEncoder();
     }
   
     // Called every time the scheduler runs while the command is scheduled.

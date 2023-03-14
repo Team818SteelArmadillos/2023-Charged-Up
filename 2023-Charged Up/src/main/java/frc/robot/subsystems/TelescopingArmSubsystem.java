@@ -2,31 +2,29 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.CTREConfigs;
 import frc.robot.Constants;
 
 public class TelescopingArmSubsystem extends SubsystemBase {
 
-    public TalonFX tm; //telescoping motor
+    public TalonFX telescopingMotor; //telescoping motor
     
-    public PIDController PID;
-    public double currentLength; 
+    public double currentLength;
     //public DutyCycleEncoder encoder;
 
-    // Initialize
+    // Initialize herems
     public TelescopingArmSubsystem() {
         // motor stuff
-        tm = new TalonFX(Constants.telscopingMotorPort);
+        telescopingMotor = new TalonFX(Constants.telscopingMotorPort);
 
         //pid stuff
-        PID = new PIDController(Constants.tP, Constants.tI, Constants.tD);
-
+        configureMotor();
         //grabs rotations of motor
         /*
         encoder = new DutyCycleEncoder(Constants.boreEncoder);
@@ -37,16 +35,26 @@ public class TelescopingArmSubsystem extends SubsystemBase {
     }
 
     public void setArmLength(double setpointLength) {
-        //must calculate current length
-        currentLength = Constants.armLengths[0] + ( tm.getSelectedSensorPosition() * Constants.ticksToFeet );    
-        tm.set(ControlMode.PercentOutput, PID.calculate(currentLength, setpointLength));
+        telescopingMotor.set(ControlMode.Position, setpointLength);
     }
     
     public void setSpeed(double speed) {
-        tm.set(ControlMode.PercentOutput, speed);
+        telescopingMotor.set(ControlMode.PercentOutput, speed);
     }
 
-    public static void resetTelescopingEncoder() {
-        
+    public void resetEncoder() {
+        telescopingMotor.setSelectedSensorPosition(0);
+    }
+
+    public double getEncoder() {
+        return telescopingMotor.getSelectedSensorPosition();
+    }
+
+    public void configureMotor() {
+        telescopingMotor.setInverted(true);
+        telescopingMotor.config_kP(0, Constants.tP);
+        telescopingMotor.config_kI(0, Constants.tI);
+        telescopingMotor.config_kD(0, Constants.tD);
+        telescopingMotor.configAllowableClosedloopError(0, 300);
     }
 }

@@ -207,30 +207,33 @@ public final class Constants {
     // pivoting motor Values 
     public static final double pP = -0.025;
     public static final double pivotI = 0.0;
-    public static final double pivotD = 1.0;
+    public static final double pivotD = 0.0;
     public static final double pPIDTolerance = 2.0;
 
     //Telescoping Values
-    public static final double armLengths[] = {0, 0, 0, 0, 0};
+    public static final double armLengths[] = {0, 50000, 90000, 130000, 170000};
+    public static final double maximumArmLength = 170000; //
+    public static final double minimumArmLength = 0; //
+    public static final double lengthSlewRate = 10000;
 
     public static final double ticksToFeet = 0;
-    public static final double tP = 0.5;
+    public static final double tP = 0.15;
     public static final double tI = 0;
-    public static final double tD = 1;
+    public static final double tD = 0;
 
     // Pneumatic ports
     public static final int pneumaticPistonPort = 17; // Copied from 2022 Rapid React Code (needs to be tested more??)
     public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
 
     // Piston Claw Values
-    public static final double clawWheelForwardSpeed = 0.20;
-    public static final double clawWheelReverseSpeed = -0.20;
+    public static final double clawWheelForawrdSpeed = 0.20;
+    public static final double clawWheelReverseSpeed = -0.80;
 
     // Pivoting Arm Angles
-    public static final int[] armAngles = {0, 30, 45, 67, 90};
-    public static final int[] revArmAngles = {0, -30, -45, -67, -90};
+    public static final int[] armAngles = {0, -37, -58, -90, 90};
+    public static final int[] revArmAngles = {0, 37, 58, 67, -90};
     public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
-    public static final double armSlewRate = 78;
+    public static final double angleSlewRate = 78;
     public static final int armSetpointCounter = 20;
     public static final double controllerDeadzone = 0.05;
 
@@ -244,9 +247,9 @@ public final class Constants {
     //public static final int falcon500MinLimit = y; 
     public static final int boreEncoder = 0;
 
-    //Charging Station PID Values
+    //PID values for Charging Station
     public static final double csP = 0;
     public static final double csI = 0;
     public static final double csD = 0;
-    public static final double csTolerance = 5;
+    public static final double csTolerance = 0;
 }
