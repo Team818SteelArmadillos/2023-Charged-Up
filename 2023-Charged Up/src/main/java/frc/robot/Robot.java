@@ -7,7 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.commands.ManualPathPlanningCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -15,13 +17,18 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  public static SendableChooser<Integer> m_chooser;
 
   //private Command m_autonInit;
   private Command m_autonPeriodic;
   public static CTREConfigs ctreConfigs;
 
-  private RobotContainer m_robotContainer;
+  {
 
+  m_chooser = new SendableChooser<Integer>();
+
+  SmartDashboard.putData(m_chooser);
+  }
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -31,7 +38,10 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     ctreConfigs = new CTREConfigs();
-    m_robotContainer = new RobotContainer();
+    new RobotContainer();
+    m_chooser.setDefaultOption("Default", 0);
+    m_chooser.addOption("Auton1", 1);
+    SmartDashboard.putData("Auton Choices", m_chooser);
   }
 
   /**
@@ -61,6 +71,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     //m_autonInit = m_robotContainer.getAutonInit();
+    ManualPathPlanningCommand.chooseAuton();
     m_autonPeriodic.schedule();
   }
 
@@ -68,6 +79,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     //m_autonPeriodic = m_robotContainer.getAutonPeriodic();
+    ManualPathPlanningCommand.AutonRun();
     m_autonPeriodic.schedule();
   }
 

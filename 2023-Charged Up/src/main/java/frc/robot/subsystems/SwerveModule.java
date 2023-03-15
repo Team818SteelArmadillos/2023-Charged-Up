@@ -22,8 +22,8 @@ public class SwerveModule {
     private double m_coeff;
     private TalonFX m_azimuthMotor;
     private TalonFX m_driveMotor;
-    private CANCoder m_canCoder;
     private double m_lastAngle;
+    private CANCoder m_canCoder;
     private boolean m_turningInverted;
     private boolean m_driveInverted;
     private boolean m_canCoderInverted;
@@ -60,7 +60,7 @@ public class SwerveModule {
         configTurningMotor();
         configDriveMotor();   
 
-        m_lastAngle = getState().angle.getDegrees();
+        getState().angle.getDegrees();
 
         m_azimuthMotor.configSelectedFeedbackCoefficient(encoderCoeff);
 
