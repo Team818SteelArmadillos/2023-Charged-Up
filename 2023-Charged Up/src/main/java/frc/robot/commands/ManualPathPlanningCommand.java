@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.AutoDrive;
@@ -68,6 +69,11 @@ public class ManualPathPlanningCommand extends CommandBase {
   }
 
   public static boolean checkStatus(double[][] coordinates, int index){
+    if(index == 0){
+      Pose2d coolcords = new Pose2d(coordinates[0][1], coordinates[0][2])
+      m_swerveDrivetrain.resetOdometry(coolcords);
+      return true;
+    }
     switch((int)coordinates[index][0]){
       case 0:
         return Math.sqrt(Math.pow(Math.abs(m_swerveDrivetrain.getPose().getX() - coordinates[index][1]), 2) + Math.pow(Math.abs(m_swerveDrivetrain.getPose().getY() - coordinates[index][2]), 2)) < .5;

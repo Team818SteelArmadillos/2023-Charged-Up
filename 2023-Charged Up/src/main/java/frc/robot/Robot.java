@@ -22,6 +22,7 @@ public class Robot extends TimedRobot {
   //private Command m_autonInit;
   private Command m_autonPeriodic;
   public static CTREConfigs ctreConfigs;
+  private RobotContainer m_robotContainer;
 
   {
 
