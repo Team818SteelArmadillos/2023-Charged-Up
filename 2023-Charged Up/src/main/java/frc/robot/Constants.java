@@ -212,12 +212,13 @@ public final class Constants {
 
     //Telescoping Values
     public static final double armLengths[] = {0, 50000, 90000, 130000, 170000};
-    public static final double maximumArmLength = 170000; //
+    public static final double maximumArmLength = 165000; //
     public static final double minimumArmLength = 0; //
     public static final double lengthSlewRate = 10000;
+    public static final int limitSwitchPort = 0;
 
     public static final double ticksToFeet = 0;
-    public static final double tP = 0.15;
+    public static final double tP = 0.10;
     public static final double tI = 0;
     public static final double tD = 0;
 
@@ -226,8 +227,8 @@ public final class Constants {
     public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
 
     // Piston Claw Values
-    public static final double clawWheelForawrdSpeed = 0.20;
-    public static final double clawWheelReverseSpeed = -0.80;
+    public static final double clawWheelForawrdSpeed = 1.0;
+    public static final double clawWheelReverseSpeed = -1.0;
 
     // Pivoting Arm Angles
     public static final int[] armAngles = {0, -37, -58, -90, 90};
@@ -235,7 +236,7 @@ public final class Constants {
     public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
     public static final double angleSlewRate = 78;
     public static final int armSetpointCounter = 20;
-    public static final double controllerDeadzone = 0.05;
+    public static final double controllerDeadzone = 0.1;
 
     public static final double encoderOvershoot = 64.6;
 

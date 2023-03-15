@@ -25,9 +25,9 @@ public class ClawWheelCommand extends CommandBase {
   @Override
   public void execute() {
     if (_state == 0) {
-      clawWheelsSubsystem.setIntakeSpeed(1);
+      clawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelForawrdSpeed);
     } else {
-      clawWheelsSubsystem.setIntakeSpeed(-0.5);
+      clawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelReverseSpeed);
     }
   }
 

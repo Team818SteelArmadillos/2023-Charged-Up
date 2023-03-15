@@ -41,11 +41,7 @@ public class ArmCommand extends CommandBase {
   public void initialize() {
     
     //sets the setpoint to the current location of the arm on startup so that the arm doesn't move
-
-    pivotingArmSubsystem.resetEncoder();
-    telescopingArmSubsystem.resetEncoder();
-    angleSetpoint = pivotingArmSubsystem.getAngle();
-    lengthSetpoint = telescopingArmSubsystem.getEncoder();
+    zeroArm();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -60,21 +56,25 @@ public class ArmCommand extends CommandBase {
     rawRightJoystickInput = OI.getOperator().getRightY();
 
     // Set setPoint values with buttons. only one at a time
-    if ( OI.getOperator().a().getAsBoolean() ) { //neutral position 
-      angleSetpoint = Constants.armAngles[0];
-      lengthSetpoint = Constants.armLengths[0];
-    } else if ( OI.getOperator().b().getAsBoolean() ) { //score high position
-      angleSetpoint = Constants.armAngles[2];
-      lengthSetpoint = Constants.armLengths[3];
-    } else if ( OI.getOperator().y().getAsBoolean() ) { // score medium position
-      angleSetpoint = Constants.armAngles[2];
-      lengthSetpoint = Constants.armLengths[2];
-    } else if ( OI.getOperator().x().getAsBoolean() ) { // pick up from platform
+    if ( OI.getOperator().a().getAsBoolean() ) { //low position 
       angleSetpoint = Constants.armAngles[3];
       lengthSetpoint = Constants.armLengths[1];
+    } else if ( OI.getOperator().b().getAsBoolean() ) { //medium position
+      angleSetpoint = Constants.armAngles[2];
+      lengthSetpoint = Constants.armLengths[2];
+    } else if ( OI.getOperator().y().getAsBoolean() ) { // high position
+      angleSetpoint = Constants.armAngles[2];
+      lengthSetpoint = Constants.armLengths[3];
+    } else if ( OI.getOperator().x().getAsBoolean() ) { // pick up from feeder station
+      zeroArm();
+      // angleSetpoint = Constants.armAngles[3];
+      // lengthSetpoint = Constants.armLengths[1];
+    } else if ( OI.getOperator().rightBumper().getAsBoolean() ) { // neutral position
+      angleSetpoint = Constants.armAngles[0];
+      lengthSetpoint = Constants.armLengths[0];
     } else {
-      // do nothing
-    } 
+      //do nothing
+    }
     
     //manual set angle
     if ( Math.abs( rawLeftJoystickInput ) > Constants.controllerDeadzone ) {
@@ -85,24 +85,37 @@ public class ArmCommand extends CommandBase {
     //manual set length
     if ( Math.abs( rawRightJoystickInput ) > Constants.controllerDeadzone ) {
       rightJoystickInput = rawRightJoystickInput;
-      lengthSetpoint = lengthRateLimiter.calculate(lengthSetpoint + 2000 * rightJoystickInput);
+      lengthSetpoint = lengthRateLimiter.calculate(lengthSetpoint + 6000 * rightJoystickInput);
     }
-  
+
+    if ( telescopingArmSubsystem.getLimitswitch() ) {
+      telescopingArmSubsystem.resetEncoder();
+    }
+
+    SmartDashboard.putBoolean("limit switch", telescopingArmSubsystem.getLimitswitch());
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
     pivotingArmSubsystem.setPivotAngle(angleSetpoint);
     
-    lengthSetpoint = MathUtil.clamp(lengthSetpoint, Constants.minimumArmLength, Constants.maximumArmLength);
     telescopingArmSubsystem.setArmLength(lengthSetpoint);
+    lengthSetpoint = MathUtil.clamp(lengthSetpoint, -Constants.maximumArmLength, Constants.maximumArmLength);
     //telescopingArmSubsystem.setSpeed(rightJoystickInput);
-
-
+    
+    
     SmartDashboard.putNumber("Telescoping Encoder", telescopingArmSubsystem.getEncoder());
     SmartDashboard.putNumber("Telescoping Setpoint", lengthSetpoint);
     
-    //old debug features
-    //SmartDashboard.putNumber("Arm Angle", pivotingArmSubsystem.getAngle());
-    //SmartDashboard.putNumber("setpoint angle", angleSetpoint);
+    SmartDashboard.putNumber("Arm Angle", pivotingArmSubsystem.getAngle());
+    SmartDashboard.putNumber("setpoint angle", angleSetpoint);
 
+    
+    //old debug features
+  }
+
+  private void zeroArm() {
+    telescopingArmSubsystem.resetEncoder();
+    pivotingArmSubsystem.resetEncoder();
+    lengthSetpoint = telescopingArmSubsystem.getEncoder();
+    angleSetpoint = pivotingArmSubsystem.getAngle();
   }
 
   // Called once the command ends or is interrupted.

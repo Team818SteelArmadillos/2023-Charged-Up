@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,6 +15,7 @@ import frc.robot.Constants;
 public class TelescopingArmSubsystem extends SubsystemBase {
 
     public TalonFX telescopingMotor; //telescoping motor
+    //public DigitalInput limitSwitch;
     
     public double currentLength;
     //public DutyCycleEncoder encoder;
@@ -22,6 +24,7 @@ public class TelescopingArmSubsystem extends SubsystemBase {
     public TelescopingArmSubsystem() {
         // motor stuff
         telescopingMotor = new TalonFX(Constants.telscopingMotorPort);
+        //limitSwitch = new DigitalInput(Constants.limitSwitchPort);
 
         //pid stuff
         configureMotor();
@@ -32,6 +35,10 @@ public class TelescopingArmSubsystem extends SubsystemBase {
         encoder.setDistancePerRotation(1);
         SmartDashboard.putNumber("Telescoping Arm Rotations", encoder.getDistance());
         */
+    }
+
+    public boolean getLimitswitch() {
+        return telescopingMotor.isRevLimitSwitchClosed() == 1;
     }
 
     public void setArmLength(double setpointLength) {
@@ -55,6 +62,6 @@ public class TelescopingArmSubsystem extends SubsystemBase {
         telescopingMotor.config_kP(0, Constants.tP);
         telescopingMotor.config_kI(0, Constants.tI);
         telescopingMotor.config_kD(0, Constants.tD);
-        telescopingMotor.configAllowableClosedloopError(0, 300);
+        telescopingMotor.configAllowableClosedloopError(0, 600);
     }
 }
