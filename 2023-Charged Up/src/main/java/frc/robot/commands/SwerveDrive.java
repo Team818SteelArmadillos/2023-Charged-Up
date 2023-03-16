@@ -6,6 +6,7 @@ import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.SwerveDrivetrain;
 import frc.robot.subsystems.SwerveModule;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -26,6 +27,10 @@ public class SwerveDrive extends CommandBase {
 
     private SlewRateLimiter m_xAxisARateLimiter;
     private SlewRateLimiter m_yAxisARateLimiter;
+
+    private double targetAngle;
+    
+    public PIDController DrivePID;
 
     /**
      * 
@@ -51,9 +56,13 @@ public class SwerveDrive extends CommandBase {
         m_rotationAxis = rotationAxis;
         m_fieldRelative = fieldRelative;
         m_openLoop = openLoop;
+        targetAngle = 0;
 
         m_xAxisARateLimiter = new SlewRateLimiter(Constants.A_RATE_LIMITER);
         m_yAxisARateLimiter = new SlewRateLimiter(Constants.A_RATE_LIMITER);
+        DrivePID = new PIDController(Constants.ROTATION_P, Constants.ROTATION_I, Constants.ROTATION_D);
+       // DrivePID.setTolerance(1);
+        
 
     }
 
@@ -63,14 +72,18 @@ public class SwerveDrive extends CommandBase {
         
 
         /* Set variables equal to their respective axis */
-        double yAxis = -m_driverController.getRawAxis(m_driveAxis);
-        double xAxis = -m_driverController.getRawAxis(m_strafeAxis);
+        double yAxis = m_driverController.getRawAxis(m_driveAxis);
+        double xAxis = m_driverController.getRawAxis(m_strafeAxis);
         double rAxis = -m_driverController.getRawAxis(m_rotationAxis);
         
         /* Deadbands */
         yAxis = (Math.abs(yAxis) < Constants.STICK_DEADBAND) ? 0 : yAxis;
         xAxis = (Math.abs(xAxis) < Constants.STICK_DEADBAND) ? 0 : xAxis;
         rAxis = (Math.abs(rAxis) < Constants.STICK_DEADBAND) ? 0 : rAxis;
+
+        targetAngle = targetAngle + (rAxis * 5);
+
+        rAxis = -DrivePID.calculate(m_swerveDrivetrain.getAngle(), targetAngle);
 
         /* Square joystick inputs */
         double rAxisSquared = rAxis > 0 ? rAxis * rAxis : rAxis * rAxis * -1;
@@ -86,5 +99,6 @@ public class SwerveDrive extends CommandBase {
         m_rotation = rAxisSquared * Constants.MAX_ANGULAR_VELOCITY * 0.5; // if 
         m_swerveDrivetrain.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
         SmartDashboard.putNumber("Input Angle", m_translation.getAngle().getDegrees());
+        SmartDashboard.putNumber("Rotation Angle", m_swerveDrivetrain.getAngle());
     }
 }

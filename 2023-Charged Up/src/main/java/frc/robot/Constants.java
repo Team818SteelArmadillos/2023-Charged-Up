@@ -98,6 +98,13 @@ public final class Constants {
     public static final double AZIMUTH_D = 0.0;
     public static final double AZIMUTH_F = 0.0;
 
+
+    //Rotation PID Controller values
+    public static final double ROTATION_P = 0.005;
+    public static final double ROTATION_I = 0.00001;
+    public static final double ROTATION_D = 0.0;
+    
+
     /* Drive Motor PID Values */
     public static final double DRIVE_P = 0.0; 
     public static final double DRIVE_I = 0.0;
@@ -208,18 +215,18 @@ public final class Constants {
     public static final double pP = -0.025;
     public static final double pivotI = 0.0;
     public static final double pivotD = 0.0;
-    public static final double pPIDTolerance = 2.0;
+    public static final double pPIDTolerance = 1.0;
 
     //Telescoping Values
-    public static final double armLengths[] = {0, 50000, 90000, 130000, 170000};
-    public static final double maximumArmLength = 165000; //
+    public static final double armLengths[] = {0, 50000, 98000, Constants.maximumArmLength, 167500};
+    public static final double maximumArmLength = 167500; //
     public static final double minimumArmLength = 0; //
     public static final double lengthSlewRate = 10000;
     public static final int limitSwitchPort = 0;
 
     public static final double ticksToFeet = 0;
     public static final double tP = 0.10;
-    public static final double tI = 0;
+    public static final double tI = 0.00001;
     public static final double tD = 0;
 
     // Pneumatic ports
@@ -227,12 +234,12 @@ public final class Constants {
     public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
 
     // Piston Claw Values
-    public static final double clawWheelForawrdSpeed = 1.0;
-    public static final double clawWheelReverseSpeed = -1.0;
+    public static final double clawWheelForawrdSpeed = 0.8;
+    public static final double clawWheelReverseSpeed = -0.8;
 
     // Pivoting Arm Angles
-    public static final int[] armAngles = {0, -37, -58, -90, 90};
-    public static final int[] revArmAngles = {0, 37, 58, 67, -90};
+    public static final int[] armAngles = {0, -37, -50, -90, 90};
+    public static final int[] revArmAngles = {0, 37, 50, 90, -90};
     public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
     public static final double angleSlewRate = 78;
     public static final int armSetpointCounter = 20;

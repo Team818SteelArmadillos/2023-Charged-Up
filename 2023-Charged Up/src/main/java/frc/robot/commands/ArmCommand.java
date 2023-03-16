@@ -67,7 +67,7 @@ public class ArmCommand extends CommandBase {
       lengthSetpoint = Constants.armLengths[3];
     } else if ( OI.getOperator().x().getAsBoolean() ) { // pick up from feeder station
       zeroArm();
-      // angleSetpoint = Constants.armAngles[3];
+      // angleSetpoint = Constants.armAngles[1];
       // lengthSetpoint = Constants.armLengths[1];
     } else if ( OI.getOperator().rightBumper().getAsBoolean() ) { // neutral position
       angleSetpoint = Constants.armAngles[0];
@@ -85,7 +85,7 @@ public class ArmCommand extends CommandBase {
     //manual set length
     if ( Math.abs( rawRightJoystickInput ) > Constants.controllerDeadzone ) {
       rightJoystickInput = rawRightJoystickInput;
-      lengthSetpoint = lengthRateLimiter.calculate(lengthSetpoint + 6000 * rightJoystickInput);
+      lengthSetpoint = lengthRateLimiter.calculate(lengthSetpoint + 20000 * rightJoystickInput);
     }
 
     if ( telescopingArmSubsystem.getLimitswitch() ) {
