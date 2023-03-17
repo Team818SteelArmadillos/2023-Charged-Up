@@ -37,13 +37,13 @@ public class ManualPathPlanningCommand extends CommandBase {
   public static void chooseAuton(){
     switch(Robot.m_chooser.getSelected()){
       case 0:{
-        double[][] autonCoords = {{0, -70.78, -255.11}, {0, -70.78, -172.61}};
+        double[][] autonCoords = {{0, 70.78, -255.11}, {0, 70.78, -172.61}};
         coordinates = autonCoords;
         break;
       }
       case 1:{
         //Should be blue left when finished.
-        double[][] autonCoords = {{0, -121.61,-255.11}, {0, -121.61, -42.98}};
+        double[][] autonCoords = {{0, 137.61,-255.11}, {}, {0, 121.61, -255.11}, {0, 121.61, -64.62}, {}, {0, 121.61, -255.11}, {0, 93.61, -255.11}};
         coordinates = autonCoords;
         break;
       }
@@ -101,6 +101,6 @@ public class ManualPathPlanningCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     //might need to be >
-    return commandIndex == coordinates.length;
+    return commandIndex == coordinates.length || coordinates[commandIndex][0] == 5;
   }
 }
