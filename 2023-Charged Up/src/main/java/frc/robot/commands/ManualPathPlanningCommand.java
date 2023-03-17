@@ -37,12 +37,13 @@ public class ManualPathPlanningCommand extends CommandBase {
   public static void chooseAuton(){
     switch(Robot.m_chooser.getSelected()){
       case 0:{
-        double[][] autonCoords = {{0, 26.88, 260}, {0, 26.88, 180}};
+        double[][] autonCoords = {{0, -70.78, -255.11}, {0, -70.78, -172.61}};
         coordinates = autonCoords;
         break;
       }
       case 1:{
-        double[][] autonCoords = {{0, 45, 260}, {0, 45, 180}};
+        //Should be blue left when finished.
+        double[][] autonCoords = {{0, -121.61,-255.11}, {0, -121.61, -42.98}};
         coordinates = autonCoords;
         break;
       }
@@ -53,24 +54,7 @@ public class ManualPathPlanningCommand extends CommandBase {
       }
     }
   }
-    // String autonCoords;
-    // switch(Robot.m_chooser.getSelected()){
-    //   case 0:
-    //   autonCoords = "0450560320810925";
-    //   case 1:
-    //   autonCoords = "0550580320820925";
-    //   default:
-    //   autonCoords = "5000000000000000";
-    // }
-    // int y = 0;
-    // for(var i = 0; i < 5; i++){
-    //   for(var x = 0; x < 3; x++){
-    //     coordinates[i][x] = autonCoords.charAt(y) - 0;
-    //     y+=1;
-    //   }
-    // }
   
-
   public static void AutonRun(){
     if(commandIndex == 0){
       Rotation2d startRotation = new Rotation2d();
