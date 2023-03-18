@@ -100,8 +100,8 @@ public final class Constants {
 
 
     //Rotation PID Controller values
-    public static final double ROTATION_P = 0.01;
-    public static final double ROTATION_I = 0.00001;
+    public static final double ROTATION_P = 0.025;
+    public static final double ROTATION_I = 0.00005;
     public static final double ROTATION_D = 0.0;
     
 
@@ -215,7 +215,7 @@ public final class Constants {
     public static final double pP = -0.025;
     public static final double pivotI = 0.0;
     public static final double pivotD = 0.0;
-    public static final double pPIDTolerance = 2.0;
+    public static final double pPIDTolerance = 1.0;
 
     //Telescoping Values
     public static final double armLengths[] = {0, 50000, 98000, Constants.maximumArmLength, 167500};
@@ -226,7 +226,7 @@ public final class Constants {
 
     public static final double ticksToFeet = 0;
     public static final double tP = 0.10;
-    public static final double tI = 0.00001;
+    public static final double tI = 0.000005;
     public static final double tD = 0;
 
     // Pneumatic ports
@@ -238,14 +238,14 @@ public final class Constants {
     public static final double clawWheelReverseSpeed = -0.8;
 
     // Pivoting Arm Angles
-    public static final int[] armAngles = {0, -37, -50, -90, 90};
-    public static final int[] revArmAngles = {0, 37, 50, 90, -90};
+    public static final int[] armAngles = {0, -37, -52, -98, 90};
+    public static final int[] revArmAngles = {0, 37, 50, 98, -90};
     public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
     public static final double angleSlewRate = 78;
     public static final int armSetpointCounter = 20;
     public static final double controllerDeadzone = 0.1;
 
-    public static final double encoderOvershoot = 64.6;
+    public static final double encoderOvershoot = 0.684;
 
     // Neo 550 Motor Stuff
     public static final int neoAmpLimit = 20 /*AMPs*/; // Cannot forget units!

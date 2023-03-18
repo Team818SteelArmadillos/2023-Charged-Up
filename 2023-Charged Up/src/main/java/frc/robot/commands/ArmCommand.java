@@ -95,7 +95,9 @@ public class ArmCommand extends CommandBase {
     SmartDashboard.putBoolean("limit switch", telescopingArmSubsystem.getLimitswitch());
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
     pivotingArmSubsystem.setPivotAngle(angleSetpoint);
-    
+
+    // Debug MAnual speed control
+    //telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY());
     telescopingArmSubsystem.setArmLength(lengthSetpoint);
     lengthSetpoint = MathUtil.clamp(lengthSetpoint, -Constants.maximumArmLength, Constants.maximumArmLength);
     //telescopingArmSubsystem.setSpeed(rightJoystickInput);
@@ -104,7 +106,6 @@ public class ArmCommand extends CommandBase {
     SmartDashboard.putNumber("Telescoping Encoder", telescopingArmSubsystem.getEncoder());
     SmartDashboard.putNumber("Telescoping Setpoint", lengthSetpoint);
     
-    SmartDashboard.putNumber("Arm Angle", pivotingArmSubsystem.getAngle());
     SmartDashboard.putNumber("setpoint angle", angleSetpoint);
 
     
@@ -113,7 +114,7 @@ public class ArmCommand extends CommandBase {
 
   private void zeroArm() {
     telescopingArmSubsystem.resetEncoder();
-    pivotingArmSubsystem.resetEncoder();
+    //pivotingArmSubsystem.resetEncoder();
     lengthSetpoint = telescopingArmSubsystem.getEncoder();
     angleSetpoint = pivotingArmSubsystem.getAngle();
   }

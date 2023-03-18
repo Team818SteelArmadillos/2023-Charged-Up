@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-//import frc.robot.subsystems.ClawWheelsSubsystem;
+import frc.robot.subsystems.ClawWheelsSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimeNetwork;
 import frc.robot.subsystems.Pathplanning;
@@ -64,7 +64,7 @@ public class RobotContainer {
 
 
   /* Subsystems */
-  //private final ClawWheelsSubsystem m_ClawWheelsSubsystem = new ClawWheelsSubsystem();
+  private final ClawWheelsSubsystem m_ClawWheelsSubsystem = new ClawWheelsSubsystem();
   private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
   private final LimeNetwork m_LimeNetwork = new LimeNetwork();
   private final Pathplanning m_Pathplanning = new Pathplanning();
@@ -103,8 +103,8 @@ public class RobotContainer {
   //bikebreak command
 
   //claw wheel commands
-  //public final ClawWheelCommand m_ClawWheelReverseCommand = new ClawWheelCommand(0, m_ClawWheelsSubsystem);
-  //public final ClawWheelCommand m_ClawWheelForwardCommand = new ClawWheelCommand(1, m_ClawWheelsSubsystem);
+  public final ClawWheelCommand m_ClawWheelReverseCommand = new ClawWheelCommand(0, m_ClawWheelsSubsystem);
+  public final ClawWheelCommand m_ClawWheelForwardCommand = new ClawWheelCommand(1, m_ClawWheelsSubsystem);
  
  //led command
   public final LEDCommand m_LEDColorCommand = new LEDCommand(m_LedSubsystem);
@@ -159,9 +159,9 @@ public class RobotContainer {
     //if (Math.abs( OI.getOperator().getLeftY() ) > 0.05) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); } else {m_pivotingArmSubsystem.setPivotSpeed(0);}
     //OI.getOperator().x().whileTrue(m_EncoderCommand);
     OI.getOperator().leftBumper().whileTrue( m_ClawCommand );
+    OI.getOperator().rightTrigger().whileTrue( m_ClawWheelReverseCommand );
+    OI.getOperator().leftTrigger().whileTrue( m_ClawWheelForwardCommand );
     //OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );
-    //OI.getOperator().rightTrigger().whileTrue( m_ClawWheelReverseCommand );
-    //OI.getOperator().leftTrigger().whileTrue( m_ClawWheelForwardCommand );
     
 
   }

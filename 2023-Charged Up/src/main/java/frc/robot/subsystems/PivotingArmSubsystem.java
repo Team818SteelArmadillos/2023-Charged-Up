@@ -89,7 +89,7 @@ public class PivotingArmSubsystem extends SubsystemBase {
     }
 
     public double getEncoder() {
-        return encoder.get();
+        return encoder.get() - Constants.encoderOvershoot;
     }
 
     public double getAngle() {
@@ -114,5 +114,11 @@ public class PivotingArmSubsystem extends SubsystemBase {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void periodic(){ 
+        SmartDashboard.putNumber("Arm Angle", getAngle());
+        SmartDashboard.putNumber( "Pivoting Arm Encoder", encoder.get() );
     }
 }

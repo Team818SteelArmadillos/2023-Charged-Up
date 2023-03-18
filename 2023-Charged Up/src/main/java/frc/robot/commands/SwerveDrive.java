@@ -74,16 +74,17 @@ public class SwerveDrive extends CommandBase {
         /* Set variables equal to their respective axis */
         double yAxis = m_driverController.getRawAxis(m_driveAxis);
         double xAxis = m_driverController.getRawAxis(m_strafeAxis);
-        double rAxis = -m_driverController.getRawAxis(m_rotationAxis);
+        double rAxis = m_driverController.getRawAxis(m_rotationAxis);
         
         /* Deadbands */
         yAxis = (Math.abs(yAxis) < Constants.STICK_DEADBAND) ? 0 : yAxis;
         xAxis = (Math.abs(xAxis) < Constants.STICK_DEADBAND) ? 0 : xAxis;
-        rAxis = (Math.abs(rAxis) < Constants.STICK_DEADBAND) ? 0 : rAxis;
 
-        targetAngle = targetAngle + (rAxis * 5);
-
-        rAxis = -DrivePID.calculate(m_swerveDrivetrain.getAngle(), targetAngle);
+        if ((Math.abs(rAxis) < Constants.STICK_DEADBAND)) {
+            rAxis = -DrivePID.calculate(m_swerveDrivetrain.getAngle(), targetAngle);
+        } else {
+            targetAngle = m_swerveDrivetrain.getAngle();
+        }
 
         /* Square joystick inputs */
         double rAxisSquared = rAxis > 0 ? rAxis * rAxis : rAxis * rAxis * -1;
