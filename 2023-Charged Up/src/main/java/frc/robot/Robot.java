@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.DriveDistance;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -17,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
 
   //private Command m_autonInit;
-  private Command m_autonPeriodic;
+  //private DriveDistance m_autonPeriodic;
   public static CTREConfigs ctreConfigs;
 
   private RobotContainer m_robotContainer;
@@ -60,15 +61,16 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    m_robotContainer.getAutonomousCommand().schedule();
     //m_autonInit = m_robotContainer.getAutonInit();
-    m_autonPeriodic.schedule();
+    //m_autonPeriodic.schedule();
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
     //m_autonPeriodic = m_robotContainer.getAutonPeriodic();
-    m_autonPeriodic.schedule();
+    //m_autonPeriodic.schedule();
   }
 
   @Override

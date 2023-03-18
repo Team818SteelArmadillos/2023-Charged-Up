@@ -100,7 +100,7 @@ public final class Constants {
 
 
     //Rotation PID Controller values
-    public static final double ROTATION_P = 0.005;
+    public static final double ROTATION_P = 0.01;
     public static final double ROTATION_I = 0.00001;
     public static final double ROTATION_D = 0.0;
     
@@ -215,13 +215,13 @@ public final class Constants {
     public static final double pP = -0.025;
     public static final double pivotI = 0.0;
     public static final double pivotD = 0.0;
-    public static final double pPIDTolerance = 1.0;
+    public static final double pPIDTolerance = 2.0;
 
     //Telescoping Values
     public static final double armLengths[] = {0, 50000, 98000, Constants.maximumArmLength, 167500};
     public static final double maximumArmLength = 167500; //
     public static final double minimumArmLength = 0; //
-    public static final double lengthSlewRate = 10000;
+    public static final double lengthSlewRate = 20000;
     public static final int limitSwitchPort = 0;
 
     public static final double ticksToFeet = 0;
@@ -259,5 +259,5 @@ public final class Constants {
     public static final double csP = 0;
     public static final double csI = 0;
     public static final double csD = 0;
-    public static final double csTolerance = 0;
+    public static final double csTolerance = 0.1;
 }

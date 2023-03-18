@@ -10,6 +10,8 @@ import frc.robot.commands.*;
 
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -74,6 +76,9 @@ public class RobotContainer {
   //pivoting manual command
   public final ArmCommand m_PivotingArmCommand = new ArmCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
 
+
+  private final DriveDistance m_driveDistance = new DriveDistance(m_swerveDrivetrain, new Pose2d(0.0, 10.0, new Rotation2d(0.0)), fieldRelative, openLoop);
+
   /*
   public final PivotingArmCommand m_manualPivotingArmCommand = new PivotingArmCommand(-1, m_pivotingArmSubsystem, m_BikeBreakSubsystem);
   
@@ -96,7 +101,6 @@ public class RobotContainer {
   public final ClawCommand m_ClawCommand = new ClawCommand(m_pistonClawSubsystem);
 
   //bikebreak command
-  final BikeBreakCommand m_BikeBreakCommand = new BikeBreakCommand(m_pivotingArmSubsystem);
 
   //claw wheel commands
   //public final ClawWheelCommand m_ClawWheelReverseCommand = new ClawWheelCommand(0, m_ClawWheelsSubsystem);
@@ -155,7 +159,7 @@ public class RobotContainer {
     //if (Math.abs( OI.getOperator().getLeftY() ) > 0.05) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); } else {m_pivotingArmSubsystem.setPivotSpeed(0);}
     //OI.getOperator().x().whileTrue(m_EncoderCommand);
     OI.getOperator().leftBumper().whileTrue( m_ClawCommand );
-    OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );
+    //OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );
     //OI.getOperator().rightTrigger().whileTrue( m_ClawWheelReverseCommand );
     //OI.getOperator().leftTrigger().whileTrue( m_ClawWheelForwardCommand );
     
@@ -184,8 +188,8 @@ public class RobotContainer {
    */
 
   public Command getAutonomousCommand() {
-
-    return autoChooser.getSelected();
+    return m_driveDistance;
+    //return autoChooser.getSelected();
 
   }
   
