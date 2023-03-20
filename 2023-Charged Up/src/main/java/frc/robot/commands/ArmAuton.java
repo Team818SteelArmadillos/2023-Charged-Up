@@ -7,29 +7,33 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.PivotingArmSubsystem;
+import frc.robot.subsystems.TelescopingArmSubsystem;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ArmAuton extends CommandBase {
   PivotingArmSubsystem m_PivotingArmSubsystem;
-  /** Creates a new ArmAuton. */
-  public ArmAuton(PivotingArmSubsystem pivotingArmSubsystem) {
-    addRequirements(pivotingArmSubsystem());
-     m_PivotingArmSubsystem = pivotingArmSubsystem;
+  TelescopingArmSubsystem m_TelescopingArmSubsystem;
+  
+  double angleSetpoint;
+  double lengthSetpoint;
 
-    if (a ) { //low position 
+  /** Creates a new ArmAuton. */
+  public ArmAuton(PivotingArmSubsystem pivotingArmSubsystem, TelescopingArmSubsystem telescopingArmSubsystem, int position) {
+    addRequirements(pivotingArmSubsystem, telescopingArmSubsystem);
+     m_PivotingArmSubsystem = pivotingArmSubsystem;
+     m_TelescopingArmSubsystem = telescopingArmSubsystem;
+
+    if (position == 0) { //low position 
       angleSetpoint = Constants.armAngles[3];
       lengthSetpoint = Constants.armLengths[1];
-    } else if ( b ) { //medium position
+    } else if (position == 1) { //medium position
       angleSetpoint = Constants.armAngles[2];
       lengthSetpoint = Constants.armLengths[2];
-    } else if ( y) { // high position
+    } else if (position == 2) { // high position
       angleSetpoint = Constants.armAngles[2];
       lengthSetpoint = Constants.armLengths[3];
-    } else if ( x ) { // pick up from feeder station
-      zeroArm();
-      // angleSetpoint = Constants.armAngles[1];
-      // lengthSetpoint = Constants.armLengths[1];
-    } else if ( bumper ) { // neutral position
+    } else if (position == 3) { // neutral position
       angleSetpoint = Constants.armAngles[0];
       lengthSetpoint = Constants.armLengths[0];
     } else {
@@ -41,16 +45,16 @@ public class ArmAuton extends CommandBase {
   @Override
   public void initialize() {
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
-    m_pivotingArmSubsystem.setPivotAngle(angleSetpoint);
+    m_PivotingArmSubsystem.setPivotAngle(angleSetpoint);
 
     // Debug MAnual speed control
     //telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY());
-    m_telescopingArmSubsystem.setArmLength(lengthSetpoint);
     lengthSetpoint = MathUtil.clamp(lengthSetpoint, -Constants.maximumArmLength, Constants.maximumArmLength);
+    m_TelescopingArmSubsystem.setArmLength(lengthSetpoint);
   }
 
   @Override
   public boolean isFinished() {
-    return false;
+    return m_TelescopingArmSubsystem.onSetPoint(lengthSetpoint) && m_PivotingArmSubsystem.onSetPoint();
   }
 }

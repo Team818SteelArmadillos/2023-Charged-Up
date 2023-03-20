@@ -24,9 +24,12 @@ public class Robot extends TimedRobot {
   //private DriveDistance m_autonPeriodic;
   public static CTREConfigs ctreConfigs;
   private RobotContainer m_robotContainer;
+  {
+    m_chooser = new SendableChooser<Integer>();
+    SmartDashboard.putData(m_chooser); 
+  }
 
-  m_chooser = new SendableChooser<Integer>();
-  SmartDashboard.putData(m_chooser);
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.

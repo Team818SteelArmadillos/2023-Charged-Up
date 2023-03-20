@@ -57,6 +57,10 @@ public class TelescopingArmSubsystem extends SubsystemBase {
         return telescopingMotor.getSelectedSensorPosition();
     }
 
+    public boolean onSetPoint(double positon){
+        return Math.abs(telescopingMotor.getSelectedSensorPosition() - positon) < 300;
+    }
+
     public void configureMotor() {
         telescopingMotor.setInverted(true);
         telescopingMotor.config_kP(0, Constants.tP);

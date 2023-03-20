@@ -55,6 +55,10 @@ public class PivotingArmSubsystem extends SubsystemBase {
         
     }
 
+    public boolean onSetPoint(){
+        return PID.atSetpoint();
+    }
+
     public void setPivotAngle(double setpointAngle) {
 
         //Every time setPivotAngle is called, it must perform three functions.
