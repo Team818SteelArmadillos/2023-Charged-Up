@@ -228,6 +228,7 @@ public final class Constants {
     public static final double tP = 0.10;
     public static final double tI = 0.000005;
     public static final double tD = 0;
+    public static final double tTolerance = 600;
 
     // Pneumatic ports
     public static final int pneumaticPistonPort = 17; // Copied from 2022 Rapid React Code (needs to be tested more??)

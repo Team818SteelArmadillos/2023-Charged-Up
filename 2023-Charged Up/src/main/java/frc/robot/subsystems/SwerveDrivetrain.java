@@ -88,7 +88,7 @@ public class SwerveDrivetrain extends SubsystemBase {
             new SwerveModulePosition(0.0, m_swerveModules[3].getCanCoder())};
 
         m_swerveOdometry = new SwerveDriveOdometry(Constants.swerveKinematics, getYaw(), m_modulePositions);
-    
+
         resetGyro();
     }
 
@@ -321,6 +321,12 @@ public class SwerveDrivetrain extends SubsystemBase {
      * Pushes module cancoder and integrated encoder values, module velocities, and gyro angle to SmartDashboard
      * 
      */
+
+     public void stopModules() {
+        for (SwerveModule module : m_swerveModules) {
+            module.stop();
+        }
+     }
 
     @Override
     public void periodic(){

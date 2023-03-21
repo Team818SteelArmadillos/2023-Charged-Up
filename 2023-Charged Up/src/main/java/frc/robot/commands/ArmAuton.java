@@ -55,6 +55,6 @@ public class ArmAuton extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return m_TelescopingArmSubsystem.onSetPoint(lengthSetpoint) && m_PivotingArmSubsystem.onSetPoint();
+    return  m_PivotingArmSubsystem.PID.atSetpoint() && m_TelescopingArmSubsystem.onSetPoint(lengthSetpoint);
   }
 }

@@ -99,6 +99,11 @@ public class SwerveModule {
 
     }
 
+    public void stop() {
+        m_driveMotor.set(ControlMode.PercentOutput, 0);
+        m_azimuthMotor.set(ControlMode.PercentOutput, 0);
+    }
+
     /**
      * 
      * Sets the azimuth integrated encoder to absolute based on the current CANCoder position
