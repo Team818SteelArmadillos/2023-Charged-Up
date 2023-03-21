@@ -24,10 +24,6 @@ public class Robot extends TimedRobot {
   //private DriveDistance m_autonPeriodic;
   public static CTREConfigs ctreConfigs;
   private RobotContainer m_robotContainer;
-  {
-    m_chooser = new SendableChooser<Integer>();
-    SmartDashboard.putData(m_chooser); 
-  }
 
 
   /**
@@ -40,10 +36,6 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     ctreConfigs = new CTREConfigs();
     new RobotContainer();
-    m_chooser.setDefaultOption("Default",99);
-    m_chooser.addOption("(Competition) Blue Middle", 0);
-    m_chooser.addOption("(Compettion) Blue Left", 1);
-    SmartDashboard.putData("Auton Choices", m_chooser);
   }
 
   /**

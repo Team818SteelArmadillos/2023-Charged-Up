@@ -29,9 +29,9 @@ public class BlueMiddleAuton extends SequentialCommandGroup {
     m_PistonClawSubsystem = pistonClawSubsystem;
 
     new SequentialCommandGroup(
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2),
-        new ClawCommand(m_PistonClawSubsystem),
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3),
+      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
+      new ClawCommand(m_PistonClawSubsystem), // drops cone
+      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), //sets arm to neutral position
       new DriveDistance(m_swerveDrivetrain, new Pose2d(70.78, -172.1, new Rotation2d(0)), true, true)
       );
   }
