@@ -10,10 +10,10 @@ public class LEDSubsystem extends SubsystemBase {
     static I2C.Port i2cPort;
     static CANdle candle;
     static CANdleConfiguration config;
-    static boolean toggle;
+    static boolean debounce = true;
     
     public LEDSubsystem() { 
-        CANdle candle = new CANdle(0);
+        candle = new CANdle(18);
         CANdleConfiguration config = new CANdleConfiguration();
         config.stripType = LEDStripType.RGB;
         candle.configAllSettings(config);
@@ -23,8 +23,20 @@ public class LEDSubsystem extends SubsystemBase {
         candle.setLEDs(166, 77, 255);
     }
 
-    public void setLEDsPink() {
-        candle.setLEDs(255, 230, 102);
+    public void setLEDsYellow() {
+        candle.setLEDs(255, 255, 0);
+    }
+
+    public void toggle() {
+
+        if (debounce) {
+            setLEDsViolet();
+            debounce = false;
+        } else {
+            setLEDsYellow();
+            debounce = true;
+        }
+
     }
 
 }
