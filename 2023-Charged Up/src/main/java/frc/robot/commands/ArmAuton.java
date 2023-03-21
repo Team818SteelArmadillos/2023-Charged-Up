@@ -17,33 +17,36 @@ public class ArmAuton extends CommandBase {
   
   double angleSetpoint;
   double lengthSetpoint;
+  int state;
 
   /** Creates a new ArmAuton. */
-  public ArmAuton(PivotingArmSubsystem pivotingArmSubsystem, TelescopingArmSubsystem telescopingArmSubsystem, int position) {
+  public ArmAuton(PivotingArmSubsystem pivotingArmSubsystem, TelescopingArmSubsystem telescopingArmSubsystem, int State) {
     addRequirements(pivotingArmSubsystem, telescopingArmSubsystem);
      m_PivotingArmSubsystem = pivotingArmSubsystem;
      m_TelescopingArmSubsystem = telescopingArmSubsystem;
-
-    if (position == 0) { //low position 
-      angleSetpoint = Constants.armAngles[3];
-      lengthSetpoint = Constants.armLengths[1];
-    } else if (position == 1) { //medium position
-      angleSetpoint = Constants.armAngles[2];
-      lengthSetpoint = Constants.armLengths[2];
-    } else if (position == 2) { // high position
-      angleSetpoint = Constants.armAngles[2];
-      lengthSetpoint = Constants.armLengths[3];
-    } else if (position == 3) { // neutral position
-      angleSetpoint = Constants.armAngles[0];
-      lengthSetpoint = Constants.armLengths[0];
-    } else {
-      //do nothing
-    }
+     state = State;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
+    if (state == 0) { //low position 
+      angleSetpoint = Constants.armAngles[3];
+      lengthSetpoint = Constants.armLengths[1];
+    } else if (state == 1) { //medium position
+      angleSetpoint = Constants.armAngles[2];
+      lengthSetpoint = Constants.armLengths[2];
+    } else if (state == 2) { // high position
+      angleSetpoint = Constants.armAngles[2];
+      lengthSetpoint = Constants.armLengths[3];
+    } else if (state == 3) { // neutral position
+      angleSetpoint = Constants.armAngles[0];
+      lengthSetpoint = Constants.armLengths[0];
+    } else {
+      //do nothing
+    }
+    
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
     m_PivotingArmSubsystem.setPivotAngle(angleSetpoint);
 

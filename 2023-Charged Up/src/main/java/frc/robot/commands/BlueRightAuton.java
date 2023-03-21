@@ -30,10 +30,10 @@ public class BlueRightAuton extends SequentialCommandGroup {
     m_PistonClawSubsystem = pistonClawSubsystem;
 
     new SequentialCommandGroup(
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2),
-        new ClawCommand(m_PistonClawSubsystem),
-      new DriveDistance(m_swerveDrivetrain, new Pose2d(121.61, -255.11, new Rotation2d(90)), true, true),
-        new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), 
+      new DriveDistance(m_swerveDrivetrain, new Pose2d(121.61, -255.11, new Rotation2d(Math.toRadians(90))), true, true),
+      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), // sets arm to high position
+      new ClawCommand(m_PistonClawSubsystem), //drops cone
+      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), // sets arm to neutral position
       new DriveDistance(swerveDrivetrain, new Pose2d(121.61, -64.62, new Rotation2d(0)), true, true),
       new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 0),
       new DriveDistance(swerveDrivetrain, new Pose2d(121.61, -62.62, new Rotation2d(0)), true, true)

@@ -121,6 +121,12 @@ public class RobotContainer {
   //reset encoder command
   public final EncoderCommand m_EncoderCommand = new EncoderCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
 
+  // auton commands
+  private final BlueMiddleAuton m_BlueMiddleAuton = new BlueMiddleAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_pistonClawSubsystem);
+  private final BlueRightAuton m_BlueRightAuton = new BlueRightAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_pistonClawSubsystem);
+  // auton chooser
+  private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
+
   public RobotContainer() {
 
     /* Set Drive as default command*/
@@ -133,7 +139,12 @@ public class RobotContainer {
 
     m_zeroGyro.onTrue(new InstantCommand(() -> m_swerveDrivetrain.resetGyro()));
     
-      //m_swerveDrivetrain.zeroModules();
+    // Initializie auton chooser in smartdashboard
+    m_autoChooser.setDefaultOption("Blue Middle Auton", m_BlueMiddleAuton);
+    m_autoChooser.addOption("Blue Right Auton", m_BlueRightAuton);
+    SmartDashboard.putData(m_autoChooser);
+
+    //m_swerveDrivetrain.zeroModules();
     /* Initialize diagnostics subystem */
     //m_diagnostics = new Diagnostics(m_swerveDrivetrain, m_climber, m_intake, m_feeder, m_shooter, m_actuator);
     
@@ -175,11 +186,6 @@ public class RobotContainer {
 
   }
 
-  private static SendableChooser<Command> autoChooser;
-
-  
-
-
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -198,9 +204,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
 
-    return m_driveDistance;
-
-    //return autoChooser.getSelected();
+    return m_autoChooser.getSelected();
 
   }
   
