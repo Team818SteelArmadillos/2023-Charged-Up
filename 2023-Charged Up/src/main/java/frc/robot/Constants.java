@@ -103,6 +103,7 @@ public final class Constants {
     public static final double ROTATION_P = 0.025;
     public static final double ROTATION_I = 0.00005;
     public static final double ROTATION_D = 0.0;
+    public static final double ROTATION_TOLERANCE = 1.0;
     
 
     /* Drive Motor PID Values */
@@ -257,7 +258,7 @@ public final class Constants {
     public static final int boreEncoder = 0;
 
     //PID values for Charging Station
-    public static final double csP = 0;
+    public static final double csP = 0.001;
     public static final double csI = 0;
     public static final double csD = 0;
     public static final double csTolerance = 0.1;

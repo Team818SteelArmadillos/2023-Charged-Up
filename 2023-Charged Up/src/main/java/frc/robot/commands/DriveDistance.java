@@ -21,15 +21,11 @@ public class DriveDistance extends CommandBase {
     private boolean m_openLoop;
     
     private SwerveDrivetrain m_swerveDrivetrain;
-    private int m_driveAxis;
-    private int m_strafeAxis;
-    private int m_rotationAxis;
 
     private SlewRateLimiter m_xAxisARateLimiter;
     private SlewRateLimiter m_yAxisARateLimiter;
 
-    private double targetAngle;
-    private Pose2d targetPose;
+    private Pose2d m_targetPose;
     
     public PIDController DrivePID;
     public PIDController DistanceXPID;
@@ -56,13 +52,16 @@ public class DriveDistance extends CommandBase {
 
         m_fieldRelative = fieldRelative;
         m_openLoop = openLoop;
-        targetAngle = 0;
+        m_targetPose = targetPose;
 
         m_xAxisARateLimiter = new SlewRateLimiter(Constants.A_RATE_LIMITER);
         m_yAxisARateLimiter = new SlewRateLimiter(Constants.A_RATE_LIMITER);
+
         DrivePID = new PIDController(Constants.ROTATION_P, Constants.ROTATION_I, Constants.ROTATION_D);
         DistanceXPID = new PIDController(Constants.csP, Constants.csI, Constants.csD);
         DistanceYPID = new PIDController(Constants.csP, Constants.csI, Constants.csD);
+
+        DrivePID.setTolerance(Constants.ROTATION_TOLERANCE);
         DistanceXPID.setTolerance(Constants.csTolerance);
         DistanceYPID.setTolerance(Constants.csTolerance);
         
@@ -71,19 +70,10 @@ public class DriveDistance extends CommandBase {
 
     @Override
     public void execute() {
-
-        
-
         /* Set variables equal to their respective axis */
-        double yAxis = DistanceYPID.calculate(m_swerveDrivetrain.getPose().getY(), targetPose.getY());
-        double xAxis = DistanceXPID.calculate(m_swerveDrivetrain.getPose().getX(), targetPose.getX());
-        double rAxis = 0;
-        
-        /* Deadbands */
-
-        targetAngle = targetAngle + (rAxis * 5);
-
-        rAxis = -DrivePID.calculate(m_swerveDrivetrain.getAngle(), targetAngle);
+        double yAxis = DistanceYPID.calculate(m_swerveDrivetrain.getPose().getY(), m_targetPose.getY());
+        double xAxis = DistanceXPID.calculate(m_swerveDrivetrain.getPose().getX(), m_targetPose.getX());
+        double rAxis = -DrivePID.calculate(m_swerveDrivetrain.getAngle(), m_targetPose.getRotation().getDegrees());
 
         /* Square joystick inputs */
         double rAxisSquared = rAxis > 0 ? rAxis * rAxis : rAxis * rAxis * -1;
@@ -96,17 +86,19 @@ public class DriveDistance extends CommandBase {
 
         /* Input variables into drive methods */
         m_translation = new Translation2d(yAxisFiltered, xAxisFiltered).times(Constants.MAX_SPEED);
-        m_rotation = rAxisSquared * Constants.MAX_ANGULAR_VELOCITY * 0.5; // if 
+        m_rotation = rAxisSquared * Constants.MAX_ANGULAR_VELOCITY * 0.5;
         m_swerveDrivetrain.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
-        SmartDashboard.putNumber("Input Angle", m_translation.getAngle().getDegrees());
-        SmartDashboard.putNumber("Rotation Angle", m_swerveDrivetrain.getAngle());
     }
     
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        m_swerveDrivetrain.drive(new Translation2d(0.0, 0.0), 0.0, m_fieldRelative, m_openLoop);
+    }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return DistanceXPID.atSetpoint() && DistanceYPID.atSetpoint();
-        //return pivotingArmSubsystem.PID.atSetpoint();
+        return DistanceXPID.atSetpoint() && DistanceYPID.atSetpoint() && DrivePID.atSetpoint();
     }
 }

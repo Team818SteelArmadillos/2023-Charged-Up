@@ -86,7 +86,7 @@ public class RobotContainer {
   public final ArmCommand m_PivotingArmCommand = new ArmCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
 
 
-  private final DriveDistance m_driveDistance = new DriveDistance(m_swerveDrivetrain, new Pose2d(0.0, 10.0, new Rotation2d(0.0)), fieldRelative, openLoop);
+  private final DriveDistance m_driveDistance = new DriveDistance(m_swerveDrivetrain, new Pose2d(3.0, 0.0, new Rotation2d(0.0)), fieldRelative, openLoop);
 
   /*
   public final PivotingArmCommand m_manualPivotingArmCommand = new PivotingArmCommand(-1, m_pivotingArmSubsystem, m_BikeBreakSubsystem);
