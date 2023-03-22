@@ -71,8 +71,8 @@ public class DriveDistance extends CommandBase {
     @Override
     public void execute() {
         /* Set variables equal to their respective axis */
-        double yAxis = DistanceYPID.calculate(m_swerveDrivetrain.getPose().getY(), m_targetPose.getY());
-        double xAxis = DistanceXPID.calculate(m_swerveDrivetrain.getPose().getX(), m_targetPose.getX());
+        double yAxis = -DistanceYPID.calculate(m_swerveDrivetrain.getPose().getX(), m_targetPose.getY());
+        double xAxis = DistanceXPID.calculate(m_swerveDrivetrain.getPose().getY(), m_targetPose.getX());
         double rAxis = -DrivePID.calculate(m_swerveDrivetrain.getAngle(), m_targetPose.getRotation().getDegrees());
 
         /* Square joystick inputs */

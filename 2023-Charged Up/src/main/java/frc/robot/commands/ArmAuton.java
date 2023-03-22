@@ -29,7 +29,7 @@ public class ArmAuton extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void execute() {
 
     if (state == 0) { //low position 
       angleSetpoint = Constants.armAngles[3];
@@ -54,6 +54,10 @@ public class ArmAuton extends CommandBase {
     //telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY());
     lengthSetpoint = MathUtil.clamp(lengthSetpoint, -Constants.maximumArmLength, Constants.maximumArmLength);
     m_TelescopingArmSubsystem.setArmLength(lengthSetpoint);
+  }
+  @Override
+  public void end(boolean interrupted) {
+      m_PivotingArmSubsystem.setArmLocked();
   }
 
   @Override
