@@ -336,16 +336,21 @@ public class SwerveDrivetrain extends SubsystemBase {
         
         m_swerveOdometry.update(getYaw(), getStates());
 
-        SmartDashboard.putNumber("Pigeon", getAngle());
+        // SmartDashboard.putNumber("Pigeon", getAngle());
 
         SmartDashboard.putNumber("Font Left Offset", m_swerveModules[0].getCandcoderAbsPos());
         SmartDashboard.putNumber("Font Right Offset", m_swerveModules[1].getCandcoderAbsPos());
         SmartDashboard.putNumber("Back Left Offset", m_swerveModules[2].getCandcoderAbsPos());
         SmartDashboard.putNumber("Back Right Offset", m_swerveModules[3].getCandcoderAbsPos());
 
-        SmartDashboard.putNumber("pose x", getPose().getX());
-        SmartDashboard.putNumber("pose y", getPose().getY());
-        SmartDashboard.putNumber("pose rot", getPose().getRotation().getDegrees());
+        SmartDashboard.putNumber("Font Left Voltage", m_swerveModules[0].getAzimuthVoltage());
+        SmartDashboard.putNumber("Font Right Votlage", m_swerveModules[1].getAzimuthVoltage());
+        SmartDashboard.putNumber("Back Left Voltage", m_swerveModules[2].getAzimuthVoltage());
+        SmartDashboard.putNumber("Back Right Votlage", m_swerveModules[3].getAzimuthVoltage());
+
+        // SmartDashboard.putNumber("pose x", getPose().getX());
+        // SmartDashboard.putNumber("pose y", getPose().getY());
+        // SmartDashboard.putNumber("pose rot", getPose().getRotation().getDegrees());
 
     }
 

@@ -111,7 +111,7 @@ public class SwerveModule {
      */
 
     private void resetToAbsolute() {
-        m_azimuthMotor.setSelectedSensorPosition(Conversions.degreesToFalcon(m_offset, Constants.AZIMUTH_GEAR_RATIO));
+        m_azimuthMotor.setSelectedSensorPosition(Conversions.degreesToFalcon(getCanCoder().getDegrees() - m_offset, Constants.AZIMUTH_GEAR_RATIO));
     }
 
     /**
@@ -124,6 +124,7 @@ public class SwerveModule {
         m_canCoder.configFactoryDefault();
         m_canCoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
         m_canCoder.configSensorDirection(m_canCoderInverted);
+        m_canCoder.setPosition(0.0);
     }
 
     /**
@@ -137,7 +138,9 @@ public class SwerveModule {
         m_azimuthMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
         m_azimuthMotor.setInverted(m_turningInverted);
         m_azimuthMotor.setNeutralMode(Constants.AZIMUTH_NEUTRAL_MODE);
-        resetToAbsolute();
+        m_azimuthMotor.setSelectedSensorPosition(0);
+
+        //resetToAbsolute();
         //m_azimuthMotor.configRemoteFeedbackFilter(m_canCoder, 0);
         //m_azimuthMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.RemoteSensor0, 1, 0);
         //m_azimuthMotor.setSelectedSensorPosition(0);
@@ -181,6 +184,10 @@ public class SwerveModule {
 
     public double getDriveEncoder() {
         return m_driveMotor.getSelectedSensorPosition();
+    }
+
+    public double getAzimuthVoltage() {
+        return m_azimuthMotor.getMotorOutputVoltage();
     }
 
     /**

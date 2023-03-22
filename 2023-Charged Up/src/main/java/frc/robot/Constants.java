@@ -100,7 +100,7 @@ public final class Constants {
 
 
     //Rotation PID Controller values
-    public static final double ROTATION_P = 0.025;
+    public static final double ROTATION_P = 0.0025;
     public static final double ROTATION_I = 0.00005;
     public static final double ROTATION_D = 0.0;
     public static final double ROTATION_TOLERANCE = 1.0;
