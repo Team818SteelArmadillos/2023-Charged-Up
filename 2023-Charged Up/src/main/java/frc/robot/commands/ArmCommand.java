@@ -66,11 +66,7 @@ public class ArmCommand extends CommandBase {
     } else if ( OI.getOperator().y().getAsBoolean() ) { // high position
       angleSetpoint = Constants.armAngles[2];
       lengthSetpoint = Constants.armLengths[3];
-    } else if ( OI.getOperator().x().getAsBoolean() ) { // pick up from feeder station
-      zeroArm();
-      // angleSetpoint = Constants.armAngles[1];
-      // lengthSetpoint = Constants.armLengths[1];
-    } else if ( OI.getOperator().rightBumper().getAsBoolean() ) { // neutral position
+    } else if ( OI.getOperator().x().getAsBoolean() ) { // neutral position
       angleSetpoint = Constants.armAngles[0];
       lengthSetpoint = Constants.armLengths[0];
     } else {

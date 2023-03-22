@@ -12,6 +12,7 @@ import frc.robot.subsystems.TelescopingArmSubsystem;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -43,8 +44,8 @@ public class BlueMiddleAuton extends SequentialCommandGroup {
       new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
       new ParallelCommandGroup(new ClawCommand(m_PistonClawSubsystem, m_LEDSubsystem), new WaitCommand(1)), //Dispenses cone
       new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), //sets arm to neutral position
-      new DriveDistance(m_swerveDrivetrain, new Pose2d(coordinates[0], Units.inchesToMeters(-64.62), new Rotation2d(0)), true, true), //Drives to middle of field
-      new DriveDistance(m_swerveDrivetrain, new Pose2d(coordinates[0], coordinates[1], new Rotation2d(0)), true, true) //Balances
+      new DriveDistance(m_swerveDrivetrain, 8.0, 0.5, 0.0, 1.0, true, true), //Drives to middle of field
+      new DriveDistance(m_swerveDrivetrain, 5.0, 0.3, 0.0, -1.0, true, true) //Balances
       );
   }
 }

@@ -242,7 +242,7 @@ public final class Constants {
     public static final double clawWheelReverseSpeed = -0.8;
 
     // Pivoting Arm Angles
-    public static final int[] armAngles = {0, -37, -52, -98, 90};
+    public static final int[] armAngles = {0, -37, -54, -98, 90};
     public static final int[] revArmAngles = {0, 37, 50, 98, -90};
     public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
     public static final double angleSlewRate = 78;

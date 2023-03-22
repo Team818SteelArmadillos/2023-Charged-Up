@@ -97,9 +97,9 @@ public class SwerveDrive extends CommandBase {
 
         /* Input variables into drive methods */
         m_translation = new Translation2d(yAxisFiltered, xAxisFiltered).times(Constants.MAX_SPEED);
-        m_rotation = rAxisSquared * Constants.MAX_ANGULAR_VELOCITY * 0.5; // if 
+        m_rotation = -rAxisSquared * Constants.MAX_ANGULAR_VELOCITY * 0.5; // if 
         m_swerveDrivetrain.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
-        SmartDashboard.putNumber("Input Angle", m_translation.getAngle().getDegrees());
-        SmartDashboard.putNumber("Rotation Angle", m_swerveDrivetrain.getAngle());
+        //SmartDashboard.putNumber("Input Angle", m_translation.getAngle().getDegrees());
+        //SmartDashboard.putNumber("Rotation Angle", m_swerveDrivetrain.getAngle());
     }
 }

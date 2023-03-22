@@ -86,7 +86,7 @@ public class RobotContainer {
   public final ArmCommand m_ArmCommand = new ArmCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
 
 
-  private final DriveDistance m_driveDistance = new DriveDistance(m_swerveDrivetrain, new Pose2d(3.0, 0.0, new Rotation2d(0.0)), fieldRelative, openLoop);
+  //private final DriveDistance m_driveDistance = new DriveDistance(m_swerveDrivetrain, new Pose2d(3.0, 0.0, new Rotation2d(0.0)), fieldRelative, openLoop);
 
   /*
   public final PivotingArmCommand m_manualPivotingArmCommand = new PivotingArmCommand(-1, m_pivotingArmSubsystem, m_BikeBreakSubsystem);
@@ -114,6 +114,7 @@ public class RobotContainer {
   //claw wheel commands
   public final ClawWheelCommand m_ClawWheelReverseCommand = new ClawWheelCommand(0, m_ClawWheelsSubsystem);
   public final ClawWheelCommand m_ClawWheelForwardCommand = new ClawWheelCommand(1, m_ClawWheelsSubsystem);
+  public final ClawWheelCommand m_ClawWheelHoldCommand = new ClawWheelCommand(2, m_ClawWheelsSubsystem);
  
  //led command
   //public final LEDCommand m_LEDColorCommand = new LEDCommand(m_LedSubsystem);
@@ -141,7 +142,7 @@ public class RobotContainer {
     
     // Initializie auton chooser in smartdashboard
     m_autoChooser.setDefaultOption("Blue Middle Auton", m_BlueMiddleAuton);
-    m_autoChooser.addOption("Blue Right Auton", m_BlueRightAuton);
+   // m_autoChooser.addOption("Blue Right Auton", m_BlueRightAuton);
     SmartDashboard.putData("Auton Choices", m_autoChooser);
 
     //m_swerveDrivetrain.zeroModules();
@@ -181,6 +182,7 @@ public class RobotContainer {
     OI.getOperator().leftBumper().whileTrue( m_ClawCommand );
     OI.getOperator().rightTrigger().whileTrue( m_ClawWheelReverseCommand );
     OI.getOperator().leftTrigger().whileTrue( m_ClawWheelForwardCommand );
+    OI.getOperator().rightBumper().whileTrue( m_ClawWheelHoldCommand ) ;
     //OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );
     
 
