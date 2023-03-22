@@ -99,6 +99,11 @@ public class SwerveModule {
 
     }
 
+    public void stop() {
+        m_driveMotor.set(ControlMode.PercentOutput, 0);
+        m_azimuthMotor.set(ControlMode.PercentOutput, 0);
+    }
+
     /**
      * 
      * Sets the azimuth integrated encoder to absolute based on the current CANCoder position
@@ -106,7 +111,7 @@ public class SwerveModule {
      */
 
     private void resetToAbsolute() {
-        m_azimuthMotor.setSelectedSensorPosition(Conversions.degreesToFalcon(getCanCoder().getDegrees() - m_offset, Constants.AZIMUTH_GEAR_RATIO));
+        m_azimuthMotor.setSelectedSensorPosition(Conversions.degreesToFalcon(m_offset, Constants.AZIMUTH_GEAR_RATIO));
     }
 
     /**

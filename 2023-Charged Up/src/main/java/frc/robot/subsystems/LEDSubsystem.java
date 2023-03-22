@@ -1,43 +1,48 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdleConfiguration;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
 import edu.wpi.first.wpilibj.I2C;
 
 public class LEDSubsystem extends SubsystemBase {  
-    static I2C.Port i2cPort;
-    static CANdle candle;
-    static CANdleConfiguration config;
-    static boolean debounce = true;
+    I2C.Port i2cPort;
+    CANdle candle;
+    CANdleConfiguration config;
+    boolean toggle;
     
-    public LEDSubsystem() { 
-        candle = new CANdle(18);
-        CANdleConfiguration config = new CANdleConfiguration();
+    public LEDSubsystem() {
+        candle = new CANdle(Constants.CANDLE_CAN_ID);
+
+        config = new CANdleConfiguration();
         config.stripType = LEDStripType.RGB;
-        candle.configAllSettings(config);
+        candle.configAllSettings(config);  
+                
+        candle.setLEDs(255, 255, 255); 
+
+        toggle = true;
     }
 
-    public void setLEDsViolet() {        
+    public void setLEDsPurple() {        
         candle.setLEDs(166, 77, 255);
     }
 
     public void setLEDsYellow() {
-        candle.setLEDs(255, 255, 0);
+        candle.setLEDs(255, 230, 102);
     }
 
     public void toggle() {
-
-        if (debounce) {
-            setLEDsViolet();
-            debounce = false;
-        } else {
+        if (toggle) {
             setLEDsYellow();
-            debounce = true;
+        } else {
+            setLEDsPurple();
         }
 
+        toggle = !toggle;
     }
 
-}
+} 
 

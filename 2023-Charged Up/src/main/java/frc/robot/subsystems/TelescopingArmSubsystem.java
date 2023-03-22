@@ -2,14 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.CTREConfigs;
 import frc.robot.Constants;
 
 public class TelescopingArmSubsystem extends SubsystemBase {
@@ -57,11 +50,15 @@ public class TelescopingArmSubsystem extends SubsystemBase {
         return telescopingMotor.getSelectedSensorPosition();
     }
 
+    public boolean onSetPoint(double positon){
+        return Math.abs(telescopingMotor.getSelectedSensorPosition() - positon) < Constants.tTolerance;
+    }
+
     public void configureMotor() {
         telescopingMotor.setInverted(true);
         telescopingMotor.config_kP(0, Constants.tP);
         telescopingMotor.config_kI(0, Constants.tI);
         telescopingMotor.config_kD(0, Constants.tD);
-        telescopingMotor.configAllowableClosedloopError(0, 600);
+        telescopingMotor.configAllowableClosedloopError(0, Constants.tTolerance);
     }
 }

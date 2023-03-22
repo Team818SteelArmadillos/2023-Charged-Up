@@ -85,10 +85,13 @@ public class SwerveDrivetrain extends SubsystemBase {
         SwerveModulePosition m_modulePositions[] = {new SwerveModulePosition(0.0, m_swerveModules[0].getCanCoder()),
             new SwerveModulePosition(0.0, m_swerveModules[1].getCanCoder()),
             new SwerveModulePosition(0.0, m_swerveModules[2].getCanCoder()),
-            new SwerveModulePosition(0.0, m_swerveModules[3].getCanCoder())};
+            new SwerveModulePosition(0.0, m_swerveModules[3].getCanCoder())
+        };
 
+        this.m_modulePositions = m_modulePositions;
+        
         m_swerveOdometry = new SwerveDriveOdometry(Constants.swerveKinematics, getYaw(), m_modulePositions);
-    
+
         resetGyro();
     }
 
@@ -199,7 +202,7 @@ public class SwerveDrivetrain extends SubsystemBase {
     public SwerveModulePosition[] getStates(){
         SwerveModulePosition[] states = new SwerveModulePosition[4];
         for(SwerveModule mod : m_swerveModules){
-            states[mod.m_moduleNumber] = new SwerveModulePosition(mod.getDriveEncoder(), mod.getState().angle);
+            states[mod.m_moduleNumber] = new SwerveModulePosition((mod.getDriveEncoder()/Constants.DRIVE_TICKS_PER_REVOLUTION) * Constants.WHEEL_CIRCUMFERENCE, mod.getState().angle);
         }
         return states;
     }
@@ -321,6 +324,12 @@ public class SwerveDrivetrain extends SubsystemBase {
      * Pushes module cancoder and integrated encoder values, module velocities, and gyro angle to SmartDashboard
      * 
      */
+
+     public void stopModules() {
+        for (SwerveModule module : m_swerveModules) {
+            module.stop();
+        }
+     }
 
     @Override
     public void periodic(){

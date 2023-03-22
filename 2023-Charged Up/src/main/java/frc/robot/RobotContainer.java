@@ -8,10 +8,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.*;
 
+import java.util.List;
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -20,6 +27,8 @@ import edu.wpi.first.wpilibj.event.BooleanEvent;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -74,10 +83,10 @@ public class RobotContainer {
   private final TelescopingArmSubsystem m_telescopingArmSubsystem = new TelescopingArmSubsystem();
   
   //pivoting manual command
-  public final ArmCommand m_PivotingArmCommand = new ArmCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
+  public final ArmCommand m_ArmCommand = new ArmCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
 
 
-  private final DriveDistance m_driveDistance = new DriveDistance(m_swerveDrivetrain, new Pose2d(0.0, 10.0, new Rotation2d(0.0)), fieldRelative, openLoop);
+  private final DriveDistance m_driveDistance = new DriveDistance(m_swerveDrivetrain, new Pose2d(3.0, 0.0, new Rotation2d(0.0)), fieldRelative, openLoop);
 
   /*
   public final PivotingArmCommand m_manualPivotingArmCommand = new PivotingArmCommand(-1, m_pivotingArmSubsystem, m_BikeBreakSubsystem);
@@ -98,7 +107,7 @@ public class RobotContainer {
   */
 
   //claw command
-  public final ClawCommand m_ClawCommand = new ClawCommand(m_pistonClawSubsystem);
+  public final ClawCommand m_ClawCommand = new ClawCommand(m_pistonClawSubsystem, m_LedSubsystem);
 
   //bikebreak command
 
@@ -107,10 +116,16 @@ public class RobotContainer {
   public final ClawWheelCommand m_ClawWheelForwardCommand = new ClawWheelCommand(1, m_ClawWheelsSubsystem);
  
  //led command
-  public final LEDCommand m_LEDColorCommand = new LEDCommand(m_LedSubsystem);
+  //public final LEDCommand m_LEDColorCommand = new LEDCommand(m_LedSubsystem);
 
   //reset encoder command
   public final EncoderCommand m_EncoderCommand = new EncoderCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
+
+  // auton commands
+  private final BlueMiddleAuton m_BlueMiddleAuton = new BlueMiddleAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_pistonClawSubsystem, m_LedSubsystem);
+  private final BlueRightAuton m_BlueRightAuton = new BlueRightAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_pistonClawSubsystem, m_LedSubsystem);
+  // auton chooser
+  private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
   public RobotContainer() {
 
@@ -118,13 +133,18 @@ public class RobotContainer {
     boolean fieldRelative = true;
     boolean openLoop = true;
     
-    m_pivotingArmSubsystem.setDefaultCommand(m_PivotingArmCommand);
+    m_pivotingArmSubsystem.setDefaultCommand(m_ArmCommand);
     m_swerveDrivetrain.setDefaultCommand(new SwerveDrive(m_swerveDrivetrain, 
       m_driverController, m_translationAxis, m_strafeAxis, m_rotationAxis, fieldRelative, openLoop));
 
     m_zeroGyro.onTrue(new InstantCommand(() -> m_swerveDrivetrain.resetGyro()));
     
-      //m_swerveDrivetrain.zeroModules();
+    // Initializie auton chooser in smartdashboard
+    m_autoChooser.setDefaultOption("Blue Middle Auton", m_BlueMiddleAuton);
+    m_autoChooser.addOption("Blue Right Auton", m_BlueRightAuton);
+    SmartDashboard.putData("Auton Choices", m_autoChooser);
+
+    //m_swerveDrivetrain.zeroModules();
     /* Initialize diagnostics subystem */
     //m_diagnostics = new Diagnostics(m_swerveDrivetrain, m_climber, m_intake, m_feeder, m_shooter, m_actuator);
     
@@ -166,11 +186,6 @@ public class RobotContainer {
 
   }
 
-  private static SendableChooser<Command> autoChooser;
-
-  
-
-
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -188,8 +203,9 @@ public class RobotContainer {
    */
 
   public Command getAutonomousCommand() {
-    return m_driveDistance;
-    //return autoChooser.getSelected();
+
+
+    return m_BlueMiddleAuton;//m_autoChooser.getSelected();
 
   }
   

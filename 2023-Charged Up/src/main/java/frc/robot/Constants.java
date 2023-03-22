@@ -31,18 +31,22 @@ public final class Constants {
     public static final int BACK_LEFT_DRIVE = 7; //Josh
     public static final int BACK_LEFT_ENCODER = 11; //Gary 
     public static final int BACK_LEFT_AZIMUTH = 6 ; //Tracy
+    public static final double BACK_LEFT_OFFSET = 147.480; // -90
 
     public static final int BACK_RIGHT_DRIVE = 4; //Happy
     public static final int BACK_RIGHT_ENCODER = 10; //Bre
     public static final int BACK_RIGHT_AZIMUTH = 5; //Samuel
+    public static final double BACK_RIGHT_OFFSET = 275.449; // -197
 
     public static final int FRONT_RIGHT_DRIVE = 2; //Keith
     public static final int FRONT_RIGHT_ENCODER = 9; //Freddy Mercury
     public static final int FRONT_RIGHT_AZIMUTH = 3; //Beth
+    public static final double FRONT_RIGHT_OFFSET = 352.441; // -286
 
     public static final int FRONT_LEFT_DRIVE = 1; //Chad
     public static final int FRONT_LEFT_ENCODER = 8; //Jonathan 
     public static final int FRONT_LEFT_AZIMUTH = 0; //Geraldine
+    public static final double FRONT_LEFT_OFFSET = 105.645; // -158
 
     public static final int THROUGH_BORE_ENCODER = 0;
 
@@ -53,10 +57,6 @@ public final class Constants {
     public static final int PIGEON = 12;
 
     /* CANCoder offsets */
-    public static double FRONT_LEFT_OFFSET = 284.6; // -158
-    public static double FRONT_RIGHT_OFFSET = 172.8; // -286
-    public static double BACK_LEFT_OFFSET = 325.2; // -90
-    public static double BACK_RIGHT_OFFSET = 100. ; // -197
 
     public static double FRONT_LEFT_MULTIPLIER = 1; // 
     public static double FRONT_RIGHT_MULTIPLIER = 1; // 
@@ -103,6 +103,7 @@ public final class Constants {
     public static final double ROTATION_P = 0.025;
     public static final double ROTATION_I = 0.00005;
     public static final double ROTATION_D = 0.0;
+    public static final double ROTATION_TOLERANCE = 1.0;
     
 
     /* Drive Motor PID Values */
@@ -179,6 +180,8 @@ public final class Constants {
                 Misc.
     ==============================*/
 
+    public static final int CANDLE_CAN_ID = 18;
+
     public static final double OPEN_LOOP_RAMP = 0.25;
     public static final double CLOSED_LOOP_RAMP = 0.0;
     public static final double LIMELIGHT_GROUNDOFFSET = 20.75;
@@ -215,7 +218,7 @@ public final class Constants {
     public static final double pP = -0.025;
     public static final double pivotI = 0.0;
     public static final double pivotD = 0.0;
-    public static final double pPIDTolerance = 1.0;
+    public static final double pPIDTolerance = 2.0;
 
     //Telescoping Values
     public static final double armLengths[] = {0, 50000, 98000, Constants.maximumArmLength, 167500};
@@ -228,6 +231,7 @@ public final class Constants {
     public static final double tP = 0.10;
     public static final double tI = 0.000005;
     public static final double tD = 0;
+    public static final double tTolerance = 600;
 
     // Pneumatic ports
     public static final int pneumaticPistonPort = 17; // Copied from 2022 Rapid React Code (needs to be tested more??)
@@ -256,7 +260,7 @@ public final class Constants {
     public static final int boreEncoder = 0;
 
     //PID values for Charging Station
-    public static final double csP = 0;
+    public static final double csP = 0.20;
     public static final double csI = 0;
     public static final double csD = 0;
     public static final double csTolerance = 0.1;
