@@ -86,7 +86,7 @@ public class RobotContainer {
   public final ArmCommand m_ArmCommand = new ArmCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
 
 
-  private final DriveDistance m_driveDistance = new DriveDistance(m_swerveDrivetrain, new Pose2d(3.0, 0.0, new Rotation2d(0.0)), fieldRelative, openLoop);
+  //private final DriveDistance m_driveDistance = new DriveDistance(m_swerveDrivetrain, new Pose2d(3.0, 0.0, new Rotation2d(0.0)), fieldRelative, openLoop);
 
   /*
   public final PivotingArmCommand m_manualPivotingArmCommand = new PivotingArmCommand(-1, m_pivotingArmSubsystem, m_BikeBreakSubsystem);
@@ -123,7 +123,7 @@ public class RobotContainer {
 
   // auton commands
   private final BlueMiddleAuton m_BlueMiddleAuton = new BlueMiddleAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_pistonClawSubsystem, m_LedSubsystem);
-  private final BlueRightAuton m_BlueRightAuton = new BlueRightAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_pistonClawSubsystem, m_LedSubsystem);
+  //private final BlueRightAuton m_BlueRightAuton = new BlueRightAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_pistonClawSubsystem, m_LedSubsystem);
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
@@ -141,7 +141,7 @@ public class RobotContainer {
     
     // Initializie auton chooser in smartdashboard
     m_autoChooser.setDefaultOption("Blue Middle Auton", m_BlueMiddleAuton);
-    m_autoChooser.addOption("Blue Right Auton", m_BlueRightAuton);
+   // m_autoChooser.addOption("Blue Right Auton", m_BlueRightAuton);
     SmartDashboard.putData("Auton Choices", m_autoChooser);
 
     //m_swerveDrivetrain.zeroModules();

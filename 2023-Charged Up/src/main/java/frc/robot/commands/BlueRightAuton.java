@@ -41,20 +41,19 @@ public class BlueRightAuton extends SequentialCommandGroup {
     m_clawWheelAuton = clawWheelAuton;
     m_ClawWheelsSubsystem = clawWheelsSubsystem;
     addCommands(
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
-      new ParallelCommandGroup(new ClawCommand(m_PistonClawSubsystem, m_LEDSubsystem), new WaitCommand(1)), //Dispenses cone
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), //sets arm to neutral position
-      new DriveDistance(m_swerveDrivetrain, new Pose2d(Units.inchesToMeters(121.61), Units.inchesToMeters(-255.11), new Rotation2d(0)), true, true), //Moves horizontally to allign with cone
-      new DriveDistance(m_swerveDrivetrain, new Pose2d(Units.inchesToMeters(121.61), Units.inchesToMeters(-64.62), new Rotation2d(180)), true, true), //Moves to central cone.
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 0), //Moves arm to pick up cone
-      new ParallelDeadlineGroup(new DriveDistance(m_swerveDrivetrain, new Pose2d(Units.inchesToMeters(121.61), Units.inchesToMeters(-60.62), new Rotation2d(180)), true, true), new ClawWheelAuton(0, null, isFinished()), new ClawWheelAuton(5, m_ClawWheelsSubsystem, true)),
-      new DriveDistance(m_swerveDrivetrain, new Pose2d(Units.inchesToMeters(121.61), Units.inchesToMeters(-255.11), new Rotation2d(0)), true, true), //Moves horizontally to allign with cone
-      new DriveDistance(m_swerveDrivetrain, new Pose2d(Units.inchesToMeters(93.61), Units.inchesToMeters(-255.11), new Rotation2d(0)), true, true), //Moves horizontally to allign with cone
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
-      new ParallelCommandGroup(new ClawCommand(m_PistonClawSubsystem, m_LEDSubsystem), new WaitCommand(1)), //Dispenses cone
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3) //sets arm to neutral position                                                                    
-      );
+      // new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
+      // new ParallelCommandGroup(new ClawCommand(m_PistonClawSubsystem, m_LEDSubsystem), new WaitCommand(1)), //Dispenses cone
+      // new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), //sets arm to neutral position
+      // new DriveDistance(m_swerveDrivetrain, new Pose2d(Units.inchesToMeters(121.61), Units.inchesToMeters(-255.11), new Rotation2d(0)), true, true), //Moves horizontally to allign with cone
+      // new DriveDistance(m_swerveDrivetrain, new Pose2d(Units.inchesToMeters(121.61), Units.inchesToMeters(-64.62), new Rotation2d(180)), true, true), //Moves to central cone.
+      // new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 0), //Moves arm to pick up cone
+      // new ParallelDeadlineGroup(new DriveDistance(m_swerveDrivetrain, new Pose2d(Units.inchesToMeters(121.61), Units.inchesToMeters(-60.62), new Rotation2d(180)), true, true), new ClawWheelAuton(0, null, isFinished()), new ClawWheelAuton(5, m_ClawWheelsSubsystem, true)),
+      // new DriveDistance(m_swerveDrivetrain, new Pose2d(Units.inchesToMeters(121.61), Units.inchesToMeters(-255.11), new Rotation2d(0)), true, true), //Moves horizontally to allign with cone
+      // new DriveDistance(m_swerveDrivetrain, new Pose2d(Units.inchesToMeters(93.61), Units.inchesToMeters(-255.11), new Rotation2d(0)), true, true), //Moves horizontally to allign with cone
+      // new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
+      // new ParallelCommandGroup(new ClawCommand(m_PistonClawSubsystem, m_LEDSubsystem), new WaitCommand(1)), //Dispenses cone
+      // new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3) //sets arm to neutral position                                                                    
+       );
   }
 }
 
- 
