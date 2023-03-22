@@ -114,6 +114,7 @@ public class RobotContainer {
   //claw wheel commands
   public final ClawWheelCommand m_ClawWheelReverseCommand = new ClawWheelCommand(0, m_ClawWheelsSubsystem);
   public final ClawWheelCommand m_ClawWheelForwardCommand = new ClawWheelCommand(1, m_ClawWheelsSubsystem);
+  public final ClawWheelCommand m_ClawWheelHoldCommand = new ClawWheelCommand(2, m_ClawWheelsSubsystem);
  
  //led command
   //public final LEDCommand m_LEDColorCommand = new LEDCommand(m_LedSubsystem);
@@ -181,6 +182,7 @@ public class RobotContainer {
     OI.getOperator().leftBumper().whileTrue( m_ClawCommand );
     OI.getOperator().rightTrigger().whileTrue( m_ClawWheelReverseCommand );
     OI.getOperator().leftTrigger().whileTrue( m_ClawWheelForwardCommand );
+    OI.getOperator().rightBumper().whileTrue( m_ClawWheelHoldCommand ) ;
     //OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );
     
 
