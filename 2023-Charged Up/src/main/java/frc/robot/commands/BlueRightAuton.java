@@ -11,8 +11,10 @@ import frc.robot.subsystems.SwerveDrivetrain;
 import frc.robot.subsystems.TelescopingArmSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class BlueRightAuton extends SequentialCommandGroup {
   /** Creates a new BlueMiddleAuton. */
@@ -32,17 +34,17 @@ public class BlueRightAuton extends SequentialCommandGroup {
     m_PistonClawSubsystem = pistonClawSubsystem;
     m_LEDSubsystem = ledSubsystem;
 
-    addCommands(
-      new DriveDistance(m_swerveDrivetrain, new Pose2d(121.61, -255.11, new Rotation2d(Math.toRadians(90))), true, true),
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), // sets arm to high position
-      new ClawCommand(m_PistonClawSubsystem, m_LEDSubsystem), //drops cone
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), // sets arm to neutral position
-      new DriveDistance(swerveDrivetrain, new Pose2d(121.61, -64.62, new Rotation2d(0)), true, true),
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 0),
-      new DriveDistance(swerveDrivetrain, new Pose2d(121.61, -62.62, new Rotation2d(0)), true, true)
+    // addCommands(
+    //   new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
+    //   new ParallelCommandGroup(new ClawCommand(m_PistonClawSubsystem, m_LEDSubsystem), new WaitCommand(1)), //Dispenses cone
+    //   new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), //sets arm to neutral position
+    //   new DriveDistance(m_swerveDrivetrain, new Pose2d(Units.inchesToMeters(121.61), Units.inchesToMeters(-255.11), new Rotation2d(0)), true, true), //Moves horizontally to allign with cone
+    //   new DriveDistance(m_swerveDrivetrain, new Pose2d(Units.inchesToMeters(121.61), Units.inchesToMeters(-64.62), new Rotation2d(0)), true, true), //Moves to central cone.
+    //   new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 0), //Moves arm to pick up cone
+    //   //need wheel spinning here
         
 
-      );
+    //   );
   }
 }
 
