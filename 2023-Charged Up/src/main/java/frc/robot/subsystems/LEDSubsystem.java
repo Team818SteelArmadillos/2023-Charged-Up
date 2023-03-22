@@ -21,17 +21,17 @@ public class LEDSubsystem extends SubsystemBase {
         config.stripType = LEDStripType.RGB;
         candle.configAllSettings(config);  
                 
-        candle.setLEDs(255, 255, 255); 
+        candle.setLEDs(0, 102, 255); 
 
         toggle = true;
     }
 
     public void setLEDsPurple() {        
-        candle.setLEDs(166, 77, 255);
+        candle.setLEDs(153, 0, 204);
     }
 
     public void setLEDsYellow() {
-        candle.setLEDs(255, 230, 102);
+        candle.setLEDs(255, 255, 0);
     }
 
     public void toggle() {
@@ -43,6 +43,5 @@ public class LEDSubsystem extends SubsystemBase {
 
         toggle = !toggle;
     }
-
 } 
 
