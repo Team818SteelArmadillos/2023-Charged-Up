@@ -155,36 +155,11 @@ public class RobotContainer {
 
   public void configureButtonBindings() {
 
-    //pivoting arm controls
-    /*if (OI.getOperator().L1().getAsBoolean() == false) {
-      OI.getOperator().cross().onTrue( Commands.parallel(m_PivotingArmGroundCommand, m_TelescopingArmLowCommand) );
-      OI.getOperator().circle().onTrue( Commands.parallel(m_PivotingArmMediumCommand, m_TelescopingArmMediumCommand) );
-      OI.getOperator().square().onTrue( Commands.parallel(m_PivotingGrabHighCommand, m_TelescopingGrabHighCommand) );
-      OI.getOperator().triangle().onTrue( Commands.parallel(m_PivotingArmHighCommand, m_TelescopingArmHighCommand) );
-    } else {
-      OI.getOperator().cross().onTrue( Commands.parallel(r_PivotingArmGroundCommand, m_TelescopingArmLowCommand) );
-      OI.getOperator().circle().onTrue( Commands.parallel(r_PivotingArmMediumCommand, m_TelescopingArmMediumCommand) );
-      OI.getOperator().square().onTrue( Commands.parallel(r_PivotingGrabHighCommand, m_TelescopingGrabHighCommand) );
-      OI.getOperator().triangle().onTrue( Commands.parallel(r_PivotingArmHighCommand, m_TelescopingArmHighCommand) ); 
-    }
-    */
-    
-    /* 
-    OI.getOperator().axisGreaterThan(Constants.leftYAxis, 0.1).whileTrue(m_manualPivotingArmCommand);
-    OI.getOperator().axisLessThan(Constants.leftYAxis, -0.1).whileTrue(m_manualPivotingArmCommand);
-
-    OI.getOperator().axisGreaterThan(Constants.rightYAxis, 0.1).whileTrue(m_manualTelescopingArmCommand);
-    OI.getOperator().axisLessThan(Constants.rightYAxis, -0.1).whileTrue(m_manualTelescopingArmCommand);
-    */
-
-    //if (Math.abs( OI.getOperator().getLeftY() ) > 0.05) { m_pivotingArmSubsystem.setPivotSpeed(OI.getOperator().getLeftY()); } else {m_pivotingArmSubsystem.setPivotSpeed(0);}
-    //OI.getOperator().x().whileTrue(m_EncoderCommand);
     OI.getOperator().leftBumper().whileTrue( m_ClawCommand );
     OI.getOperator().rightTrigger().whileTrue( m_ClawWheelReverseCommand );
     OI.getOperator().leftTrigger().whileTrue( m_ClawWheelForwardCommand );
     OI.getOperator().rightBumper().whileTrue( m_ClawWheelHoldCommand ) ;
-    //OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );
-    
+    //OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );    
 
   }
 
@@ -207,7 +182,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
 
-    return m_BlueMiddleAuton;//m_autoChooser.getSelected();
+    return m_autoChooser.getSelected();//m_BlueMiddleAuton;
 
   }
   

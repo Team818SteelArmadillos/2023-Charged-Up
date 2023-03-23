@@ -23,7 +23,7 @@ public class LEDSubsystem extends SubsystemBase {
                 
         candle.setLEDs(0, 102, 255); 
 
-        toggle = true;
+        toggle = false;
     }
 
     public void setLEDsPurple() {        
