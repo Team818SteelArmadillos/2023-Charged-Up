@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-import frc.robot.Robot;
 import frc.robot.subsystems.ClawWheelsSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.PistonClawSubsystem;
@@ -25,12 +24,11 @@ public class BlueRightAuton extends SequentialCommandGroup {
   private static TelescopingArmSubsystem m_TelescopingArmSubsystem;
   private static PistonClawSubsystem m_PistonClawSubsystem;
   private static LEDSubsystem m_LEDSubsystem;
-  private static ClawWheelAuton m_clawWheelAuton;
   private static ClawWheelsSubsystem m_ClawWheelsSubsystem;
   static double[][] coordinates = {{0, 70.78, -255.11}, {0, 70.78, -172.61}};
   public BlueRightAuton(TelescopingArmSubsystem telescopingArmSubsystem, PivotingArmSubsystem pivotingArmSubsystem, 
   SwerveDrivetrain swerveDrivetrain, PistonClawSubsystem pistonClawSubsystem, LEDSubsystem ledSubsystem, 
-  ClawWheelAuton clawWheelAuton, ClawWheelsSubsystem clawWheelsSubsystem) {
+  ClawWheelsSubsystem m_ClawWheelsSubsystem) {
 
     addRequirements(swerveDrivetrain, pivotingArmSubsystem, telescopingArmSubsystem, pistonClawSubsystem);
     m_TelescopingArmSubsystem = telescopingArmSubsystem;
@@ -38,8 +36,6 @@ public class BlueRightAuton extends SequentialCommandGroup {
     m_swerveDrivetrain = swerveDrivetrain;
     m_PistonClawSubsystem = pistonClawSubsystem;
     m_LEDSubsystem = ledSubsystem;
-    m_clawWheelAuton = clawWheelAuton;
-    m_ClawWheelsSubsystem = clawWheelsSubsystem;
     addCommands(
       // new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
       // new ParallelCommandGroup(new ClawCommand(m_PistonClawSubsystem, m_LEDSubsystem), new WaitCommand(1)), //Dispenses cone

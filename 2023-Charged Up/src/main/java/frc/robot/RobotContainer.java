@@ -54,7 +54,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   //private final DriveTrainCommand m_autoCommand = new DriveTrainCommand();
-  
+
   //variables
   boolean facingForward;
   boolean fieldRelative;
@@ -124,7 +124,7 @@ public class RobotContainer {
 
   // auton commands
   private final BlueMiddleAuton m_BlueMiddleAuton = new BlueMiddleAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_pistonClawSubsystem, m_LedSubsystem);
-  //private final BlueRightAuton m_BlueRightAuton = new BlueRightAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_pistonClawSubsystem, m_LedSubsystem);
+  private final BlueRightAuton m_BlueRightAuton = new BlueRightAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_pistonClawSubsystem, m_LedSubsystem, m_ClawWheelsSubsystem);
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
