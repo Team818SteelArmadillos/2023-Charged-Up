@@ -25,17 +25,14 @@ public class AutoBalanceCommand extends CommandBase {
   public Translation2d translation;
 
   public SlewRateLimiter speedRateLimiter;
+  
+  public double balanceSpeed = 0.1;
 
   public AutoBalanceCommand (PivotingArmSubsystem sub, SwerveDrivetrain sub1) {
     
     addRequirements(sub);
     pivotingArmSubsystem = sub;
     swerveDrivetrain = sub1;
-
-    pid = new PIDController(Constants.csP, Constants.csI, Constants.csD);
-    pid.setTolerance(Constants.csTolerance);
-
-    speedRateLimiter = new SlewRateLimiter(Constants.MAX_SPEED/5);
 
   }
 
@@ -47,21 +44,16 @@ public class AutoBalanceCommand extends CommandBase {
     @Override
     public void execute() {
 
-      pitch = swerveDrivetrain.getPitch();
-      
-      //calculate the next pid output
-      pidOutput = pid.calculate(pitch, 0);
-
-      /* Filter joystick inputs using slew rate limiter */
-      double yAxisFiltered = speedRateLimiter.calculate(pidOutput);
-
-      
       //create a translation 2d with the pid onnly affecting the y-axis
-      translation = new Translation2d(yAxisFiltered, 0);
+      if ( pitch > Constants.csTolerance ) {
+        translation = new Translation2d(balanceSpeed, 0);
+      } else if ( pitch < -Constants.csTolerance ) {
+        translation = new Translation2d(-balanceSpeed, 0);
+      } else {
+        translation = new Translation2d(0, 0);
+      }
       
       swerveDrivetrain.drive(translation, 0, true, true);
-
-      SmartDashboard.putNumber("Pitch", swerveDrivetrain.getPitch());
     
     }
     
@@ -73,6 +65,6 @@ public class AutoBalanceCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-      return pid.atSetpoint();
+      return (pitch < Constants.csTolerance && pitch > -Constants.csTolerance);
   }
 }
