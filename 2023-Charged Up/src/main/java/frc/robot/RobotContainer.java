@@ -142,7 +142,7 @@ public class RobotContainer {
     
     // Initializie auton chooser in smartdashboard
     m_autoChooser.setDefaultOption("Blue Middle Auton", m_BlueMiddleAuton);
-   // m_autoChooser.addOption("Blue Right Auton", m_BlueRightAuton);
+    m_autoChooser.addOption("Blue Right Auton", m_BlueRightAuton);
     SmartDashboard.putData("Auton Choices", m_autoChooser);
 
     //m_swerveDrivetrain.zeroModules();
