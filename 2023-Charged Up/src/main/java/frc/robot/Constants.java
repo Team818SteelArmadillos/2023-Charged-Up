@@ -118,14 +118,14 @@ public final class Constants {
     public static final double DRIVE_A = (0.06921 / 12);
 
     /* Azimuth Current Limiting */
-    public static final int AZIMUTH_CONTINUOUS_CURRENT_LIMIT = 25; // amps
-    public static final int AZIMUTH_PEAK_CURRENT_LIMIT = 40; // amps
+    public static final int AZIMUTH_CONTINUOUS_CURRENT_LIMIT = 10; // amps
+    public static final int AZIMUTH_PEAK_CURRENT_LIMIT = 20; // amps
     public static final int AZIMUTH_PEAK_CURRENT_DURATION = 100; // milliseconds
     public static final boolean AZIMUTH_ENABLE_CURRENT_LIMIT = true;
 
     /* Drive Current Limiting */
-    public static final int DRIVE_CONTINUOUS_CURRENT_LIMIT = 35; // amps
-    public static final int DRIVE_PEAK_CURRENT_LIMIT = 60; // amps
+    public static final int DRIVE_CONTINUOUS_CURRENT_LIMIT = 30; // amps
+    public static final int DRIVE_PEAK_CURRENT_LIMIT = 50; // amps
     public static final int DRIVE_PEAK_CURRENT_DURATION = 100; // milliseconds
     public static final boolean DRIVE_ENABLE_CURRENT_LIMIT = true;
 

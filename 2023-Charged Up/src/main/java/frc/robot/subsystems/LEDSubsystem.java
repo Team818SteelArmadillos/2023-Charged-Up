@@ -36,9 +36,9 @@ public class LEDSubsystem extends SubsystemBase {
 
     public void toggle() {
         if (toggle) {
-            setLEDsYellow();
-        } else {
             setLEDsPurple();
+        } else {
+            setLEDsYellow();
         }
 
         toggle = !toggle;

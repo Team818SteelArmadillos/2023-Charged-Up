@@ -74,7 +74,7 @@ public class SwerveDrive extends CommandBase {
         /* Set variables equal to their respective axis */
         double yAxis = m_driverController.getRawAxis(m_driveAxis);
         double xAxis = m_driverController.getRawAxis(m_strafeAxis);
-        double rAxis = m_driverController.getRawAxis(m_rotationAxis);
+        double rAxis = -m_driverController.getRawAxis(m_rotationAxis);
         
         /* Deadbands */
         yAxis = (Math.abs(yAxis) < Constants.STICK_DEADBAND) ? 0 : yAxis;
@@ -97,7 +97,7 @@ public class SwerveDrive extends CommandBase {
 
         /* Input variables into drive methods */
         m_translation = new Translation2d(yAxisFiltered, xAxisFiltered).times(Constants.MAX_SPEED);
-        m_rotation = -rAxisSquared * Constants.MAX_ANGULAR_VELOCITY * 0.5; // if 
+        m_rotation = rAxisSquared * Constants.MAX_ANGULAR_VELOCITY * 0.5; // if 
         m_swerveDrivetrain.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
         //SmartDashboard.putNumber("Input Angle", m_translation.getAngle().getDegrees());
         //SmartDashboard.putNumber("Rotation Angle", m_swerveDrivetrain.getAngle());
