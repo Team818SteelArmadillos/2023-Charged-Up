@@ -260,8 +260,8 @@ public final class Constants {
     public static final int boreEncoder = 0;
 
     //PID values for Charging Station
-    public static final double csP = 0.20;
+    public static final double csP = 0.00002;
     public static final double csI = 0;
     public static final double csD = 0;
-    public static final double csTolerance = 0.1;
+    public static final double csTolerance = 5;
 }

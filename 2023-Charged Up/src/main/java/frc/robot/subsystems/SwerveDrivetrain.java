@@ -159,6 +159,9 @@ public class SwerveDrivetrain extends SubsystemBase {
         return m_swerveOdometry.getPoseMeters();
     }
 
+    public double getPitch() {
+        return m_gyro.getPitch();
+    }
     /**
      * 
      * Sets the robot odometry to the current known pose
@@ -168,7 +171,6 @@ public class SwerveDrivetrain extends SubsystemBase {
      */
 
     public void resetOdometry(Pose2d pose) {
-
         m_swerveOdometry.resetPosition(getYaw(), m_modulePositions, pose);
     }
 
@@ -336,7 +338,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         
         m_swerveOdometry.update(getYaw(), getStates());
 
-        // SmartDashboard.putNumber("Pigeon", getAngle());
+        SmartDashboard.putNumber("Pitch", getPitch());
 
         // SmartDashboard.putNumber("Font Left Offset", m_swerveModules[0].getCandcoderAbsPos());
         // SmartDashboard.putNumber("Font Right Offset", m_swerveModules[1].getCandcoderAbsPos());
