@@ -159,8 +159,8 @@ public class SwerveDrivetrain extends SubsystemBase {
         return m_swerveOdometry.getPoseMeters();
     }
 
-    public double getPitch() {
-        return m_gyro.getPitch();
+    public double getRoll() {
+        return m_gyro.getRoll() + Constants.PIGEON_ROLL_OFFSET;
     }
     /**
      * 
@@ -338,7 +338,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         
         m_swerveOdometry.update(getYaw(), getStates());
 
-        SmartDashboard.putNumber("Pitch", getPitch());
+        SmartDashboard.putNumber("Roll", getRoll());
 
         // SmartDashboard.putNumber("Font Left Offset", m_swerveModules[0].getCandcoderAbsPos());
         // SmartDashboard.putNumber("Font Right Offset", m_swerveModules[1].getCandcoderAbsPos());

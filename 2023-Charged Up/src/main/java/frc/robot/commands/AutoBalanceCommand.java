@@ -1,54 +1,45 @@
 package frc.robot.commands;
 
-import com.ctre.phoenix.sensors.Pigeon2;
-
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.OI;
-import frc.robot.subsystems.PivotingArmSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.SwerveDrivetrain;
 
 public class AutoBalanceCommand extends CommandBase {
 
   private SwerveDrivetrain swerveDrivetrain;
-  private PivotingArmSubsystem pivotingArmSubsystem;
+  LEDSubsystem led;
 
-  public PIDController pid;
-
-  public double pidOutput;
-  public double pitch;
+  public double roll;
   public Translation2d translation;
 
-  public SlewRateLimiter speedRateLimiter;
-  
-  public double balanceSpeed = 0.1;
+  public double balanceSpeed = 0.5;
 
-  public AutoBalanceCommand (PivotingArmSubsystem sub, SwerveDrivetrain sub1) {
+  public AutoBalanceCommand (SwerveDrivetrain sub, LEDSubsystem sub1) {
     
-    addRequirements(sub);
-    pivotingArmSubsystem = sub;
-    swerveDrivetrain = sub1;
-
+    addRequirements(sub, sub1);
+    swerveDrivetrain = sub;
+    led = sub1;
   }
 
   @Override
     public void initialize() {
+      led.setLEDsYellow();
     }
   
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
 
+
+      roll = swerveDrivetrain.getRoll();
+
       //create a translation 2d with the pid onnly affecting the y-axis
-      if ( pitch > Constants.csTolerance ) {
-        translation = new Translation2d(balanceSpeed, 0);
-      } else if ( pitch < -Constants.csTolerance ) {
+      if ( roll > Constants.csTolerance ) {
         translation = new Translation2d(-balanceSpeed, 0);
+      } else if ( roll < -Constants.csTolerance ) {
+        translation = new Translation2d(balanceSpeed, 0);
       } else {
         translation = new Translation2d(0, 0);
       }
@@ -60,11 +51,13 @@ public class AutoBalanceCommand extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+      translation = new Translation2d(0, 0);
+      swerveDrivetrain.drive(translation, 0, true, true);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-      return (pitch < Constants.csTolerance && pitch > -Constants.csTolerance);
+      return (roll < Constants.csTolerance && roll > -Constants.csTolerance);
   }
 }

@@ -49,7 +49,7 @@ public final class Constants {
     public static final double FRONT_LEFT_OFFSET = 105.645; // -158
 
     public static final int THROUGH_BORE_ENCODER = 0;
-
+    public static final double PIGEON_ROLL_OFFSET = 1.8;
     /*Can Bus */
 
     public static final String CAN_BUS_DRIVE = "CANivore";
@@ -125,7 +125,7 @@ public final class Constants {
 
     /* Drive Current Limiting */
     public static final int DRIVE_CONTINUOUS_CURRENT_LIMIT = 30; // amps
-    public static final int DRIVE_PEAK_CURRENT_LIMIT = 50; // amps
+    public static final int DRIVE_PEAK_CURRENT_LIMIT = 40; // amps
     public static final int DRIVE_PEAK_CURRENT_DURATION = 100; // milliseconds
     public static final boolean DRIVE_ENABLE_CURRENT_LIMIT = true;
 

@@ -11,6 +11,7 @@ public class OI {
     //public OI () 
     static {
       operatorController = new CommandXboxController(Constants.operatorControllerPort);
+      driveController = new CommandXboxController(Constants.DRIVER_PORT);
     }
 
     public static CommandXboxController getDriver() {

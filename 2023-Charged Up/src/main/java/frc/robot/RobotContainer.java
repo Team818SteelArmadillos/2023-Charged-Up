@@ -84,7 +84,7 @@ public class RobotContainer {
   
   //pivoting manual command
   public final ArmCommand m_ArmCommand = new ArmCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
-
+  public final AutoBalanceCommand m_autoBalanceCommand = new AutoBalanceCommand(m_swerveDrivetrain, m_LedSubsystem);
 
   //private final DriveDistance m_driveDistance = new DriveDistance(m_swerveDrivetrain, new Pose2d(3.0, 0.0, new Rotation2d(0.0)), fieldRelative, openLoop);
 
@@ -159,6 +159,7 @@ public class RobotContainer {
     OI.getOperator().rightTrigger().whileTrue( m_ClawWheelReverseCommand );
     OI.getOperator().leftTrigger().whileTrue( m_ClawWheelForwardCommand );
     OI.getOperator().rightBumper().whileTrue( m_ClawWheelHoldCommand ) ;
+    OI.getDriver().y().whileTrue( m_autoBalanceCommand );
     //OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );    
 
   }
