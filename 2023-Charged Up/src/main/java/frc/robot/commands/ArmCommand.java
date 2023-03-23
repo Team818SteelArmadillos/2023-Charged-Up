@@ -61,7 +61,7 @@ public class ArmCommand extends CommandBase {
       angleSetpoint = Constants.armAngles[3];
       lengthSetpoint = Constants.armLengths[1];
     } else if ( OI.getOperator().b().getAsBoolean() ) { //medium position
-      angleSetpoint = Constants.armAngles[2];
+      angleSetpoint = Constants.armAngles[3];
       lengthSetpoint = Constants.armLengths[2];
     } else if ( OI.getOperator().y().getAsBoolean() ) { // high position
       angleSetpoint = Constants.armAngles[2];
@@ -81,7 +81,7 @@ public class ArmCommand extends CommandBase {
 
     //manual set length
     if ( Math.abs( rawRightJoystickInput ) > Constants.controllerDeadzone ) {
-      rightJoystickInput = rawRightJoystickInput;
+      rightJoystickInput = -rawRightJoystickInput;
       lengthSetpoint = lengthRateLimiter.calculate(lengthSetpoint + 20000 * rightJoystickInput);
     }
 

@@ -35,7 +35,7 @@ public class ArmAuton extends CommandBase {
       angleSetpoint = Constants.armAngles[3];
       lengthSetpoint = Constants.armLengths[1];
     } else if (state == 1) { //medium position
-      angleSetpoint = Constants.armAngles[2];
+      angleSetpoint = Constants.armAngles[3];
       lengthSetpoint = Constants.armLengths[2];
     } else if (state == 2) { // high position
       angleSetpoint = Constants.armAngles[2];

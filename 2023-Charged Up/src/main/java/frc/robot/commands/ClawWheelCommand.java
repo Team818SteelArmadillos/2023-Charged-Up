@@ -27,7 +27,7 @@ public class ClawWheelCommand extends CommandBase {
     switch (_state) {
       case 0: clawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelForawrdSpeed); break;
       case 1: clawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelReverseSpeed); break;
-      case 2: clawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelForawrdSpeed / 4); break;
+      case 2: clawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelReverseSpeed / 4); break;
     }
   }
 
