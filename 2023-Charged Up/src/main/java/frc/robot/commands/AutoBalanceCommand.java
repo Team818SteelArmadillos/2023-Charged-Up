@@ -1,10 +1,12 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.SwerveDrivetrain;
+
 
 public class AutoBalanceCommand extends CommandBase {
 
@@ -21,11 +23,12 @@ public class AutoBalanceCommand extends CommandBase {
     addRequirements(sub, sub1);
     swerveDrivetrain = sub;
     led = sub1;
+    
   }
 
   @Override
     public void initialize() {
-      led.setLEDsYellow();
+      led.setLEDRGB(249, 0, 79); //red
     }
   
     // Called every time the scheduler runs while the command is scheduled.
@@ -53,11 +56,12 @@ public class AutoBalanceCommand extends CommandBase {
     public void end(boolean interrupted) {
       translation = new Translation2d(0, 0);
       swerveDrivetrain.drive(translation, 0, true, true);
+      led.setLEDRGB(0, 255, 64); //green
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-      return (roll < Constants.csTolerance && roll > -Constants.csTolerance);
+      return ( -Constants.csTolerance < roll && roll < Constants.csTolerance);
   }
 }

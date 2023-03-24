@@ -34,6 +34,10 @@ public class LEDSubsystem extends SubsystemBase {
         candle.setLEDs(255, 255, 0);
     }
 
+    public void setLEDRGB(int r, int g, int b) {
+        candle.setLEDs(r, g, b);
+    }
+
     public void toggle() {
         if (toggle) {
             setLEDsPurple();
