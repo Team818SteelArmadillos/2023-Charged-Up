@@ -10,9 +10,8 @@ import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.ClawWheelsSubsystem;
+import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.PistonClawSubsystem;
 import frc.robot.subsystems.PivotingArmSubsystem;
 import frc.robot.subsystems.SwerveDrivetrain;
 import frc.robot.subsystems.TelescopingArmSubsystem;
@@ -49,11 +48,10 @@ public class RobotContainer {
 
 
   /* Subsystems */
-  private final ClawWheelsSubsystem m_ClawWheelsSubsystem = new ClawWheelsSubsystem();
+  private final ClawSubsystem m_ClawSubsystem = new ClawSubsystem();
   private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
   //private final LimeNetwork m_LimeNetwork = new LimeNetwork();
   //private final Pathplanning m_Pathplanning = new Pathplanning();
-  private final PistonClawSubsystem m_pistonClawSubsystem = new PistonClawSubsystem();
   private final PivotingArmSubsystem m_pivotingArmSubsystem = new PivotingArmSubsystem();
   private final SwerveDrivetrain m_swerveDrivetrain = new SwerveDrivetrain();
   private final TelescopingArmSubsystem m_telescopingArmSubsystem = new TelescopingArmSubsystem();
@@ -83,14 +81,14 @@ public class RobotContainer {
   */
 
   //claw command
-  public final ClawCommand m_ClawCommand = new ClawCommand(m_pistonClawSubsystem, m_LedSubsystem);
+  public final ClawCommand m_ClawCommand = new ClawCommand(m_ClawSubsystem, m_LedSubsystem);
 
   //bikebreak command
 
   //claw wheel commands
-  public final ClawWheelCommand m_ClawWheelReverseCommand = new ClawWheelCommand(0, m_ClawWheelsSubsystem);
-  public final ClawWheelCommand m_ClawWheelForwardCommand = new ClawWheelCommand(1, m_ClawWheelsSubsystem);
-  public final ClawWheelCommand m_ClawWheelHoldCommand = new ClawWheelCommand(2, m_ClawWheelsSubsystem);
+  public final ClawWheelCommand m_IntakeIn = new ClawWheelCommand(1, m_ClawSubsystem);
+  public final ClawWheelCommand m_IntakeOut = new ClawWheelCommand(0, m_ClawSubsystem);
+
  
  //led command
   //public final LEDCommand m_LEDColorCommand = new LEDCommand(m_LedSubsystem);
@@ -99,8 +97,8 @@ public class RobotContainer {
   public final EncoderCommand m_EncoderCommand = new EncoderCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
 
   // auton commands
-  private final BlueMiddleAuton m_BlueMiddleAuton = new BlueMiddleAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_pistonClawSubsystem, m_LedSubsystem);
-  private final BlueRightAuton m_BlueRightAuton = new BlueRightAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_pistonClawSubsystem, m_LedSubsystem);
+  private final BlueMiddleAuton m_BlueMiddleAuton = new BlueMiddleAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_ClawSubsystem, m_LedSubsystem);
+  private final BlueRightAuton m_BlueRightAuton = new BlueRightAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_ClawSubsystem, m_LedSubsystem);
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
@@ -132,9 +130,8 @@ public class RobotContainer {
   public void configureButtonBindings() {
 
     OI.getOperator().leftBumper().whileTrue( m_ClawCommand );
-    OI.getOperator().rightTrigger().whileTrue( m_ClawWheelReverseCommand );
-    OI.getOperator().leftTrigger().whileTrue( m_ClawWheelForwardCommand );
-    OI.getOperator().rightBumper().whileTrue( m_ClawWheelHoldCommand ) ;
+    OI.getOperator().rightTrigger().whileTrue( m_IntakeOut );
+    OI.getOperator().leftTrigger().whileTrue(m_IntakeIn );
     OI.getDriver().y().whileTrue( m_autoBalanceCommand );
     //OI.getOperator().povUp().whileTrue( m_BikeBreakCommand );    
 

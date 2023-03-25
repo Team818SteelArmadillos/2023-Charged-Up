@@ -1,15 +1,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.PistonClawSubsystem;
 
 public class ClawCommand extends CommandBase {
 
-  PistonClawSubsystem pistonClawSubsystem;
+  ClawSubsystem pistonClawSubsystem;
   LEDSubsystem ledSubsystem;
 
-  public ClawCommand(PistonClawSubsystem sub1, LEDSubsystem sub2) {
+  public ClawCommand(ClawSubsystem sub1, LEDSubsystem sub2) {
     addRequirements(sub1, sub2);
     pistonClawSubsystem = sub1;
     ledSubsystem = sub2;

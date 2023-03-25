@@ -53,8 +53,10 @@ public final class Constants {
     public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
 
     // Piston Claw Values
-    public static final double clawWheelForawrdSpeed = 0.65;
-    public static final double clawWheelReverseSpeed = -0.8;
+    public static final double CONE_IN_SPEED = 0.65;
+    public static final double CONE_OUT_SPEED= -0.8;
+    public static final double CUBE_IN_SPEED = 0.6;
+    public static final double CUBE_OUT_SPEED = -0.2;
 
     // Pivoting Arm Angles
     public static final int[] armAngles = {0, -37, -52, -54, -98, 90};
@@ -82,22 +84,22 @@ public final class Constants {
     public static final int BACK_LEFT_DRIVE = 7; //Josh
     public static final int BACK_LEFT_ENCODER = 11; //Gary 
     public static final int BACK_LEFT_AZIMUTH = 6 ; //Tracy
-    public static final double BACK_LEFT_OFFSET = 147.480;
+    public static final double BACK_LEFT_OFFSET = 150.29296875;
 
     public static final int BACK_RIGHT_DRIVE = 4; //Happy
     public static final int BACK_RIGHT_ENCODER = 10; //Bre
     public static final int BACK_RIGHT_AZIMUTH = 5; //Samuel
-    public static final double BACK_RIGHT_OFFSET = 275.449;
+    public static final double BACK_RIGHT_OFFSET = 264.638671875;
 
     public static final int FRONT_RIGHT_DRIVE = 2; //Keith
     public static final int FRONT_RIGHT_ENCODER = 9; //Freddy Mercury
     public static final int FRONT_RIGHT_AZIMUTH = 3; //Beth
-    public static final double FRONT_RIGHT_OFFSET = 352.441;
+    public static final double FRONT_RIGHT_OFFSET = 352.44140625;
 
     public static final int FRONT_LEFT_DRIVE = 1; //Chad
     public static final int FRONT_LEFT_ENCODER = 8; //Jonathan 
     public static final int FRONT_LEFT_AZIMUTH = 0; //Geraldine
-    public static final double FRONT_LEFT_OFFSET = 105.645;
+    public static final double FRONT_LEFT_OFFSET = 108.193359375;
 
     public static final double PIGEON_ROLL_OFFSET = 1.8;
 

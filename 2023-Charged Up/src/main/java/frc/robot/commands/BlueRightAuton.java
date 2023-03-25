@@ -3,8 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
+import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.PistonClawSubsystem;
 import frc.robot.subsystems.PivotingArmSubsystem;
 import frc.robot.subsystems.SwerveDrivetrain;
 import frc.robot.subsystems.TelescopingArmSubsystem;
@@ -20,14 +20,14 @@ public class BlueRightAuton extends SequentialCommandGroup {
   private static SwerveDrivetrain m_swerveDrivetrain;
   private static PivotingArmSubsystem m_PivotingArmSubsystem;
   private static TelescopingArmSubsystem m_TelescopingArmSubsystem;
-  private static PistonClawSubsystem m_PistonClawSubsystem;
+  private static ClawSubsystem m_PistonClawSubsystem;
   private static LEDSubsystem m_LEDSubsystem;
   static double[] start = {Units.inchesToMeters(70.78), Units.inchesToMeters(-255.11)};
   
   static double[] coordinates = {Units.inchesToMeters(70.78), Units.inchesToMeters(-172.61)};
   
   public BlueRightAuton(TelescopingArmSubsystem telescopingArmSubsystem, PivotingArmSubsystem pivotingArmSubsystem, 
-  SwerveDrivetrain swerveDrivetrain, PistonClawSubsystem pistonClawSubsystem, LEDSubsystem ledSubsystem) {
+  SwerveDrivetrain swerveDrivetrain, ClawSubsystem pistonClawSubsystem, LEDSubsystem ledSubsystem) {
 
     addRequirements(swerveDrivetrain, pivotingArmSubsystem, telescopingArmSubsystem, pistonClawSubsystem);
     m_TelescopingArmSubsystem = telescopingArmSubsystem;
@@ -40,8 +40,8 @@ public class BlueRightAuton extends SequentialCommandGroup {
       new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
       new ParallelCommandGroup(new ClawCommand(m_PistonClawSubsystem, m_LEDSubsystem), new WaitCommand(1)), //Dispenses cone
       new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), //sets arm to neutral position
-      new DriveDistance(m_swerveDrivetrain, 7.0, 0.45, 0.0, 1.0, true, true), //Drives to middle of field
-      new HoldPosition(m_swerveDrivetrain)
+      new DriveDistance(m_swerveDrivetrain, 7.0, 0.45, 0.0, 1.0, true, true) //Drives to middle of field
+      //new HoldPosition(m_swerveDrivetrain)
       );
   }
 }

@@ -123,7 +123,7 @@ public class SwerveModule {
         m_canCoder.configFactoryDefault();
         m_canCoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
         m_canCoder.configSensorDirection(m_canCoderInverted);
-        m_canCoder.setPosition(0.0); //TODO: Remove this once absolute encoders are solved
+        //m_canCoder.setPosition(0.0); //TODO: Remove this once absolute encoders are solved
     }
 
     /**
@@ -137,9 +137,9 @@ public class SwerveModule {
         m_azimuthMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
         m_azimuthMotor.setInverted(m_turningInverted);
         m_azimuthMotor.setNeutralMode(Constants.AZIMUTH_NEUTRAL_MODE);
-        m_azimuthMotor.setSelectedSensorPosition(0); //TODO: Remove this once absolute encoders are solved
+        //m_azimuthMotor.setSelectedSensorPosition(0); //TODO: Remove this once absolute encoders are solved
 
-        //resetToAbsolute(); //TODO: Add this once absolute encoders are solved
+        resetToAbsolute(); //TODO: Add this once absolute encoders are solved
         //m_azimuthMotor.configRemoteFeedbackFilter(m_canCoder, 0);
         //m_azimuthMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.RemoteSensor0, 1, 0);
         //m_azimuthMotor.setSelectedSensorPosition(0);

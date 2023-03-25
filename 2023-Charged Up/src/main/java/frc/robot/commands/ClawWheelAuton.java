@@ -7,15 +7,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.ClawWheelsSubsystem;
+import frc.robot.subsystems.ClawSubsystem;
 
 public class ClawWheelAuton extends CommandBase {
   /** Creates a new ClawWheelAuton. */
-  private ClawWheelsSubsystem m_ClawWheelsSubsystem;
+  private ClawSubsystem m_ClawWheelsSubsystem;
   private Timer endTimer;
   private int endAfter;
   private boolean in;
-  public ClawWheelAuton(int time, ClawWheelsSubsystem clawWheel, boolean in) {
+  public ClawWheelAuton(int time, ClawSubsystem clawWheel, boolean in) {
     m_ClawWheelsSubsystem = clawWheel;
     endTimer = new Timer();
     endAfter = time;
@@ -27,9 +27,9 @@ public class ClawWheelAuton extends CommandBase {
     endTimer.reset();
     endTimer.start();
     if(in){
-      m_ClawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelForawrdSpeed);
+      m_ClawWheelsSubsystem.setIntakeSpeed(Constants.CONE_IN_SPEED);
     }else{
-      m_ClawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelReverseSpeed);
+      m_ClawWheelsSubsystem.setIntakeSpeed(Constants.CONE_OUT_SPEED);
     }
   }
 

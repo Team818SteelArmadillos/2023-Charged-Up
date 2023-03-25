@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
+import frc.robot.OI;
 import frc.robot.subsystems.SwerveDrivetrain;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -21,6 +22,7 @@ public class SwerveDrive extends CommandBase {
     private int m_driveAxis;
     private int m_strafeAxis;
     private int m_rotationAxis;
+    private double m_speedFactor;
 
     private SlewRateLimiter m_xAxisARateLimiter;
     private SlewRateLimiter m_yAxisARateLimiter;
@@ -54,6 +56,7 @@ public class SwerveDrive extends CommandBase {
         m_fieldRelative = fieldRelative;
         m_openLoop = openLoop;
         targetAngle = 0;
+        m_speedFactor = 1.0;
 
         m_xAxisARateLimiter = new SlewRateLimiter(Constants.A_RATE_LIMITER);
         m_yAxisARateLimiter = new SlewRateLimiter(Constants.A_RATE_LIMITER);
@@ -71,6 +74,12 @@ public class SwerveDrive extends CommandBase {
             targetAngle = m_swerveDrivetrain.getAngle();
         }
 
+        if (OI.getDriver().getRightTriggerAxis() >= 0.5) {
+            m_speedFactor = 0.5;
+        } else {
+            m_speedFactor = 1.0;
+        }
+
         /* Set variables equal to their respective axis */
         double yAxis = m_driverController.getRawAxis(m_driveAxis);
         double xAxis = m_driverController.getRawAxis(m_strafeAxis);
@@ -85,6 +94,7 @@ public class SwerveDrive extends CommandBase {
         } else {
             targetAngle = m_swerveDrivetrain.getAngle();
         }
+        
 
         /* Square joystick inputs */
         double rAxisSquared = rAxis > 0 ? rAxis * rAxis : rAxis * rAxis * -1;
@@ -96,7 +106,7 @@ public class SwerveDrive extends CommandBase {
         double xAxisFiltered = m_xAxisARateLimiter.calculate(xAxisSquared);
 
         /* Input variables into drive methods */
-        m_translation = new Translation2d(yAxisFiltered, xAxisFiltered).times(Constants.MAX_SPEED);
+        m_translation = new Translation2d(yAxisFiltered, xAxisFiltered).times(Constants.MAX_SPEED * m_speedFactor);
         m_rotation = rAxisSquared * Constants.MAX_ANGULAR_VELOCITY * 0.5; // if 
         m_swerveDrivetrain.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
         //SmartDashboard.putNumber("Input Angle", m_translation.getAngle().getDegrees());

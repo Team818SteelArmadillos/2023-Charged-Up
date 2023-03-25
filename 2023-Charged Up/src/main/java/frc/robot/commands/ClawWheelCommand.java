@@ -1,15 +1,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ClawWheelsSubsystem;
+import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.Constants;
 
 public class ClawWheelCommand extends CommandBase {
 
   int _state;
-  private ClawWheelsSubsystem clawWheelsSubsystem;
+  private ClawSubsystem clawWheelsSubsystem;
   
-  public ClawWheelCommand(int state, ClawWheelsSubsystem sub) {
+  public ClawWheelCommand(int state, ClawSubsystem sub) {
     _state = state;
     clawWheelsSubsystem = sub;
   }
@@ -22,10 +22,16 @@ public class ClawWheelCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    switch (_state) {
-      case 0: clawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelForawrdSpeed); break;
-      case 1: clawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelReverseSpeed); break;
-      case 2: clawWheelsSubsystem.setIntakeSpeed(Constants.clawWheelReverseSpeed / 4); break;
+    if (!clawWheelsSubsystem.inCubeMode()) {
+      switch (_state) {
+        case 0: clawWheelsSubsystem.setIntakeSpeed(Constants.CONE_IN_SPEED); break; //Cone in
+        case 1: clawWheelsSubsystem.setIntakeSpeed(Constants.CONE_OUT_SPEED); break; //Cone out
+      }
+    } else {
+      switch (_state) {
+        case 0: clawWheelsSubsystem.setIntakeSpeed(Constants.CUBE_IN_SPEED); break; //Cube in
+        case 1: clawWheelsSubsystem.setIntakeSpeed(Constants.CUBE_OUT_SPEED); break; //Cube out
+      }
     }
   }
 

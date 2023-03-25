@@ -3,8 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
+import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.PistonClawSubsystem;
 import frc.robot.subsystems.PivotingArmSubsystem;
 import frc.robot.subsystems.SwerveDrivetrain;
 import frc.robot.subsystems.TelescopingArmSubsystem;
@@ -20,26 +20,26 @@ public class BlueMiddleAuton extends SequentialCommandGroup {
   private static SwerveDrivetrain m_swerveDrivetrain;
   private static PivotingArmSubsystem m_PivotingArmSubsystem;
   private static TelescopingArmSubsystem m_TelescopingArmSubsystem;
-  private static PistonClawSubsystem m_PistonClawSubsystem;
+  private static ClawSubsystem m_clawSubsystem;
   private static LEDSubsystem m_LEDSubsystem;
   static double[] start = {Units.inchesToMeters(70.78), Units.inchesToMeters(-255.11)};
   
   static double[] coordinates = {Units.inchesToMeters(70.78), Units.inchesToMeters(-172.61)};
   
   public BlueMiddleAuton(TelescopingArmSubsystem telescopingArmSubsystem, PivotingArmSubsystem pivotingArmSubsystem, 
-  SwerveDrivetrain swerveDrivetrain, PistonClawSubsystem pistonClawSubsystem, LEDSubsystem ledSubsystem) {
+  SwerveDrivetrain swerveDrivetrain, ClawSubsystem clawSubsystem, LEDSubsystem ledSubsystem) {
 
-    addRequirements(swerveDrivetrain, pivotingArmSubsystem, telescopingArmSubsystem, pistonClawSubsystem);
+    addRequirements(swerveDrivetrain, pivotingArmSubsystem, telescopingArmSubsystem);
     m_TelescopingArmSubsystem = telescopingArmSubsystem;
     m_PivotingArmSubsystem = pivotingArmSubsystem;
     m_swerveDrivetrain = swerveDrivetrain;
-    m_PistonClawSubsystem = pistonClawSubsystem;
+    m_clawSubsystem = clawSubsystem;
     m_LEDSubsystem = ledSubsystem;
     m_swerveDrivetrain.resetOdometry(new Pose2d(Units.inchesToMeters(70.78), Units.inchesToMeters(-255.11), new Rotation2d(0)));
     addCommands(
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
-      new ParallelCommandGroup(new ClawCommand(m_PistonClawSubsystem, m_LEDSubsystem), new WaitCommand(1)), //Dispenses cone
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), //sets arm to neutral position
+      // new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
+      // new ParallelCommandGroup(new ClawCommand(m_clawSubsystem, m_LEDSubsystem), new WaitCommand(1)), //Dispenses cone
+      // new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), //sets arm to neutral position
       new DriveDistance(m_swerveDrivetrain, 6.5, 0.45, 0.0, 1.0, true, true), //Drives to middle of field
       new DriveToRamp(m_swerveDrivetrain, 0.7, 0.0, -1.0, true, true), //Balances
       new DriveToBalance(m_swerveDrivetrain, 0.1, 0.0, -1.0, true, true), //Balances
