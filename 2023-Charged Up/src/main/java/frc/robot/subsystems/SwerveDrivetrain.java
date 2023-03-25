@@ -333,6 +333,12 @@ public class SwerveDrivetrain extends SubsystemBase {
         }
      }
 
+     public void holdPosition() {
+        for (SwerveModule module : m_swerveModules) {
+            module.hold();
+        }
+     }
+
     @Override
     public void periodic(){
         

@@ -1,36 +1,43 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.SwerveDrivetrain;
 import frc.robot.subsystems.SwerveModule;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class SwerveDrive extends CommandBase {
+public class DriveToRamp extends CommandBase {
+
+    private int counter;
 
     private double m_rotation;
+
+    private double m_speed;
+    private double m_xAxis;
+    private double m_yAxis;
+
     private Translation2d m_translation;
     private boolean m_fieldRelative;
     private boolean m_openLoop;
     
     private SwerveDrivetrain m_swerveDrivetrain;
-    private XboxController m_driverController;
-    private int m_driveAxis;
-    private int m_strafeAxis;
-    private int m_rotationAxis;
 
     private SlewRateLimiter m_xAxisARateLimiter;
     private SlewRateLimiter m_yAxisARateLimiter;
-
-    private double targetAngle;
     
     public PIDController DrivePID;
+
+    private Timer timer;
 
     /**
      * 
@@ -46,48 +53,43 @@ public class SwerveDrive extends CommandBase {
      * 
      */
 
-    public SwerveDrive(SwerveDrivetrain swerveDrivetrain, XboxController driverController, int driveAxis, int strafeAxis, int rotationAxis, boolean fieldRelative, boolean openLoop) {
+    public DriveToRamp(SwerveDrivetrain swerveDrivetrain, double speed, double xAxis, double yAxis, boolean fieldRelative, boolean openLoop) {
         m_swerveDrivetrain = swerveDrivetrain;
         addRequirements(m_swerveDrivetrain);
 
-        m_driverController = driverController;
-        m_driveAxis = driveAxis;
-        m_strafeAxis = strafeAxis;
-        m_rotationAxis = rotationAxis;
+        timer = new Timer();
+        //m_swerveDrivetrain.resetOdometry(new Pose2d(0.0, 0.0, new Rotation2d(0.0)));
+
         m_fieldRelative = fieldRelative;
         m_openLoop = openLoop;
-        targetAngle = 0;
+
+        m_speed = speed;
+        m_xAxis = xAxis;
+        m_yAxis = yAxis;
 
         m_xAxisARateLimiter = new SlewRateLimiter(Constants.A_RATE_LIMITER);
         m_yAxisARateLimiter = new SlewRateLimiter(Constants.A_RATE_LIMITER);
-        DrivePID = new PIDController(Constants.ROTATION_P, Constants.ROTATION_I, Constants.ROTATION_D);
-       // DrivePID.setTolerance(1);
-        
 
+        DrivePID = new PIDController(Constants.ROTATION_P, Constants.ROTATION_I, Constants.ROTATION_D);
+
+        DrivePID.setTolerance(Constants.ROTATION_TOLERANCE);
+        
     }
 
     @Override
+    public void initialize() {
+        counter = 0;
+        timer.reset();
+        timer.start();
+    }
+    
+
+    @Override
     public void execute() {
-
-        if (m_driverController.getXButton()) {
-            m_swerveDrivetrain.resetGyro();
-            targetAngle = m_swerveDrivetrain.getAngle();
-        }
-
         /* Set variables equal to their respective axis */
-        double yAxis = m_driverController.getRawAxis(m_driveAxis);
-        double xAxis = m_driverController.getRawAxis(m_strafeAxis);
-        double rAxis = -m_driverController.getRawAxis(m_rotationAxis);
-        
-        /* Deadbands */
-        yAxis = (Math.abs(yAxis) < Constants.STICK_DEADBAND) ? 0 : yAxis;
-        xAxis = (Math.abs(xAxis) < Constants.STICK_DEADBAND) ? 0 : xAxis;
-
-        if ((Math.abs(rAxis) < Constants.STICK_DEADBAND)) {
-            rAxis = -DrivePID.calculate(m_swerveDrivetrain.getAngle(), targetAngle);
-        } else {
-            targetAngle = m_swerveDrivetrain.getAngle();
-        }
+        double yAxis = -m_yAxis;
+        double xAxis = -m_xAxis;
+        double rAxis = -DrivePID.calculate(m_swerveDrivetrain.getAngle(), 0);
 
         /* Square joystick inputs */
         double rAxisSquared = rAxis > 0 ? rAxis * rAxis : rAxis * rAxis * -1;
@@ -99,10 +101,25 @@ public class SwerveDrive extends CommandBase {
         double xAxisFiltered = m_xAxisARateLimiter.calculate(xAxisSquared);
 
         /* Input variables into drive methods */
-        m_translation = new Translation2d(yAxisFiltered, xAxisFiltered).times(Constants.MAX_SPEED);
-        m_rotation = rAxisSquared * Constants.MAX_ANGULAR_VELOCITY * 0.5; // if 
+        m_translation = new Translation2d(yAxisFiltered, xAxisFiltered).times(Constants.MAX_SPEED * m_speed);
+        m_rotation = rAxisSquared * Constants.MAX_ANGULAR_VELOCITY * 0.5;
         m_swerveDrivetrain.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
-        //SmartDashboard.putNumber("Input Angle", m_translation.getAngle().getDegrees());
-        //SmartDashboard.putNumber("Rotation Angle", m_swerveDrivetrain.getAngle());
+    }
+    
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {
+        m_swerveDrivetrain.stopModules();
+    }
+
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        if (Math.abs(m_swerveDrivetrain.getRoll()) >= Constants.MINIMUM_CHARGE_STATION_ANGLE_THRESH) {
+            counter++;
+        } else {
+            counter = 0;
+        }
+        return counter >= 20;
     }
 }

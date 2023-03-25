@@ -182,6 +182,9 @@ public final class Constants {
 
     public static final int CANDLE_CAN_ID = 18;
 
+    public static final double MINIMUM_CHARGE_STATION_ANGLE_THRESH = 10.0;
+    public static final double MINIMUM_INCLINE_THRESHOLD = 0.2;
+
     public static final double OPEN_LOOP_RAMP = 0.25;
     public static final double CLOSED_LOOP_RAMP = 0.0;
     public static final double LIMELIGHT_GROUNDOFFSET = 20.75;
@@ -238,7 +241,7 @@ public final class Constants {
     public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
 
     // Piston Claw Values
-    public static final double clawWheelForawrdSpeed = 0.8;
+    public static final double clawWheelForawrdSpeed = 0.65;
     public static final double clawWheelReverseSpeed = -0.8;
 
     // Pivoting Arm Angles
