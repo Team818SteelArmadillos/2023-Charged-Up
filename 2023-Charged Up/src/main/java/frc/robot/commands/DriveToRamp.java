@@ -1,17 +1,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.subsystems.SwerveDrivetrain;
-import frc.robot.subsystems.SwerveModule;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -19,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class DriveToRamp extends CommandBase {
 
     private int counter;
+    private boolean on_ramp_flag;
 
     private double m_rotation;
 
@@ -41,15 +35,8 @@ public class DriveToRamp extends CommandBase {
 
     /**
      * 
-     * Command for driver-controlled driving
-     * 
-     * @param swerveDrivetrain drivetrain instance
-     * @param driverController driver XboxController object
-     * @param driveAxis corresponding integer for the y-axis translation joystick axis
-     * @param strafeAxis corresponding integer for the x-axis translation joystick axis
-     * @param rotationAxis corresponding integer for the rotation joystick axis
-     * @param fieldRelative whether or not driving is field relative
-     * @param openLoop whether or not driving is open loop
+     * Command for driving to the ramp. The robot will check the incline-angle until it sees that it has tilted up, indicating that we are now on the ramp.
+     * The command will end when we are on the ramp and the ramp has flipped.
      * 
      */
 
@@ -79,6 +66,7 @@ public class DriveToRamp extends CommandBase {
     @Override
     public void initialize() {
         counter = 0;
+        on_ramp_flag = false;
         timer.reset();
         timer.start();
     }
@@ -86,6 +74,16 @@ public class DriveToRamp extends CommandBase {
 
     @Override
     public void execute() {
+        if (Math.abs(m_swerveDrivetrain.getRoll()) >= Constants.MINIMUM_CHARGE_STATION_ANGLE_THRESH) {
+            counter++;
+        } else {
+            counter = 0;
+        }
+
+        if (counter >= 20) {
+            on_ramp_flag = true;
+        }
+
         /* Set variables equal to their respective axis */
         double yAxis = -m_yAxis;
         double xAxis = -m_xAxis;
@@ -105,7 +103,7 @@ public class DriveToRamp extends CommandBase {
         m_rotation = rAxisSquared * Constants.MAX_ANGULAR_VELOCITY * 0.5;
         m_swerveDrivetrain.drive(m_translation, m_rotation, m_fieldRelative, m_openLoop);
     }
-    
+
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
@@ -115,11 +113,6 @@ public class DriveToRamp extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (Math.abs(m_swerveDrivetrain.getRoll()) >= Constants.MINIMUM_CHARGE_STATION_ANGLE_THRESH) {
-            counter++;
-        } else {
-            counter = 0;
-        }
-        return counter >= 20;
+        return  on_ramp_flag && (Math.abs(m_swerveDrivetrain.getRoll()) <= Constants.MINIMUM_INCLINE_THRESHOLD);
     }
 }

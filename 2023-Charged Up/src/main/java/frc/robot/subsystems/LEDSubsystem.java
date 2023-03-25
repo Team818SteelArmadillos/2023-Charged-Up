@@ -21,7 +21,7 @@ public class LEDSubsystem extends SubsystemBase {
         config.stripType = LEDStripType.RGB;
         candle.configAllSettings(config);  
                 
-        candle.setLEDs(0, 102, 255); 
+        candle.setLEDs(0, 102, 255); // blue
 
         toggle = true;
     }

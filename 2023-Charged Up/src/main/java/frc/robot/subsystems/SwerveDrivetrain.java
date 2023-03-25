@@ -9,14 +9,10 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.CTREConfigs;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
-import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveDrivetrain extends SubsystemBase {
@@ -346,19 +342,19 @@ public class SwerveDrivetrain extends SubsystemBase {
 
         SmartDashboard.putNumber("Roll", getRoll());
 
-        // SmartDashboard.putNumber("Font Left Offset", m_swerveModules[0].getCandcoderAbsPos());
-        // SmartDashboard.putNumber("Font Right Offset", m_swerveModules[1].getCandcoderAbsPos());
-        // SmartDashboard.putNumber("Back Left Offset", m_swerveModules[2].getCandcoderAbsPos());
-        // SmartDashboard.putNumber("Back Right Offset", m_swerveModules[3].getCandcoderAbsPos());
+        SmartDashboard.putNumber("FL CANCoder", m_swerveModules[0].getCandcoderAbsPos());
+        SmartDashboard.putNumber("FR CANCoder", m_swerveModules[1].getCandcoderAbsPos());
+        SmartDashboard.putNumber("BL CANCoder", m_swerveModules[2].getCandcoderAbsPos());
+        SmartDashboard.putNumber("BR CANCoder", m_swerveModules[3].getCandcoderAbsPos());
 
-        // SmartDashboard.putNumber("Font Left Voltage", m_swerveModules[0].getAzimuthVoltage());
-        // SmartDashboard.putNumber("Font Right Votlage", m_swerveModules[1].getAzimuthVoltage());
-        // SmartDashboard.putNumber("Back Left Voltage", m_swerveModules[2].getAzimuthVoltage());
-        // SmartDashboard.putNumber("Back Right Votlage", m_swerveModules[3].getAzimuthVoltage());
+        SmartDashboard.putNumber("FL CANCoder", m_swerveModules[0].getCandcoderAbsPos());
+        SmartDashboard.putNumber("FR CANCoder", m_swerveModules[1].getCandcoderAbsPos());
+        SmartDashboard.putNumber("BL CANCoder", m_swerveModules[2].getCandcoderAbsPos());
+        SmartDashboard.putNumber("BR CANCoder", m_swerveModules[3].getCandcoderAbsPos());
 
-        SmartDashboard.putNumber("pose x", getPose().getX());
-        SmartDashboard.putNumber("pose y", getPose().getY());
-        SmartDashboard.putNumber("pose rot", getPose().getRotation().getDegrees());
+        SmartDashboard.putNumber("Pose X", getPose().getX());
+        SmartDashboard.putNumber("Pose Y", getPose().getY());
+        SmartDashboard.putNumber("Pose Rotation", getPose().getRotation().getDegrees());
 
     }
 

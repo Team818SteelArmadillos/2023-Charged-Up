@@ -1,17 +1,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.subsystems.SwerveDrivetrain;
-import frc.robot.subsystems.SwerveModule;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -19,10 +12,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class DriveToBalance extends CommandBase {
 
     private int balance_counter;
+    private boolean flip_flag;
 
     private double m_rotation;
 
-    private double m_incline;
+    //private double m_incline;
     private double m_speed;
     private double m_xAxis;
     private double m_yAxis;
@@ -63,7 +57,7 @@ public class DriveToBalance extends CommandBase {
 
         m_fieldRelative = fieldRelative;
         m_openLoop = openLoop;
-        m_incline = m_swerveDrivetrain.getRoll();
+        //m_incline = m_swerveDrivetrain.getRoll();
 
         m_speed = speed;
         m_xAxis = xAxis;
@@ -75,6 +69,8 @@ public class DriveToBalance extends CommandBase {
         DrivePID = new PIDController(Constants.ROTATION_P, Constants.ROTATION_I, Constants.ROTATION_D);
 
         DrivePID.setTolerance(Constants.ROTATION_TOLERANCE);
+
+        flip_flag = false;
         
     }
 
@@ -93,9 +89,17 @@ public class DriveToBalance extends CommandBase {
 
         /* Set variables equal to their respective axis */
         if (m_swerveDrivetrain.getRoll() <= -Constants.MINIMUM_INCLINE_THRESHOLD) {
+            if (!flip_flag) {
+                m_speed = m_speed * 0.7;
+            }
             yAxis = m_yAxis;
+            flip_flag = true;
         } else if (m_swerveDrivetrain.getRoll() >= Constants.MINIMUM_INCLINE_THRESHOLD) {
+            if (flip_flag) {
+                m_speed = m_speed * 0.7;
+            }
             yAxis = -m_yAxis;
+            flip_flag = false;
         } else {
             m_swerveDrivetrain.holdPosition();
             // do nothing
@@ -135,6 +139,6 @@ public class DriveToBalance extends CommandBase {
             balance_counter = 0;
         }
 
-        return balance_counter >= 5;
+        return balance_counter >= 20;
     }
 }

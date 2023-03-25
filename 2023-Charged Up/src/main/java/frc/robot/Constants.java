@@ -23,6 +23,57 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 public final class Constants {
 
+    /*============================
+                Arm 
+    ==============================*/
+
+    public static final int THROUGH_BORE_ENCODER = 0;
+
+    // pivoting motor Values 
+    public static final double pP = -0.025;
+    public static final double pivotI = 0.0;
+    public static final double pivotD = 0.0;
+    public static final double pPIDTolerance = 2.0;
+
+    //Telescoping Values
+    public static final double armLengths[] = {0, 50000, 98000, Constants.maximumArmLength, 167500};
+    public static final double maximumArmLength = 167500; //
+    public static final double minimumArmLength = 0; //
+    public static final double lengthSlewRate = 20000;
+    public static final int limitSwitchPort = 0;
+
+    public static final double ticksToFeet = 0;
+    public static final double tP = 0.10;
+    public static final double tI = 0.000005;
+    public static final double tD = 0;
+    public static final double tTolerance = 600;
+
+    // Pneumatic ports
+    public static final int pneumaticPistonPort = 17; // Copied from 2022 Rapid React Code (needs to be tested more??)
+    public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
+
+    // Piston Claw Values
+    public static final double clawWheelForawrdSpeed = 0.65;
+    public static final double clawWheelReverseSpeed = -0.8;
+
+    // Pivoting Arm Angles
+    public static final int[] armAngles = {0, -37, -52, -54, -98, 90};
+    public static final int[] revArmAngles = {0, 37, 50, 98, -90};
+    public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
+    public static final double angleSlewRate = 78;
+    public static final int armSetpointCounter = 20;
+    public static final double controllerDeadzone = 0.1;
+
+    public static final double encoderOvershoot = 0.847;
+
+    // Neo 550 Motor Stuff
+    public static final int neoAmpLimit = 20 /*AMPs*/; // Cannot forget units!
+
+    //Falcon 500 Motor Limit
+    //public static final int falcon500MaxLimit = x; /*rotations - x is a placeholder */
+    //public static final int falcon500MinLimit = y; 
+    public static final int boreEncoder = 0;
+
    /*============================
                Swerve 
     ==============================*/
@@ -31,39 +82,35 @@ public final class Constants {
     public static final int BACK_LEFT_DRIVE = 7; //Josh
     public static final int BACK_LEFT_ENCODER = 11; //Gary 
     public static final int BACK_LEFT_AZIMUTH = 6 ; //Tracy
-    public static final double BACK_LEFT_OFFSET = 147.480; // -90
+    public static final double BACK_LEFT_OFFSET = 147.480;
 
     public static final int BACK_RIGHT_DRIVE = 4; //Happy
     public static final int BACK_RIGHT_ENCODER = 10; //Bre
     public static final int BACK_RIGHT_AZIMUTH = 5; //Samuel
-    public static final double BACK_RIGHT_OFFSET = 275.449; // -197
+    public static final double BACK_RIGHT_OFFSET = 275.449;
 
     public static final int FRONT_RIGHT_DRIVE = 2; //Keith
     public static final int FRONT_RIGHT_ENCODER = 9; //Freddy Mercury
     public static final int FRONT_RIGHT_AZIMUTH = 3; //Beth
-    public static final double FRONT_RIGHT_OFFSET = 352.441; // -286
+    public static final double FRONT_RIGHT_OFFSET = 352.441;
 
     public static final int FRONT_LEFT_DRIVE = 1; //Chad
     public static final int FRONT_LEFT_ENCODER = 8; //Jonathan 
     public static final int FRONT_LEFT_AZIMUTH = 0; //Geraldine
-    public static final double FRONT_LEFT_OFFSET = 105.645; // -158
+    public static final double FRONT_LEFT_OFFSET = 105.645;
 
-    public static final int THROUGH_BORE_ENCODER = 0;
     public static final double PIGEON_ROLL_OFFSET = 1.8;
-    /*Can Bus */
 
+    /*Can Bus */
     public static final String CAN_BUS_DRIVE = "CANivore";
 
     public static final int PIGEON = 12;
 
     /* CANCoder offsets */
-
     public static double FRONT_LEFT_MULTIPLIER = 1; // 
     public static double FRONT_RIGHT_MULTIPLIER = 1; // 
     public static double BACK_LEFT_MULTIPLIER = 1; // 
     public static double BACK_RIGHT_MULTIPLIER = 1; // 
-
-    
 
     /* Azimuth reversed */
     public static boolean FRONT_LEFT_AZIMUTH_REVERSED = true;
@@ -87,10 +134,9 @@ public final class Constants {
     public static final boolean INVERT_GYRO = false;
 
     /* Encoder Ticks per Revolution */
-    public static final int AZIMUTH_TICKS_PER_REVOLUTION = 2048; // 21074 withvgear ratio 360 deg
+    public static final int AZIMUTH_TICKS_PER_REVOLUTION = 2048;
     public static final int DRIVE_TICKS_PER_REVOLUTION = 2048;
     public static final double CODE_LOOPS_PER_MIN = 600.0;
-
 
     /* Angle Motor PID Values */
     public static final double AZIMUTH_P = 0.45;
@@ -98,13 +144,11 @@ public final class Constants {
     public static final double AZIMUTH_D = 0.0;
     public static final double AZIMUTH_F = 0.0;
 
-
     //Rotation PID Controller values
     public static final double ROTATION_P = 0.0025;
     public static final double ROTATION_I = 0.00005;
     public static final double ROTATION_D = 0.0;
     public static final double ROTATION_TOLERANCE = 1.0;
-    
 
     /* Drive Motor PID Values */
     public static final double DRIVE_P = 0.0; 
@@ -183,11 +227,17 @@ public final class Constants {
     public static final int CANDLE_CAN_ID = 18;
 
     public static final double MINIMUM_CHARGE_STATION_ANGLE_THRESH = 10.0;
-    public static final double MINIMUM_INCLINE_THRESHOLD = 0.2;
+    public static final double MINIMUM_INCLINE_THRESHOLD = 1;
 
     public static final double OPEN_LOOP_RAMP = 0.25;
     public static final double CLOSED_LOOP_RAMP = 0.0;
     public static final double LIMELIGHT_GROUNDOFFSET = 20.75;
+
+    //PID values for Charging Station
+    public static final double csP = 0.02;
+    public static final double csI = 0;
+    public static final double csD = 0;
+    public static final double csTolerance = 5;
 
      /*============================
          Controller Constants
@@ -206,8 +256,6 @@ public final class Constants {
     public static final double DRIVING_INTAKE_RUMBLE = 0.3;
     public static final int leftYAxis = 1;
     public static final int rightYAxis = 5;
-
-    //Drive Ports
     
     // Controller Ports
     public static final int operatorControllerPort = 2;
@@ -217,54 +265,4 @@ public final class Constants {
     public static final int telscopingMotorPort = 16;
     public static final int[] clawWheelMotorPort = {20, 21};
 
-    // pivoting motor Values 
-    public static final double pP = -0.025;
-    public static final double pivotI = 0.0;
-    public static final double pivotD = 0.0;
-    public static final double pPIDTolerance = 2.0;
-
-    //Telescoping Values
-    public static final double armLengths[] = {0, 50000, 98000, Constants.maximumArmLength, 167500};
-    public static final double maximumArmLength = 167500; //
-    public static final double minimumArmLength = 0; //
-    public static final double lengthSlewRate = 20000;
-    public static final int limitSwitchPort = 0;
-
-    public static final double ticksToFeet = 0;
-    public static final double tP = 0.10;
-    public static final double tI = 0.000005;
-    public static final double tD = 0;
-    public static final double tTolerance = 600;
-
-    // Pneumatic ports
-    public static final int pneumaticPistonPort = 17; // Copied from 2022 Rapid React Code (needs to be tested more??)
-    public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
-
-    // Piston Claw Values
-    public static final double clawWheelForawrdSpeed = 0.65;
-    public static final double clawWheelReverseSpeed = -0.8;
-
-    // Pivoting Arm Angles
-    public static final int[] armAngles = {0, -37, -52, -54, -98, 90};
-    public static final int[] revArmAngles = {0, 37, 50, 98, -90};
-    public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
-    public static final double angleSlewRate = 78;
-    public static final int armSetpointCounter = 20;
-    public static final double controllerDeadzone = 0.1;
-
-    public static final double encoderOvershoot = 0.847;
-
-    // Neo 550 Motor Stuff
-    public static final int neoAmpLimit = 20 /*AMPs*/; // Cannot forget units!
-
-    //Falcon 500 Motor Limit
-    //public static final int falcon500MaxLimit = x; /*rotations - x is a placeholder */
-    //public static final int falcon500MinLimit = y; 
-    public static final int boreEncoder = 0;
-
-    //PID values for Charging Station
-    public static final double csP = 0.02;
-    public static final double csI = 0;
-    public static final double csD = 0;
-    public static final double csTolerance = 5;
 }

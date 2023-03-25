@@ -3,12 +3,9 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.TalonSRXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import frc.lib.math.Conversions;
@@ -46,12 +43,14 @@ public class SwerveModule {
      */
 
     public SwerveModule(int moduleNumber, double offset, int azimuthMotor, int driveMotor, int canCoder, boolean azimuthInverted, boolean driveInverted, boolean canCoderInverted, double encoderCoeff){
+        
         m_moduleNumber = moduleNumber;
         m_offset = offset;
         m_turningInverted = azimuthInverted;
         m_driveInverted = driveInverted;
         m_canCoderInverted = canCoderInverted;
         m_coeff = encoderCoeff;
+
         m_canCoder = new CANCoder(canCoder, Constants.CAN_BUS_DRIVE);
         m_azimuthMotor = new TalonFX(azimuthMotor, Constants.CAN_BUS_DRIVE);
         m_driveMotor = new TalonFX(driveMotor, Constants.CAN_BUS_DRIVE);
@@ -63,8 +62,6 @@ public class SwerveModule {
         m_lastAngle = getState().angle.getDegrees();
 
         m_azimuthMotor.configSelectedFeedbackCoefficient(encoderCoeff);
-
-        SmartDashboard.putNumber("SwrvMOD position", 0);
     }
 
     /**
@@ -93,8 +90,6 @@ public class SwerveModule {
        
         m_azimuthMotor.set(ControlMode.Position, Conversions.degreesToFalcon(angle, Constants.AZIMUTH_GEAR_RATIO));
        
-        SmartDashboard.putNumber("Target angle", angle);
-        SmartDashboard.putNumber("Target Encoder Value", Conversions.degreesToFalcon(angle, Constants.AZIMUTH_GEAR_RATIO));
         m_lastAngle = angle;
 
     }
@@ -128,7 +123,7 @@ public class SwerveModule {
         m_canCoder.configFactoryDefault();
         m_canCoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
         m_canCoder.configSensorDirection(m_canCoderInverted);
-        m_canCoder.setPosition(0.0);
+        m_canCoder.setPosition(0.0); //TODO: Remove this once absolute encoders are solved
     }
 
     /**
@@ -142,9 +137,9 @@ public class SwerveModule {
         m_azimuthMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
         m_azimuthMotor.setInverted(m_turningInverted);
         m_azimuthMotor.setNeutralMode(Constants.AZIMUTH_NEUTRAL_MODE);
-        m_azimuthMotor.setSelectedSensorPosition(0);
+        m_azimuthMotor.setSelectedSensorPosition(0); //TODO: Remove this once absolute encoders are solved
 
-        //resetToAbsolute();
+        //resetToAbsolute(); //TODO: Add this once absolute encoders are solved
         //m_azimuthMotor.configRemoteFeedbackFilter(m_canCoder, 0);
         //m_azimuthMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.RemoteSensor0, 1, 0);
         //m_azimuthMotor.setSelectedSensorPosition(0);
@@ -217,6 +212,4 @@ public class SwerveModule {
     public void zeroModule() {
         m_azimuthMotor.setSelectedSensorPosition(Conversions.degreesToFalcon(m_offset, Constants.AZIMUTH_GEAR_RATIO));
     }
-
-
 }

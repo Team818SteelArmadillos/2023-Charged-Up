@@ -5,37 +5,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.*;
 
-import java.util.List;
-import java.util.function.BooleanSupplier;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.event.BooleanEvent;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.ClawWheelsSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.LimeNetwork;
-import frc.robot.subsystems.Pathplanning;
 import frc.robot.subsystems.PistonClawSubsystem;
 import frc.robot.subsystems.PivotingArmSubsystem;
 import frc.robot.subsystems.SwerveDrivetrain;
@@ -69,14 +45,14 @@ public class RobotContainer {
   private final int m_rotationAxis = XboxController.Axis.kRightX.value;
 
   /* Driver Buttons */
-  private final JoystickButton m_zeroGyro = new JoystickButton(m_driverController, XboxController.Button.kX.value);
+  //private final JoystickButton m_zeroGyro = new JoystickButton(m_driverController, XboxController.Button.kX.value);
 
 
   /* Subsystems */
   private final ClawWheelsSubsystem m_ClawWheelsSubsystem = new ClawWheelsSubsystem();
   private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
-  private final LimeNetwork m_LimeNetwork = new LimeNetwork();
-  private final Pathplanning m_Pathplanning = new Pathplanning();
+  //private final LimeNetwork m_LimeNetwork = new LimeNetwork();
+  //private final Pathplanning m_Pathplanning = new Pathplanning();
   private final PistonClawSubsystem m_pistonClawSubsystem = new PistonClawSubsystem();
   private final PivotingArmSubsystem m_pivotingArmSubsystem = new PivotingArmSubsystem();
   private final SwerveDrivetrain m_swerveDrivetrain = new SwerveDrivetrain();
