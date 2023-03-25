@@ -229,7 +229,7 @@ public final class Constants {
     public static final int CANDLE_CAN_ID = 18;
 
     public static final double MINIMUM_CHARGE_STATION_ANGLE_THRESH = 10.0;
-    public static final double MINIMUM_INCLINE_THRESHOLD = 1;
+    public static final double MINIMUM_INCLINE_THRESHOLD = 0.5;
 
     public static final double OPEN_LOOP_RAMP = 0.25;
     public static final double CLOSED_LOOP_RAMP = 0.0;

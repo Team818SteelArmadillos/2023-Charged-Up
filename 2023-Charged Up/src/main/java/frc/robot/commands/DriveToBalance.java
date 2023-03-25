@@ -86,28 +86,22 @@ public class DriveToBalance extends CommandBase {
     public void execute() {
 
         double yAxis = 0;
-        if (Math.abs(m_incline) - Math.abs(m_swerveDrivetrain.getRoll()) >= Constants.MINIMUM_INCLINE_THRESHOLD) {
-            balance_counter++;
-        } else {
-            /* Set variables equal to their respective axis */
-            if (m_swerveDrivetrain.getRoll() <= -Constants.MINIMUM_INCLINE_THRESHOLD) {
-                if (!flip_flag) {
-                    m_speed = m_speed * 0.9;
-                }
-                yAxis = m_yAxis;
-                flip_flag = true;
-            } else if (m_swerveDrivetrain.getRoll() >= Constants.MINIMUM_INCLINE_THRESHOLD) {
-                if (flip_flag) {
-                    m_speed = m_speed * 0.9;
-                }
-                yAxis = -m_yAxis;
-                flip_flag = false;
-            } else {
-                m_swerveDrivetrain.holdPosition();
-                // do nothing
+        /* Set variables equal to their respective axis */
+        if (m_swerveDrivetrain.getRoll() <= -Constants.MINIMUM_INCLINE_THRESHOLD) {
+            if (!flip_flag) {
+                m_speed = m_speed * 0.9;
             }
-
-            balance_counter = 0;
+            yAxis = m_yAxis;
+            flip_flag = true;
+        } else if (m_swerveDrivetrain.getRoll() >= Constants.MINIMUM_INCLINE_THRESHOLD) {
+            if (flip_flag) {
+                m_speed = m_speed * 0.9;
+            }
+            yAxis = -m_yAxis;
+            flip_flag = false;
+        } else {
+            balance_counter++;
+            m_swerveDrivetrain.holdPosition();
         }
         
         double xAxis = -m_xAxis;
@@ -137,9 +131,6 @@ public class DriveToBalance extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-
-        
-
         return balance_counter >= 20;
     }
 }
