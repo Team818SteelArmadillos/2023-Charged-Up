@@ -53,10 +53,10 @@ public final class Constants {
     public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
 
     // Piston Claw Values
-    public static final double CONE_IN_SPEED = 0.65;
-    public static final double CONE_OUT_SPEED= -0.8;
-    public static final double CUBE_IN_SPEED = 0.6;
-    public static final double CUBE_OUT_SPEED = -0.2;
+    public static final double CONE_IN_SPEED = -0.8;
+    public static final double CONE_OUT_SPEED= 0.65;
+    public static final double CUBE_IN_SPEED = -0.3;
+    public static final double CUBE_OUT_SPEED = 0.6;
 
     // Pivoting Arm Angles
     public static final int[] armAngles = {0, -37, -52, -54, -98, 90};
@@ -171,7 +171,7 @@ public final class Constants {
 
     /* Drive Current Limiting */
     public static final int DRIVE_CONTINUOUS_CURRENT_LIMIT = 30; // amps
-    public static final int DRIVE_PEAK_CURRENT_LIMIT = 40; // amps
+    public static final int DRIVE_PEAK_CURRENT_LIMIT = 45; // amps
     public static final int DRIVE_PEAK_CURRENT_DURATION = 100; // milliseconds
     public static final boolean DRIVE_ENABLE_CURRENT_LIMIT = true;
 
@@ -229,7 +229,7 @@ public final class Constants {
     public static final int CANDLE_CAN_ID = 18;
 
     public static final double MINIMUM_CHARGE_STATION_ANGLE_THRESH = 10.0;
-    public static final double MINIMUM_INCLINE_THRESHOLD = 0.5;
+    public static final double MINIMUM_INCLINE_THRESHOLD = 1.5;
 
     public static final double OPEN_LOOP_RAMP = 0.25;
     public static final double CLOSED_LOOP_RAMP = 0.0;

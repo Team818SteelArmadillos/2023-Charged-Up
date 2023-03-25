@@ -86,8 +86,8 @@ public class RobotContainer {
   //bikebreak command
 
   //claw wheel commands
-  public final ClawWheelCommand m_IntakeIn = new ClawWheelCommand(1, m_ClawSubsystem);
-  public final ClawWheelCommand m_IntakeOut = new ClawWheelCommand(0, m_ClawSubsystem);
+  public final ClawWheelCommand m_IntakeIn = new ClawWheelCommand(0, m_ClawSubsystem);
+  public final ClawWheelCommand m_IntakeOut = new ClawWheelCommand(1, m_ClawSubsystem);
 
  
  //led command
@@ -99,6 +99,7 @@ public class RobotContainer {
   // auton commands
   private final BlueMiddleAuton m_BlueMiddleAuton = new BlueMiddleAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_ClawSubsystem, m_LedSubsystem);
   private final BlueRightAuton m_BlueRightAuton = new BlueRightAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_ClawSubsystem, m_LedSubsystem);
+  private final BlueMiddleAuton m_BlueBalanceAuton = new BlueMiddleAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_ClawSubsystem, m_LedSubsystem);
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
@@ -117,6 +118,7 @@ public class RobotContainer {
     // Initializie auton chooser in smartdashboard
     m_autoChooser.setDefaultOption("Blue Middle Auton", m_BlueMiddleAuton);
     m_autoChooser.addOption("Blue Right Auton", m_BlueRightAuton);
+    m_autoChooser.addOption("Blue Balance Auton", m_BlueBalanceAuton);
     SmartDashboard.putData("Auton Choices", m_autoChooser);
 
     //m_swerveDrivetrain.zeroModules();

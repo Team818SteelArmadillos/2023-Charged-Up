@@ -38,10 +38,10 @@ public class BlueMiddleAuton extends SequentialCommandGroup {
     m_swerveDrivetrain.resetOdometry(new Pose2d(Units.inchesToMeters(70.78), Units.inchesToMeters(-255.11), new Rotation2d(0)));
     addCommands(
       new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
-      new ParallelCommandGroup(new ClawCommand(m_clawSubsystem, m_LEDSubsystem), new WaitCommand(0.5)), //Dispenses cone
+      new ParallelCommandGroup(new ClawCommand(m_clawSubsystem, m_LEDSubsystem), new WaitCommand(0.8)), //Dispenses cone
       new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), //sets arm to neutral position
-      new DriveDistance(m_swerveDrivetrain, 6.7, 0.7, 0.0, 1.0, true, true), //Drives to middle of field
-      new WaitCommand(0.5),
+      new DriveDistance(m_swerveDrivetrain, 8.0, 0.7, 0.0, 1.0, true, true), //Drives to middle of field
+      new WaitCommand(0.8),
       new DriveToRamp(m_swerveDrivetrain, 0.5, 0.0, -1.0, true, true), //Balances
       new DriveToBalance(m_swerveDrivetrain, 0.105, 0.0, -1.0, true, true), //Balances
       //new AutoBalanceCommand(m_swerveDrivetrain, m_LEDSubsystem),
