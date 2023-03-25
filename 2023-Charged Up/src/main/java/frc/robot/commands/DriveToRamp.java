@@ -80,7 +80,7 @@ public class DriveToRamp extends CommandBase {
             counter = 0;
         }
 
-        if (counter >= 20) {
+        if (counter >= 35) {
             on_ramp_flag = true;
         }
 
@@ -113,6 +113,6 @@ public class DriveToRamp extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return  on_ramp_flag && (Math.abs(m_swerveDrivetrain.getRoll()) <= Constants.MINIMUM_INCLINE_THRESHOLD);
+        return  on_ramp_flag;
     }
 }

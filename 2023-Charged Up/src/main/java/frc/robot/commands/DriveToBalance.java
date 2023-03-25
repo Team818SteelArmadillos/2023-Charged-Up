@@ -16,7 +16,7 @@ public class DriveToBalance extends CommandBase {
 
     private double m_rotation;
 
-    //private double m_incline;
+    private double m_incline;
     private double m_speed;
     private double m_xAxis;
     private double m_yAxis;
@@ -57,7 +57,7 @@ public class DriveToBalance extends CommandBase {
 
         m_fieldRelative = fieldRelative;
         m_openLoop = openLoop;
-        //m_incline = m_swerveDrivetrain.getRoll();
+        m_incline = m_swerveDrivetrain.getRoll();
 
         m_speed = speed;
         m_xAxis = xAxis;
@@ -86,23 +86,28 @@ public class DriveToBalance extends CommandBase {
     public void execute() {
 
         double yAxis = 0;
-
-        /* Set variables equal to their respective axis */
-        if (m_swerveDrivetrain.getRoll() <= -Constants.MINIMUM_INCLINE_THRESHOLD) {
-            if (!flip_flag) {
-                m_speed = m_speed * 0.7;
-            }
-            yAxis = m_yAxis;
-            flip_flag = true;
-        } else if (m_swerveDrivetrain.getRoll() >= Constants.MINIMUM_INCLINE_THRESHOLD) {
-            if (flip_flag) {
-                m_speed = m_speed * 0.7;
-            }
-            yAxis = -m_yAxis;
-            flip_flag = false;
+        if (Math.abs(m_incline) - Math.abs(m_swerveDrivetrain.getRoll()) >= Constants.MINIMUM_INCLINE_THRESHOLD) {
+            balance_counter++;
         } else {
-            m_swerveDrivetrain.holdPosition();
-            // do nothing
+            /* Set variables equal to their respective axis */
+            if (m_swerveDrivetrain.getRoll() <= -Constants.MINIMUM_INCLINE_THRESHOLD) {
+                if (!flip_flag) {
+                    m_speed = m_speed * 0.9;
+                }
+                yAxis = m_yAxis;
+                flip_flag = true;
+            } else if (m_swerveDrivetrain.getRoll() >= Constants.MINIMUM_INCLINE_THRESHOLD) {
+                if (flip_flag) {
+                    m_speed = m_speed * 0.9;
+                }
+                yAxis = -m_yAxis;
+                flip_flag = false;
+            } else {
+                m_swerveDrivetrain.holdPosition();
+                // do nothing
+            }
+
+            balance_counter = 0;
         }
         
         double xAxis = -m_xAxis;
@@ -133,11 +138,7 @@ public class DriveToBalance extends CommandBase {
     @Override
     public boolean isFinished() {
 
-        if (Math.abs(m_swerveDrivetrain.getRoll()) <= Constants.MINIMUM_INCLINE_THRESHOLD) {
-            balance_counter++;
-        } else {
-            balance_counter = 0;
-        }
+        
 
         return balance_counter >= 20;
     }
