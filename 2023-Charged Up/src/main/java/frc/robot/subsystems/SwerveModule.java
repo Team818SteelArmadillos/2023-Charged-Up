@@ -3,7 +3,10 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -54,7 +57,7 @@ public class SwerveModule {
         m_canCoder = new CANCoder(canCoder, Constants.CAN_BUS_DRIVE);
         m_azimuthMotor = new TalonFX(azimuthMotor, Constants.CAN_BUS_DRIVE);
         m_driveMotor = new TalonFX(driveMotor, Constants.CAN_BUS_DRIVE);
-
+        
         configCanCoder();
         configTurningMotor();
         configDriveMotor();   
@@ -110,6 +113,25 @@ public class SwerveModule {
      */
 
     private void resetToAbsolute() {
+        double last_time_stamp = 0;
+        int fresh_counter = 0;
+        for (int i = 0; i < 10; i++) {
+            m_canCoder.getAbsolutePosition();
+            if (m_canCoder.getLastError().equals(ErrorCode.OK)) {
+                double new_last_time_stamp = m_canCoder.getLastTimestamp();
+                if (last_time_stamp != new_last_time_stamp) {
+                    fresh_counter++;
+                }
+                last_time_stamp = new_last_time_stamp;
+            }
+            // do nothing
+            if (fresh_counter > 2) {
+                break;
+            } else {
+                Timer.delay(0.1);
+            }
+        }
+        SmartDashboard.putBoolean("CANcoder Error", fresh_counter <= 2);
         m_azimuthMotor.setSelectedSensorPosition(Conversions.degreesToFalcon(getCanCoder().getDegrees() - m_offset, Constants.AZIMUTH_GEAR_RATIO));
     }
 
@@ -139,10 +161,9 @@ public class SwerveModule {
         m_azimuthMotor.setNeutralMode(Constants.AZIMUTH_NEUTRAL_MODE);
         //m_azimuthMotor.setSelectedSensorPosition(0); //TODO: Remove this once absolute encoders are solved
 
+
+
         resetToAbsolute(); //TODO: Add this once absolute encoders are solved
-        //m_azimuthMotor.configRemoteFeedbackFilter(m_canCoder, 0);
-        //m_azimuthMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.RemoteSensor0, 1, 0);
-        //m_azimuthMotor.setSelectedSensorPosition(0);
 
         m_azimuthMotor.configSelectedFeedbackCoefficient(m_coeff);
     }

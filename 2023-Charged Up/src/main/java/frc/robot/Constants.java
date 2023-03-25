@@ -31,7 +31,7 @@ public final class Constants {
 
     // pivoting motor Values 
     public static final double pP = -0.025;
-    public static final double pivotI = 0.0;
+    public static final double pivotI = 0.00015;
     public static final double pivotD = 0.0;
     public static final double pPIDTolerance = 2.0;
 
@@ -66,7 +66,7 @@ public final class Constants {
     public static final int armSetpointCounter = 20;
     public static final double controllerDeadzone = 0.1;
 
-    public static final double encoderOvershoot = 0.847;
+    public static final double encoderOvershoot = 0.336;
 
     // Neo 550 Motor Stuff
     public static final int neoAmpLimit = 20 /*AMPs*/; // Cannot forget units!
