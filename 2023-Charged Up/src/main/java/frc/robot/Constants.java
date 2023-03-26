@@ -45,6 +45,7 @@ public final class Constants {
     public static final double ticksToFeet = 0;
     public static final double tP = 0.10;
     public static final double tI = 0.000005;
+    
     public static final double tD = 0;
     public static final double tTolerance = 600;
 
@@ -84,22 +85,22 @@ public final class Constants {
     public static final int BACK_LEFT_DRIVE = 7; //Josh
     public static final int BACK_LEFT_ENCODER = 11; //Gary 
     public static final int BACK_LEFT_AZIMUTH = 6 ; //Tracy
-    public static final double BACK_LEFT_OFFSET = 214.18;
+    public static final double BACK_LEFT_OFFSET = 216.4;
 
     public static final int BACK_RIGHT_DRIVE = 4; //Happy
     public static final int BACK_RIGHT_ENCODER = 10; //Bre
     public static final int BACK_RIGHT_AZIMUTH = 5; //Samuel
-    public static final double BACK_RIGHT_OFFSET = 91.3;
+    public static final double BACK_RIGHT_OFFSET = 96.3;
 
     public static final int FRONT_RIGHT_DRIVE = 2; //Keith
     public static final int FRONT_RIGHT_ENCODER = 9; //Freddy Mercury
     public static final int FRONT_RIGHT_AZIMUTH = 3; //Beth
-    public static final double FRONT_RIGHT_OFFSET = 9.0;
+    public static final double FRONT_RIGHT_OFFSET = 8.7;
 
     public static final int FRONT_LEFT_DRIVE = 1; //Chad
     public static final int FRONT_LEFT_ENCODER = 8; //Jonathan 
     public static final int FRONT_LEFT_AZIMUTH = 0; //Geraldine
-    public static final double FRONT_LEFT_OFFSET = 257.6;
+    public static final double FRONT_LEFT_OFFSET = 256.2;
 
     public static final double PIGEON_ROLL_OFFSET = 1.8;
 

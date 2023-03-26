@@ -57,7 +57,7 @@ public class DriveToBalance extends CommandBase {
 
         m_fieldRelative = fieldRelative;
         m_openLoop = openLoop;
-        m_incline = m_swerveDrivetrain.getRoll();
+        //m_incline = m_swerveDrivetrain.getRoll();
 
         m_speed = speed;
         m_xAxis = xAxis;

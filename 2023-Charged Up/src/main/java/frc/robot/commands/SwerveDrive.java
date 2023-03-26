@@ -74,6 +74,10 @@ public class SwerveDrive extends CommandBase {
             targetAngle = m_swerveDrivetrain.getAngle();
         }
 
+        if (m_driverController.getYButton()) {
+            m_swerveDrivetrain.resetModulesToAbsolute();
+        }
+
         if (OI.getDriver().getRightTriggerAxis() >= 0.5) {
             m_speedFactor = 0.5;
         } else {

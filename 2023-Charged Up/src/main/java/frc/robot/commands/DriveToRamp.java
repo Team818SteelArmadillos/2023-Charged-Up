@@ -80,7 +80,7 @@ public class DriveToRamp extends CommandBase {
             counter = 0;
         }
 
-        if (counter >= 25) {
+        if (counter >= 20) {
             on_ramp_flag = true;
         }
 

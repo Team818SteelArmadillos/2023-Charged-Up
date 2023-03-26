@@ -13,6 +13,7 @@ import frc.robot.Constants;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveDrivetrain extends SubsystemBase {
@@ -37,7 +38,6 @@ public class SwerveDrivetrain extends SubsystemBase {
         m_gyro.setStatusFramePeriod(PigeonIMU_StatusFrame.CondStatus_10_SixDeg_Quat, 12000);
         m_gyro.setStatusFramePeriod(PigeonIMU_StatusFrame.RawStatus_4_Mag, 13000);
         m_gyro.setStatusFramePeriod(PigeonIMU_StatusFrame.BiasedStatus_6_Accel, 14000); */
-
 
         m_swerveModules = new SwerveModule[] {
             new SwerveModule(0, 
@@ -238,6 +238,14 @@ public class SwerveDrivetrain extends SubsystemBase {
 
         for(SwerveModule mod: m_swerveModules) {
             mod.zeroModule();
+        }
+
+    }
+
+    public void resetModulesToAbsolute() {
+
+        for(SwerveModule mod: m_swerveModules) {
+            mod.resetToAbsolute();
         }
 
     }

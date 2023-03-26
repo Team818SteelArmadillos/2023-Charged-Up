@@ -57,6 +57,8 @@ public class SwerveModule {
         m_canCoder = new CANCoder(canCoder, Constants.CAN_BUS_DRIVE);
         m_azimuthMotor = new TalonFX(azimuthMotor, Constants.CAN_BUS_DRIVE);
         m_driveMotor = new TalonFX(driveMotor, Constants.CAN_BUS_DRIVE);
+
+        Timer.delay(0.5);
         
         configCanCoder();
         configTurningMotor();
@@ -116,26 +118,7 @@ public class SwerveModule {
         return m_azimuthMotor.getSelectedSensorPosition();
     }
 
-    private void resetToAbsolute() {
-        double last_time_stamp = 0;
-        int fresh_counter = 0;
-        for (int i = 0; i < 200; i++) {
-            m_canCoder.getAbsolutePosition();
-            if (m_canCoder.getLastError().equals(ErrorCode.OK)) {
-                double new_last_time_stamp = m_canCoder.getLastTimestamp();
-                if (last_time_stamp != new_last_time_stamp) {
-                    fresh_counter++;
-                }
-                last_time_stamp = new_last_time_stamp;
-            }
-            // do nothing
-            if (fresh_counter > 2) {
-                break;
-            } else {
-                Timer.delay(0.1);
-            }
-        }
-        SmartDashboard.putNumber("Fresh Count" + m_moduleNumber, (double) fresh_counter);
+    public void resetToAbsolute() {
         m_azimuthMotor.setSelectedSensorPosition(Conversions.degreesToFalcon(getCanCoder().getDegrees() - m_offset, Constants.AZIMUTH_GEAR_RATIO));
     }
 
@@ -163,13 +146,9 @@ public class SwerveModule {
         m_azimuthMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
         m_azimuthMotor.setInverted(m_turningInverted);
         m_azimuthMotor.setNeutralMode(Constants.AZIMUTH_NEUTRAL_MODE);
-        //m_azimuthMotor.setSelectedSensorPosition(0); //TODO: Remove this once absolute encoders are solved
-
-
-
         resetToAbsolute(); //TODO: Add this once absolute encoders are solved
 
-        m_azimuthMotor.configSelectedFeedbackCoefficient(m_coeff);
+        //m_azimuthMotor.configSelectedFeedbackCoefficient(m_coeff);
     }
 
     /**
