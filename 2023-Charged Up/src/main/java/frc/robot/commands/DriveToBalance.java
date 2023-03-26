@@ -20,6 +20,7 @@ public class DriveToBalance extends CommandBase {
     private double m_speed;
     private double m_xAxis;
     private double m_yAxis;
+    private double m_incline;
 
     private Translation2d m_translation;
     private boolean m_fieldRelative;
@@ -31,6 +32,7 @@ public class DriveToBalance extends CommandBase {
     private SlewRateLimiter m_yAxisARateLimiter;
     
     public PIDController DrivePID;
+    public PIDController balancePID;
 
     private Timer timer;
 
@@ -67,8 +69,10 @@ public class DriveToBalance extends CommandBase {
         m_yAxisARateLimiter = new SlewRateLimiter(Constants.A_RATE_LIMITER);
 
         DrivePID = new PIDController(Constants.ROTATION_P, Constants.ROTATION_I, Constants.ROTATION_D);
+        balancePID = new PIDController(Constants.csP, Constants.csI, Constants.csD);
 
         DrivePID.setTolerance(Constants.ROTATION_TOLERANCE);
+        balancePID.setTolerance(Constants.csTolerance);
 
         flip_flag = false;
         
@@ -103,6 +107,13 @@ public class DriveToBalance extends CommandBase {
             balance_counter++;
             m_swerveDrivetrain.holdPosition();
         }
+
+        // if (!balancePID.atSetpoint()) {
+        //     m_speed = balancePID.calculate(m_incline, 0);
+        // } else {
+        //     balance_counter++;
+        //     m_swerveDrivetrain.holdPosition();
+        // }
         
         double xAxis = -m_xAxis;
         double rAxis = -DrivePID.calculate(m_swerveDrivetrain.getAngle(), 0);
