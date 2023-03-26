@@ -37,7 +37,8 @@ public class BlueRightAuton extends SequentialCommandGroup {
     m_LEDSubsystem = ledSubsystem;
     m_swerveDrivetrain.resetOdometry(new Pose2d(Units.inchesToMeters(70.78), Units.inchesToMeters(-255.11), new Rotation2d(0)));
     addCommands(
-      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 1), //sets arm high
+      new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 2), //sets arm high
+      new WaitCommand(0.5),
       new ParallelCommandGroup(new ClawCommand(m_PistonClawSubsystem, m_LEDSubsystem), new WaitCommand(1)), //Dispenses cone
       new ArmAuton(m_PivotingArmSubsystem, m_TelescopingArmSubsystem, 3), //sets arm to neutral position
       new DriveDistance(m_swerveDrivetrain, 4.0, 0.7, 0.0, 1.0, true, true) //Drives to middle of field
