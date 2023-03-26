@@ -84,22 +84,22 @@ public final class Constants {
     public static final int BACK_LEFT_DRIVE = 7; //Josh
     public static final int BACK_LEFT_ENCODER = 11; //Gary 
     public static final int BACK_LEFT_AZIMUTH = 6 ; //Tracy
-    public static final double BACK_LEFT_OFFSET = 150.29296875;
+    public static final double BACK_LEFT_OFFSET = 214.18;
 
     public static final int BACK_RIGHT_DRIVE = 4; //Happy
     public static final int BACK_RIGHT_ENCODER = 10; //Bre
     public static final int BACK_RIGHT_AZIMUTH = 5; //Samuel
-    public static final double BACK_RIGHT_OFFSET = 264.638671875;
+    public static final double BACK_RIGHT_OFFSET = 91.3;
 
     public static final int FRONT_RIGHT_DRIVE = 2; //Keith
     public static final int FRONT_RIGHT_ENCODER = 9; //Freddy Mercury
     public static final int FRONT_RIGHT_AZIMUTH = 3; //Beth
-    public static final double FRONT_RIGHT_OFFSET = 352.44140625;
+    public static final double FRONT_RIGHT_OFFSET = 9.0;
 
     public static final int FRONT_LEFT_DRIVE = 1; //Chad
     public static final int FRONT_LEFT_ENCODER = 8; //Jonathan 
     public static final int FRONT_LEFT_AZIMUTH = 0; //Geraldine
-    public static final double FRONT_LEFT_OFFSET = 108.193359375;
+    public static final double FRONT_LEFT_OFFSET = 257.6;
 
     public static final double PIGEON_ROLL_OFFSET = 1.8;
 
@@ -127,10 +127,10 @@ public final class Constants {
     public static boolean BACK_RIGHT_DRIVE_REVERSED = true;
 
     /* CANCoders reversed */
-    public static boolean FRONT_LEFT_CANCODER_REVERSED = true;
-    public static boolean FRONT_RIGHT_CANCODER_REVERSED = true;
-    public static boolean BACK_LEFT_CANCODER_REVERSED = true;
-    public static boolean BACK_RIGHT_CANCODER_REVERSED = true;
+    public static boolean FRONT_LEFT_CANCODER_REVERSED = false;
+    public static boolean FRONT_RIGHT_CANCODER_REVERSED = false;
+    public static boolean BACK_LEFT_CANCODER_REVERSED = false;
+    public static boolean BACK_RIGHT_CANCODER_REVERSED = false;
 
     /* Gyro reversed */
     public static final boolean INVERT_GYRO = false;

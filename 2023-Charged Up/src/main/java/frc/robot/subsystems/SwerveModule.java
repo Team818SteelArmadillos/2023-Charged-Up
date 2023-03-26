@@ -112,10 +112,14 @@ public class SwerveModule {
      * 
      */
 
+    public double getAzumithEncoder() {
+        return m_azimuthMotor.getSelectedSensorPosition();
+    }
+
     private void resetToAbsolute() {
         double last_time_stamp = 0;
         int fresh_counter = 0;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 200; i++) {
             m_canCoder.getAbsolutePosition();
             if (m_canCoder.getLastError().equals(ErrorCode.OK)) {
                 double new_last_time_stamp = m_canCoder.getLastTimestamp();
@@ -131,7 +135,7 @@ public class SwerveModule {
                 Timer.delay(0.1);
             }
         }
-        SmartDashboard.putBoolean("CANcoder Error", fresh_counter <= 2);
+        SmartDashboard.putNumber("Fresh Count" + m_moduleNumber, (double) fresh_counter);
         m_azimuthMotor.setSelectedSensorPosition(Conversions.degreesToFalcon(getCanCoder().getDegrees() - m_offset, Constants.AZIMUTH_GEAR_RATIO));
     }
 

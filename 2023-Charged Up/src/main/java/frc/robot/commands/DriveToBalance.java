@@ -16,7 +16,7 @@ public class DriveToBalance extends CommandBase {
 
     private double m_rotation;
 
-    private double m_incline;
+    //private double m_incline;
     private double m_speed;
     private double m_xAxis;
     private double m_yAxis;

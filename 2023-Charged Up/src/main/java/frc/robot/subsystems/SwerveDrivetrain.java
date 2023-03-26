@@ -342,10 +342,10 @@ public class SwerveDrivetrain extends SubsystemBase {
 
         SmartDashboard.putNumber("Roll", getRoll());
 
-        SmartDashboard.putNumber("FL CANCoder", m_swerveModules[0].getCandcoderAbsPos());
-        SmartDashboard.putNumber("FR CANCoder", m_swerveModules[1].getCandcoderAbsPos());
-        SmartDashboard.putNumber("BL CANCoder", m_swerveModules[2].getCandcoderAbsPos());
-        SmartDashboard.putNumber("BR CANCoder", m_swerveModules[3].getCandcoderAbsPos());
+        SmartDashboard.putNumber("FL encoder", m_swerveModules[0].getAzumithEncoder());
+        SmartDashboard.putNumber("FR encoder", m_swerveModules[1].getAzumithEncoder());
+        SmartDashboard.putNumber("BL encoder", m_swerveModules[2].getAzumithEncoder());
+        SmartDashboard.putNumber("BR encoder", m_swerveModules[3].getAzumithEncoder());
 
         SmartDashboard.putNumber("FL CANCoder", m_swerveModules[0].getCandcoderAbsPos());
         SmartDashboard.putNumber("FR CANCoder", m_swerveModules[1].getCandcoderAbsPos());
