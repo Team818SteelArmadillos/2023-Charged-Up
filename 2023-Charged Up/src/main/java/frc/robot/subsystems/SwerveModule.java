@@ -57,8 +57,6 @@ public class SwerveModule {
         m_canCoder = new CANCoder(canCoder, Constants.CAN_BUS_DRIVE);
         m_azimuthMotor = new TalonFX(azimuthMotor, Constants.CAN_BUS_DRIVE);
         m_driveMotor = new TalonFX(driveMotor, Constants.CAN_BUS_DRIVE);
-
-        Timer.delay(0.5);
         
         configCanCoder();
         configTurningMotor();
@@ -118,6 +116,18 @@ public class SwerveModule {
         return m_azimuthMotor.getSelectedSensorPosition();
     }
 
+    public void resetToAbsolute_ONLY_USE_THIS_ON_INIT() {
+        double resetValue = 0;
+        for (int i=0; i<10; i++) {
+            resetValue = Conversions.degreesToFalcon(getCanCoder().getDegrees() - m_offset, Constants.AZIMUTH_GEAR_RATIO);
+            if (Math.abs(resetValue) <= Constants.MINIMUM_ENCODER_BOOT_TOLERANCE) {
+                break;
+            }
+            Timer.delay(0.1);
+        }
+        m_azimuthMotor.setSelectedSensorPosition(resetValue);
+    }
+
     public void resetToAbsolute() {
         m_azimuthMotor.setSelectedSensorPosition(Conversions.degreesToFalcon(getCanCoder().getDegrees() - m_offset, Constants.AZIMUTH_GEAR_RATIO));
     }
@@ -146,7 +156,7 @@ public class SwerveModule {
         m_azimuthMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
         m_azimuthMotor.setInverted(m_turningInverted);
         m_azimuthMotor.setNeutralMode(Constants.AZIMUTH_NEUTRAL_MODE);
-        resetToAbsolute(); //TODO: Add this once absolute encoders are solved
+        resetToAbsolute_ONLY_USE_THIS_ON_INIT(); //TODO: Add this once absolute encoders are solved
 
         //m_azimuthMotor.configSelectedFeedbackCoefficient(m_coeff);
     }

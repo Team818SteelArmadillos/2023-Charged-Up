@@ -31,12 +31,12 @@ public final class Constants {
 
     // pivoting motor Values 
     public static final double pP = -0.025;
-    public static final double pivotI = 0.00015;
+    public static final double pivotI = 0.0002;
     public static final double pivotD = 0.0;
     public static final double pPIDTolerance = 2.0;
 
     //Telescoping Values
-    public static final double armLengths[] = {0, 50000, 98000, Constants.maximumArmLength, 167500};
+    public static final double armLengths[] = {0, 50000, 98000, Constants.maximumArmLength, 170000};
     public static final double maximumArmLength = 167500; //
     public static final double minimumArmLength = 0; //
     public static final double lengthSlewRate = 20000;
@@ -60,7 +60,7 @@ public final class Constants {
     public static final double CUBE_OUT_SPEED = 0.6;
 
     // Pivoting Arm Angles
-    public static final int[] armAngles = {0, -37, -52, -54, -98, 90};
+    public static final int[] armAngles = {0, -37, -50, -52, -98, 90};
     public static final int[] revArmAngles = {0, 37, 50, 98, -90};
     public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
     public static final double angleSlewRate = 78;
@@ -80,6 +80,8 @@ public final class Constants {
    /*============================
                Swerve 
     ==============================*/
+
+    public static final int MINIMUM_ENCODER_BOOT_TOLERANCE = 500;
 
     /* CAN IDs */
     public static final int BACK_LEFT_DRIVE = 7; //Josh

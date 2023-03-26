@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
 import frc.robot.OI;
@@ -76,6 +77,7 @@ public class SwerveDrive extends CommandBase {
 
         if (m_driverController.getYButton()) {
             m_swerveDrivetrain.resetModulesToAbsolute();
+            Timer.delay(0.1);
         }
 
         if (OI.getDriver().getRightTriggerAxis() >= 0.5) {
