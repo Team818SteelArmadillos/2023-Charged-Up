@@ -52,8 +52,15 @@ public class ArmAuton extends CommandBase {
     // Debug MAnual speed control
     //telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY());
     lengthSetpoint = MathUtil.clamp(lengthSetpoint, -Constants.maximumArmLength, Constants.maximumArmLength);
-    m_TelescopingArmSubsystem.setArmLength(lengthSetpoint);
+    if (state == 3) {
+      m_TelescopingArmSubsystem.setArmLength(lengthSetpoint);
+    } else {
+      if (m_PivotingArmSubsystem.onSetPoint() && m_PivotingArmSubsystem.isBikeBreakEngaged()) {
+        m_TelescopingArmSubsystem.setArmLength(lengthSetpoint);
+      }
+    }
   }
+  
   @Override
   public void end(boolean interrupted) {
       m_PivotingArmSubsystem.setArmLocked();

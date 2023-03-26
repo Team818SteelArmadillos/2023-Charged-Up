@@ -94,8 +94,14 @@ public class ArmCommand extends CommandBase {
 
     // Debug MAnual speed control
     //telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY());
-    telescopingArmSubsystem.setArmLength(lengthSetpoint);
     lengthSetpoint = MathUtil.clamp(lengthSetpoint, -Constants.maximumArmLength, Constants.maximumArmLength);
+    if (angleSetpoint == Constants.armAngles[0]) {
+      telescopingArmSubsystem.setArmLength(lengthSetpoint);
+    } else {
+      if (pivotingArmSubsystem.onSetPoint() && pivotingArmSubsystem.isBikeBreakEngaged()) {
+        telescopingArmSubsystem.setArmLength(lengthSetpoint);
+      }
+    }
     //telescopingArmSubsystem.setSpeed(rightJoystickInput);
     
     
