@@ -60,7 +60,7 @@ public final class Constants {
     public static final double CUBE_OUT_SPEED = 0.6;
 
     // Pivoting Arm Angles
-    public static final int[] armAngles = {0, -37, -51, -53, -98, 90};
+    public static final int[] armAngles = {0, -37, -52, -54, -98, 90};
     public static final int[] revArmAngles = {0, 37, 50, 98, -90};
     public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
     public static final double angleSlewRate = 78;
