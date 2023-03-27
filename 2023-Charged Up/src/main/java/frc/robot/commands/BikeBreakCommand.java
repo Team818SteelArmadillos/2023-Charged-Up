@@ -1,13 +1,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.PivotingArmSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 
 public class BikeBreakCommand extends CommandBase {
 
-  private PivotingArmSubsystem bikeBreakSubsystem;
+  private ArmSubsystem bikeBreakSubsystem;
 
-  public BikeBreakCommand (PivotingArmSubsystem sub) {
+  public BikeBreakCommand (ArmSubsystem sub) {
     addRequirements(sub);
     bikeBreakSubsystem = sub;
   }

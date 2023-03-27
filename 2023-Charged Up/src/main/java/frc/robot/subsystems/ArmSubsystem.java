@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -20,12 +21,16 @@ public class ArmSubsystem extends SubsystemBase {
     public TalonSRX pm3;
     
     public PIDController PivotingPID;
+    public ArmFeedforward armFeedforward;
     public static DutyCycleEncoder encoder; // = new Encoder(0, 0, 0); // LETS CODE THIS THING!! 
     public int armCounts;
     
     public TalonFX telescopingMotor;
     
     public double currentLength;
+    public double pidOutput;
+    public double feedforwardOutput;
+    public double power;
     
     public DoubleSolenoid bikeBreak;
 
@@ -46,6 +51,9 @@ public class ArmSubsystem extends SubsystemBase {
         PivotingPID = new PIDController(Constants.pP, Constants.pivotI, Constants.pivotD);
         PivotingPID.setTolerance(Constants.pPIDTolerance);
         PivotingPID.reset();
+
+        //feed forward
+        armFeedforward = new ArmFeedforward(Constants.ARM_Ks, Constants.ARM_Kg, Constants.ARM_Kv, Constants.ARM_Ka);
         
         //encoder stuff
         encoder = new DutyCycleEncoder(Constants.THROUGH_BORE_ENCODER); //these encoder paramters are undefined since
@@ -77,7 +85,9 @@ public class ArmSubsystem extends SubsystemBase {
         //Simply put, the third function checks if the arm has been at the setpoint for "long enough." If so, it locks the arm. Otherwise, it keeps it 
         //unlocked and keeps moving toward its desired setpoint.
 
-        double pidOutput = PivotingPID.calculate(getPivotAngle(), setpointAngle);
+        pidOutput = PivotingPID.calculate(getPivotAngle(), setpointAngle);
+        feedforwardOutput = armFeedforward.calculate(setpointAngle, pidOutput);
+        power = pidOutput + feedforwardOutput;
 
         if ( PivotingPID.atSetpoint() )  {
             armCounts++;
@@ -89,7 +99,8 @@ public class ArmSubsystem extends SubsystemBase {
             setArmLocked(); 
         } else {
             setArmUnlocked();
-            setPivotSpeed(pidOutput);
+            
+            setPivotSpeed(power);
         }
 
     }
@@ -107,7 +118,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public double getPivotAngle() {
-        return (getEncoder() * 360); //- Constants.encoderOvershoot;
+        return (getPivotingEncoder() * 360); //- Constants.encoderOvershoot;
     }
 
     /*==============================

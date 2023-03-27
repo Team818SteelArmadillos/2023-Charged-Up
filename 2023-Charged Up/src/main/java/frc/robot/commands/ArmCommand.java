@@ -90,10 +90,11 @@ public class ArmCommand extends CommandBase {
     armSubsystem.setPivotAngle(angleSetpoint);
 
     lengthSetpoint = MathUtil.clamp(lengthSetpoint, -Constants.maximumArmLength, Constants.maximumArmLength);
+    
     if (angleSetpoint == Constants.armAngles[0]) {
       armSubsystem.setArmLength(lengthSetpoint);
     } else if (armSubsystem.onPivotingSetPoint() && armSubsystem.isBikeBreakEngaged()) {
-        armSubsystem.setArmLength(lengthSetpoint);
+      armSubsystem.setArmLength(lengthSetpoint);
     }
     
     

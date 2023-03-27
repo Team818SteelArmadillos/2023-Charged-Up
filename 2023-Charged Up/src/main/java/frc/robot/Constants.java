@@ -53,6 +53,11 @@ public final class Constants {
     public static final int pneumaticPistonPort = 17; // Copied from 2022 Rapid React Code (needs to be tested more??)
     public static final int[] pneumaticPorts = {0,1,2,3,4,5,6,7};
 
+    //Arm Feedforward Values
+    public static final double ARM_Ks = 0.0;
+    public static final double ARM_Kg = 0.0;
+    public static final double ARM_Kv = 0.0;
+    public static final double ARM_Ka = 0.0;  
     // Piston Claw Values
     public static final double CONE_IN_SPEED = -0.8;
     public static final double CONE_OUT_SPEED= 0.65;

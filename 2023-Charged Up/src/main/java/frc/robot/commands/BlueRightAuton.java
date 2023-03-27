@@ -16,10 +16,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class BlueRightAuton extends SequentialCommandGroup {
   /** Creates a new BlueMiddleAuton. */
-  private static SwerveDrivetrain m_swerveDrivetrain;
-  private static ArmSubsystem m_armSubsystem;
-  private static ClawSubsystem m_clawSubsystem;
-  private static LEDSubsystem m_LEDSubsystem;
   static double[] start = {Units.inchesToMeters(70.78), Units.inchesToMeters(-255.11)};
   
   static double[] coordinates = {Units.inchesToMeters(70.78), Units.inchesToMeters(-172.61)};
@@ -27,19 +23,15 @@ public class BlueRightAuton extends SequentialCommandGroup {
   public BlueRightAuton(ArmSubsystem armSubsystem, 
   SwerveDrivetrain swerveDrivetrain, ClawSubsystem clawSubsystem, LEDSubsystem ledSubsystem) {
 
-    addRequirements(swerveDrivetrain, armSubsystem, armSubsystem);
-    m_armSubsystem = armSubsystem;
-    m_swerveDrivetrain = swerveDrivetrain;
-    m_clawSubsystem = clawSubsystem;
-    m_LEDSubsystem = ledSubsystem;
-    m_swerveDrivetrain.resetOdometry(new Pose2d(Units.inchesToMeters(70.78), Units.inchesToMeters(-255.11), new Rotation2d(0)));
+    addRequirements(swerveDrivetrain, armSubsystem, clawSubsystem, ledSubsystem);
+    swerveDrivetrain.resetOdometry(new Pose2d(Units.inchesToMeters(70.78), Units.inchesToMeters(-255.11), new Rotation2d(0)));
     addCommands(
-      new ArmAuton(m_armSubsystem, 2), //sets arm high
+      new ArmAuton(armSubsystem, 2), //sets arm high
       new WaitCommand(0.5),
-      new ParallelCommandGroup(new ClawCommand(m_clawSubsystem, m_LEDSubsystem), new WaitCommand(1)), //Dispenses cone
-      new ArmAuton(m_armSubsystem, 2), //sets arm to neutral position
-      new DriveDistance(m_swerveDrivetrain, 4.0, 0.7, 0.0, 1.0, true, true) //Drives to middle of field
-      //new HoldPosition(m_swerveDrivetrain)
+      new ParallelCommandGroup(new ClawCommand(clawSubsystem, ledSubsystem), new WaitCommand(1)), //Dispenses cone
+      new ArmAuton(armSubsystem, 2), //sets arm to neutral position
+      new DriveDistance(swerveDrivetrain, 4.0, 0.7, 0.0, 1.0, true, true) //Drives to middle of field
+      //new HoldPosition(swerveDrivetrain)
       );
   }
 }
