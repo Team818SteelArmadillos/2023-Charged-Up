@@ -6,29 +6,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.OI;
-import frc.robot.subsystems.PivotingArmSubsystem;
-import frc.robot.subsystems.TelescopingArmSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 
 
 public class ArmCommand extends CommandBase {
 
   private double angleSetpoint;
-  private PivotingArmSubsystem pivotingArmSubsystem;
+  private ArmSubsystem armSubsystem;
   private SlewRateLimiter angleRateLimiter;
   private double rawLeftJoystickInput;
   private double leftJoystickInput;
 
   private double lengthSetpoint;
-  private TelescopingArmSubsystem telescopingArmSubsystem;
   private SlewRateLimiter lengthRateLimiter;
   private double rawRightJoystickInput;
   private double rightJoystickInput;
 
 
-  public ArmCommand (PivotingArmSubsystem sub, TelescopingArmSubsystem sub1) {
-    addRequirements(sub, sub1);
-    pivotingArmSubsystem = sub;
-    telescopingArmSubsystem = sub1;
+  public ArmCommand (ArmSubsystem sub) {
+    addRequirements(sub);
+    armSubsystem = sub;
     
     //limits the change of a given variable to never exceed Constants.armSlewRate per second
     angleRateLimiter = new SlewRateLimiter(Constants.angleSlewRate);
@@ -84,28 +81,23 @@ public class ArmCommand extends CommandBase {
       lengthSetpoint = lengthRateLimiter.calculate(lengthSetpoint + 20000 * rightJoystickInput);
     }
 
-    if ( telescopingArmSubsystem.getLimitswitch() ) {
-      telescopingArmSubsystem.resetEncoder();
+    if ( armSubsystem.getLimitswitch() ) {
+      armSubsystem.resetTelescopingEncoder();
     }
 
-    SmartDashboard.putBoolean("limit switch", telescopingArmSubsystem.getLimitswitch());
+    SmartDashboard.putBoolean("limit switch", armSubsystem.getLimitswitch());
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
-    pivotingArmSubsystem.setPivotAngle(angleSetpoint);
+    armSubsystem.setPivotAngle(angleSetpoint);
 
-    // Debug MAnual speed control
-    //telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY());
     lengthSetpoint = MathUtil.clamp(lengthSetpoint, -Constants.maximumArmLength, Constants.maximumArmLength);
     if (angleSetpoint == Constants.armAngles[0]) {
-      telescopingArmSubsystem.setArmLength(lengthSetpoint);
-    } else {
-      if (pivotingArmSubsystem.onSetPoint() && pivotingArmSubsystem.isBikeBreakEngaged()) {
-        telescopingArmSubsystem.setArmLength(lengthSetpoint);
-      }
+      armSubsystem.setArmLength(lengthSetpoint);
+    } else if (armSubsystem.onPivotingSetPoint() && armSubsystem.isBikeBreakEngaged()) {
+        armSubsystem.setArmLength(lengthSetpoint);
     }
-    //telescopingArmSubsystem.setSpeed(rightJoystickInput);
     
     
-    SmartDashboard.putNumber("Telescoping Encoder", telescopingArmSubsystem.getEncoder());
+    SmartDashboard.putNumber("Telescoping Encoder", armSubsystem.getTelescopingEncoder());
     SmartDashboard.putNumber("Telescoping Setpoint", lengthSetpoint);
     
     SmartDashboard.putNumber("setpoint angle", angleSetpoint);
@@ -115,10 +107,9 @@ public class ArmCommand extends CommandBase {
   }
 
   private void zeroArm() {
-    telescopingArmSubsystem.resetEncoder();
-    //pivotingArmSubsystem.resetEncoder();
-    lengthSetpoint = telescopingArmSubsystem.getEncoder();
-    angleSetpoint = pivotingArmSubsystem.getAngle();
+    armSubsystem.resetTelescopingEncoder();
+    lengthSetpoint = armSubsystem.getTelescopingEncoder();
+    angleSetpoint = armSubsystem.getPivotAngle();
   }
 
   // Called once the command ends or is interrupted.

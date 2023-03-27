@@ -12,9 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.PivotingArmSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.SwerveDrivetrain;
-import frc.robot.subsystems.TelescopingArmSubsystem;
  
 
 /**
@@ -52,12 +51,11 @@ public class RobotContainer {
   private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
   //private final LimeNetwork m_LimeNetwork = new LimeNetwork();
   //private final Pathplanning m_Pathplanning = new Pathplanning();
-  private final PivotingArmSubsystem m_pivotingArmSubsystem = new PivotingArmSubsystem();
+  private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final SwerveDrivetrain m_swerveDrivetrain = new SwerveDrivetrain();
-  private final TelescopingArmSubsystem m_telescopingArmSubsystem = new TelescopingArmSubsystem();
   
   //pivoting manual command
-  public final ArmCommand m_ArmCommand = new ArmCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
+  public final ArmCommand m_ArmCommand = new ArmCommand(m_armSubsystem);
   public final AutoBalanceCommand m_autoBalanceCommand = new AutoBalanceCommand(m_swerveDrivetrain, m_LedSubsystem);
 
   //private final DriveDistance m_driveDistance = new DriveDistance(m_swerveDrivetrain, new Pose2d(3.0, 0.0, new Rotation2d(0.0)), fieldRelative, openLoop);
@@ -94,12 +92,12 @@ public class RobotContainer {
   //public final LEDCommand m_LEDColorCommand = new LEDCommand(m_LedSubsystem);
 
   //reset encoder command
-  public final EncoderCommand m_EncoderCommand = new EncoderCommand(m_pivotingArmSubsystem, m_telescopingArmSubsystem);
+  public final EncoderCommand m_EncoderCommand = new EncoderCommand(m_armSubsystem);
 
   // auton commands
-  private final BlueMiddleAuton m_BlueMiddleAuton = new BlueMiddleAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_ClawSubsystem, m_LedSubsystem);
-  private final BlueRightAuton m_BlueRightAuton = new BlueRightAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_ClawSubsystem, m_LedSubsystem);
-  private final BlueMiddleAuton m_BlueBalanceAuton = new BlueMiddleAuton(m_telescopingArmSubsystem, m_pivotingArmSubsystem, m_swerveDrivetrain, m_ClawSubsystem, m_LedSubsystem);
+  private final BlueMiddleAuton m_BlueMiddleAuton = new BlueMiddleAuton(m_armSubsystem, m_swerveDrivetrain, m_ClawSubsystem, m_LedSubsystem);
+  private final BlueRightAuton m_BlueRightAuton = new BlueRightAuton(m_armSubsystem, m_swerveDrivetrain, m_ClawSubsystem, m_LedSubsystem);
+  private final BlueMiddleAuton m_BlueBalanceAuton = new BlueMiddleAuton(m_armSubsystem, m_swerveDrivetrain, m_ClawSubsystem, m_LedSubsystem);
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
@@ -109,7 +107,7 @@ public class RobotContainer {
     boolean fieldRelative = true;
     boolean openLoop = true;
     
-    m_pivotingArmSubsystem.setDefaultCommand(m_ArmCommand);
+    m_armSubsystem.setDefaultCommand(m_ArmCommand);
     m_swerveDrivetrain.setDefaultCommand(new SwerveDrive(m_swerveDrivetrain, 
       m_driverController, m_translationAxis, m_strafeAxis, m_rotationAxis, fieldRelative, openLoop));
 

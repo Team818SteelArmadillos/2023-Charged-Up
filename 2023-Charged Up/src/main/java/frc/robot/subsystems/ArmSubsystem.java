@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -13,47 +14,59 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 
-public class PivotingArmSubsystem extends SubsystemBase {
+public class ArmSubsystem extends SubsystemBase {
     public TalonSRX pm1; // pivoting motor 1
     public TalonSRX pm2;
     public TalonSRX pm3;
     
-    public PIDController PID;
-    public static DutyCycleEncoder encoder; // = new Encoder(0, 0, 0); // LETS CODE THIS THING!!
-    //public double currentAngle; 
+    public PIDController PivotingPID;
+    public static DutyCycleEncoder encoder; // = new Encoder(0, 0, 0); // LETS CODE THIS THING!! 
     public int armCounts;
     
-    public DoubleSolenoid bikeBreak;
+    public TalonFX telescopingMotor;
     
+    public double currentLength;
+    
+    public DoubleSolenoid bikeBreak;
+
     // Initialize here
-    public PivotingArmSubsystem() {
+    public ArmSubsystem() {
         // motor stuff
         pm1 = new TalonSRX(Constants.pivotingMotorPorts[0]);
         pm2 = new TalonSRX(Constants.pivotingMotorPorts[1]);
         pm3 = new TalonSRX(Constants.pivotingMotorPorts[2]);
 
+        
         pm2.follow(pm1); 
         pm3.follow(pm1); //makes motors 2 and 3 follow 1 so that only 1 needs to be set
-
+        
+        telescopingMotor = new TalonFX(Constants.telscopingMotorPort);
+        
         //pid stuff
-        PID = new PIDController(Constants.pP, Constants.pivotI, Constants.pivotD);
-        PID.setTolerance(Constants.pPIDTolerance);
-        PID.reset();
-
+        PivotingPID = new PIDController(Constants.pP, Constants.pivotI, Constants.pivotD);
+        PivotingPID.setTolerance(Constants.pPIDTolerance);
+        PivotingPID.reset();
+        
         //encoder stuff
         encoder = new DutyCycleEncoder(Constants.THROUGH_BORE_ENCODER); //these encoder paramters are undefined since
         //encoder.reset();
         SmartDashboard.putNumber( "Pivoting Arm Encoder", encoder.get() );
 
         bikeBreak = new DoubleSolenoid(Constants.pneumaticPistonPort, PneumaticsModuleType.CTREPCM, Constants.pneumaticPorts[6], Constants.pneumaticPorts[7]);
+        
         setArmLocked();
+        configureMotor();
 
         armCounts = 0;
         
     }
 
-    public boolean onSetPoint(){
-        return PID.atSetpoint();
+     /*==============================
+            pivoting stuff
+    ==============================*/
+
+    public boolean onPivotingSetPoint(){
+        return PivotingPID.atSetpoint();
     }
 
     public void setPivotAngle(double setpointAngle) {
@@ -64,9 +77,9 @@ public class PivotingArmSubsystem extends SubsystemBase {
         //Simply put, the third function checks if the arm has been at the setpoint for "long enough." If so, it locks the arm. Otherwise, it keeps it 
         //unlocked and keeps moving toward its desired setpoint.
 
-        double pidOutput = PID.calculate(getAngle(), setpointAngle);
+        double pidOutput = PivotingPID.calculate(getPivotAngle(), setpointAngle);
 
-        if ( PID.atSetpoint() )  {
+        if ( PivotingPID.atSetpoint() )  {
             armCounts++;
         } else {
             armCounts = 0;
@@ -85,17 +98,57 @@ public class PivotingArmSubsystem extends SubsystemBase {
         pm1.set(ControlMode.PercentOutput, pivotSpeed);
     }
 
-    public void resetEncoder() {
+    public void resetPivotingEncoder() {
         encoder.reset();
     }
 
-    public double getEncoder() {
+    public double getPivotingEncoder() {
         return encoder.get() - Constants.encoderOvershoot;
     }
 
-    public double getAngle() {
+    public double getPivotAngle() {
         return (getEncoder() * 360); //- Constants.encoderOvershoot;
     }
+
+    /*==============================
+            telescoping stuff
+    ==============================*/
+
+    public boolean getLimitswitch() {
+        return telescopingMotor.isRevLimitSwitchClosed() == 1;
+    }
+
+    public void setArmLength(double setpointLength) {
+        telescopingMotor.set(ControlMode.Position, setpointLength);
+    }
+    
+    public void setSpeed(double speed) {
+        telescopingMotor.set(ControlMode.PercentOutput, speed);
+    }
+
+    public void resetTelescopingEncoder() {
+        telescopingMotor.setSelectedSensorPosition(0);
+    }
+
+    public double getTelescopingEncoder() {
+        return telescopingMotor.getSelectedSensorPosition();
+    }
+
+    public boolean onSetPoint(double positon){
+        return Math.abs(telescopingMotor.getSelectedSensorPosition() - positon) < Constants.tTolerance;
+    }
+
+    public void configureMotor() {
+        telescopingMotor.setInverted(true);
+        telescopingMotor.config_kP(0, Constants.tP);
+        telescopingMotor.config_kI(0, Constants.tI);
+        telescopingMotor.config_kD(0, Constants.tD);
+        telescopingMotor.configAllowableClosedloopError(0, Constants.tTolerance);
+    }
+
+     /*==============================
+            bike break stuff
+    ==============================*/
 
     public void setArmUnlocked() {
         bikeBreak.set(Value.kForward);
@@ -117,9 +170,12 @@ public class PivotingArmSubsystem extends SubsystemBase {
         }
     }
 
+    //PERIODIC
+
     @Override
     public void periodic(){ 
-        SmartDashboard.putNumber("Arm Angle", getAngle());
-        SmartDashboard.putNumber( "Pivoting Arm Encoder", encoder.get() );
+        SmartDashboard.putNumber("Arm Angle", getPivotAngle());
+        SmartDashboard.putNumber("Pivoting Arm Encoder", encoder.get() );
     }
+
 }

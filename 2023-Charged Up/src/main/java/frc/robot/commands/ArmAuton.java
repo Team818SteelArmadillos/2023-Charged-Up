@@ -5,24 +5,21 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.PivotingArmSubsystem;
-import frc.robot.subsystems.TelescopingArmSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ArmAuton extends CommandBase {
-  PivotingArmSubsystem m_PivotingArmSubsystem;
-  TelescopingArmSubsystem m_TelescopingArmSubsystem;
+  ArmSubsystem m_armSubsystem;
   
   double angleSetpoint;
   double lengthSetpoint;
   int state;
 
   /** Creates a new ArmAuton. */
-  public ArmAuton(PivotingArmSubsystem pivotingArmSubsystem, TelescopingArmSubsystem telescopingArmSubsystem, int State) {
-    addRequirements(pivotingArmSubsystem, telescopingArmSubsystem);
-     m_PivotingArmSubsystem = pivotingArmSubsystem;
-     m_TelescopingArmSubsystem = telescopingArmSubsystem;
+  public ArmAuton(ArmSubsystem pivotingArmSubsystem, int State) {
+    addRequirements(pivotingArmSubsystem);
+     m_armSubsystem = pivotingArmSubsystem;
      state = State;
   }
 
@@ -47,27 +44,25 @@ public class ArmAuton extends CommandBase {
     }
     
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
-    m_PivotingArmSubsystem.setPivotAngle(angleSetpoint);
+    m_armSubsystem.setPivotAngle(angleSetpoint);
 
     // Debug MAnual speed control
     //telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY());
     lengthSetpoint = MathUtil.clamp(lengthSetpoint, -Constants.maximumArmLength, Constants.maximumArmLength);
     if (state == 3) {
-      m_TelescopingArmSubsystem.setArmLength(lengthSetpoint);
-    } else {
-      if (m_PivotingArmSubsystem.onSetPoint() && m_PivotingArmSubsystem.isBikeBreakEngaged()) {
-        m_TelescopingArmSubsystem.setArmLength(lengthSetpoint);
-      }
+      m_armSubsystem.setArmLength(lengthSetpoint);
+    } else if (m_armSubsystem.onPivotingSetPoint() && m_armSubsystem.isBikeBreakEngaged()) {
+      m_armSubsystem.setArmLength(lengthSetpoint);
     }
   }
   
   @Override
   public void end(boolean interrupted) {
-      m_PivotingArmSubsystem.setArmLocked();
+      m_armSubsystem.setArmLocked();
   }
 
   @Override
   public boolean isFinished() {
-    return  m_PivotingArmSubsystem.PID.atSetpoint() && m_TelescopingArmSubsystem.onSetPoint(lengthSetpoint);
+    return  m_armSubsystem.PivotingPID.atSetpoint() && m_armSubsystem.onSetPoint(lengthSetpoint);
   }
 }
