@@ -107,7 +107,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public double getPivotAngle() {
-        return (getEncoder() * 360); //- Constants.encoderOvershoot;
+        return (getPivotingEncoder() * 360); //- Constants.encoderOvershoot;
     }
 
     /*==============================

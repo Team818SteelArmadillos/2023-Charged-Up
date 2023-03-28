@@ -28,17 +28,17 @@ public class ArmAuton extends CommandBase {
   public void execute() {
 
     if (state == 0) { //low position 
-      angleSetpoint = Constants.armAngles[3];
-      lengthSetpoint = Constants.armLengths[1];
+      angleSetpoint = Constants.ARM_ANGLE_LOW;
+      lengthSetpoint = Constants.ARM_LENGTH_GROUND;
     } else if (state == 1) { //medium position
-      angleSetpoint = Constants.armAngles[3];
-      lengthSetpoint = Constants.armLengths[2];
+      angleSetpoint = Constants.ARM_ANGLE_MID;
+      lengthSetpoint = Constants.ARM_LENGTH_MID;
     } else if (state == 2) { // high position
-      angleSetpoint = Constants.armAngles[2];
-      lengthSetpoint = Constants.armLengths[3];
+      angleSetpoint = Constants.ARM_ANGLE_HIGH;
+      lengthSetpoint = Constants.ARM_LENGTH_MAX;
     } else if (state == 3) { // neutral position
-      angleSetpoint = Constants.armAngles[0];
-      lengthSetpoint = Constants.armLengths[0];
+      angleSetpoint = Constants.ARM_ANGLE_NEUTRAL;
+      lengthSetpoint = Constants.ARM_LENGTH_MIN;
     } else {
       //do nothing
     }
@@ -46,9 +46,6 @@ public class ArmAuton extends CommandBase {
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
     m_armSubsystem.setPivotAngle(angleSetpoint);
 
-    // Debug MAnual speed control
-    //telescopingArmSubsystem.setSpeed(OI.getOperator().getRightY());
-    lengthSetpoint = MathUtil.clamp(lengthSetpoint, -Constants.maximumArmLength, Constants.maximumArmLength);
     if (state == 3) {
       m_armSubsystem.setArmLength(lengthSetpoint);
     } else if (m_armSubsystem.onPivotingSetPoint() && m_armSubsystem.isBikeBreakEngaged()) {

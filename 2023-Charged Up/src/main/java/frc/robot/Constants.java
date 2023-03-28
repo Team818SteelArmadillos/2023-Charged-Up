@@ -36,9 +36,10 @@ public final class Constants {
     public static final double pPIDTolerance = 2.0;
 
     //Telescoping Values
-    public static final double armLengths[] = {0, 50000, 98000, Constants.maximumArmLength, 170000};
-    public static final double maximumArmLength = 167500; //
-    public static final double minimumArmLength = 0; //
+    public static final double ARM_LENGTH_MIN = 0; //
+    public static final double ARM_LENGTH_MAX = 170000; //
+    public static final double ARM_LENGTH_GROUND = 50000; //
+    public static final double ARM_LENGTH_MID = 98000; //
     public static final double lengthSlewRate = 20000;
     public static final int limitSwitchPort = 0;
 
@@ -60,8 +61,10 @@ public final class Constants {
     public static final double CUBE_OUT_SPEED = 0.6;
 
     // Pivoting Arm Angles
-    public static final int[] armAngles = {0, -37, -52, -54, -98, 90};
-    public static final int[] revArmAngles = {0, 37, 50, 98, -90};
+    public static final int ARM_ANGLE_NEUTRAL = 0;
+    public static final int ARM_ANGLE_LOW = -98;
+    public static final int ARM_ANGLE_MID = -54;
+    public static final int ARM_ANGLE_HIGH = -52;
     public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
     public static final double angleSlewRate = 78;
     public static final int armSetpointCounter = 20;
@@ -81,35 +84,40 @@ public final class Constants {
                Swerve 
     ==============================*/
 
-    public static final int MINIMUM_ENCODER_BOOT_TOLERANCE = 500;
+    public static final double DRIVE_TURN_KP = 5.0;
+
+    public static final double STEER_GAINS_KP = 30;
+    public static final double STEER_GAINS_KD  = 0.2;
+
+    public static final double DRIVE_GAINS_KP = 1;
 
     /* CAN IDs */
-    public static final int BACK_LEFT_DRIVE = 7; //Josh
-    public static final int BACK_LEFT_ENCODER = 11; //Gary 
-    public static final int BACK_LEFT_AZIMUTH = 6 ; //Tracy
-    public static final double BACK_LEFT_OFFSET = 216.4;
+    public static final int BACK_LEFT_AZIMUTH = 6 ;
+    public static final int BACK_LEFT_DRIVE = 7;
+    public static final int BACK_LEFT_CANCODER = 11;
+    public static final double BACK_LEFT_OFFSET = -0.097412;
 
-    public static final int BACK_RIGHT_DRIVE = 4; //Happy
-    public static final int BACK_RIGHT_ENCODER = 10; //Bre
-    public static final int BACK_RIGHT_AZIMUTH = 5; //Samuel
-    public static final double BACK_RIGHT_OFFSET = 96.3;
+    public static final int BACK_RIGHT_AZIMUTH = 5;
+    public static final int BACK_RIGHT_DRIVE = 4;
+    public static final int BACK_RIGHT_CANCODER = 10;
+    public static final double BACK_RIGHT_OFFSET = -0.769287;
 
-    public static final int FRONT_RIGHT_DRIVE = 2; //Keith
-    public static final int FRONT_RIGHT_ENCODER = 9; //Freddy Mercury
-    public static final int FRONT_RIGHT_AZIMUTH = 3; //Beth
-    public static final double FRONT_RIGHT_OFFSET = 8.7;
+    public static final int FRONT_RIGHT_AZIMUTH = 3;
+    public static final int FRONT_RIGHT_DRIVE = 2;
+    public static final int FRONT_RIGHT_CANCODER = 9;
+    public static final double FRONT_RIGHT_OFFSET = -0.522705;
 
-    public static final int FRONT_LEFT_DRIVE = 1; //Chad
-    public static final int FRONT_LEFT_ENCODER = 8; //Jonathan 
-    public static final int FRONT_LEFT_AZIMUTH = 0; //Geraldine
-    public static final double FRONT_LEFT_OFFSET = 256.2;
+    public static final int FRONT_LEFT_AZIMUTH = 0;
+    public static final int FRONT_LEFT_DRIVE = 1;
+    public static final int FRONT_LEFT_CANCODER = 8;
+    public static final double FRONT_LEFT_OFFSET = -0.212646;
 
     public static final double PIGEON_ROLL_OFFSET = 1.8;
 
     /*Can Bus */
     public static final String CAN_BUS_DRIVE = "CANivore";
 
-    public static final int PIGEON = 12;
+    public static final int PIGEON_ID = 12;
 
     /* CANCoder offsets */
     public static double FRONT_LEFT_MULTIPLIER = 1; // 
@@ -183,12 +191,13 @@ public final class Constants {
     public static final NeutralMode DRIVE_NEUTRAL_MODE = NeutralMode.Brake;
 
     /* Swerve Gear Ratios */
-    public static final double DRIVE_GEAR_RATIO = (6.65 / 1.0); //6.86:1 from SDS
-    public static final double AZIMUTH_GEAR_RATIO = (10.29/1.0);//(12.8 / 1.0); //12.8:1 from SDS
+    public static final double DRIVE_GEAR_RATIO = (6.55/1.0);
+    public static final double AZIMUTH_GEAR_RATIO = (10.29/1.0);
 
     /* Swerve Profiling Values */
     public static final double MAX_SPEED = (Units.feetToMeters(17.01)); //meters per second (theoretical from SDS) TBD CHANGED
-    public static final double MAX_ANGULAR_VELOCITY = Math.PI * 4.12; //radians per second (theoretical calculation)
+    public static final double MAX_ANGULAR_VELOCITY = 11.1027;
+    public static final int SLIP_CURRENT = 50;
     public static final double TURN_IN_PLACE_SPEED = 0.5;
     public static final double A_RATE_LIMITER = 2.0; //Slew Rate Limiter Constant
 

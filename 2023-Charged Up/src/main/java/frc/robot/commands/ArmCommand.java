@@ -54,17 +54,17 @@ public class ArmCommand extends CommandBase {
 
     // Set setPoint values with buttons. only one at a time
     if ( OI.getOperator().a().getAsBoolean() ) { //low position 
-      angleSetpoint = Constants.armAngles[4];
-      lengthSetpoint = Constants.armLengths[1];
+      angleSetpoint = Constants.ARM_ANGLE_LOW;
+      lengthSetpoint = Constants.ARM_LENGTH_GROUND;
     } else if ( OI.getOperator().b().getAsBoolean() ) { //medium position
-      angleSetpoint = Constants.armAngles[3];
-      lengthSetpoint = Constants.armLengths[2];
+      angleSetpoint = Constants.ARM_ANGLE_MID;
+      lengthSetpoint = Constants.ARM_LENGTH_MID;
     } else if ( OI.getOperator().y().getAsBoolean() ) { // high position
-      angleSetpoint = Constants.armAngles[2];
-      lengthSetpoint = Constants.armLengths[3];
+      angleSetpoint = Constants.ARM_ANGLE_HIGH;
+      lengthSetpoint = Constants.ARM_LENGTH_MAX;
     } else if ( OI.getOperator().x().getAsBoolean() ) { // neutral position
-      angleSetpoint = Constants.armAngles[0];
-      lengthSetpoint = Constants.armLengths[0];
+      angleSetpoint = Constants.ARM_ANGLE_NEUTRAL;
+      lengthSetpoint = Constants.ARM_LENGTH_MIN;
     } else {
       //do nothing
     }
@@ -85,12 +85,10 @@ public class ArmCommand extends CommandBase {
       armSubsystem.resetTelescopingEncoder();
     }
 
-    SmartDashboard.putBoolean("limit switch", armSubsystem.getLimitswitch());
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
     armSubsystem.setPivotAngle(angleSetpoint);
 
-    lengthSetpoint = MathUtil.clamp(lengthSetpoint, -Constants.maximumArmLength, Constants.maximumArmLength);
-    if (angleSetpoint == Constants.armAngles[0]) {
+    if (angleSetpoint == Constants.ARM_ANGLE_NEUTRAL) {
       armSubsystem.setArmLength(lengthSetpoint);
     } else if (armSubsystem.onPivotingSetPoint() && armSubsystem.isBikeBreakEngaged()) {
         armSubsystem.setArmLength(lengthSetpoint);
@@ -99,7 +97,6 @@ public class ArmCommand extends CommandBase {
     
     SmartDashboard.putNumber("Telescoping Encoder", armSubsystem.getTelescopingEncoder());
     SmartDashboard.putNumber("Telescoping Setpoint", lengthSetpoint);
-    
     SmartDashboard.putNumber("setpoint angle", angleSetpoint);
 
     

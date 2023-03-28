@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 
-public class ClawCommand extends CommandBase {
+public class ClawModeToggleCommand extends CommandBase {
 
   ClawSubsystem pistonClawSubsystem;
   LEDSubsystem ledSubsystem;
 
-  public ClawCommand(ClawSubsystem sub1, LEDSubsystem sub2) {
+  public ClawModeToggleCommand(ClawSubsystem sub1, LEDSubsystem sub2) {
     addRequirements(sub1, sub2);
     pistonClawSubsystem = sub1;
     ledSubsystem = sub2;

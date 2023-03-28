@@ -57,7 +57,6 @@ public class ClawSubsystem extends SubsystemBase {
     public void setIntakeSpeed(double intakeSpeed) {
         cwm1.set(intakeSpeed);
         cwm2.set(intakeSpeed);
-        //SmartDashboard.putNumber("_IntakeSpeed", intakeSpeed);
     }
 
     public boolean isOpen() {
