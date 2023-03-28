@@ -10,6 +10,14 @@ public class SwerveDriveTrainConstants {
     public double TurnKi = 0;
     public double TurnKd = 0;
 
+    public double xKp = 0;
+    public double xKi = 0;
+    public double xKd = 0;
+    
+    public double yKp = 0;
+    public double yKi = 0;
+    public double yKd = 0;
+
     public SwerveDriveTrainConstants withPigeon2Id(int id) {
         this.Pigeon2Id = id;
         return this;

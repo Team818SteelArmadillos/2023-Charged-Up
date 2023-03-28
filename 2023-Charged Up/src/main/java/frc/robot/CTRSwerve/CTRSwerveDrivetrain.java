@@ -13,6 +13,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 
 public class CTRSwerveDrivetrain {
     private final int ModuleCount;
@@ -26,6 +27,8 @@ public class CTRSwerveDrivetrain {
     private OdometryThread m_odometryThread;
     private Field2d m_field;
     private PIDController m_turnPid;
+    private PIDController m_xPid;
+    private PIDController m_yPid;
 
     /* Perform swerve module updates in a separate thread to minimize latency */
     private class OdometryThread extends Thread {
@@ -109,12 +112,23 @@ public class CTRSwerveDrivetrain {
         m_turnPid = new PIDController(driveTrainConstants.TurnKp, driveTrainConstants.TurnKi, driveTrainConstants.TurnKd);
         m_turnPid.enableContinuousInput(-Math.PI, Math.PI);
 
+        m_xPid = new PIDController(driveTrainConstants.xKp, driveTrainConstants.xKi, driveTrainConstants.xKd);
+        m_yPid = new PIDController(driveTrainConstants.yKp, driveTrainConstants.yKi, driveTrainConstants.yKd);
+
         m_odometryThread = new OdometryThread();
         m_odometryThread.start();
     }
 
     private SwerveModulePosition[] getSwervePositions() {
         return m_modulePositions;
+    }
+
+    public void setModuleStates(SwerveModuleState[] desiredStates) {
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.MAX_SPEED);
+        
+        // for(CTRSwerveModule mod : m_modules){
+        //     mod.apply(desiredStates[mod.m_moduleNumber]);
+        // }
     }
 
     public void driveRobotCentric(ChassisSpeeds speeds) {
@@ -145,6 +159,8 @@ public class CTRSwerveDrivetrain {
             m_modules[i].apply(swerveStates[i]);
         }
     }
+
+    
 
     public void driveStopMotion() {
         /* Point every module toward (0,0) to make it close to a X configuration */
