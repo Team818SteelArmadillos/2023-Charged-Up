@@ -5,16 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.CTRSwerve.CTRSwerveDrivetrain;
-import frc.robot.CTRSwerve.SwerveDriveConstantsCreator;
-import frc.robot.CTRSwerve.SwerveDriveTrainConstants;
-import frc.robot.CTRSwerve.SwerveModuleConstants;
 import frc.robot.commands.*;
-
-import com.ctre.phoenixpro.configs.Slot0Configs;
-
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ClawSubsystem;
@@ -36,19 +27,19 @@ public class RobotContainer {
 
   /* Subsystems */
   private final CTRSwerveSubsystem m_swerveSubsystem = new CTRSwerveSubsystem();
-  private final ClawSubsystem m_ClawSubsystem = new ClawSubsystem();
-  private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
-  //private final LimeNetwork m_LimeNetwork = new LimeNetwork();
-  //private final Pathplanning m_Pathplanning = new Pathplanning();
-  private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  // private final ClawSubsystem m_ClawSubsystem = new ClawSubsystem();
+  // private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
+  // //private final LimeNetwork m_LimeNetwork = new LimeNetwork();
+  // //private final Pathplanning m_Pathplanning = new Pathplanning();
+  // private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   
   //arm command
-  public final ArmCommand m_ArmCommand = new ArmCommand(m_armSubsystem);
+  // public final ArmCommand m_ArmCommand = new ArmCommand(m_armSubsystem);
 
   //claw commands
-  public final ClawModeToggleCommand m_ClawCommand = new ClawModeToggleCommand(m_ClawSubsystem, m_LedSubsystem);
-  public final ClawWheelCommand m_IntakeIn = new ClawWheelCommand(0, m_ClawSubsystem);
-  public final ClawWheelCommand m_IntakeOut = new ClawWheelCommand(1, m_ClawSubsystem);
+  // public final ClawModeToggleCommand m_ClawCommand = new ClawModeToggleCommand(m_ClawSubsystem, m_LedSubsystem);
+  // public final ClawWheelCommand m_IntakeIn = new ClawWheelCommand(0, m_ClawSubsystem);
+  // public final ClawWheelCommand m_IntakeOut = new ClawWheelCommand(1, m_ClawSubsystem);
 
   //server command
   public final SwerveDriveCommand m_swerveDriveCommand = new SwerveDriveCommand(m_swerveSubsystem);
@@ -58,7 +49,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     m_swerveSubsystem.setDefaultCommand(m_swerveDriveCommand);
-    m_armSubsystem.setDefaultCommand(m_ArmCommand);
+    // m_armSubsystem.setDefaultCommand(m_ArmCommand);
     
     // Initializie auton chooser in smartdashboard
     // m_autoChooser.setDefaultOption("Blue Middle Auton", m_BlueMiddleAuton);
@@ -71,9 +62,9 @@ public class RobotContainer {
   }
 
   public void configureButtonBindings() {
-    OI.getOperator().leftBumper().whileTrue(m_ClawCommand);
-    OI.getOperator().rightTrigger().whileTrue(m_IntakeOut);
-    OI.getOperator().leftTrigger().whileTrue(m_IntakeIn);
+    // OI.getOperator().leftBumper().whileTrue(m_ClawCommand);
+    // OI.getOperator().rightTrigger().whileTrue(m_IntakeOut);
+    // OI.getOperator().leftTrigger().whileTrue(m_IntakeIn);
   }
 
   /**
