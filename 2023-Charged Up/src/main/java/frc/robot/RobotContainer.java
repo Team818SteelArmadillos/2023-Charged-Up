@@ -62,9 +62,9 @@ public class RobotContainer {
   }
 
   public void configureButtonBindings() {
-    // OI.getOperator().leftBumper().whileTrue(m_ClawCommand);
-    // OI.getOperator().rightTrigger().whileTrue(m_IntakeOut);
-    // OI.getOperator().leftTrigger().whileTrue(m_IntakeIn);
+    //OI.getOperator().leftBumper().whileTrue(m_ClawCommand);
+    //OI.getOperator().rightTrigger().whileTrue(m_IntakeOut);
+    //OI.getOperator().leftTrigger().whileTrue(m_IntakeIn);
   }
 
   /**
