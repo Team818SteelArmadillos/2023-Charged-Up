@@ -28,16 +28,16 @@ public class BalanceAuton extends CommandBase {
 
     m_drivetrain = drivetrain.getCTRSwerveDrivetrain();
 
-    balancePID = new PIDController(0, 0, 0);
+    balancePID = new PIDController(0.12, 0, 002);
     balancePID.setTolerance(1.5);
 
     balance_counter = 0;
     charge_station_stationary_counter = 0;
     m_lastPitch = m_drivetrain.getPitch();
 
-    SmartDashboard.putNumber("Balance P", 0.0);
-    SmartDashboard.putNumber("Balance I", 0.0);
-    SmartDashboard.putNumber("Balance D", 0.0);
+    // SmartDashboard.putNumber("Balance P", 0.0);
+    // SmartDashboard.putNumber("Balance I", 0.0);
+    // SmartDashboard.putNumber("Balance D", 0.0);
   }
 
   // Called when the command is initially scheduled.
@@ -49,12 +49,18 @@ public class BalanceAuton extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    balancePID.setP(SmartDashboard.getNumber("Balance P", 0.0));
-    balancePID.setI(SmartDashboard.getNumber("Balance I", 0.0));
-    balancePID.setD(SmartDashboard.getNumber("Balance D", 0.0));
+    //DEBUG
+    // balancePID.setP(SmartDashboard.getNumber("Balance P", 0.0));
+    // balancePID.setI(SmartDashboard.getNumber("Balance I", 0.0));
+    // balancePID.setD(SmartDashboard.getNumber("Balance D", 0.0));
 
     double pitch = m_drivetrain.getPitch();
     double pitch_delta = m_lastPitch - pitch;
+    double output = balancePID.calculate(m_drivetrain.getPitch(), 0);
+
+    //DEBUG
+    // SmartDashboard.putNumber("pitch", pitch);
+    // SmartDashboard.putNumber("delta_pitch", pitch_delta);
 
     if (pitch_delta < 0.5) {
       charge_station_stationary_counter++;
@@ -63,7 +69,7 @@ public class BalanceAuton extends CommandBase {
     }
 
     if (charge_station_stationary_counter >= 20) {
-      m_drivetrain.driveFullyFieldCentric(balancePID.calculate(m_drivetrain.getPitch(), 0), 0.0, m_lastCurrentAngle);
+      m_drivetrain.driveFullyFieldCentric(output, 0.0, m_lastCurrentAngle);
       charge_station_stationary_counter = 20; // prevent int overflow
     } else {
       m_drivetrain.driveStopMotion();

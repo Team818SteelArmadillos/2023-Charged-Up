@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.auton_commands.BalanceAuton;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,6 +44,7 @@ public class RobotContainer {
 
   //server command
   public final SwerveDriveCommand m_swerveDriveCommand = new SwerveDriveCommand(m_swerveSubsystem);
+  public final BalanceAuton m_balanceAutonCommand = new BalanceAuton(m_swerveSubsystem);
 
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();

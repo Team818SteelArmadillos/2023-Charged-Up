@@ -225,6 +225,7 @@ public final class Constants {
     public static final double DRIVETRAIN_WIDTH = Units.inchesToMeters(26);
     public static final double DRIVETRAIN_LENGTH = Units.inchesToMeters(26);
     public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
+    public static final double WHEEL_RADIUS_INCHES = 2;
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
     public static final SwerveDriveKinematics swerveKinematics = new SwerveDriveKinematics(
