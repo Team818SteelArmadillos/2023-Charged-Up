@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.LimeNetwork;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.SwerveDrivetrain;
  
@@ -49,7 +50,7 @@ public class RobotContainer {
   /* Subsystems */
   private final ClawSubsystem m_ClawSubsystem = new ClawSubsystem();
   private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
-  //private final LimeNetwork m_LimeNetwork = new LimeNetwork();
+  private final LimeNetwork m_LimeNetwork = new LimeNetwork();
   //private final Pathplanning m_Pathplanning = new Pathplanning();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final SwerveDrivetrain m_swerveDrivetrain = new SwerveDrivetrain();
@@ -58,30 +59,11 @@ public class RobotContainer {
   public final ArmCommand m_ArmCommand = new ArmCommand(m_armSubsystem);
   public final AutoBalanceCommand m_autoBalanceCommand = new AutoBalanceCommand(m_swerveDrivetrain, m_LedSubsystem);
 
-  //private final DriveDistance m_driveDistance = new DriveDistance(m_swerveDrivetrain, new Pose2d(3.0, 0.0, new Rotation2d(0.0)), fieldRelative, openLoop);
-
-  /*
-  public final PivotingArmCommand m_manualPivotingArmCommand = new PivotingArmCommand(-1, m_pivotingArmSubsystem, m_BikeBreakSubsystem);
-  
-  //PivotingArmCommand instances for different arm angles
-  public final PivotingArmCommand m_PivotingArmGroundCommand = new PivotingArmCommand(0, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // Sets angle to 0 deg
-  public final PivotingArmCommand m_PivotingArmMediumCommand = new PivotingArmCommand(1, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 30 deg
-  public final PivotingArmCommand m_PivotingArmHighCommand = new PivotingArmCommand(2, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 45 dm_eg
-  public final PivotingArmCommand m_PivotingGrabHighCommand = new PivotingArmCommand(3, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 45 dm_eg
-  public final PivotingArmCommand m_PivotingArmRestingCommand = new PivotingArmCommand(4, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // Sets angle to 90 deg
-  
-  //reversed pivoting arm commands
-  public final PivotingArmCommand r_PivotingArmGroundCommand = new PivotingArmCommand(5, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // Sets angle to 0 deg
-  public final PivotingArmCommand r_PivotingArmMediumCommand = new PivotingArmCommand(6, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 30 deg
-  public final PivotingArmCommand r_PivotingArmHighCommand = new PivotingArmCommand(7, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 45 dm_eg
-  public final PivotingArmCommand r_PivotingGrabHighCommand = new PivotingArmCommand(8, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // sets angle to 45 dm_eg
-  public final PivotingArmCommand r_PivotingArmRestingCommand = new PivotingArmCommand(9, m_pivotingArmSubsystem, m_BikeBreakSubsystem); // Sets angle to 90 deg
-  */
-
   //claw command
   public final ClawCommand m_ClawCommand = new ClawCommand(m_ClawSubsystem, m_LedSubsystem);
 
-  //bikebreak command
+  //lime command
+  public final LimelightCommand m_LimelightCommand = new LimelightCommand(m_LimeNetwork);
 
   //claw wheel commands
   public final ClawWheelCommand m_IntakeIn = new ClawWheelCommand(0, m_ClawSubsystem);
@@ -108,6 +90,7 @@ public class RobotContainer {
     boolean openLoop = true;
     
     m_armSubsystem.setDefaultCommand(m_ArmCommand);
+    m_LimeNetwork.setDefaultCommand(m_LimelightCommand);
     m_swerveDrivetrain.setDefaultCommand(new SwerveDrive(m_swerveDrivetrain, 
       m_driverController, m_translationAxis, m_strafeAxis, m_rotationAxis, fieldRelative, openLoop));
 
