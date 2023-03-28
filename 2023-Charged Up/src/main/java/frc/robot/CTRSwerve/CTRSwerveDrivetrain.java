@@ -162,6 +162,10 @@ public class CTRSwerveDrivetrain {
         return m_odometry.getPoseMeters();
     }
 
+    public double getPitch() {
+        return m_pigeon2.getPitch().getValue();
+    }
+
     public double getSuccessfulDaqs() {
         return m_odometryThread.SuccessfulDaqs;
     }
