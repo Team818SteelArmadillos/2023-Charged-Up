@@ -37,7 +37,7 @@ public class SwerveDriveCommand extends CommandBase {
     double leftY = -OI.getDriver().getLeftY();
     double leftX = OI.getDriver().getLeftX();
     double rightX = OI.getDriver().getRightX();
-    double speedFactor = Constants.MAX_SPEED;
+    double speedFactor = Constants.MAX_SPEED * (1.0 - (OI.getDriver().getRightTriggerAxis()*0.9)); // right trigger 100% to 10% speed control
     double rotationFactor = Constants.MAX_ANGULAR_VELOCITY;
 
     if (Math.abs(leftY) < Constants.controllerDeadzone && Math.abs(leftX) < Constants.controllerDeadzone) {
@@ -47,11 +47,6 @@ public class SwerveDriveCommand extends CommandBase {
 
     if (Math.abs(rightX) < Constants.controllerDeadzone) {
         rightX = 0;
-    }
-
-    if (OI.getDriver().getRightTriggerAxis() >= 0.5) {
-      speedFactor = Constants.MAX_SPEED/10;
-      rotationFactor = Constants.MAX_ANGULAR_VELOCITY/10;
     }
 
     var directions = new ChassisSpeeds();
