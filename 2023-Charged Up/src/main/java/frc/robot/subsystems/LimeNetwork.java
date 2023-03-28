@@ -4,6 +4,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -16,46 +20,26 @@ public class LimeNetwork extends SubsystemBase {
   // Limelight network entries
   private NetworkTableEntry tx;
   private NetworkTableEntry ty;
-  private NetworkTableEntry ta;
-
-  //read values periodically
-  private double x = 0.0;    
-  private double y = 0.0;    
-  private double area = 0.0; 
+  private NetworkTableEntry tBotPose;
 
   public LimeNetwork() {
     limeTable = NetworkTableInstance.getDefault().getTable("limelight");
 
     tx = limeTable.getEntry("tx");
     ty = limeTable.getEntry("ty");
-    ta = limeTable.getEntry("ta");
-  }
-
-  public void updateValues() {
-    x = tx.getDouble(0.0);
-    y = ty.getDouble(0.0);
-    area = ta.getDouble(0.0);
+    tBotPose = limeTable.getEntry("botpose");
   }
 
   public  double getTX() {
-    updateValues();
-    return x;
+    return tx.getDouble(0.0);
   }
   
   public  double getTY() {
-    updateValues();
-    return y;
+    return ty.getDouble(0.0);
   }
 
-  public  double getTA() {
-    updateValues();
-    return area;
-  }
-
-  public  double[] values() {
-    updateValues();
-    double[] values = {x, y, area};
-    return values;
+  public double[] getRobotPose() {
+    return tBotPose.getDoubleArray( new double[] {0.0, 0.0, 0.0} );
   }
 
 }
