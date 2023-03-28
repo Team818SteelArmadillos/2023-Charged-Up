@@ -28,8 +28,7 @@ public class CTRSwerveSubsystem extends SubsystemBase {
   /** Creates a new CTRESwerveSubsystem. */
   public CTRSwerveSubsystem() {
     //CTRE Swerve
-    drivetrain = new SwerveDriveTrainConstants().withPigeon2Id(Constants.PIGEON_ID).withCANbusName(Constants.CAN_BUS_DRIVE);
-      drivetrain.withTurnKp(Constants.DRIVE_TURN_KP);
+    drivetrain = new SwerveDriveTrainConstants().withPigeon2Id(Constants.PIGEON_ID).withCANbusName(Constants.CAN_BUS_DRIVE).withTurnKp(Constants.DRIVE_TURN_KP);
 
     steerGains = new Slot0Configs();
       steerGains.kP = Constants.STEER_GAINS_KP;
@@ -41,19 +40,20 @@ public class CTRSwerveSubsystem extends SubsystemBase {
     m_constantsCreator = new SwerveDriveConstantsCreator(
       Constants.DRIVE_GEAR_RATIO, 
       Constants.AZIMUTH_GEAR_RATIO, 
-      Constants.WHEEL_CIRCUMFERENCE/2, 
+      Constants.WHEEL_RADIUS_INCHES, 
       Constants.SLIP_CURRENT, 
       steerGains, 
       driveGains, 
-      true);
+      true)
+      ;
 
     frontRight = m_constantsCreator.createModuleConstants(
       Constants.FRONT_RIGHT_AZIMUTH, 
       Constants.FRONT_RIGHT_DRIVE, 
       Constants.FRONT_RIGHT_CANCODER, 
       Constants.FRONT_RIGHT_OFFSET, 
-      Constants.DRIVETRAIN_LENGTH/2, 
-      -Constants.DRIVETRAIN_LENGTH/2
+      Constants.DRIVETRAIN_LENGTH/2.0, 
+      -Constants.DRIVETRAIN_LENGTH/2.0
       );
     
     frontLeft = m_constantsCreator.createModuleConstants(
@@ -61,24 +61,24 @@ public class CTRSwerveSubsystem extends SubsystemBase {
       Constants.FRONT_LEFT_DRIVE, 
       Constants.FRONT_LEFT_CANCODER, 
       Constants.FRONT_LEFT_OFFSET, 
-      Constants.DRIVETRAIN_LENGTH/2, 
-      Constants.DRIVETRAIN_LENGTH/2);
+      Constants.DRIVETRAIN_LENGTH/2.0, 
+      Constants.DRIVETRAIN_LENGTH/2.0);
 
     backRight = m_constantsCreator.createModuleConstants(
       Constants.BACK_RIGHT_AZIMUTH, 
       Constants.BACK_RIGHT_DRIVE, 
       Constants.BACK_RIGHT_CANCODER, 
       Constants.BACK_RIGHT_OFFSET, 
-      -Constants.DRIVETRAIN_LENGTH/2, 
-      -Constants.DRIVETRAIN_LENGTH/2);
+      -Constants.DRIVETRAIN_LENGTH/2.0, 
+      -Constants.DRIVETRAIN_LENGTH/2.0);
 
     backLeft = m_constantsCreator.createModuleConstants(
       Constants.BACK_LEFT_AZIMUTH, 
       Constants.BACK_LEFT_DRIVE, 
       Constants.BACK_LEFT_CANCODER, 
       Constants.BACK_LEFT_OFFSET, 
-      -Constants.DRIVETRAIN_LENGTH/2, 
-      Constants.DRIVETRAIN_LENGTH/2);
+      -Constants.DRIVETRAIN_LENGTH/2.0, 
+      Constants.DRIVETRAIN_LENGTH/2.0);
 
     m_drivetrain = new CTRSwerveDrivetrain(drivetrain, frontRight, frontLeft, backRight, backLeft);
   }

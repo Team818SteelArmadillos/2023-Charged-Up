@@ -16,6 +16,7 @@ public class SwerveDriveCommand extends CommandBase {
 
   private CTRSwerveDrivetrain m_drivetrain;
   private Rotation2d m_lastTargetAngle;
+  private int drive_lock_counter;
 
   /** Creates a new SwerveDriveCommand. */
   public SwerveDriveCommand(CTRSwerveSubsystem ctrSwerveSubsytem) {
@@ -23,12 +24,14 @@ public class SwerveDriveCommand extends CommandBase {
     addRequirements(ctrSwerveSubsytem);
     m_drivetrain = ctrSwerveSubsytem.getCTRSwerveDrivetrain();
     m_lastTargetAngle = new Rotation2d();
+    drive_lock_counter = 0;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_lastTargetAngle = m_drivetrain.getPoseMeters().getRotation().plus(new Rotation2d(Math.PI/2)); // we start backwards
+    m_lastTargetAngle = m_drivetrain.getPoseMeters().getRotation(); // we start backwards
+    drive_lock_counter = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -67,12 +70,21 @@ public class SwerveDriveCommand extends CommandBase {
           // do nothing
         }
 
-        if (rightX > 0) {
+        if (Math.abs(rightX) > Constants.controllerDeadzone) {
           m_drivetrain.driveFieldCentric(directions);
-          m_lastTargetAngle = m_drivetrain.getPoseMeters().getRotation();
+          drive_lock_counter = 0;
         } else {
-          m_drivetrain.driveFullyFieldCentric(leftY * speedFactor, leftX * -speedFactor, m_lastTargetAngle);
+          drive_lock_counter++;
+          if (drive_lock_counter >= 20) {
+            m_drivetrain.driveFullyFieldCentric(leftY * speedFactor, leftX * -speedFactor, m_lastTargetAngle);
+            drive_lock_counter = 20; // prevent overflow
+          } else {
+            m_drivetrain.driveFieldCentric(directions);
+            m_lastTargetAngle = m_drivetrain.getPoseMeters().getRotation();
+          }
         }
+
+
     }
 
     if (OI.getDriver().getXButton()) {
