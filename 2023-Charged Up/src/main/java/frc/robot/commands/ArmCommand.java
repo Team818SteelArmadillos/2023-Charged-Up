@@ -82,9 +82,12 @@ public class ArmCommand extends CommandBase {
     }
 
     //manual set length
-    if ( Math.abs( rawRightJoystickInput ) > Constants.controllerDeadzone && armSubsystem.isBikeBreakEngaged()) {
+    if ( Math.abs( rawRightJoystickInput ) > Constants.controllerDeadzone) {
       rightJoystickInput = -rawRightJoystickInput;
       lengthSetpoint = lengthRateLimiter.calculate(lengthSetpoint + 20000 * rightJoystickInput);
+      if (lengthSetpoint > last_lengthSetpoint && !armSubsystem.isBikeBreakEngaged()) {
+        lengthSetpoint = last_lengthSetpoint;
+      }
     }
 
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
