@@ -6,10 +6,8 @@ package frc.robot.auton_commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.CTRSwerve.CTRSwerveDrivetrain;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 
 public class DriveToPositionAuton extends CommandBase {
@@ -25,25 +23,18 @@ public class DriveToPositionAuton extends CommandBase {
   PIDController m_yPid;
 
   public DriveToPositionAuton(double targetX, double targetY, Rotation2d targetAngle, CTRSwerveSubsystem drivetrain) {
+    addRequirements(drivetrain);
 
     m_xPid = new PIDController(1.5, 0, 0.2);
     m_yPid = new PIDController(1.5, 0, 0.2);
 
-    // m_xPid.setTolerance(0.1);
-    // m_yPid.setTolerance(0.1);
-
-    // SmartDashboard.putNumber("p", 0);
-    // SmartDashboard.putNumber("i", 0);
-    // SmartDashboard.putNumber("d", 0);
-    // SmartDashboard.putNumber("xTarget", 0);
-    // SmartDashboard.putNumber("yTarget", 0);
+    m_xPid.setTolerance(0.1);
+    m_yPid.setTolerance(0.1);
     
     m_targetX = targetX;
     m_targetY = targetY;
     m_targetAngle = targetAngle;
     m_drivetrain = drivetrain;
-
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.

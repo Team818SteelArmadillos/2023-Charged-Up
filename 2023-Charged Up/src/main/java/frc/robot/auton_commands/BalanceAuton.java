@@ -6,7 +6,6 @@ package frc.robot.auton_commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.CTRSwerve.CTRSwerveDrivetrain;
 import frc.robot.subsystems.CTRSwerveSubsystem;
@@ -28,7 +27,7 @@ public class BalanceAuton extends CommandBase {
 
     m_drivetrain = drivetrain.getCTRSwerveDrivetrain();
 
-    balancePID = new PIDController(0.12, 0, 002);
+    balancePID = new PIDController(0.12, 0, 0.02);
     balancePID.setTolerance(1.5);
 
     balance_counter = 0;

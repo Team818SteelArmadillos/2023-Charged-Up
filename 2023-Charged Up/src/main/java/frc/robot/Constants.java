@@ -27,6 +27,11 @@ public final class Constants {
                 Arm 
     ==============================*/
 
+    public static final int ARM_LOW_STATE = 0;
+    public static final int ARM_MID_STATE = 1;
+    public static final int ARM_HIGH_STATE = 2;
+    public static final int ARM_NEUTRAL_STATE = 3;
+
     public static final int THROUGH_BORE_ENCODER = 0;
 
     // pivoting motor Values 

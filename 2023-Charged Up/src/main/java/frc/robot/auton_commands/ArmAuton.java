@@ -27,16 +27,16 @@ public class ArmAuton extends CommandBase {
   @Override
   public void execute() {
 
-    if (state == 0) { //low position 
+    if (state == Constants.ARM_LOW_STATE) { //low position 
       angleSetpoint = Constants.ARM_ANGLE_LOW;
       lengthSetpoint = Constants.ARM_LENGTH_GROUND;
-    } else if (state == 1) { //medium position
+    } else if (state == Constants.ARM_MID_STATE) { //medium position
       angleSetpoint = Constants.ARM_ANGLE_MID;
       lengthSetpoint = Constants.ARM_LENGTH_MID;
-    } else if (state == 2) { // high position
+    } else if (state == Constants.ARM_ANGLE_HIGH) { // high position
       angleSetpoint = Constants.ARM_ANGLE_HIGH;
       lengthSetpoint = Constants.ARM_LENGTH_MAX;
-    } else if (state == 3) { // neutral position
+    } else if (state == Constants.ARM_NEUTRAL_STATE) { // neutral position
       angleSetpoint = Constants.ARM_ANGLE_NEUTRAL;
       lengthSetpoint = Constants.ARM_LENGTH_MIN;
     } else {
@@ -46,7 +46,7 @@ public class ArmAuton extends CommandBase {
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
     m_armSubsystem.setPivotAngle(angleSetpoint);
 
-    if (state == 3) {
+    if (state == Constants.ARM_NEUTRAL_STATE) {
       m_armSubsystem.setArmLength(lengthSetpoint);
     } else if (m_armSubsystem.onPivotingSetPoint() && m_armSubsystem.isBikeBreakEngaged()) {
       m_armSubsystem.setArmLength(lengthSetpoint);
