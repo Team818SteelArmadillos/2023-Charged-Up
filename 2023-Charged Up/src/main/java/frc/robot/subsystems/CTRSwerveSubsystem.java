@@ -44,8 +44,8 @@ public class CTRSwerveSubsystem extends SubsystemBase {
       Constants.SLIP_CURRENT, 
       steerGains, 
       driveGains, 
-      true)
-      ;
+      true
+      );
 
     frontRight = m_constantsCreator.createModuleConstants(
       Constants.FRONT_RIGHT_AZIMUTH, 

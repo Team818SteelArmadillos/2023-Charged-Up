@@ -163,7 +163,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean isBikeBreakEngaged() {
-        if (bikeBreak.get().equals(DoubleSolenoid.Value.kForward)) {
+        if (bikeBreak.get().equals(DoubleSolenoid.Value.kReverse)) {
             return true;
         } else {
             return false;
@@ -175,7 +175,8 @@ public class ArmSubsystem extends SubsystemBase {
     @Override
     public void periodic(){ 
         SmartDashboard.putNumber("Arm Angle", getPivotAngle());
-        SmartDashboard.putNumber("Pivoting Arm Encoder", encoder.get() );
+        SmartDashboard.putNumber("Pivoting Arm Encoder RAW", encoder.get());
+        SmartDashboard.putNumber("Telescoping Arm Encoder", getTelescopingEncoder());
     }
 
 }

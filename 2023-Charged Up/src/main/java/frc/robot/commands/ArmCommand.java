@@ -17,6 +17,8 @@ public class ArmCommand extends CommandBase {
   private double rawLeftJoystickInput;
   private double leftJoystickInput;
 
+  private int break_engaged_counter;
+
   private double lengthSetpoint;
   private SlewRateLimiter lengthRateLimiter;
   private double rawRightJoystickInput;
@@ -30,6 +32,8 @@ public class ArmCommand extends CommandBase {
     //limits the change of a given variable to never exceed Constants.armSlewRate per second
     angleRateLimiter = new SlewRateLimiter(Constants.angleSlewRate);
     lengthRateLimiter = new SlewRateLimiter(Constants.lengthSlewRate);
+
+    break_engaged_counter = 0;
   }
   
   // Called when the command is initially scheduled.
@@ -55,7 +59,7 @@ public class ArmCommand extends CommandBase {
     // Set setPoint values with buttons. only one at a time
     if ( OI.getOperator().a().getAsBoolean() ) { //low position 
       angleSetpoint = Constants.ARM_ANGLE_LOW;
-      lengthSetpoint = Constants.ARM_LENGTH_GROUND;
+      lengthSetpoint = Constants.ARM_LENGTH_MIN;
     } else if ( OI.getOperator().b().getAsBoolean() ) { //medium position
       angleSetpoint = Constants.ARM_ANGLE_MID;
       lengthSetpoint = Constants.ARM_LENGTH_MID;
@@ -67,6 +71,10 @@ public class ArmCommand extends CommandBase {
       lengthSetpoint = Constants.ARM_LENGTH_MIN;
     } else {
       //do nothing
+    }
+
+    if ( armSubsystem.getLimitswitch() ) {
+      armSubsystem.resetTelescopingEncoder();
     }
     
     //manual set angle
@@ -81,20 +89,20 @@ public class ArmCommand extends CommandBase {
       lengthSetpoint = lengthRateLimiter.calculate(lengthSetpoint + 20000 * rightJoystickInput);
     }
 
-    if ( armSubsystem.getLimitswitch() ) {
-      armSubsystem.resetTelescopingEncoder();
-    }
-
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
     armSubsystem.setPivotAngle(angleSetpoint);
 
-    if (angleSetpoint == Constants.ARM_ANGLE_NEUTRAL) {
-      armSubsystem.setArmLength(lengthSetpoint);
-    } else if (armSubsystem.onPivotingSetPoint() && armSubsystem.isBikeBreakEngaged()) {
-        armSubsystem.setArmLength(lengthSetpoint);
+    if (armSubsystem.isBikeBreakEngaged()) {
+      break_engaged_counter++;
+    } else {
+      break_engaged_counter = 0;
     }
     
-    
+    if (break_engaged_counter >= 10 || angleSetpoint == Constants.ARM_ANGLE_NEUTRAL) {
+      armSubsystem.setArmLength(lengthSetpoint);
+      break_engaged_counter = 10; // prevent overflow
+    }
+
     SmartDashboard.putNumber("Telescoping Encoder", armSubsystem.getTelescopingEncoder());
     SmartDashboard.putNumber("Telescoping Setpoint", lengthSetpoint);
     SmartDashboard.putNumber("setpoint angle", angleSetpoint);

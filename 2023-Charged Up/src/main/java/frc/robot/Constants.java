@@ -38,12 +38,12 @@ public final class Constants {
     public static final double pP = -0.025;
     public static final double pivotI = 0.0002;
     public static final double pivotD = 0.0;
-    public static final double pPIDTolerance = 2.0;
+    public static final double pPIDTolerance = 2.5;
 
     //Telescoping Values
     public static final double ARM_LENGTH_MIN = 0; //
-    public static final double ARM_LENGTH_MAX = 170000; //
-    public static final double ARM_LENGTH_GROUND = 50000; //
+    public static final double ARM_LENGTH_MAX = 162500; //
+    public static final double ARM_LENGTH_GROUND = 0; //
     public static final double ARM_LENGTH_MID = 98000; //
     public static final double lengthSlewRate = 20000;
     public static final int limitSwitchPort = 0;
@@ -67,15 +67,15 @@ public final class Constants {
 
     // Pivoting Arm Angles
     public static final int ARM_ANGLE_NEUTRAL = 0;
-    public static final int ARM_ANGLE_LOW = -98;
+    public static final int ARM_ANGLE_LOW = 115;
     public static final int ARM_ANGLE_MID = -54;
     public static final int ARM_ANGLE_HIGH = -52;
     public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
     public static final double angleSlewRate = 78;
-    public static final int armSetpointCounter = 20;
+    public static final int armSetpointCounter = 10;
     public static final double controllerDeadzone = 0.1;
 
-    public static final double encoderOvershoot = 0.501;
+    public static final double encoderOvershoot = 0.3374;
 
     // Neo 550 Motor Stuff
     public static final int neoAmpLimit = 20 /*AMPs*/; // Cannot forget units!

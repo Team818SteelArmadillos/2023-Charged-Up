@@ -2,24 +2,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClawSubsystem;
-import frc.robot.subsystems.LEDSubsystem;
 
 public class ClawModeToggleCommand extends CommandBase {
 
   ClawSubsystem pistonClawSubsystem;
-  LEDSubsystem ledSubsystem;
 
-  public ClawModeToggleCommand(ClawSubsystem sub1, LEDSubsystem sub2) {
-    addRequirements(sub1, sub2);
+  public ClawModeToggleCommand(ClawSubsystem sub1) {
+    addRequirements(sub1);
     pistonClawSubsystem = sub1;
-    ledSubsystem = sub2;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     pistonClawSubsystem.toggle();
-    ledSubsystem.toggle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
