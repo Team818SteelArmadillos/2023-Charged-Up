@@ -44,7 +44,7 @@ public final class Constants {
     public static final double ARM_LENGTH_MIN = 0; //
     public static final double ARM_LENGTH_MAX = 162500; //
     public static final double ARM_LENGTH_GROUND = 0; //
-    public static final double ARM_LENGTH_MID = 98000; //
+    public static final double ARM_LENGTH_MID = 90000; //
     public static final double lengthSlewRate = 20000;
     public static final int limitSwitchPort = 0;
 
@@ -69,7 +69,7 @@ public final class Constants {
     public static final int ARM_ANGLE_NEUTRAL = 0;
     public static final int ARM_ANGLE_LOW = 115;
     public static final int ARM_ANGLE_MID = -54;
-    public static final int ARM_ANGLE_HIGH = -52;
+    public static final int ARM_ANGLE_HIGH = -54;
     public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
     public static final double angleSlewRate = 78;
     public static final int armSetpointCounter = 10;
@@ -243,6 +243,9 @@ public final class Constants {
     /*============================
                 Misc.
     ==============================*/
+
+    public static final int FORWARD_DIRECTION = 1;
+    public static final int BACKWARD_DIRECTION = -1;
 
     public static final int CANDLE_CAN_ID = 18;
 

@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ClawSubsystem extends SubsystemBase {
 
@@ -64,6 +65,15 @@ public class ClawSubsystem extends SubsystemBase {
             return true;
         } else {
             return false;
+        }
+    }
+    
+    @Override
+    public void periodic() {
+        if (isOpen()) {
+            SmartDashboard.putString("Claw Mode", "OPEN / CUBE");
+        } else {
+            SmartDashboard.putString("Claw Mode", "CLOSED / CONE");
         }
     }
 

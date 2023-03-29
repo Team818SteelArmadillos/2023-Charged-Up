@@ -158,6 +158,10 @@ public class CTRSwerveDrivetrain {
         m_pigeon2.setYaw(0);
     }
 
+    public void seedFieldRelativeButBackwards() {
+        m_pigeon2.setYaw(180);
+    }
+
     public Pose2d getPoseMeters() {
         return m_odometry.getPoseMeters();
     }

@@ -15,10 +15,10 @@ public class ClawWheelAuton extends CommandBase {
   private Timer endTimer;
   private int endAfter;
   private boolean in;
-  public ClawWheelAuton(int time, ClawSubsystem clawWheel, boolean in) {
+  public ClawWheelAuton(int time_seconds, ClawSubsystem clawWheel, boolean in) {
     m_ClawWheelsSubsystem = clawWheel;
     endTimer = new Timer();
-    endAfter = time;
+    endAfter = time_seconds;
     this.in = in;
   }
   // Called when the command is initially scheduled.

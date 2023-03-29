@@ -36,11 +36,11 @@ public class ArmSubsystem extends SubsystemBase {
         pm2 = new TalonSRX(Constants.pivotingMotorPorts[1]);
         pm3 = new TalonSRX(Constants.pivotingMotorPorts[2]);
 
-        
         pm2.follow(pm1); 
         pm3.follow(pm1); //makes motors 2 and 3 follow 1 so that only 1 needs to be set
         
         telescopingMotor = new TalonFX(Constants.telscopingMotorPort);
+        configureMotor();
         
         //pid stuff
         PivotingPID = new PIDController(Constants.pP, Constants.pivotI, Constants.pivotD);
@@ -53,19 +53,16 @@ public class ArmSubsystem extends SubsystemBase {
         SmartDashboard.putNumber( "Pivoting Arm Encoder", encoder.get() );
 
         bikeBreak = new DoubleSolenoid(Constants.pneumaticPistonPort, PneumaticsModuleType.CTREPCM, Constants.pneumaticPorts[6], Constants.pneumaticPorts[7]);
-        
         setArmLocked();
-        configureMotor();
 
         armCounts = 0;
-        
     }
 
      /*==============================
             pivoting stuff
     ==============================*/
 
-    public boolean onPivotingSetPoint(){
+    public boolean onPivotingSetPoint() {
         return PivotingPID.atSetpoint();
     }
 
@@ -85,8 +82,9 @@ public class ArmSubsystem extends SubsystemBase {
             armCounts = 0;
         }
         
-        if (armCounts > Constants.armSetpointCounter) { 
+        if (armCounts >= Constants.armSetpointCounter) { 
             setArmLocked(); 
+            armCounts = Constants.armSetpointCounter; // prevent overflow
         } else {
             setArmUnlocked();
             setPivotSpeed(pidOutput);
@@ -134,7 +132,7 @@ public class ArmSubsystem extends SubsystemBase {
         return telescopingMotor.getSelectedSensorPosition();
     }
 
-    public boolean onSetPoint(double positon){
+    public boolean onSetPoint(double positon) {
         return Math.abs(telescopingMotor.getSelectedSensorPosition() - positon) < Constants.tTolerance;
     }
 

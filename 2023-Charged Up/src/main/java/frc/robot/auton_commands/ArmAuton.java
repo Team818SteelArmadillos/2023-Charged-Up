@@ -14,16 +14,15 @@ public class ArmAuton extends CommandBase {
   
   double angleSetpoint;
   double lengthSetpoint;
+  double last_lengthSetpoint;
   int state;
-  int break_engaged_counter;
 
   /** Creates a new ArmAuton. */
   public ArmAuton(ArmSubsystem pivotingArmSubsystem, int State) {
     addRequirements(pivotingArmSubsystem);
      m_armSubsystem = pivotingArmSubsystem;
      state = State;
-
-     break_engaged_counter = 0;
+     last_lengthSetpoint = 0;
   }
 
   // Called when the command is initially scheduled.
@@ -32,11 +31,11 @@ public class ArmAuton extends CommandBase {
 
     if (state == Constants.ARM_LOW_STATE) { //low position 
       angleSetpoint = Constants.ARM_ANGLE_LOW;
-      lengthSetpoint = Constants.ARM_LENGTH_MIN;
+      lengthSetpoint = Constants.ARM_LENGTH_GROUND;
     } else if (state == Constants.ARM_MID_STATE) { //medium position
       angleSetpoint = Constants.ARM_ANGLE_MID;
       lengthSetpoint = Constants.ARM_LENGTH_MID;
-    } else if (state == Constants.ARM_ANGLE_HIGH) { // high position
+    } else if (state == Constants.ARM_HIGH_STATE) { // high position
       angleSetpoint = Constants.ARM_ANGLE_HIGH;
       lengthSetpoint = Constants.ARM_LENGTH_MAX;
     } else if (state == Constants.ARM_NEUTRAL_STATE) { // neutral position
@@ -49,15 +48,10 @@ public class ArmAuton extends CommandBase {
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
     m_armSubsystem.setPivotAngle(angleSetpoint);
 
-    if (m_armSubsystem.isBikeBreakEngaged()) {
-      break_engaged_counter++;
-    } else {
-      break_engaged_counter = 0;
-    }
     
-    if (break_engaged_counter >= 10 || state == Constants.ARM_NEUTRAL_STATE) {
+    if (m_armSubsystem.isBikeBreakEngaged() || lengthSetpoint < last_lengthSetpoint) {
       m_armSubsystem.setArmLength(lengthSetpoint);
-      break_engaged_counter = 10; // prevent overflow
+      last_lengthSetpoint = lengthSetpoint;
     }
   }
   

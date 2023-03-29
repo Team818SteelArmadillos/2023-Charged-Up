@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.OI;
@@ -17,12 +16,11 @@ public class ArmCommand extends CommandBase {
   private double rawLeftJoystickInput;
   private double leftJoystickInput;
 
-  private int break_engaged_counter;
-
   private double lengthSetpoint;
   private SlewRateLimiter lengthRateLimiter;
   private double rawRightJoystickInput;
   private double rightJoystickInput;
+  private double last_lengthSetpoint;
 
 
   public ArmCommand (ArmSubsystem sub) {
@@ -33,7 +31,7 @@ public class ArmCommand extends CommandBase {
     angleRateLimiter = new SlewRateLimiter(Constants.angleSlewRate);
     lengthRateLimiter = new SlewRateLimiter(Constants.lengthSlewRate);
 
-    break_engaged_counter = 0;
+    last_lengthSetpoint = 0;
   }
   
   // Called when the command is initially scheduled.
@@ -84,31 +82,18 @@ public class ArmCommand extends CommandBase {
     }
 
     //manual set length
-    if ( Math.abs( rawRightJoystickInput ) > Constants.controllerDeadzone ) {
+    if ( Math.abs( rawRightJoystickInput ) > Constants.controllerDeadzone && armSubsystem.isBikeBreakEngaged()) {
       rightJoystickInput = -rawRightJoystickInput;
       lengthSetpoint = lengthRateLimiter.calculate(lengthSetpoint + 20000 * rightJoystickInput);
     }
 
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
     armSubsystem.setPivotAngle(angleSetpoint);
-
-    if (armSubsystem.isBikeBreakEngaged()) {
-      break_engaged_counter++;
-    } else {
-      break_engaged_counter = 0;
-    }
     
-    if (break_engaged_counter >= 10 || angleSetpoint == Constants.ARM_ANGLE_NEUTRAL) {
+    if (armSubsystem.isBikeBreakEngaged() || lengthSetpoint < last_lengthSetpoint) {
       armSubsystem.setArmLength(lengthSetpoint);
-      break_engaged_counter = 10; // prevent overflow
+      last_lengthSetpoint = lengthSetpoint;
     }
-
-    SmartDashboard.putNumber("Telescoping Encoder", armSubsystem.getTelescopingEncoder());
-    SmartDashboard.putNumber("Telescoping Setpoint", lengthSetpoint);
-    SmartDashboard.putNumber("setpoint angle", angleSetpoint);
-
-    
-    //old debug features
   }
 
   private void zeroArm() {
