@@ -112,9 +112,6 @@ public class CTRSwerveDrivetrain {
         m_turnPid = new PIDController(driveTrainConstants.TurnKp, driveTrainConstants.TurnKi, driveTrainConstants.TurnKd);
         m_turnPid.enableContinuousInput(-Math.PI, Math.PI);
 
-        m_xPid = new PIDController(driveTrainConstants.xKp, driveTrainConstants.xKi, driveTrainConstants.xKd);
-        m_yPid = new PIDController(driveTrainConstants.yKp, driveTrainConstants.yKi, driveTrainConstants.yKd);
-
         m_odometryThread = new OdometryThread();
         m_odometryThread.start();
     }
@@ -159,8 +156,6 @@ public class CTRSwerveDrivetrain {
             m_modules[i].apply(swerveStates[i]);
         }
     }
-
-    
 
     public void driveStopMotion() {
         /* Point every module toward (0,0) to make it close to a X configuration */

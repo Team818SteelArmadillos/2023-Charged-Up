@@ -54,9 +54,15 @@ public class TrajectoryFollowingCommand extends CommandBase {
       try {
         trajectory = TrajectoryUtil.fromPathweaverJson(Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON));
       } catch (IOException e) {
-        // TODO Auto-generated catch block
+        trajectory = TrajectoryGenerator.generateTrajectory(
+          new Pose2d(),
+          null, 
+          new Pose2d(),
+          trajectoryConfig
+        );
         e.printStackTrace();
       }
+
 
       // 3. Define PID Controllers for tracking trajectory
       PIDController xController = new PIDController(Constants.AUTO_P_X_CONTROLLER, 0, 0);

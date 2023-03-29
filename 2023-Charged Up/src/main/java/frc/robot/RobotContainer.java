@@ -6,7 +6,9 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.auton_commands.BalanceAuton;
+import frc.robot.auton_commands.DriveToPositionAuton;
 import frc.robot.commands.*;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ClawSubsystem;
@@ -45,12 +47,13 @@ public class RobotContainer {
   //server command
   public final SwerveDriveCommand m_swerveDriveCommand = new SwerveDriveCommand(m_swerveSubsystem);
   public final BalanceAuton m_balanceAutonCommand = new BalanceAuton(m_swerveSubsystem);
+  public final DriveToPositionAuton m_driveToPoseCommand = new DriveToPositionAuton(0, 5, new Rotation2d(), m_swerveSubsystem);
 
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
   public RobotContainer() {
-    m_swerveSubsystem.setDefaultCommand(m_swerveDriveCommand);
+    //m_swerveSubsystem.setDefaultCommand(m_swerveDriveCommand);
     // m_armSubsystem.setDefaultCommand(m_ArmCommand);
     
     // Initializie auton chooser in smartdashboard
@@ -86,7 +89,7 @@ public class RobotContainer {
    */
 
   public Command getAutonomousCommand() {
-    return m_autoChooser.getSelected();
+    return m_driveToPoseCommand; //m_autoChooser.getSelected();
   }
   
 }
