@@ -18,9 +18,7 @@ public class Robot extends TimedRobot {
   public static SendableChooser<Integer> m_chooser;
   //private Command m_autonInit;
   //private DriveDistance m_autonPeriodic;
-  public static CTREConfigs ctreConfigs;
   private RobotContainer m_robotContainer;
-
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -30,7 +28,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    ctreConfigs = new CTREConfigs();
     m_robotContainer = new RobotContainer();
   }
 
