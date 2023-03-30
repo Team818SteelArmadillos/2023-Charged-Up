@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.auton_commands;
+package frc.robot.auton_commands.sub_commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -29,16 +29,16 @@ public class BalanceAuton extends CommandBase {
 
     m_drivetrain = drivetrain.getCTRSwerveDrivetrain();
 
-    balancePID = new PIDController(0.1, 0, 0.001);
+    balancePID = new PIDController(0.0, 0.0, 0.0);
     balancePID.setTolerance(1.5);
 
     balance_counter = 0;
     charge_station_stationary_counter = 0;
     m_lastPitch = m_drivetrain.getPitch();
 
-    // SmartDashboard.putNumber("Balance P", 0.0);
-    // SmartDashboard.putNumber("Balance I", 0.0);
-    // SmartDashboard.putNumber("Balance D", 0.0);
+    SmartDashboard.putNumber("Balance P", 0.0);
+    SmartDashboard.putNumber("Balance I", 0.0);
+    SmartDashboard.putNumber("Balance D", 0.0);
   }
 
   // Called when the command is initially scheduled.
@@ -51,9 +51,9 @@ public class BalanceAuton extends CommandBase {
   @Override
   public void execute() {
     //DEBUG
-    // balancePID.setP(SmartDashboard.getNumber("Balance P", 0.0));
-    // balancePID.setI(SmartDashboard.getNumber("Balance I", 0.0));
-    // balancePID.setD(SmartDashboard.getNumber("Balance D", 0.0));
+    balancePID.setP(SmartDashboard.getNumber("Balance P", 0.0));
+    balancePID.setI(SmartDashboard.getNumber("Balance I", 0.0));
+    balancePID.setD(SmartDashboard.getNumber("Balance D", 0.0));
 
     double pitch = m_drivetrain.getPitch();
     double pitch_delta = m_lastPitch - pitch;

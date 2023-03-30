@@ -5,11 +5,10 @@
 package frc.robot.auton_commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Constants;
-import frc.robot.auton_commands.sub_commands.ArmAuton;
+import frc.robot.auton_commands.sub_commands.BalanceAuton;
+import frc.robot.auton_commands.sub_commands.DriveToGroundIntakeAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
-import frc.robot.commands.ClawModeToggleCommand;
+import frc.robot.auton_commands.sub_commands.ScoreHighAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
@@ -17,18 +16,17 @@ import frc.robot.subsystems.ClawSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ShortCrossAuton extends SequentialCommandGroup {
+public class MidCrossConeBalanceAuton extends SequentialCommandGroup {
   /** Creates a new IWantToWinAuton. */
-  public ShortCrossAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem) {
+  public MidCrossConeBalanceAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ArmAuton(armSubsystem, Constants.ARM_HIGH_STATE),
-      new WaitCommand(0.2),
-      new ClawModeToggleCommand(clawSubsystem),
-      new WaitCommand(0.2),
-      new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-      new DriveToPositionAuton(4, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+      new ScoreHighAuton(armSubsystem, clawSubsystem),
+      new DriveToPositionAuton(6.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new DriveToGroundIntakeAuton(7, 0, armSubsystem, swerveSubsystem, clawSubsystem),
+      new DriveToPositionAuton(3.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new BalanceAuton(swerveSubsystem)
     );
   }
 }

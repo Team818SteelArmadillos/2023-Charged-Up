@@ -5,10 +5,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.auton_commands.BalanceAuton;
-import frc.robot.auton_commands.DriveToPositionAuton;
 import frc.robot.auton_commands.IWantToWinAuton;
 import frc.robot.auton_commands.MidCrossBalanceAuton;
+import frc.robot.auton_commands.sub_commands.BalanceAuton;
+import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
 import frc.robot.commands.*;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;

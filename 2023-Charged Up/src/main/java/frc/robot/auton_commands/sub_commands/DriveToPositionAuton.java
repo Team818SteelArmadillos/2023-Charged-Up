@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.auton_commands;
+package frc.robot.auton_commands.sub_commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -13,6 +13,18 @@ import frc.robot.subsystems.CTRSwerveSubsystem;
 
 public class DriveToPositionAuton extends CommandBase {
   /** Creates a new DriveToPosition. */
+
+
+  /*               positive x
+   *                   ^
+   *                   |
+   * positive y  <-----+----->
+   *                   |
+   *                   v
+   * 
+   * 
+   */
+
   
   double m_targetX;
   double m_targetY;
@@ -63,12 +75,8 @@ public class DriveToPositionAuton extends CommandBase {
     // m_xPid.setPID(SmartDashboard.getNumber("p", 0.0), SmartDashboard.getNumber("i", 0.0), SmartDashboard.getNumber("d", 0.0));
     // m_yPid.setPID(SmartDashboard.getNumber("p", 0.0), SmartDashboard.getNumber("i", 0.0), SmartDashboard.getNumber("d", 0.0));
     
-    //if (m_targetX > 0.0) {
-      xSpeed = m_xPid.calculate(currentX, m_targetX) * Constants.MAX_SPEED;
-    //}
-    //if (m_targetY > 0.0) {
-      ySpeed = m_yPid.calculate(currentY, m_targetY) * Constants.MAX_SPEED;
-    //}
+    xSpeed = m_xPid.calculate(currentX, m_targetX) * (Constants.MAX_SPEED * 0.3);
+    ySpeed = m_yPid.calculate(currentY, m_targetY) * (Constants.MAX_SPEED * 0.3);
 
     //SmartDashboard.putNumber("ySpeedOut", ySpeed);
 

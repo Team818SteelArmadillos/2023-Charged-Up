@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.auton_commands;
+package frc.robot.auton_commands.sub_commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -13,12 +13,9 @@ public class ClawWheelAuton extends CommandBase {
   /** Creates a new ClawWheelAuton. */
   private ClawSubsystem m_ClawWheelsSubsystem;
   private Timer endTimer;
-  private int endAfter;
   private boolean in;
-  public ClawWheelAuton(int time_seconds, ClawSubsystem clawWheel, boolean in) {
+  public ClawWheelAuton(ClawSubsystem clawWheel, boolean in) {
     m_ClawWheelsSubsystem = clawWheel;
-    endTimer = new Timer();
-    endAfter = time_seconds;
     this.in = in;
   }
   // Called when the command is initially scheduled.
@@ -27,9 +24,17 @@ public class ClawWheelAuton extends CommandBase {
     endTimer.reset();
     endTimer.start();
     if(in){
-      m_ClawWheelsSubsystem.setIntakeSpeed(Constants.CONE_IN_SPEED);
-    }else{
-      m_ClawWheelsSubsystem.setIntakeSpeed(Constants.CONE_OUT_SPEED);
+      if (m_ClawWheelsSubsystem.isOpen()) {
+        m_ClawWheelsSubsystem.setIntakeSpeed(Constants.CUBE_IN_SPEED);
+      } else {
+        m_ClawWheelsSubsystem.setIntakeSpeed(Constants.CONE_IN_SPEED);
+      }
+    } else {
+      if (m_ClawWheelsSubsystem.isOpen()) {
+        m_ClawWheelsSubsystem.setIntakeSpeed(Constants.CUBE_OUT_SPEED);
+      } else {
+        m_ClawWheelsSubsystem.setIntakeSpeed(Constants.CONE_OUT_SPEED);
+      }
     }
   }
 
@@ -43,6 +48,6 @@ public class ClawWheelAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return endTimer.hasElapsed(endAfter);
+    return false;
   }
 }

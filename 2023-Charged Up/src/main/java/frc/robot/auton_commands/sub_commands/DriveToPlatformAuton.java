@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.auton_commands;
+package frc.robot.auton_commands.sub_commands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
@@ -16,6 +16,7 @@ public class DriveToPlatformAuton extends CommandBase {
   private CTRSwerveDrivetrain m_drivetrain;
   private Rotation2d m_lastCurrentAngle;
   private int m_direction;
+  private int inlcine_counter;
   private Timer m_timeoutTimer;
 
   /** Creates a new BalanceAuton. */
@@ -25,6 +26,7 @@ public class DriveToPlatformAuton extends CommandBase {
     m_drivetrain = drivetrain.getCTRSwerveDrivetrain();
     m_direction = direction;
     m_timeoutTimer = new Timer();
+    inlcine_counter = 0;
   }
 
   // Called when the command is initially scheduled.
@@ -51,6 +53,12 @@ public class DriveToPlatformAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_drivetrain.getPitch()) >= Constants.MINIMUM_CHARGE_STATION_ANGLE_THRESH || m_timeoutTimer.hasElapsed(4);
+    if (Math.abs(m_drivetrain.getPitch()) >= Constants.MINIMUM_CHARGE_STATION_ANGLE_THRESH) {
+      inlcine_counter++;
+    } else {
+      inlcine_counter = 0;
+    }
+
+    return  inlcine_counter >= 20 || m_timeoutTimer.hasElapsed(5);
   }
 }

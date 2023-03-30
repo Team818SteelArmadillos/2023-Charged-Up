@@ -10,6 +10,10 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
+import frc.robot.auton_commands.sub_commands.ArmAuton;
+import frc.robot.auton_commands.sub_commands.DriveToGroundIntakeAuton;
+import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
+import frc.robot.auton_commands.sub_commands.ScoreHighAuton;
 import frc.robot.commands.ClawModeToggleCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
@@ -29,31 +33,8 @@ public class IWantToWinAuton extends SequentialCommandGroup {
 
     addCommands(
       // score
-      new ArmAuton(armSubsystem, Constants.ARM_HIGH_STATE),
-      new ClawModeToggleCommand(clawSubsystem),
-      new WaitCommand(0.2),
-      // drive to cone 1
-      new ParallelDeadlineGroup(
-        new SequentialCommandGroup(
-          new ParallelDeadlineGroup(// retract arm while driving
-            new DriveToPositionAuton(4.8, -0.40, rotation, swerveSubsystem),
-            new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE)
-          ),
-          new WaitCommand(5.0),
-          new ClawModeToggleCommand(clawSubsystem),
-          new WaitCommand(0.5)
-        ),
-        new ClawWheelAuton(5, clawSubsystem, true)
-      ),
-      new ParallelCommandGroup(// retract arm while driving
-        new DriveToPositionAuton(0.3, -0.1, rotation, swerveSubsystem),
-        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE)
-      ),
-      new ArmAuton(armSubsystem, Constants.ARM_MID_STATE),
-      new WaitCommand(0.2),
-      new ClawModeToggleCommand(clawSubsystem),
-      new WaitCommand(0.2),
-      new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE)
+      new ScoreHighAuton(armSubsystem, clawSubsystem),
+      new DriveToGroundIntakeAuton(4.8, -0.4, armSubsystem, swerveSubsystem, clawSubsystem)
 
 
       // new ParallelCommandGroup(// ready arm while driving
