@@ -16,6 +16,7 @@ public class ClawWheelAuton extends CommandBase {
   private boolean in;
   public ClawWheelAuton(ClawSubsystem clawWheel, boolean in) {
     m_ClawWheelsSubsystem = clawWheel;
+    endTimer = new Timer();
     this.in = in;
   }
   // Called when the command is initially scheduled.

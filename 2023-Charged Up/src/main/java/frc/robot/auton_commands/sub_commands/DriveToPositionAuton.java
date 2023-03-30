@@ -6,6 +6,7 @@ package frc.robot.auton_commands.sub_commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -31,6 +32,7 @@ public class DriveToPositionAuton extends CommandBase {
   Rotation2d m_targetAngle;
   
   CTRSwerveSubsystem m_drivetrain;
+  Timer timeout;
 
   PIDController m_xPid;
   PIDController m_yPid;
@@ -38,8 +40,10 @@ public class DriveToPositionAuton extends CommandBase {
   public DriveToPositionAuton(double targetX, double targetY, Rotation2d targetAngle, CTRSwerveSubsystem drivetrain) {
     addRequirements(drivetrain);
 
-    m_xPid = new PIDController(0.7, 0, 0.2);
-    m_yPid = new PIDController(0.7, 0, 0.2);
+    timeout = new Timer();
+
+    m_xPid = new PIDController(1.7, 0, 0.0);
+    m_yPid = new PIDController(1.7, 0, 0.0);
 
     m_xPid.setTolerance(0.01);
     m_yPid.setTolerance(0.01);
@@ -49,17 +53,19 @@ public class DriveToPositionAuton extends CommandBase {
     m_targetAngle = targetAngle;
     m_drivetrain = drivetrain;
 
-    SmartDashboard.putNumber("xTarget", 0.0);
-    SmartDashboard.putNumber("yTarget", 0.0);
+    // SmartDashboard.putNumber("xTarget", 0.0);
+    // SmartDashboard.putNumber("yTarget", 0.0);
 
-    SmartDashboard.putNumber("p", 0.0);
-    SmartDashboard.putNumber("i", 0.0);
-    SmartDashboard.putNumber("d", 0.0);
+    // SmartDashboard.putNumber("p", 0.0);
+    // SmartDashboard.putNumber("i", 0.0);
+    // SmartDashboard.putNumber("d", 0.0);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    timeout.reset();
+    timeout.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -75,8 +81,8 @@ public class DriveToPositionAuton extends CommandBase {
     // m_xPid.setPID(SmartDashboard.getNumber("p", 0.0), SmartDashboard.getNumber("i", 0.0), SmartDashboard.getNumber("d", 0.0));
     // m_yPid.setPID(SmartDashboard.getNumber("p", 0.0), SmartDashboard.getNumber("i", 0.0), SmartDashboard.getNumber("d", 0.0));
     
-    xSpeed = m_xPid.calculate(currentX, m_targetX) * (Constants.MAX_SPEED * 0.3);
-    ySpeed = m_yPid.calculate(currentY, m_targetY) * (Constants.MAX_SPEED * 0.3);
+    xSpeed = m_xPid.calculate(currentX, m_targetX);
+    ySpeed = m_yPid.calculate(currentY, m_targetY);
 
     //SmartDashboard.putNumber("ySpeedOut", ySpeed);
 
@@ -88,11 +94,12 @@ public class DriveToPositionAuton extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_drivetrain.getCTRSwerveDrivetrain().driveStopMotion();
+    timeout.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_xPid.atSetpoint() && m_yPid.atSetpoint());
+    return (m_xPid.atSetpoint() && m_yPid.atSetpoint()) || timeout.hasElapsed(2.5);
   }
 }

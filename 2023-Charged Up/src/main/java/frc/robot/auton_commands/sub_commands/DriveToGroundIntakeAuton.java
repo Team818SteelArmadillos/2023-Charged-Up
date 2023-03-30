@@ -21,7 +21,7 @@ public class DriveToGroundIntakeAuton extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ArmAuton(armSubsystem, Constants.ARM_ANGLE_LOW),
+      new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
       new ParallelDeadlineGroup(
         new DriveToPositionAuton(target_x, target_y, new Rotation2d(-target_x, -target_y), swerveSubsystem),
         new ClawWheelAuton(clawSubsystem, true)

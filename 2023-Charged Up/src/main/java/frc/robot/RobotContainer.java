@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.auton_commands.IWantToWinAuton;
 import frc.robot.auton_commands.MidCrossBalanceAuton;
+import frc.robot.auton_commands.ShortCrossAuton;
 import frc.robot.auton_commands.sub_commands.BalanceAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
 import frc.robot.commands.*;
@@ -38,6 +39,7 @@ public class RobotContainer {
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IWantToWinAuton m_2coneNBAuton = new IWantToWinAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
   private final MidCrossBalanceAuton m_MidCrossBalanceAuton = new MidCrossBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final ShortCrossAuton m_ShortCrossAuton = new ShortCrossAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
   
   //arm command
   public final ArmCommand m_ArmCommand = new ArmCommand(m_armSubsystem);
@@ -60,8 +62,9 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_ArmCommand);
     
     // Initializie auton chooser in smartdashboard
-    m_autoChooser.setDefaultOption("2 Cone NB Auton.", m_2coneNBAuton);
-    m_autoChooser.addOption("Middle Auton", m_MidCrossBalanceAuton);
+    m_autoChooser.setDefaultOption("Funny Cone Auton.", m_2coneNBAuton);
+    m_autoChooser.addOption("Score Cross Balance Auton", m_MidCrossBalanceAuton);
+    m_autoChooser.addOption("Score Cross Auton", m_ShortCrossAuton);
     //m_autoChooser.addOption("Blue Balance Auton", m_BlueBalanceAuton);
     SmartDashboard.putData("Auton Choices", m_autoChooser);
     
@@ -92,7 +95,7 @@ public class RobotContainer {
    */
 
   public Command getAutonomousCommand() {
-    return m_2coneNBAuton; //m_autoChooser.getSelected();
+    return m_autoChooser.getSelected();
   }
   
 } 
