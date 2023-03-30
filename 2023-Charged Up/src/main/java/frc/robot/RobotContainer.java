@@ -6,12 +6,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.auton_commands.IWantToWinAuton;
+import frc.robot.auton_commands.IWantToWinAutonOtherColor;
 import frc.robot.auton_commands.MidCrossBalanceAuton;
 import frc.robot.auton_commands.ShortCrossAuton;
 import frc.robot.auton_commands.sub_commands.BalanceAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
 import frc.robot.commands.*;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ClawSubsystem;
@@ -38,6 +38,7 @@ public class RobotContainer {
   //private final Pathplanning m_Pathplanning = new Pathplanning();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final IWantToWinAuton m_2coneNBAuton = new IWantToWinAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final IWantToWinAutonOtherColor m_2coneNBAutonRed = new IWantToWinAutonOtherColor(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
   private final MidCrossBalanceAuton m_MidCrossBalanceAuton = new MidCrossBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
   private final ShortCrossAuton m_ShortCrossAuton = new ShortCrossAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
   
@@ -62,9 +63,10 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_ArmCommand);
     
     // Initializie auton chooser in smartdashboard
-    m_autoChooser.setDefaultOption("Funny Cone Auton.", m_2coneNBAuton);
+    m_autoChooser.setDefaultOption("Blue Funny Cone Auton.", m_2coneNBAuton);
     m_autoChooser.addOption("Score Cross Balance Auton", m_MidCrossBalanceAuton);
     m_autoChooser.addOption("Score Cross Auton", m_ShortCrossAuton);
+    m_autoChooser.addOption("Red Funny Cone Auton", m_2coneNBAutonRed);
     //m_autoChooser.addOption("Blue Balance Auton", m_BlueBalanceAuton);
     SmartDashboard.putData("Auton Choices", m_autoChooser);
     
