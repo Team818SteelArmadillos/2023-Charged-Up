@@ -6,6 +6,7 @@ package frc.robot.auton_commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.CTRSwerveSubsystem;
@@ -25,16 +26,23 @@ public class DriveToPositionAuton extends CommandBase {
   public DriveToPositionAuton(double targetX, double targetY, Rotation2d targetAngle, CTRSwerveSubsystem drivetrain) {
     addRequirements(drivetrain);
 
-    m_xPid = new PIDController(1.5, 0, 0.2);
-    m_yPid = new PIDController(1.5, 0, 0.2);
+    m_xPid = new PIDController(0.7, 0, 0.2);
+    m_yPid = new PIDController(0.7, 0, 0.2);
 
-    m_xPid.setTolerance(0.1);
-    m_yPid.setTolerance(0.1);
+    m_xPid.setTolerance(0.01);
+    m_yPid.setTolerance(0.01);
     
     m_targetX = targetX;
     m_targetY = targetY;
     m_targetAngle = targetAngle;
     m_drivetrain = drivetrain;
+
+    SmartDashboard.putNumber("xTarget", 0.0);
+    SmartDashboard.putNumber("yTarget", 0.0);
+
+    SmartDashboard.putNumber("p", 0.0);
+    SmartDashboard.putNumber("i", 0.0);
+    SmartDashboard.putNumber("d", 0.0);
   }
 
   // Called when the command is initially scheduled.
@@ -55,8 +63,12 @@ public class DriveToPositionAuton extends CommandBase {
     // m_xPid.setPID(SmartDashboard.getNumber("p", 0.0), SmartDashboard.getNumber("i", 0.0), SmartDashboard.getNumber("d", 0.0));
     // m_yPid.setPID(SmartDashboard.getNumber("p", 0.0), SmartDashboard.getNumber("i", 0.0), SmartDashboard.getNumber("d", 0.0));
     
-    xSpeed = m_xPid.calculate(currentX, m_targetX) * Constants.MAX_SPEED;
-    ySpeed = m_yPid.calculate(currentY, m_targetY) * Constants.MAX_SPEED;
+    //if (m_targetX > 0.0) {
+      xSpeed = m_xPid.calculate(currentX, m_targetX) * Constants.MAX_SPEED;
+    //}
+    //if (m_targetY > 0.0) {
+      ySpeed = m_yPid.calculate(currentY, m_targetY) * Constants.MAX_SPEED;
+    //}
 
     //SmartDashboard.putNumber("ySpeedOut", ySpeed);
 

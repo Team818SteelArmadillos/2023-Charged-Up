@@ -83,7 +83,8 @@ public class ArmSubsystem extends SubsystemBase {
         }
         
         if (armCounts >= Constants.armSetpointCounter) { 
-            setArmLocked(); 
+            setArmLocked();
+            setPivotSpeed(0.0);
             armCounts = Constants.armSetpointCounter; // prevent overflow
         } else {
             setArmUnlocked();

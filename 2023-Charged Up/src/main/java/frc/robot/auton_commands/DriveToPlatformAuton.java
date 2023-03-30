@@ -39,7 +39,7 @@ public class DriveToPlatformAuton extends CommandBase {
   @Override
   public void execute() {
       // drive at 40% speed
-      m_drivetrain.driveFullyFieldCentric((m_direction * 0.4) * Constants.MAX_SPEED, 0.0, m_lastCurrentAngle);
+      m_drivetrain.driveFullyFieldCentric((m_direction * 0.6) * Constants.MAX_SPEED, 0.0, m_lastCurrentAngle);
   }
 
   // Called once the command ends or is interrupted.
@@ -51,6 +51,6 @@ public class DriveToPlatformAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_drivetrain.getPitch()) >= Constants.MINIMUM_CHARGE_STATION_ANGLE_THRESH || m_timeoutTimer.hasElapsed(2);
+    return Math.abs(m_drivetrain.getPitch()) >= Constants.MINIMUM_CHARGE_STATION_ANGLE_THRESH || m_timeoutTimer.hasElapsed(4);
   }
 }

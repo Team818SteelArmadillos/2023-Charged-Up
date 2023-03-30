@@ -23,15 +23,14 @@ public class MidCrossBalanceAuton extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ArmAuton(armSubsystem, Constants.ARM_HIGH_STATE),
-      new WaitCommand(0.5),
       new ClawModeToggleCommand(clawSubsystem),
-      new WaitCommand(0.3),
+      new WaitCommand(0.2),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(4, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+        new DriveToPositionAuton(6.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
       new WaitCommand(0.8),
-      new DriveToPlatformAuton(Constants.BACKWARD_DIRECTION, swerveSubsystem),
+      new DriveToPositionAuton(4.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
       new BalanceAuton(swerveSubsystem)
     );
   }

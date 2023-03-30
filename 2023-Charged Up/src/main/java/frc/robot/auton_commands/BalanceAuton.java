@@ -6,7 +6,9 @@ package frc.robot.auton_commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.CTRSwerve.CTRSwerveDrivetrain;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 
@@ -27,7 +29,7 @@ public class BalanceAuton extends CommandBase {
 
     m_drivetrain = drivetrain.getCTRSwerveDrivetrain();
 
-    balancePID = new PIDController(0.12, 0, 0.02);
+    balancePID = new PIDController(0.1, 0, 0.001);
     balancePID.setTolerance(1.5);
 
     balance_counter = 0;
@@ -68,7 +70,7 @@ public class BalanceAuton extends CommandBase {
     }
 
     if (charge_station_stationary_counter >= 20) {
-      m_drivetrain.driveFullyFieldCentric(output, 0.0, m_lastCurrentAngle);
+      m_drivetrain.driveFullyFieldCentric(-output * Constants.MAX_SPEED * 0.6, 0.0, m_lastCurrentAngle);
       charge_station_stationary_counter = 20; // prevent int overflow
     } else {
       m_drivetrain.driveStopMotion();

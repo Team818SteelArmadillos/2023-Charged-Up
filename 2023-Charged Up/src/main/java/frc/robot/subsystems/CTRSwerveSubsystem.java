@@ -28,7 +28,9 @@ public class CTRSwerveSubsystem extends SubsystemBase {
   /** Creates a new CTRESwerveSubsystem. */
   public CTRSwerveSubsystem() {
     //CTRE Swerve
-    drivetrain = new SwerveDriveTrainConstants().withPigeon2Id(Constants.PIGEON_ID).withCANbusName(Constants.CAN_BUS_DRIVE).withTurnKp(Constants.DRIVE_TURN_KP);
+    drivetrain = new SwerveDriveTrainConstants().withPigeon2Id(Constants.PIGEON_ID).withCANbusName(Constants.CAN_BUS_DRIVE);
+    drivetrain.withTurnKp(Constants.DRIVE_TURN_KP);
+    drivetrain.withTurnKd(Constants.DRIVE_TURN_KD);
 
     steerGains = new Slot0Configs();
       steerGains.kP = Constants.STEER_GAINS_KP;
@@ -81,6 +83,8 @@ public class CTRSwerveSubsystem extends SubsystemBase {
       Constants.DRIVETRAIN_LENGTH/2.0);
 
     m_drivetrain = new CTRSwerveDrivetrain(drivetrain, frontRight, frontLeft, backRight, backLeft);
+
+    m_drivetrain.seedFieldRelativeButBackwards(); // WE START BACKWARDS
   }
 
   public CTRSwerveDrivetrain getCTRSwerveDrivetrain() {

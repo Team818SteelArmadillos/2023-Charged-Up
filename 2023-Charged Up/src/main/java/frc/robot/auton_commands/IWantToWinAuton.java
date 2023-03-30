@@ -23,38 +23,58 @@ public class IWantToWinAuton extends SequentialCommandGroup {
   public IWantToWinAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+
+    Rotation2d rotation = swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation();
+
+
     addCommands(
       // score
       new ArmAuton(armSubsystem, Constants.ARM_HIGH_STATE),
-      new WaitCommand(0.5),
       new ClawModeToggleCommand(clawSubsystem),
-      new WaitCommand(0.3),
+      new WaitCommand(0.2),
       // drive to cone 1
-      new ParallelCommandGroup(// retract arm while driving
-        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(0, 0, new Rotation2d(), swerveSubsystem)
-      ),
-      new DriveToPositionAuton(0, 0, new Rotation2d(), swerveSubsystem),
-      new ParallelCommandGroup(// ready arm while driving
-        new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
-        new DriveToPositionAuton(0, 0, new Rotation2d(), swerveSubsystem), 
+      new ParallelDeadlineGroup(
+        new SequentialCommandGroup(
+          new ParallelDeadlineGroup(// retract arm while driving
+            new DriveToPositionAuton(4.8, -0.40, rotation, swerveSubsystem),
+            new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE)
+          ),
+          new WaitCommand(5.0),
+          new ClawModeToggleCommand(clawSubsystem),
+          new WaitCommand(0.5)
+        ),
         new ClawWheelAuton(5, clawSubsystem, true)
       ),
-      // pick up cone 1
-      new ClawModeToggleCommand(clawSubsystem),
-      new WaitCommand(0.3),
-      new ParallelDeadlineGroup(
-        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(0, 0, new Rotation2d(), swerveSubsystem)
+      new ParallelCommandGroup(// retract arm while driving
+        new DriveToPositionAuton(0.3, -0.1, rotation, swerveSubsystem),
+        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE)
       ),
-      // drive
-      new DriveToPositionAuton(0, 0, new Rotation2d(), swerveSubsystem),
-      new DriveToPositionAuton(0, 0, new Rotation2d(), swerveSubsystem),
-      // score 1
-      new ArmAuton(armSubsystem, Constants.ARM_HIGH_STATE),
-      new WaitCommand(0.5),
+      new ArmAuton(armSubsystem, Constants.ARM_MID_STATE),
+      new WaitCommand(0.2),
       new ClawModeToggleCommand(clawSubsystem),
-      new WaitCommand(0.3)
+      new WaitCommand(0.2),
+      new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE)
+
+
+      // new ParallelCommandGroup(// ready arm while driving
+      //   new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
+      //   new DriveToPositionAuton(0, 0, new Rotation2d(), swerveSubsystem) 
+      // ),
+      // new ClawModeToggleCommand(clawSubsystem),
+      // new WaitCommand(0.2),
+      // // pick up cone 1
+      // new ParallelCommandGroup(
+      //   new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
+      //   new DriveToPositionAuton(0, 0, new Rotation2d(), swerveSubsystem)
+      // ),
+      // // score 1
+      // new ParallelCommandGroup(
+      //   new ArmAuton(armSubsystem, Constants.ARM_MID_STATE),
+      //   new WaitCommand(0.2),
+      //   new ClawModeToggleCommand(clawSubsystem),
+      //   new WaitCommand(0.2)
+      // )
+      
 
       // // drive to cone 2
       // new ParallelCommandGroup(// retract arm while driving

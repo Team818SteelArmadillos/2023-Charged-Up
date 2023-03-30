@@ -36,15 +36,15 @@ public final class Constants {
 
     // pivoting motor Values 
     public static final double pP = -0.025;
-    public static final double pivotI = 0.0002;
-    public static final double pivotD = 0.0;
-    public static final double pPIDTolerance = 2.5;
+    public static final double pivotI = 0.0000;
+    public static final double pivotD = 0.000;
+    public static final double pPIDTolerance = 2.7;
 
     //Telescoping Values
     public static final double ARM_LENGTH_MIN = 0; //
     public static final double ARM_LENGTH_MAX = 162500; //
     public static final double ARM_LENGTH_GROUND = 0; //
-    public static final double ARM_LENGTH_MID = 90000; //
+    public static final double ARM_LENGTH_MID = 80000; //
     public static final double lengthSlewRate = 20000;
     public static final int limitSwitchPort = 0;
 
@@ -72,7 +72,7 @@ public final class Constants {
     public static final int ARM_ANGLE_HIGH = -54;
     public static final int pivotHardLimit = 115; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
     public static final double angleSlewRate = 78;
-    public static final int armSetpointCounter = 10;
+    public static final int armSetpointCounter = 20;
     public static final double controllerDeadzone = 0.1;
 
     public static final double encoderOvershoot = 0.3374;
@@ -90,6 +90,7 @@ public final class Constants {
     ==============================*/
 
     public static final double DRIVE_TURN_KP = 5.0;
+    public static final double DRIVE_TURN_KD = 0.4;
 
     public static final double STEER_GAINS_KP = 30;
     public static final double STEER_GAINS_KD  = 0.2;

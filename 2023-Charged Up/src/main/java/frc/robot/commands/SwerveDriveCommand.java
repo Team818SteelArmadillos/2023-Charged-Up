@@ -30,7 +30,7 @@ public class SwerveDriveCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drivetrain.seedFieldRelativeButBackwards(); // we start backwards so set yaw to 180
+    //m_drivetrain.seedFieldRelativeButBackwards(); // we start backwards so set yaw to 180
     m_lastTargetAngle = m_drivetrain.getPoseMeters().getRotation();
     drive_lock_counter = 0;
   }

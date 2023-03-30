@@ -47,12 +47,11 @@ public class ArmAuton extends CommandBase {
     
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
     m_armSubsystem.setPivotAngle(angleSetpoint);
-
+    m_armSubsystem.setArmLength(lengthSetpoint);
     
-    if (m_armSubsystem.isBikeBreakEngaged() || lengthSetpoint < last_lengthSetpoint) {
-      m_armSubsystem.setArmLength(lengthSetpoint);
-      last_lengthSetpoint = lengthSetpoint;
-    }
+    // if (m_armSubsystem.PivotingPID.atSetpoint() || lengthSetpoint < m_armSubsystem.getTelescopingEncoder()) {
+    //   
+    // }
   }
   
   @Override

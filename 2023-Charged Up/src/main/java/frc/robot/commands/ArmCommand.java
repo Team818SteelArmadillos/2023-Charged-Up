@@ -20,7 +20,6 @@ public class ArmCommand extends CommandBase {
   private SlewRateLimiter lengthRateLimiter;
   private double rawRightJoystickInput;
   private double rightJoystickInput;
-  private double last_lengthSetpoint;
 
 
   public ArmCommand (ArmSubsystem sub) {
@@ -30,8 +29,6 @@ public class ArmCommand extends CommandBase {
     //limits the change of a given variable to never exceed Constants.armSlewRate per second
     angleRateLimiter = new SlewRateLimiter(Constants.angleSlewRate);
     lengthRateLimiter = new SlewRateLimiter(Constants.lengthSlewRate);
-
-    last_lengthSetpoint = 0;
   }
   
   // Called when the command is initially scheduled.
@@ -85,18 +82,16 @@ public class ArmCommand extends CommandBase {
     if ( Math.abs( rawRightJoystickInput ) > Constants.controllerDeadzone) {
       rightJoystickInput = -rawRightJoystickInput;
       lengthSetpoint = lengthRateLimiter.calculate(lengthSetpoint + 20000 * rightJoystickInput);
-      if (lengthSetpoint > last_lengthSetpoint && !armSubsystem.isBikeBreakEngaged()) {
-        lengthSetpoint = last_lengthSetpoint;
-      }
     }
 
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
     armSubsystem.setPivotAngle(angleSetpoint);
-    
-    if (armSubsystem.isBikeBreakEngaged() || lengthSetpoint < last_lengthSetpoint) {
-      armSubsystem.setArmLength(lengthSetpoint);
-      last_lengthSetpoint = lengthSetpoint;
-    }
+    armSubsystem.setArmLength(lengthSetpoint);
+
+    // if (armSubsystem.PivotingPID.atSetpoint() || lengthSetpoint < last_lengthSetpoint) {
+      
+    //   last_lengthSetpoint = lengthSetpoint;
+    // }
   }
 
   private void zeroArm() {
