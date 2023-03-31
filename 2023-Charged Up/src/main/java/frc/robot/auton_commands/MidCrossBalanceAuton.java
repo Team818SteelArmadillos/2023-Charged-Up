@@ -4,6 +4,7 @@
 
 package frc.robot.auton_commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -11,6 +12,7 @@ import frc.robot.auton_commands.sub_commands.BalanceAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPlatformAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
 import frc.robot.auton_commands.sub_commands.ScoreHighAuton;
+import frc.robot.commands.ClawModeToggleCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
@@ -25,8 +27,12 @@ public class MidCrossBalanceAuton extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ScoreHighAuton(armSubsystem, clawSubsystem),
-      new DriveToPlatformAuton(Constants.FORWARD_DIRECTION, swerveSubsystem),
-      new DriveToPositionAuton(5.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new ClawModeToggleCommand(clawSubsystem),
+      new ParallelCommandGroup(
+        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
+        new DriveToPlatformAuton(Constants.FORWARD_DIRECTION, swerveSubsystem)
+      ),
+      new DriveToPositionAuton(5.1, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
       new WaitCommand(0.8),
       new DriveToPlatformAuton(Constants.BACKWARD_DIRECTION, swerveSubsystem),
       new BalanceAuton(swerveSubsystem)

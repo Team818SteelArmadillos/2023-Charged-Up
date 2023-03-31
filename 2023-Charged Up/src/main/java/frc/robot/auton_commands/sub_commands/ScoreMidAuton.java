@@ -22,8 +22,7 @@ public class ScoreMidAuton extends SequentialCommandGroup {
     addCommands(
       new ArmAuton(armSubsystem, Constants.ARM_MID_STATE),
       new ClawModeToggleCommand(clawSubsystem),
-      new WaitCommand(0.2),
-      new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE)
+      new WaitCommand(0.2)
     );
   }
 }

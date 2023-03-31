@@ -7,9 +7,7 @@ package frc.robot.auton_commands.sub_commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 
 public class DriveToPositionAuton extends CommandBase {
@@ -32,6 +30,7 @@ public class DriveToPositionAuton extends CommandBase {
   Rotation2d m_targetAngle;
   
   CTRSwerveSubsystem m_drivetrain;
+  boolean point_to_direction;
   Timer timeout;
 
   PIDController m_xPid;
@@ -52,6 +51,33 @@ public class DriveToPositionAuton extends CommandBase {
     m_targetY = targetY;
     m_targetAngle = targetAngle;
     m_drivetrain = drivetrain;
+
+    point_to_direction = false;
+
+    // SmartDashboard.putNumber("xTarget", 0.0);
+    // SmartDashboard.putNumber("yTarget", 0.0);
+
+    // SmartDashboard.putNumber("p", 0.0);
+    // SmartDashboard.putNumber("i", 0.0);
+    // SmartDashboard.putNumber("d", 0.0);
+  }
+
+  public DriveToPositionAuton(double targetX, double targetY, CTRSwerveSubsystem drivetrain) {
+    addRequirements(drivetrain);
+
+    timeout = new Timer();
+
+    m_xPid = new PIDController(1.7, 0, 0.0);
+    m_yPid = new PIDController(1.7, 0, 0.0);
+
+    m_xPid.setTolerance(0.01);
+    m_yPid.setTolerance(0.01);
+    
+    m_targetX = targetX;
+    m_targetY = targetY;
+    m_drivetrain = drivetrain;
+
+    point_to_direction = true;
 
     // SmartDashboard.putNumber("xTarget", 0.0);
     // SmartDashboard.putNumber("yTarget", 0.0);
@@ -85,6 +111,10 @@ public class DriveToPositionAuton extends CommandBase {
     ySpeed = m_yPid.calculate(currentY, m_targetY);
 
     //SmartDashboard.putNumber("ySpeedOut", ySpeed);
+
+    if (point_to_direction) {
+      m_targetAngle = new Rotation2d(-(m_targetX - currentX), -(m_targetY - currentY));
+    }
 
     m_drivetrain.getCTRSwerveDrivetrain().driveFullyFieldCentric(xSpeed, ySpeed, m_targetAngle);
 

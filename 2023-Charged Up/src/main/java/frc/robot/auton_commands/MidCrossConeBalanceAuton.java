@@ -4,11 +4,16 @@
 
 package frc.robot.auton_commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
+import frc.robot.auton_commands.sub_commands.ArmAuton;
 import frc.robot.auton_commands.sub_commands.BalanceAuton;
 import frc.robot.auton_commands.sub_commands.DriveToGroundIntakeAuton;
+import frc.robot.auton_commands.sub_commands.DriveToPlatformAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
 import frc.robot.auton_commands.sub_commands.ScoreHighAuton;
+import frc.robot.commands.ClawModeToggleCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
@@ -23,9 +28,17 @@ public class MidCrossConeBalanceAuton extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ScoreHighAuton(armSubsystem, clawSubsystem),
-      new DriveToPositionAuton(6.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
-      new DriveToGroundIntakeAuton(7, 0, armSubsystem, swerveSubsystem, clawSubsystem),
-      new DriveToPositionAuton(3.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new ClawModeToggleCommand(clawSubsystem),
+      new ParallelCommandGroup(
+        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
+        new DriveToPlatformAuton(Constants.FORWARD_DIRECTION, swerveSubsystem)
+      ),
+      new DriveToPositionAuton(5.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new DriveToGroundIntakeAuton(6.8, -0.1, armSubsystem, swerveSubsystem, clawSubsystem),
+      new ParallelCommandGroup(
+        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
+        new DriveToPlatformAuton(Constants.BACKWARD_DIRECTION, swerveSubsystem)
+      ),
       new BalanceAuton(swerveSubsystem)
     );
   }

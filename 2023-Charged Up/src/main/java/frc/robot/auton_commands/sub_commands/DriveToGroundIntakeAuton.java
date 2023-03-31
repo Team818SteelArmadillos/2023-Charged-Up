@@ -4,7 +4,6 @@
 
 package frc.robot.auton_commands.sub_commands;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
@@ -23,10 +22,9 @@ public class DriveToGroundIntakeAuton extends SequentialCommandGroup {
     addCommands(
       new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
       new ParallelDeadlineGroup(
-        new DriveToPositionAuton(target_x, target_y, new Rotation2d(-target_x, -target_y), swerveSubsystem),
+        new DriveToPositionAuton(target_x, target_y, swerveSubsystem),
         new ClawWheelAuton(clawSubsystem, true)
-      ),
-      new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE)
+      )
     );
   }
 }

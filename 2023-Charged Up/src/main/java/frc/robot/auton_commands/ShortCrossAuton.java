@@ -5,7 +5,10 @@
 package frc.robot.auton_commands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
+import frc.robot.auton_commands.sub_commands.ArmAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
 import frc.robot.auton_commands.sub_commands.ScoreHighAuton;
 import frc.robot.commands.ClawModeToggleCommand;
@@ -24,7 +27,10 @@ public class ShortCrossAuton extends SequentialCommandGroup {
     addCommands(
       new ScoreHighAuton(armSubsystem, clawSubsystem),
       new ClawModeToggleCommand(clawSubsystem),
-      new DriveToPositionAuton(5, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation().plus(new Rotation2d(-1.0, 0.0)), swerveSubsystem)
+      new ParallelCommandGroup(
+        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
+        new DriveToPositionAuton(5, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation().plus(new Rotation2d(-1.0, 0.0)), swerveSubsystem)
+      )
     );
   }
 }

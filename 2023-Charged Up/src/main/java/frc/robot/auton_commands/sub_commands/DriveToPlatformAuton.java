@@ -41,7 +41,7 @@ public class DriveToPlatformAuton extends CommandBase {
   @Override
   public void execute() {
       // drive at 40% speed
-      m_drivetrain.driveFullyFieldCentric((m_direction * 0.4) * Constants.MAX_SPEED, 0.0, m_lastCurrentAngle);
+      m_drivetrain.driveFullyFieldCentric((m_direction * 0.6) * Constants.MAX_SPEED, 0.0, m_lastCurrentAngle);
   }
 
   // Called once the command ends or is interrupted.

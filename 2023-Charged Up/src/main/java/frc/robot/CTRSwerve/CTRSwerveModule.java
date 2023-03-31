@@ -1,16 +1,21 @@
 package frc.robot.CTRSwerve;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenixpro.BaseStatusSignalValue;
 import com.ctre.phoenixpro.StatusSignalValue;
 import com.ctre.phoenixpro.configs.CANcoderConfiguration;
 import com.ctre.phoenixpro.configs.TalonFXConfiguration;
 import com.ctre.phoenixpro.configs.TorqueCurrentConfigs;
+import com.ctre.phoenixpro.controls.ControlRequest;
+import com.ctre.phoenixpro.controls.NeutralOut;
 import com.ctre.phoenixpro.controls.PositionVoltage;
 import com.ctre.phoenixpro.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenixpro.hardware.CANcoder;
 import com.ctre.phoenixpro.hardware.TalonFX;
 import com.ctre.phoenixpro.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenixpro.signals.InvertedValue;
+import com.ctre.phoenixpro.signals.NeutralModeValue;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -41,6 +46,7 @@ public class CTRSwerveModule {
         TalonFXConfiguration talonConfigs = new TalonFXConfiguration();
 
         talonConfigs.Slot0 = constants.DriveMotorGains;
+        talonConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         talonConfigs.TorqueCurrent.PeakForwardTorqueCurrent = constants.SlipCurrent;
         talonConfigs.TorqueCurrent.PeakReverseTorqueCurrent = -constants.SlipCurrent;
         m_driveMotor.getConfigurator().apply(talonConfigs);

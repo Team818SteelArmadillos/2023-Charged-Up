@@ -25,6 +25,8 @@ public class MidBalanceAuton extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+
+    // DO NOT USE THIS AUTON
       new ArmAuton(armSubsystem, Constants.ARM_HIGH_STATE),
       new WaitCommand(0.5),
       new ClawModeToggleCommand(clawSubsystem),
