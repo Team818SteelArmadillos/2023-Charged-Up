@@ -1,13 +1,10 @@
 package frc.robot.CTRSwerve;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenixpro.BaseStatusSignalValue;
 import com.ctre.phoenixpro.StatusSignalValue;
 import com.ctre.phoenixpro.configs.CANcoderConfiguration;
 import com.ctre.phoenixpro.configs.TalonFXConfiguration;
 import com.ctre.phoenixpro.configs.TorqueCurrentConfigs;
-import com.ctre.phoenixpro.controls.ControlRequest;
-import com.ctre.phoenixpro.controls.NeutralOut;
 import com.ctre.phoenixpro.controls.PositionVoltage;
 import com.ctre.phoenixpro.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenixpro.hardware.CANcoder;
