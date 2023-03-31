@@ -7,10 +7,12 @@ package frc.robot.auton_commands.sub_commands;
 import frc.robot.Constants;
 import frc.robot.subsystems.ArmSubsystem;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ArmAuton extends CommandBase {
   ArmSubsystem m_armSubsystem;
+  Timer timeout;
   
   double angleSetpoint;
   double lengthSetpoint;
@@ -23,6 +25,14 @@ public class ArmAuton extends CommandBase {
      m_armSubsystem = pivotingArmSubsystem;
      state = State;
      last_lengthSetpoint = 0;
+
+     timeout = new Timer();
+  }
+
+  @Override
+  public void initialize() {
+    timeout.reset();
+    timeout.start();
   }
 
   // Called when the command is initially scheduled.
@@ -56,11 +66,12 @@ public class ArmAuton extends CommandBase {
   
   @Override
   public void end(boolean interrupted) {
+      timeout.stop();
       m_armSubsystem.setArmLocked();
   }
 
   @Override
   public boolean isFinished() {
-    return  m_armSubsystem.PivotingPID.atSetpoint() && m_armSubsystem.onSetPoint(lengthSetpoint);
+    return  m_armSubsystem.PivotingPID.atSetpoint() && m_armSubsystem.onSetPoint(lengthSetpoint)|| timeout.hasElapsed(2.5) ;
   }
 }

@@ -31,7 +31,7 @@ public class IWantToWinAuton extends SequentialCommandGroup {
       // score
       new ScoreHighAuton(armSubsystem, clawSubsystem),
       new ClawModeToggleCommand(clawSubsystem),
-      new DriveToGroundIntakeAuton(5.0, -0.4, armSubsystem, swerveSubsystem, clawSubsystem),
+      new DriveToGroundIntakeAuton(5.0, -0.35, armSubsystem, swerveSubsystem, clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPositionAuton(-0.1, 0.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)

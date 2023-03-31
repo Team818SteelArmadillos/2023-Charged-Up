@@ -130,6 +130,6 @@ public class DriveToPositionAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_xPid.atSetpoint() && m_yPid.atSetpoint()) || timeout.hasElapsed(2.5);
+    return (m_xPid.atSetpoint() && m_yPid.atSetpoint()) || timeout.hasElapsed(3.0);
   }
 }
