@@ -34,7 +34,7 @@ public class MidCrossConeBalanceAuton extends SequentialCommandGroup {
       ),
       new ClawModeToggleCommand(clawSubsystem),
       new DriveToPositionAuton(5.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
-      new DriveToGroundIntakeAuton(6.8, -0.1, armSubsystem, swerveSubsystem, clawSubsystem),
+      new DriveToGroundIntakeAuton(6.8, 0.0, armSubsystem, swerveSubsystem, clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPlatformAuton(Constants.BACKWARD_DIRECTION, swerveSubsystem)
