@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
+import frc.robot.auton_commands.sub_commands.ArmAuton;
 import frc.robot.auton_commands.sub_commands.BalanceAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPlatformAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
