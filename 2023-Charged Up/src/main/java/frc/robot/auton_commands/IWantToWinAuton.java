@@ -14,13 +14,14 @@ import frc.robot.commands.ClawModeToggleCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
+import frc.robot.subsystems.LimeNetwork;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class IWantToWinAuton extends SequentialCommandGroup {
   /** Creates a new IWantToWinAuton. */
-  public IWantToWinAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem) {
+  public IWantToWinAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem, LimeNetwork limelight) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -28,12 +29,12 @@ public class IWantToWinAuton extends SequentialCommandGroup {
       // score
       new ScoreHighAuton(armSubsystem, clawSubsystem),
       new ClawModeToggleCommand(clawSubsystem),
-      new DriveToGroundIntakeAuton(5.0, -0.4, armSubsystem, swerveSubsystem, clawSubsystem),
-      new DriveToPositionAuton(-0.1, 0.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new DriveToGroundIntakeAuton(5.0, -0.4, armSubsystem, swerveSubsystem, clawSubsystem, limelight, false),
+      new DriveToPositionAuton(-0.1, 0.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem, limelight, false),
       new ScoreMidAuton(armSubsystem, clawSubsystem),
       new ClawModeToggleCommand(clawSubsystem),
-      new DriveToPositionAuton(4.0, 0.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
-      new DriveToPositionAuton(6.0, 1.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation().plus(new Rotation2d(-1.0, 0.0)), swerveSubsystem)
+      new DriveToPositionAuton(4.0, 0.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem, limelight, false),
+      new DriveToPositionAuton(6.0, 1.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation().plus(new Rotation2d(-1.0, 0.0)), swerveSubsystem, limelight, false)
     );
   }
 }

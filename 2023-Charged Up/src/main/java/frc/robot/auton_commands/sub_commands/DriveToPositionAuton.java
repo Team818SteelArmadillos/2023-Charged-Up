@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.CTRSwerveSubsystem;
+import frc.robot.subsystems.LimeNetwork;
 
 public class DriveToPositionAuton extends CommandBase {
   /** Creates a new DriveToPosition. */
@@ -32,12 +33,13 @@ public class DriveToPositionAuton extends CommandBase {
   Rotation2d m_targetAngle;
   
   CTRSwerveSubsystem m_drivetrain;
+  LimeNetwork m_limelight;
   Timer timeout;
 
   PIDController m_xPid;
   PIDController m_yPid;
 
-  public DriveToPositionAuton(double targetX, double targetY, Rotation2d targetAngle, CTRSwerveSubsystem drivetrain) {
+  public DriveToPositionAuton(double targetX, double targetY, Rotation2d targetAngle, CTRSwerveSubsystem drivetrain, LimeNetwork limelight, boolean useLime) {
     addRequirements(drivetrain);
 
     timeout = new Timer();
@@ -48,11 +50,18 @@ public class DriveToPositionAuton extends CommandBase {
     m_xPid.setTolerance(0.01);
     m_yPid.setTolerance(0.01);
     
-    m_targetX = targetX;
-    m_targetY = targetY;
     m_targetAngle = targetAngle;
     m_drivetrain = drivetrain;
-
+    m_limelight = limelight;
+    
+    if (useLime) {
+      m_targetX = targetX + m_limelight.getXOffset();
+      m_targetY = targetY + m_limelight.getYOffset();  
+    } else {
+      m_targetX = targetX;
+      m_targetY = targetY;
+    }
+    
     // SmartDashboard.putNumber("xTarget", 0.0);
     // SmartDashboard.putNumber("yTarget", 0.0);
 

@@ -22,12 +22,17 @@ public class LimeNetwork extends SubsystemBase {
   private NetworkTableEntry ty;
   private NetworkTableEntry tBotPose;
 
+  private CTRSwerveSubsystem m_drivetrain;
+
   public LimeNetwork() {
     limeTable = NetworkTableInstance.getDefault().getTable("limelight");
+    
+    m_drivetrain = new CTRSwerveSubsystem();
 
     tx = limeTable.getEntry("tx");
     ty = limeTable.getEntry("ty");
     tBotPose = limeTable.getEntry("botpose");
+  
   }
 
   public  double getTX() {
@@ -36,6 +41,14 @@ public class LimeNetwork extends SubsystemBase {
   
   public  double getTY() {
     return ty.getDouble(0.0);
+  }
+
+  public double getXOffset() {
+    return getRobotPose()[0] - m_drivetrain.getCTRSwerveDrivetrain().getPoseMeters().getX();
+  }
+
+  public double getYOffset() {
+    return getRobotPose()[1] - m_drivetrain.getCTRSwerveDrivetrain().getPoseMeters().getY();
   }
 
   public double[] getRobotPose() {

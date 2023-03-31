@@ -15,6 +15,7 @@ import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ClawSubsystem;
+import frc.robot.subsystems.LimeNetwork;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
  
@@ -34,13 +35,13 @@ public class RobotContainer {
   private final CTRSwerveSubsystem m_swerveSubsystem = new CTRSwerveSubsystem();
   private final ClawSubsystem m_ClawSubsystem = new ClawSubsystem();
   //private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
-  //private final LimeNetwork m_LimeNetwork = new LimeNetwork();
+  private final LimeNetwork m_limelight = new LimeNetwork();
   //private final Pathplanning m_Pathplanning = new Pathplanning();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
-  private final IWantToWinAuton m_2coneNBAuton = new IWantToWinAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
-  private final IWantToWinAutonOtherColor m_2coneNBAutonRed = new IWantToWinAutonOtherColor(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
-  private final MidCrossBalanceAuton m_MidCrossBalanceAuton = new MidCrossBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
-  private final ShortCrossAuton m_ShortCrossAuton = new ShortCrossAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final IWantToWinAuton m_2coneNBAuton = new IWantToWinAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem, m_limelight);
+  private final IWantToWinAutonOtherColor m_2coneNBAutonRed = new IWantToWinAutonOtherColor(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem, m_limelight);
+  private final MidCrossBalanceAuton m_MidCrossBalanceAuton = new MidCrossBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem, m_limelight);
+  private final ShortCrossAuton m_ShortCrossAuton = new ShortCrossAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem, m_limelight);
   
   //arm command
   public final ArmCommand m_ArmCommand = new ArmCommand(m_armSubsystem);
@@ -53,7 +54,7 @@ public class RobotContainer {
   //server command
   public final SwerveDriveCommand m_swerveDriveCommand = new SwerveDriveCommand(m_swerveSubsystem);
   public final BalanceAuton m_balanceAutonCommand = new BalanceAuton(m_swerveSubsystem);
-  public final DriveToPositionAuton m_driveToPoseCommand = new DriveToPositionAuton(0, 0, m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), m_swerveSubsystem);
+  public final DriveToPositionAuton m_driveToPoseCommand = new DriveToPositionAuton(0, 0, m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), m_swerveSubsystem, m_limelight);
 
 
   // auton chooser

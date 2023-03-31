@@ -14,19 +14,20 @@ import frc.robot.auton_commands.sub_commands.ScoreHighAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
+import frc.robot.subsystems.LimeNetwork;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class MidCrossBalanceAuton extends SequentialCommandGroup {
   /** Creates a new IWantToWinAuton. */
-  public MidCrossBalanceAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem) {
+  public MidCrossBalanceAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem, LimeNetwork limelight) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ScoreHighAuton(armSubsystem, clawSubsystem),
       new DriveToPlatformAuton(Constants.FORWARD_DIRECTION, swerveSubsystem),
-      new DriveToPositionAuton(5.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new DriveToPositionAuton(5.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem, limelight),
       new WaitCommand(0.8),
       new DriveToPlatformAuton(Constants.BACKWARD_DIRECTION, swerveSubsystem),
       new BalanceAuton(swerveSubsystem)

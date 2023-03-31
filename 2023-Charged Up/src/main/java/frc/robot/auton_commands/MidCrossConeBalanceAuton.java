@@ -12,20 +12,23 @@ import frc.robot.auton_commands.sub_commands.ScoreHighAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
+import frc.robot.subsystems.LimeNetwork;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class MidCrossConeBalanceAuton extends SequentialCommandGroup {
   /** Creates a new IWantToWinAuton. */
-  public MidCrossConeBalanceAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem) {
+  public LimeNetwork m_limelight = new LimeNetwork();
+
+  public MidCrossConeBalanceAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem, LimeNetwork limelight) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ScoreHighAuton(armSubsystem, clawSubsystem),
-      new DriveToPositionAuton(6.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
-      new DriveToGroundIntakeAuton(7, 0, armSubsystem, swerveSubsystem, clawSubsystem),
-      new DriveToPositionAuton(3.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new DriveToPositionAuton(6.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem, limelight, false),
+      new DriveToGroundIntakeAuton(7, 0, armSubsystem, swerveSubsystem, clawSubsystem, limelight, true),
+      new DriveToPositionAuton(3.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem, limelight, true),
       new BalanceAuton(swerveSubsystem)
     );
   }
