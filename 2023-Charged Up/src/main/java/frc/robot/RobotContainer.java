@@ -61,6 +61,11 @@ public class RobotContainer {
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
   public RobotContainer() {
+    //DEBUG
+    // SmartDashboard.putNumber("Balance P", 0.0);
+    // SmartDashboard.putNumber("Balance I", 0.0);
+    // SmartDashboard.putNumber("Balance D", 0.0);
+
     //m_swerveSubsystem.setDefaultCommand(m_swerveDriveCommand);
     m_armSubsystem.setDefaultCommand(m_ArmCommand);
     
