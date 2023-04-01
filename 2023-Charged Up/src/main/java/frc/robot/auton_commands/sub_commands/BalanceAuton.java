@@ -30,7 +30,7 @@ public class BalanceAuton extends CommandBase {
     m_drivetrain = drivetrain.getCTRSwerveDrivetrain();
 
     balancePID = new PIDController(0.07, 0.001, 0.0);
-    balancePID.setTolerance(1.5);
+    balancePID.setTolerance(1.0);
 
     balance_counter = 0;
     charge_station_stationary_counter = 0;

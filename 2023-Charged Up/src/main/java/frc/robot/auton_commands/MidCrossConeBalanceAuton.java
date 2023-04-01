@@ -5,7 +5,9 @@
 package frc.robot.auton_commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.auton_commands.sub_commands.ArmAuton;
 import frc.robot.auton_commands.sub_commands.BalanceAuton;
@@ -33,7 +35,10 @@ public class MidCrossConeBalanceAuton extends SequentialCommandGroup {
         new DriveToPlatformAuton(Constants.FORWARD_DIRECTION, swerveSubsystem)
       ),
       new DriveToPositionAuton(5.4, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
-      new DriveToGroundIntakeAuton(6.8, -0.1, armSubsystem, swerveSubsystem, clawSubsystem),
+      new ParallelDeadlineGroup(
+        new WaitCommand(2.5),
+        new DriveToGroundIntakeAuton(6.8, 0.0, armSubsystem, swerveSubsystem, clawSubsystem)
+      ),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPlatformAuton(Constants.BACKWARD_DIRECTION, swerveSubsystem)
