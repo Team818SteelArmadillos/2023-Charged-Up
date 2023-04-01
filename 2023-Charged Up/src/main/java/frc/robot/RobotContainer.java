@@ -70,11 +70,11 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_ArmCommand);
     
     // Initializie auton chooser in smartdashboard
-    m_autoChooser.setDefaultOption("Blue Funny Cone Auton.", m_2coneNBAuton);
+    m_autoChooser.setDefaultOption("Blue Funny Cube Auton.", m_2coneNBAuton);
     m_autoChooser.addOption("Score Cross Balance Auton", m_MidCrossBalanceAuton);
     m_autoChooser.addOption("Score Cross Auton", m_ShortCrossAuton);
-    m_autoChooser.addOption("Red Funny Cone Auton", m_2coneNBAutonRed);
-    m_autoChooser.addOption("Mid Cross Cone Auton", m_MidCrossConeBalanceAuton);
+    m_autoChooser.addOption("Red Funny Cube Auton", m_2coneNBAutonRed);
+    m_autoChooser.addOption("Mid Cross Cube Auton", m_MidCrossConeBalanceAuton);
     //m_autoChooser.addOption("Blue Balance Auton", m_BlueBalanceAuton);
     SmartDashboard.putData("Auton Choices", m_autoChooser);
     

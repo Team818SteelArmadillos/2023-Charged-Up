@@ -30,19 +30,19 @@ public class IWantToWinAutonOtherColor extends SequentialCommandGroup {
     addCommands(
       // score
       new ScoreHighAuton(armSubsystem, clawSubsystem),
-      new ClawModeToggleCommand(clawSubsystem),
+      //new ClawModeToggleCommand(clawSubsystem),
       new DriveToGroundIntakeAuton(5.0, 0.4, armSubsystem, swerveSubsystem, clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPositionAuton(-0.1, 0.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
-      ),
-      new ScoreMidAuton(armSubsystem, clawSubsystem),
-      new ClawModeToggleCommand(clawSubsystem),
-      new ParallelCommandGroup(
-        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(4.0, 0.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
-      ),
-      new DriveToPositionAuton(6.0, -1.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation().plus(new Rotation2d(-1.0, 0.0)), swerveSubsystem)
+      )
+      // new ScoreMidAuton(armSubsystem, clawSubsystem),
+      // new ClawModeToggleCommand(clawSubsystem),
+      // new ParallelCommandGroup(
+      //   new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
+      //   new DriveToPositionAuton(4.0, 0.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+      // ),
+      // new DriveToPositionAuton(6.0, -1.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation().plus(new Rotation2d(-1.0, 0.0)), swerveSubsystem)
     );
   }
 }

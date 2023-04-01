@@ -54,7 +54,7 @@ public class ArmCommand extends CommandBase {
     // Set setPoint values with buttons. only one at a time
     if ( OI.getOperator().a().getAsBoolean() ) { //low position 
       angleSetpoint = Constants.ARM_ANGLE_LOW;
-      lengthSetpoint = Constants.ARM_LENGTH_MIN;
+      lengthSetpoint = Constants.ARM_LENGTH_GROUND;
     } else if ( OI.getOperator().b().getAsBoolean() ) { //medium position
       angleSetpoint = Constants.ARM_ANGLE_MID;
       lengthSetpoint = Constants.ARM_LENGTH_MID;
