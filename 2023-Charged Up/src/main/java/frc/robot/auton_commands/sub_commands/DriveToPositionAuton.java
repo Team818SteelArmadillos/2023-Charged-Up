@@ -27,6 +27,7 @@ public class DriveToPositionAuton extends CommandBase {
   
   double m_targetX;
   double m_targetY;
+  double timeoutTime;
   Rotation2d m_targetAngle;
   
   CTRSwerveSubsystem m_drivetrain;
@@ -90,6 +91,9 @@ public class DriveToPositionAuton extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    timeoutTime = Math.sqrt(Math.pow(m_targetX - m_drivetrain.getCTRSwerveDrivetrain().getPoseMeters().getX(), 2) 
+    + Math.pow(m_targetY - m_drivetrain.getCTRSwerveDrivetrain().getPoseMeters().getY(), 2)) / 2.0;
+
     timeout.reset();
     timeout.start();
   }
@@ -130,6 +134,6 @@ public class DriveToPositionAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_xPid.atSetpoint() && m_yPid.atSetpoint()) || timeout.hasElapsed(3.0);
+    return (m_xPid.atSetpoint() && m_yPid.atSetpoint()) || timeout.hasElapsed(timeoutTime);
   }
 }

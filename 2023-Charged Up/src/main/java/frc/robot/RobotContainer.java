@@ -5,7 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.auton_commands.IWantToWinAuton;
+import frc.robot.auton_commands.ScoreTwoAndBalanceAuton;
 import frc.robot.auton_commands.IWantToWinAutonOtherColor;
 import frc.robot.auton_commands.MidCrossBalanceAuton;
 import frc.robot.auton_commands.MidCrossConeBalanceAuton;
@@ -38,11 +38,12 @@ public class RobotContainer {
   //private final LimeNetwork m_LimeNetwork = new LimeNetwork();
   //private final Pathplanning m_Pathplanning = new Pathplanning();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
-  private final IWantToWinAuton m_2coneNBAuton = new IWantToWinAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final ScoreTwoAndBalanceAuton m_2coneNBAuton = new ScoreTwoAndBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
   private final MidCrossConeBalanceAuton m_MidCrossConeBalanceAuton = new MidCrossConeBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
   private final IWantToWinAutonOtherColor m_2coneNBAutonRed = new IWantToWinAutonOtherColor(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
   private final MidCrossBalanceAuton m_MidCrossBalanceAuton = new MidCrossBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
   private final ShortCrossAuton m_ShortCrossAuton = new ShortCrossAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final ScoreTwoAndBalanceAuton m_ScoreTwoAndBalanceAuton = new ScoreTwoAndBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
   
   //arm command
   public final ArmCommand m_ArmCommand = new ArmCommand(m_armSubsystem);
@@ -72,6 +73,7 @@ public class RobotContainer {
     // Initializie auton chooser in smartdashboard
     m_autoChooser.setDefaultOption("Blue Funny Cube Auton.", m_2coneNBAuton);
     m_autoChooser.addOption("Score Cross Balance Auton", m_MidCrossBalanceAuton);
+    m_autoChooser.addOption("Blue Score 2 Balance Auton", m_ScoreTwoAndBalanceAuton);
     m_autoChooser.addOption("Score Cross Auton", m_ShortCrossAuton);
     m_autoChooser.addOption("Red Funny Cube Auton", m_2coneNBAutonRed);
     m_autoChooser.addOption("Mid Cross Cube Auton", m_MidCrossConeBalanceAuton);

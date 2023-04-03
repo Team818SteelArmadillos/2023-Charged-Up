@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.auton_commands.sub_commands.ArmAuton;
+import frc.robot.auton_commands.sub_commands.BalanceAuton;
 import frc.robot.auton_commands.sub_commands.ClawWheelAuton;
 import frc.robot.auton_commands.sub_commands.DriveToGroundIntakeAuton;
+import frc.robot.auton_commands.sub_commands.DriveToPlatformAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
 import frc.robot.auton_commands.sub_commands.ScoreHighAuton;
 import frc.robot.auton_commands.sub_commands.ScoreMidAuton;
@@ -24,9 +26,9 @@ import frc.robot.subsystems.ClawSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IWantToWinAuton extends SequentialCommandGroup {
+public class ScoreTwoAndBalanceAuton extends SequentialCommandGroup {
   /** Creates a new IWantToWinAuton. */
-  public IWantToWinAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem) {
+  public ScoreTwoAndBalanceAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -46,11 +48,10 @@ public class IWantToWinAuton extends SequentialCommandGroup {
       ),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(4.0, -0.2, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+        new DriveToPositionAuton(0.5, -2.5, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
-      new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
-      new DriveToGroundIntakeAuton(5.6, -1.8, armSubsystem, swerveSubsystem, clawSubsystem),
-      new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE)
+      new DriveToPlatformAuton(Constants.FORWARD_DIRECTION, swerveSubsystem),
+      new BalanceAuton(swerveSubsystem)
     );
   }
 }

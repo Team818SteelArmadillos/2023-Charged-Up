@@ -26,6 +26,9 @@ public final class Constants {
     /*============================
                 Arm 
     ==============================*/
+    public static final int CLAW_OPEN_STATE = 1;
+    public static final int CLAW_CLAW_STATE = 2;
+
 
     public static final int ARM_LOW_STATE = 0;
     public static final int ARM_MID_STATE = 1;

@@ -38,12 +38,12 @@ public class ClawSubsystem extends SubsystemBase {
 
     public void setClawClosed() {
         pistonClaw.set(DoubleSolenoid.Value.kReverse);
-        inCubeMode = true;
+        inCubeMode = false;
     }
 
     public void setClawOpen() {
         pistonClaw.set(DoubleSolenoid.Value.kForward);
-        inCubeMode = false;
+        inCubeMode = true;
     }
 
     public void toggle() {
