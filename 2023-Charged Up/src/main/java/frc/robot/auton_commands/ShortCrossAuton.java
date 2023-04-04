@@ -6,11 +6,17 @@ package frc.robot.auton_commands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.auton_commands.sub_commands.ArmAuton;
+import frc.robot.auton_commands.sub_commands.ClawWheelAuton;
+import frc.robot.auton_commands.sub_commands.DriveToGroundIntakeAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
 import frc.robot.auton_commands.sub_commands.ScoreHighAuton;
+import frc.robot.auton_commands.sub_commands.ScoreMidAuton;
+import frc.robot.auton_commands.sub_commands.SlowDriveCommand;
 import frc.robot.commands.ClawModeToggleCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
@@ -26,11 +32,28 @@ public class ShortCrossAuton extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ScoreHighAuton(armSubsystem, clawSubsystem),
-      new ClawModeToggleCommand(clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(5, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation().plus(new Rotation2d(-1.0, 0.0)), swerveSubsystem)
-      )
+        new DriveToPositionAuton(2.0, 0.3, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+      ),
+      new SlowDriveCommand(Constants.FORWARD_DIRECTION, 2.0, swerveSubsystem),
+      new DriveToGroundIntakeAuton(5.5, 0.5, armSubsystem, swerveSubsystem, clawSubsystem),
+      new ParallelCommandGroup(
+        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
+        new DriveToPositionAuton(2.1, 0.3, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+      ),
+      new SlowDriveCommand(Constants.BACKWARD_DIRECTION, 2.0, swerveSubsystem),
+      new ParallelCommandGroup(
+        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
+        new DriveToPositionAuton(-0.5, 0.68, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+      ),
+      new ScoreMidAuton(armSubsystem, clawSubsystem),
+      new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
+      new ParallelDeadlineGroup(
+        new WaitCommand(0.2), 
+        new ClawWheelAuton(clawSubsystem, false)
+      ),
+      new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE)
     );
   }
 }
