@@ -5,12 +5,15 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.auton_commands.ScoreTwoAndBalanceAuton;
-import frc.robot.auton_commands.IWantToWinAuton;
-import frc.robot.auton_commands.IWantToWinAutonOtherColor;
-import frc.robot.auton_commands.MidCrossBalanceAuton;
-import frc.robot.auton_commands.MidCrossConeBalanceAuton;
-import frc.robot.auton_commands.ShortCrossAuton;
+import frc.robot.auton_commands.BClear_ScoreTwoAndBalanceAuton;
+import frc.robot.auton_commands.BClear_ScoreTwoAndGrabAuton;
+import frc.robot.auton_commands.BClear_ScoreThreeAuton;
+import frc.robot.auton_commands.RClear_ScoreTwoAndGrabAuton;
+import frc.robot.auton_commands.RWire_ScoreTwoCrossAuton;
+import frc.robot.auton_commands.Mid_CrossGrabBalanceAuton;
+import frc.robot.auton_commands.RClear_ScoreThreeAuton;
+import frc.robot.auton_commands.RClear_ScoreTwoAndBalanceAuton;
+import frc.robot.auton_commands.BWire_ScoreTwoCrossAuton;
 import frc.robot.auton_commands.sub_commands.BalanceAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
 import frc.robot.commands.*;
@@ -39,12 +42,19 @@ public class RobotContainer {
   //private final LimeNetwork m_LimeNetwork = new LimeNetwork();
   //private final Pathplanning m_Pathplanning = new Pathplanning();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
-  private final IWantToWinAuton m_2coneNBAuton = new IWantToWinAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
-  private final MidCrossConeBalanceAuton m_MidCrossConeBalanceAuton = new MidCrossConeBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
-  private final IWantToWinAutonOtherColor m_2coneNBAutonRed = new IWantToWinAutonOtherColor(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
-  private final MidCrossBalanceAuton m_MidCrossBalanceAuton = new MidCrossBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
-  private final ShortCrossAuton m_ShortCrossAuton = new ShortCrossAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
-  private final ScoreTwoAndBalanceAuton m_ScoreTwoAndBalanceAuton = new ScoreTwoAndBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+
+  //autons
+  private final RClear_ScoreTwoAndGrabAuton mRClear_ScoreTwoAndGrabAuton = new RClear_ScoreTwoAndGrabAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final RClear_ScoreThreeAuton mRClear_ScoreThreeAuton = new RClear_ScoreThreeAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final RClear_ScoreTwoAndBalanceAuton mRClear_ScoreTwoAndBalanceAuton = new RClear_ScoreTwoAndBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final RWire_ScoreTwoCrossAuton mRWire_ScoreTwoCrossAuton = new RWire_ScoreTwoCrossAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final BClear_ScoreTwoAndGrabAuton mBClear_ScoreTwoAndGrabAuton = new BClear_ScoreTwoAndGrabAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final BClear_ScoreThreeAuton mBClear_ScoreThreeAuton = new BClear_ScoreThreeAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final BClear_ScoreTwoAndBalanceAuton mBClear_ScoreTwoAndBalanceAuton = new BClear_ScoreTwoAndBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final BWire_ScoreTwoCrossAuton mBWire_ScoreTwoCrossAuton = new BWire_ScoreTwoCrossAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final Mid_CrossGrabBalanceAuton mCrossGrabBalanceAuton = new Mid_CrossGrabBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+
+
   
   //arm command
   public final ArmCommand m_ArmCommand = new ArmCommand(m_armSubsystem);
@@ -72,12 +82,15 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_ArmCommand);
     
     // Initializie auton chooser in smartdashboard
-    m_autoChooser.setDefaultOption("Blue Score 2.5 Side", m_2coneNBAuton);
-    m_autoChooser.addOption("Score Cross Balance", m_MidCrossBalanceAuton);
-    m_autoChooser.addOption("Blue Score 2 Balance Side", m_ScoreTwoAndBalanceAuton);
-    m_autoChooser.addOption("Score 2 Bump", m_ShortCrossAuton);
-    m_autoChooser.addOption("Red Funny Cube Auton", m_2coneNBAutonRed);
-    m_autoChooser.addOption("Score 1.5 Balance Mid", m_MidCrossConeBalanceAuton);
+    m_autoChooser.setDefaultOption("Mid Score Grab Balance", mCrossGrabBalanceAuton);
+    m_autoChooser.addOption("Blue Clear Score 3", mBClear_ScoreThreeAuton);
+    m_autoChooser.addOption("Blue Clear Score 2 Balance", mBClear_ScoreTwoAndBalanceAuton);
+    m_autoChooser.addOption("Blue Clear Score 2 Grab", mBClear_ScoreTwoAndGrabAuton);
+    m_autoChooser.addOption("Blue Wire Score 2", mBWire_ScoreTwoCrossAuton);
+    m_autoChooser.addOption("Red Clear Score 3", mRClear_ScoreThreeAuton);
+    m_autoChooser.addOption("Red Clear Score 2 Balance", mRClear_ScoreTwoAndBalanceAuton);
+    m_autoChooser.addOption("Red Clear Score 2 Grab", mRClear_ScoreTwoAndGrabAuton);
+    m_autoChooser.addOption("Red Wire Score 2", mRWire_ScoreTwoCrossAuton);
     //m_autoChooser.addOption("Blue Balance Auton", m_BlueBalanceAuton);
     SmartDashboard.putData("Auton Choices", m_autoChooser);
     

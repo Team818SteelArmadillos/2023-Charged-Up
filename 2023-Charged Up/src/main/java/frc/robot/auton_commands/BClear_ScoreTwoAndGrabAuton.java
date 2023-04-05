@@ -4,20 +4,18 @@
 
 package frc.robot.auton_commands;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.auton_commands.sub_commands.ArmAuton;
-import frc.robot.auton_commands.sub_commands.BalanceAuton;
 import frc.robot.auton_commands.sub_commands.ClawWheelAuton;
 import frc.robot.auton_commands.sub_commands.DriveToGroundIntakeAuton;
-import frc.robot.auton_commands.sub_commands.DriveToPlatformAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
 import frc.robot.auton_commands.sub_commands.ScoreHighAuton;
 import frc.robot.auton_commands.sub_commands.ScoreMidAuton;
+import frc.robot.auton_commands.sub_commands.SpeedDriveCommand;
 import frc.robot.commands.ClawModeToggleCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
@@ -26,9 +24,9 @@ import frc.robot.subsystems.ClawSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ScoreTwoAndBalanceAuton extends SequentialCommandGroup {
+public class BClear_ScoreTwoAndGrabAuton extends SequentialCommandGroup {
   /** Creates a new IWantToWinAuton. */
-  public ScoreTwoAndBalanceAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem) {
+  public BClear_ScoreTwoAndGrabAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
 
@@ -36,22 +34,32 @@ public class ScoreTwoAndBalanceAuton extends SequentialCommandGroup {
       // score
       new ScoreHighAuton(armSubsystem, clawSubsystem),
       //new ClawModeToggleCommand(clawSubsystem),
+      new ParallelDeadlineGroup(
+        new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
+        new SpeedDriveCommand(Constants.FORWARD_DIRECTION, 0.4, swerveSubsystem)
+      ),
       new DriveToGroundIntakeAuton(5.0, -0.35, armSubsystem, swerveSubsystem, clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPositionAuton(-0.1, -0.57, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
       new ScoreMidAuton(armSubsystem, clawSubsystem),
+      new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
       new ParallelDeadlineGroup(
-        new WaitCommand(0.2), 
+        new WaitCommand(0.15), 
         new ClawWheelAuton(clawSubsystem, false)
       ),
       new ParallelCommandGroup(
-        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(0.5, -2.5, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+        new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
+        new DriveToPositionAuton(4.0, -0.2, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
-      new DriveToPlatformAuton(Constants.FORWARD_DIRECTION, swerveSubsystem),
-      new BalanceAuton(swerveSubsystem)
+      new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
+      new DriveToGroundIntakeAuton(5.6, -1.6, armSubsystem, swerveSubsystem, clawSubsystem),
+      new ParallelCommandGroup(
+        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
+        new DriveToPositionAuton(4.0, 0.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+      ),
+      new DriveToPositionAuton(0.2, -0.57, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
     );
   }
 }
