@@ -23,6 +23,18 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 public final class Constants {
 
+    //Auton Values
+    public static final double FIRST_CUBE_X_POS_BLUE = 5.0;
+    public static final double FIRST_CUBE_Y_POS_BLUE = -0.45;
+    public static final double SECOND_CUBE_X_POS_BLUE = 5.6;
+    public static final double SECOND_CUBE_Y_POS_BLUE = -1.75;
+
+    
+    public static final double FIRST_CUBE_X_POS_RED = FIRST_CUBE_X_POS_BLUE;
+    public static final double FIRST_CUBE_Y_POS_RED = FIRST_CUBE_Y_POS_BLUE;
+    public static final double SECOND_CUBE_X_POS_RED = SECOND_CUBE_X_POS_BLUE;
+    public static final double SECOND_CUBE_Y_POS_RED = -SECOND_CUBE_Y_POS_BLUE;
+
     /*============================
                 Arm 
     ==============================*/

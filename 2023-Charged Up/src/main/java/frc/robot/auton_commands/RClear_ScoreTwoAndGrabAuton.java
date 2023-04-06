@@ -38,10 +38,10 @@ public class RClear_ScoreTwoAndGrabAuton extends SequentialCommandGroup {
         new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
         new SpeedDriveCommand(Constants.FORWARD_DIRECTION, 0.4, swerveSubsystem)
       ),
-      new DriveToGroundIntakeAuton(5.0, 0.35, armSubsystem, swerveSubsystem, clawSubsystem),
+      new DriveToGroundIntakeAuton(Constants.FIRST_CUBE_X_POS_RED, Constants.FIRST_CUBE_Y_POS_RED, armSubsystem, swerveSubsystem, clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(-0.1, 0.57, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+        new DriveToPositionAuton(-0.1, 0.67, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
       new ScoreMidAuton(armSubsystem, clawSubsystem),
       new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
