@@ -113,8 +113,12 @@ public class ArmSubsystem extends SubsystemBase {
             telescoping stuff
     ==============================*/
 
-    public boolean getLimitswitch() {
+    public boolean getBottomLimitswitch() {
         return telescopingMotor.isRevLimitSwitchClosed() == 1;
+    }
+
+    public boolean getTopLimitswitch() {
+        return telescopingMotor.isFwdLimitSwitchClosed() == 1;
     }
 
     public void setArmLength(double setpointLength) {
@@ -143,6 +147,7 @@ public class ArmSubsystem extends SubsystemBase {
         telescopingMotor.config_kI(0, Constants.tI);
         telescopingMotor.config_kD(0, Constants.tD);
         telescopingMotor.configAllowableClosedloopError(0, Constants.tTolerance);
+        telescopingMotor.setSelectedSensorPosition(0);
     }
 
      /*==============================
@@ -173,6 +178,11 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic(){ 
+        
+        if (getBottomLimitswitch()) {
+            resetTelescopingEncoder();
+        }
+
         SmartDashboard.putNumber("Arm Angle", getPivotAngle());
         SmartDashboard.putNumber("Pivoting Arm Encoder RAW", encoder.get());
         SmartDashboard.putNumber("Telescoping Arm Encoder", getTelescopingEncoder());
