@@ -50,7 +50,6 @@ public class ArmSubsystem extends SubsystemBase {
         //encoder stuff
         encoder = new DutyCycleEncoder(Constants.THROUGH_BORE_ENCODER); //these encoder paramters are undefined since
         //encoder.reset();
-        SmartDashboard.putNumber( "Pivoting Arm Encoder", encoder.get() );
 
         bikeBreak = new DoubleSolenoid(Constants.pneumaticPistonPort, PneumaticsModuleType.CTREPCM, Constants.pneumaticPorts[6], Constants.pneumaticPorts[7]);
         setArmLocked();
@@ -97,9 +96,9 @@ public class ArmSubsystem extends SubsystemBase {
         pm1.set(ControlMode.PercentOutput, pivotSpeed);
     }
 
-    public void resetPivotingEncoder() {
-        encoder.reset();
-    }
+    // public void resetPivotingEncoder() {
+    //     encoder.reset();
+    // }
 
     public double getPivotingEncoder() {
         return encoder.get() - Constants.encoderOvershoot;
@@ -178,11 +177,6 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic(){ 
-        
-        if (getBottomLimitswitch()) {
-            resetTelescopingEncoder();
-        }
-
         SmartDashboard.putNumber("Arm Angle", getPivotAngle());
         SmartDashboard.putNumber("Pivoting Arm Encoder RAW", encoder.get());
         SmartDashboard.putNumber("Telescoping Arm Encoder", getTelescopingEncoder());

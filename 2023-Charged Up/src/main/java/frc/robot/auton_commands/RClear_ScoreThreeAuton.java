@@ -38,7 +38,7 @@ public class RClear_ScoreThreeAuton extends SequentialCommandGroup {
         new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
         new SpeedDriveCommand(Constants.FORWARD_DIRECTION, 0.4, swerveSubsystem)
       ),
-      new DriveToGroundIntakeAuton(5.0, 0.35, armSubsystem, swerveSubsystem, clawSubsystem),
+      new DriveToGroundIntakeAuton(5.0, 0.40, armSubsystem, swerveSubsystem, clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPositionAuton(-0.1, 0.57, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
@@ -51,15 +51,15 @@ public class RClear_ScoreThreeAuton extends SequentialCommandGroup {
       ),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
-        new DriveToPositionAuton(4.0, 0.2, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
-      ),
-      new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
-      new DriveToGroundIntakeAuton(5.6, 1.6, armSubsystem, swerveSubsystem, clawSubsystem),
-      new ParallelCommandGroup(
-        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPositionAuton(4.0, 0.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
-      new DriveToPositionAuton(0.2, 0.57, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
+      new DriveToGroundIntakeAuton(5.6, 1.65, armSubsystem, swerveSubsystem, clawSubsystem),
+      new ParallelCommandGroup(
+        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
+        new DriveToPositionAuton(3.0, -0.5, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+      ),
+      new DriveToPositionAuton(0.0, 0.47, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
       new ClawWheelAuton(clawSubsystem, false)
     );
   }

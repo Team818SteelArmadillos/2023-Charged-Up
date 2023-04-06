@@ -33,6 +33,8 @@ public class ClawWheelCommand extends CommandBase {
         case 1: clawWheelsSubsystem.setIntakeSpeed(Constants.CUBE_OUT_SPEED); break; //Cube out
       }
     }
+
+    
   }
 
   // Called once the command ends or is interrupted.

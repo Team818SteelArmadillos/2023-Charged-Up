@@ -66,7 +66,7 @@ public final class Constants {
     public static final double CONE_IN_SPEED = -0.8;
     public static final double CONE_OUT_SPEED= 0.65;
     public static final double CUBE_IN_SPEED = -0.5;
-    public static final double CUBE_OUT_SPEED = 0.65;
+    public static final double CUBE_OUT_SPEED = 0.7;
 
     // Pivoting Arm Angles
     public static final int ARM_ANGLE_NEUTRAL = 0;
@@ -78,7 +78,7 @@ public final class Constants {
     public static final int armSetpointCounter = 20;
     public static final double controllerDeadzone = 0.1;
 
-    public static final double encoderOvershoot = 0.0029;
+    public static final double encoderOvershoot = 0.666;
 
     // Neo 550 Motor Stuff
     public static final int neoAmpLimit = 20 /*AMPs*/; // Cannot forget units!

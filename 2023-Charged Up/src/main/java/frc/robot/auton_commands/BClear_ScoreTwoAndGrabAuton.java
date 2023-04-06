@@ -51,7 +51,7 @@ public class BClear_ScoreTwoAndGrabAuton extends SequentialCommandGroup {
       ),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
-        new DriveToPositionAuton(4.0, -0.2, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+        new DriveToPositionAuton(4.0, 0.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
       new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
       new DriveToGroundIntakeAuton(5.6, -1.6, armSubsystem, swerveSubsystem, clawSubsystem),

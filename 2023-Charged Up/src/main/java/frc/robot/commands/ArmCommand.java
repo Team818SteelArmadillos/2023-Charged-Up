@@ -68,6 +68,10 @@ public class ArmCommand extends CommandBase {
       //do nothing
     }
 
+    if (armSubsystem.getBottomLimitswitch()) {
+      armSubsystem.resetTelescopingEncoder();
+    }
+
     //manual set angle
     if ( Math.abs( rawLeftJoystickInput ) > Constants.controllerDeadzone ) {
       leftJoystickInput = rawLeftJoystickInput;
