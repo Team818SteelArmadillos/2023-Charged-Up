@@ -20,6 +20,7 @@ import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ClawSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
  
@@ -42,6 +43,7 @@ public class RobotContainer {
   //private final LimeNetwork m_LimeNetwork = new LimeNetwork();
   //private final Pathplanning m_Pathplanning = new Pathplanning();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
   //autons
   private final RClear_ScoreTwoAndGrabAuton mRClear_ScoreTwoAndGrabAuton = new RClear_ScoreTwoAndGrabAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
@@ -69,7 +71,8 @@ public class RobotContainer {
   public final BalanceAuton m_balanceAutonCommand = new BalanceAuton(m_swerveSubsystem);
   public final DriveToPositionAuton m_driveToPoseCommand = new DriveToPositionAuton(0, 0, m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), m_swerveSubsystem);
 
-
+  //intake command
+  public final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
   public RobotContainer() {
