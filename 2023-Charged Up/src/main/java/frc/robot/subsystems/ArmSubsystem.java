@@ -50,7 +50,6 @@ public class ArmSubsystem extends SubsystemBase {
         //encoder stuff
         encoder = new DutyCycleEncoder(Constants.THROUGH_BORE_ENCODER); //these encoder paramters are undefined since
         //encoder.reset();
-        SmartDashboard.putNumber( "Pivoting Arm Encoder", encoder.get() );
 
         bikeBreak = new DoubleSolenoid(Constants.pneumaticPistonPort, PneumaticsModuleType.CTREPCM, Constants.pneumaticPorts[6], Constants.pneumaticPorts[7]);
         setArmLocked();
@@ -97,9 +96,9 @@ public class ArmSubsystem extends SubsystemBase {
         pm1.set(ControlMode.PercentOutput, pivotSpeed);
     }
 
-    public void resetPivotingEncoder() {
-        encoder.reset();
-    }
+    // public void resetPivotingEncoder() {
+    //     encoder.reset();
+    // }
 
     public double getPivotingEncoder() {
         return encoder.get() - Constants.encoderOvershoot;
@@ -113,8 +112,12 @@ public class ArmSubsystem extends SubsystemBase {
             telescoping stuff
     ==============================*/
 
-    public boolean getLimitswitch() {
+    public boolean getBottomLimitswitch() {
         return telescopingMotor.isRevLimitSwitchClosed() == 1;
+    }
+
+    public boolean getTopLimitswitch() {
+        return telescopingMotor.isFwdLimitSwitchClosed() == 1;
     }
 
     public void setArmLength(double setpointLength) {
@@ -143,6 +146,7 @@ public class ArmSubsystem extends SubsystemBase {
         telescopingMotor.config_kI(0, Constants.tI);
         telescopingMotor.config_kD(0, Constants.tD);
         telescopingMotor.configAllowableClosedloopError(0, Constants.tTolerance);
+        telescopingMotor.setSelectedSensorPosition(0);
     }
 
      /*==============================

@@ -38,28 +38,28 @@ public class RClear_ScoreThreeAuton extends SequentialCommandGroup {
         new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
         new SpeedDriveCommand(Constants.FORWARD_DIRECTION, 0.4, swerveSubsystem)
       ),
-      new DriveToGroundIntakeAuton(5.0, 0.35, armSubsystem, swerveSubsystem, clawSubsystem),
+      new DriveToGroundIntakeAuton(Constants.FIRST_CUBE_X_POS_RED, Constants.FIRST_CUBE_Y_POS_RED, armSubsystem, swerveSubsystem, clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(-0.1, 0.57, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+        new DriveToPositionAuton(-0.1, 0.67, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
       new ScoreMidAuton(armSubsystem, clawSubsystem),
       new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
       new ParallelDeadlineGroup(
-        new WaitCommand(0.15), 
+        new WaitCommand(0.25), 
         new ClawWheelAuton(clawSubsystem, false)
       ),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
-        new DriveToPositionAuton(4.0, 0.2, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
-      ),
-      new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
-      new DriveToGroundIntakeAuton(5.6, 1.6, armSubsystem, swerveSubsystem, clawSubsystem),
-      new ParallelCommandGroup(
-        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPositionAuton(4.0, 0.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
-      new DriveToPositionAuton(0.2, 0.57, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
+      new DriveToGroundIntakeAuton(Constants.SECOND_CUBE_X_POS_RED, Constants.SECOND_CUBE_Y_POS_RED, armSubsystem, swerveSubsystem, clawSubsystem),
+      new ParallelCommandGroup(
+        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
+        new DriveToPositionAuton(3.0, -0.5, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+      ),
+      new DriveToPositionAuton(0.0, 0.67, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
       new ClawWheelAuton(clawSubsystem, false)
     );
   }

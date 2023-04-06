@@ -33,10 +33,10 @@ public class Mid_CrossGrabBalanceAuton extends SequentialCommandGroup {
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPlatformAuton(Constants.FORWARD_DIRECTION, swerveSubsystem)
       ),
-      new DriveToPositionAuton(5.4, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new DriveToPositionAuton(6.0, 0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
       new ParallelDeadlineGroup(
         new WaitCommand(2.5),
-        new DriveToGroundIntakeAuton(6.8, 0.0, armSubsystem, swerveSubsystem, clawSubsystem)
+        new DriveToGroundIntakeAuton(7.0, 0.0, armSubsystem, swerveSubsystem, clawSubsystem)
       ),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),

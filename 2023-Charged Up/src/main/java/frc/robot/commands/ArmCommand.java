@@ -68,10 +68,10 @@ public class ArmCommand extends CommandBase {
       //do nothing
     }
 
-    if ( armSubsystem.getLimitswitch() ) {
+    if (armSubsystem.getBottomLimitswitch()) {
       armSubsystem.resetTelescopingEncoder();
     }
-    
+
     //manual set angle
     if ( Math.abs( rawLeftJoystickInput ) > Constants.controllerDeadzone ) {
       leftJoystickInput = rawLeftJoystickInput;
@@ -87,11 +87,6 @@ public class ArmCommand extends CommandBase {
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
     armSubsystem.setPivotAngle(angleSetpoint);
     armSubsystem.setArmLength(lengthSetpoint);
-
-    // if (armSubsystem.PivotingPID.atSetpoint() || lengthSetpoint < last_lengthSetpoint) {
-      
-    //   last_lengthSetpoint = lengthSetpoint;
-    // }
   }
 
   private void zeroArm() {

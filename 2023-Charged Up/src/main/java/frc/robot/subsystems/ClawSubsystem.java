@@ -60,6 +60,14 @@ public class ClawSubsystem extends SubsystemBase {
         cwm2.set(intakeSpeed);
     }
 
+    public double getMotorCurrent() {
+        return (cwm1.getOutputCurrent() + cwm2.getOutputCurrent()) / 2.0;
+    }
+
+    public double getMotorVoltage() {
+        return (cwm1.getBusVoltage() + cwm2.getBusVoltage()) / 2.0;
+    }
+
     public boolean isOpen() {
         if (pistonClaw.get().equals(DoubleSolenoid.Value.kForward)) {
             return true;
@@ -70,6 +78,9 @@ public class ClawSubsystem extends SubsystemBase {
     
     @Override
     public void periodic() {
+        // SmartDashboard.putNumber("Claw Current", getMotorCurrent());
+        // SmartDashboard.putNumber("Claw Voltage", getMotorVoltage());
+
         if (isOpen()) {
             SmartDashboard.putString("Claw Mode", "OPEN / CUBE");
         } else {
