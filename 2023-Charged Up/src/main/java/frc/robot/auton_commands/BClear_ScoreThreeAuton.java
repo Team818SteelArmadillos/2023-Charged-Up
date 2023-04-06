@@ -46,7 +46,7 @@ public class BClear_ScoreThreeAuton extends SequentialCommandGroup {
       new ScoreMidAuton(armSubsystem, clawSubsystem),
       new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
       new ParallelDeadlineGroup(
-        new WaitCommand(0.15), 
+        new WaitCommand(0.25), 
         new ClawWheelAuton(clawSubsystem, false)
       ),
       new ParallelCommandGroup(
@@ -59,7 +59,7 @@ public class BClear_ScoreThreeAuton extends SequentialCommandGroup {
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPositionAuton(3.0, 0.5, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
-      new DriveToPositionAuton(0.0, -0.47, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new DriveToPositionAuton(0.0, -0.67, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
       new ClawWheelAuton(clawSubsystem, false)
     );
   }

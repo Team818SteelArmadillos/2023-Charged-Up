@@ -38,17 +38,20 @@ public class ClawWheelCommand extends CommandBase {
       }
     }
 
-    if (clawWheelsSubsystem.getMotorCurrent() >= 25.0) {
+    if (clawWheelsSubsystem.getMotorCurrent() >= Constants.CLAW_RUMBLE_AMP_THRESHOLD) {
       rumble_counter = 0;
     } else {
       rumble_counter++;
     }
 
     if (rumble_counter <= 20) {
+
       OI.getDriver().setRumble(RumbleType.kBothRumble, 0.5);
+      OI.getXOperator().setRumble(RumbleType.kBothRumble, 0.5);
     } else {
       rumble_counter = 21;
       OI.getDriver().setRumble(RumbleType.kBothRumble, 0.0);
+      OI.getXOperator().setRumble(RumbleType.kBothRumble, 0.0);
     }
     
   }

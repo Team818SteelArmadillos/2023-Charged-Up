@@ -31,9 +31,9 @@ public final class Constants {
 
     
     public static final double FIRST_CUBE_X_POS_RED = FIRST_CUBE_X_POS_BLUE;
-    public static final double FIRST_CUBE_Y_POS_RED = FIRST_CUBE_Y_POS_BLUE;
+    public static final double FIRST_CUBE_Y_POS_RED = (-FIRST_CUBE_Y_POS_BLUE) - 0.15;
     public static final double SECOND_CUBE_X_POS_RED = SECOND_CUBE_X_POS_BLUE;
-    public static final double SECOND_CUBE_Y_POS_RED = -SECOND_CUBE_Y_POS_BLUE;
+    public static final double SECOND_CUBE_Y_POS_RED = (-SECOND_CUBE_Y_POS_BLUE) - 0.05;
 
     /*============================
                 Arm 
@@ -76,9 +76,9 @@ public final class Constants {
 
     // Piston Claw Values
     public static final double CONE_IN_SPEED = -0.8;
-    public static final double CONE_OUT_SPEED= 0.65;
+    public static final double CONE_OUT_SPEED= 1.0;
     public static final double CUBE_IN_SPEED = -0.5;
-    public static final double CUBE_OUT_SPEED = 0.7;
+    public static final double CUBE_OUT_SPEED = 1.0;
 
     // Pivoting Arm Angles
     public static final int ARM_ANGLE_NEUTRAL = 0;
@@ -91,6 +91,8 @@ public final class Constants {
     public static final double controllerDeadzone = 0.1;
 
     public static final double encoderOvershoot = 0.666;
+
+    public static final double CLAW_RUMBLE_AMP_THRESHOLD = 30.0; //amps
 
     // Neo 550 Motor Stuff
     public static final int neoAmpLimit = 20 /*AMPs*/; // Cannot forget units!

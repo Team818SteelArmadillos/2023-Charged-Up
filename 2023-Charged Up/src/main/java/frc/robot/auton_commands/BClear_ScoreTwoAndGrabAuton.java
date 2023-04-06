@@ -46,7 +46,7 @@ public class BClear_ScoreTwoAndGrabAuton extends SequentialCommandGroup {
       new ScoreMidAuton(armSubsystem, clawSubsystem),
       new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
       new ParallelDeadlineGroup(
-        new WaitCommand(0.15), 
+        new WaitCommand(0.25), 
         new ClawWheelAuton(clawSubsystem, false)
       ),
       new ParallelCommandGroup(
