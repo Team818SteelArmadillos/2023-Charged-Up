@@ -33,7 +33,7 @@ public final class Constants {
     public static final double FIRST_CUBE_X_POS_RED = FIRST_CUBE_X_POS_BLUE;
     public static final double FIRST_CUBE_Y_POS_RED = (-FIRST_CUBE_Y_POS_BLUE) - 0.15;
     public static final double SECOND_CUBE_X_POS_RED = SECOND_CUBE_X_POS_BLUE;
-    public static final double SECOND_CUBE_Y_POS_RED = (-SECOND_CUBE_Y_POS_BLUE) - 0.05;
+    public static final double SECOND_CUBE_Y_POS_RED = (-SECOND_CUBE_Y_POS_BLUE) - 0.15;
 
     /*============================
                 Arm 
