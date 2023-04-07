@@ -76,9 +76,11 @@ public final class Constants {
 
     // Piston Claw Values
     public static final double CONE_IN_SPEED = -0.8;
-    public static final double CONE_OUT_SPEED= 1.0;
+    public static final double CONE_OUT_SPEED= 0.8;
+    public static final double CONE_OUT_SPEED_AUTON= 1.0;
     public static final double CUBE_IN_SPEED = -0.5;
-    public static final double CUBE_OUT_SPEED = 1.0;
+    public static final double CUBE_OUT_SPEED = 0.7;
+    public static final double CUBE_OUT_SPEED_AUTON = 1.0;
 
     // Pivoting Arm Angles
     public static final int ARM_ANGLE_NEUTRAL = 0;

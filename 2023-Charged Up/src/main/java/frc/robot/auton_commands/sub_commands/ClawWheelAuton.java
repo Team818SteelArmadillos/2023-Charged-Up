@@ -32,9 +32,9 @@ public class ClawWheelAuton extends CommandBase {
       }
     } else {
       if (m_ClawWheelsSubsystem.isOpen()) {
-        m_ClawWheelsSubsystem.setIntakeSpeed(Constants.CUBE_OUT_SPEED);
+        m_ClawWheelsSubsystem.setIntakeSpeed(Constants.CUBE_OUT_SPEED_AUTON);
       } else {
-        m_ClawWheelsSubsystem.setIntakeSpeed(Constants.CONE_OUT_SPEED);
+        m_ClawWheelsSubsystem.setIntakeSpeed(Constants.CONE_OUT_SPEED_AUTON);
       }
     }
   }
