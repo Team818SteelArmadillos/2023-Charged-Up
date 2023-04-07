@@ -21,6 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
   DoubleSolenoid IntakePistonLock;
 
   private int lock_counter;
+  private boolean intakeOut;
 
     /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
@@ -32,10 +33,11 @@ public class IntakeSubsystem extends SubsystemBase {
     IntakeExtendMotor.configAllSettings(victorSPXConfiguration);
     IntakeMotor.configAllSettings(victorSPXConfiguration);
 
-    IntakePistonLock = new DoubleSolenoid(Constants.IntakePistonPort, PneumaticsModuleType.CTREPCM, Constants.intakePneumaticPorts[2], Constants.intakePneumaticPorts[1]);
-    IntakePistonLock.set(DoubleSolenoid.Value.kReverse);
+    // IntakePistonLock = new DoubleSolenoid(Constants.IntakePistonPort, PneumaticsModuleType.CTREPCM, Constants.intakePneumaticPorts[2], Constants.intakePneumaticPorts[1]);
+    // IntakePistonLock.set(DoubleSolenoid.Value.kReverse);
 
     lock_counter = 0;
+    intakeOut = false;
 
   }
 
@@ -44,48 +46,55 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void intakeUnlock(){
-    IntakePistonLock.set(DoubleSolenoid.Value.kForward);
+    //IntakePistonLock.set(DoubleSolenoid.Value.kForward);
+    intakeOut = true;
   }
 
   public void intakeLock(){
-    IntakePistonLock.set(DoubleSolenoid.Value.kReverse);
+    //IntakePistonLock.set(DoubleSolenoid.Value.kReverse);
+    intakeOut = false;
   }
 
   public void intakeExtend() {
-    IntakeExtendMotor.set(ControlMode.PercentOutput, 0.6);
+    IntakeExtendMotor.set(ControlMode.PercentOutput, -0.6);
     
     //unlock the intake
     intakeUnlock();
-    lock_counter = 0;
+    //lock_counter = 0;
   }
 
   public void intakeRetract() {
-    IntakeExtendMotor.set(ControlMode.PercentOutput, 0.0);
+    IntakeExtendMotor.set(ControlMode.PercentOutput, 0.6);
 
     // wait a bit after we retact the intake to lock
-    lock_counter++;
-    if (lock_counter >=30) {
-      lock_counter = 30;
+    // lock_counter++;
+    // if (lock_counter >=30) {
+    //   lock_counter = 30;
       intakeLock();
-    }
+    //}
+  }
+
+  public void intakeStop() {
+    IntakeExtendMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
   public boolean isIntakeUnlocked(){
-    if(IntakePistonLock.get().equals(DoubleSolenoid.Value.kForward)){
-      return true;
-    } else{
-      return false;
-    }
+    // if(IntakePistonLock.get().equals(DoubleSolenoid.Value.kForward)){
+    //   return true;
+    // } else{
+    //   return false;
+    // }
+    return intakeOut;
   }
 
   
-  @Override
-  public void periodic() {
-    if (isIntakeUnlocked()) {
-      SmartDashboard.putString("IntakePosition", "OUT");
-    } else {
-        SmartDashboard.putString("IntakePosition", "IN");
-    }
-    // This method will be called once per scheduler run
-  }
+  // @Override
+  // public void periodic() {
+  //   if (isIntakeUnlocked()) {
+  //     SmartDashboard.putString("IntakePosition", "OUT");
+  //   } else {
+  //       SmartDashboard.putString("IntakePosition", "IN");
+  //   }
+  //   // This method will be called once per scheduler run
+  // }
 }

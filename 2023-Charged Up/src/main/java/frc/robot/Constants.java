@@ -240,9 +240,9 @@ public final class Constants {
 
 
     /* Intake Constants */
-    public static final int INTAKE_EXTEND_MOTOR_PORT = 25; //repalce with acutal port on phoenix tuner
-    public static final int INTAKE_MOTOR_PORT = 26; //repalce with acutal port on phoenix tuner
-    public static final int IntakePistonPort = 27;
+    public static final int INTAKE_EXTEND_MOTOR_PORT = 8; //repalce with acutal port on phoenix tuner
+    public static final int INTAKE_MOTOR_PORT = 9; //repalce with acutal port on phoenix tuner
+    //public static final int IntakePistonPort = 27;
     public static final int[] intakePneumaticPorts = {28,29,30,31,32};
 
     

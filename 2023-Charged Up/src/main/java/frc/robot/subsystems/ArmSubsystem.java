@@ -175,11 +175,11 @@ public class ArmSubsystem extends SubsystemBase {
 
     //PERIODIC
 
-    @Override
-    public void periodic(){ 
-        SmartDashboard.putNumber("Arm Angle", getPivotAngle());
-        SmartDashboard.putNumber("Pivoting Arm Encoder RAW", encoder.get());
-        SmartDashboard.putNumber("Telescoping Arm Encoder", getTelescopingEncoder());
-    }
+    // @Override
+    // public void periodic(){ 
+    //     SmartDashboard.putNumber("Arm Angle", getPivotAngle());
+    //     SmartDashboard.putNumber("Pivoting Arm Encoder RAW", encoder.get());
+    //     SmartDashboard.putNumber("Telescoping Arm Encoder", getTelescopingEncoder());
+    // }
 
 }

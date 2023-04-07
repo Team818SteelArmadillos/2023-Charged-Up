@@ -76,16 +76,16 @@ public class ClawSubsystem extends SubsystemBase {
         }
     }
     
-    @Override
-    public void periodic() {
-        // SmartDashboard.putNumber("Claw Current", getMotorCurrent());
-        // SmartDashboard.putNumber("Claw Voltage", getMotorVoltage());
+    // @Override
+    // public void periodic() {
+    //     SmartDashboard.putNumber("Claw Current", getMotorCurrent());
+    //     SmartDashboard.putNumber("Claw Voltage", getMotorVoltage());
 
-        if (isOpen()) {
-            SmartDashboard.putString("Claw Mode", "OPEN / CUBE");
-        } else {
-            SmartDashboard.putString("Claw Mode", "CLOSED / CONE");
-        }
-    }
+    //     if (isOpen()) {
+    //         SmartDashboard.putString("Claw Mode", "OPEN / CUBE");
+    //     } else {
+    //         SmartDashboard.putString("Claw Mode", "CLOSED / CONE");
+    //     }
+    // }
 
 }

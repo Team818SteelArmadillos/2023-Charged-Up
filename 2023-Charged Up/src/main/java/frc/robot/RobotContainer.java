@@ -43,7 +43,7 @@ public class RobotContainer {
   //private final LimeNetwork m_LimeNetwork = new LimeNetwork();
   //private final Pathplanning m_Pathplanning = new Pathplanning();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
-  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  //private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
   //autons
   private final RClear_ScoreTwoAndGrabAuton mRClear_ScoreTwoAndGrabAuton = new RClear_ScoreTwoAndGrabAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
@@ -72,7 +72,7 @@ public class RobotContainer {
   public final DriveToPositionAuton m_driveToPoseCommand = new DriveToPositionAuton(0, 0, m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), m_swerveSubsystem);
 
   //intake command
-  public final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
+  //public final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
   public RobotContainer() {
@@ -81,8 +81,9 @@ public class RobotContainer {
     // SmartDashboard.putNumber("Balance I", 0.0);
     // SmartDashboard.putNumber("Balance D", 0.0);
 
-    //m_swerveSubsystem.setDefaultCommand(m_swerveDriveCommand);
+    m_swerveSubsystem.setDefaultCommand(m_swerveDriveCommand);
     m_armSubsystem.setDefaultCommand(m_ArmCommand);
+    //m_intakeSubsystem.setDefaultCommand(m_intakeCommand);
     
     // Initializie auton chooser in smartdashboard
     m_autoChooser.setDefaultOption("Mid Score Grab Balance", mCrossGrabBalanceAuton);
