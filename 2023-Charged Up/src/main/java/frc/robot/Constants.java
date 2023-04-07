@@ -236,6 +236,15 @@ public final class Constants {
     public static final double FOUR_BALL_MAX_ACCELERATION = 5;
     public static final double WACK_MAX_SPEED = Units.feetToMeters(15.0);
     public static final double WACK_MAX_ACCELERATION = 5;
+
+
+
+    /* Intake Constants */
+    public static final int INTAKE_EXTEND_MOTOR_PORT = 25; //repalce with acutal port on phoenix tuner
+    public static final int INTAKE_MOTOR_PORT = 26; //repalce with acutal port on phoenix tuner
+    public static final int IntakePistonPort = 27;
+    public static final int[] intakePneumaticPorts = {28,29,30,31,32};
+
     
     /* Constraint for the motion profilied robot angle controller */
     public static final TrapezoidProfile.Constraints THETA_CONTROLLER_CONSTRAINTS =
