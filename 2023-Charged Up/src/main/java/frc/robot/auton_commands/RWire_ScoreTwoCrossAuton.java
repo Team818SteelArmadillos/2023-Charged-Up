@@ -33,18 +33,18 @@ public class RWire_ScoreTwoCrossAuton extends SequentialCommandGroup {
       new ScoreHighAuton(armSubsystem, clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(2.0, -0.3, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+        new DriveToPositionAuton(3.0, -0.5, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
-      new SlowDriveCommand(Constants.FORWARD_DIRECTION, 2.0, swerveSubsystem),
-      new DriveToGroundIntakeAuton(5.5, -0.5, armSubsystem, swerveSubsystem, clawSubsystem),
+      new SlowDriveCommand(Constants.FORWARD_DIRECTION, 1.5, swerveSubsystem),
+      new DriveToGroundIntakeAuton(6.2, -0.7, armSubsystem, swerveSubsystem, clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(2.1, -0.3, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+        new DriveToPositionAuton(3.0, -0.3, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
       new SlowDriveCommand(Constants.BACKWARD_DIRECTION, 2.0, swerveSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(-0.5, -0.68, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+        new DriveToPositionAuton(-0.3, -0.92, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
       new ScoreMidAuton(armSubsystem, clawSubsystem),
       new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
