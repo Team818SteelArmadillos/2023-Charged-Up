@@ -23,7 +23,10 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 public final class Constants {
 
-    //Auton Values
+    //Auton Values  
+    public static final String BLUE_ALLIANCE = "Blue";
+    public static final String RED_ALLIANCE = "Red";
+
     public static final int CLAW_INTAKE_DIRECTION = 1;
     public static final int SIDE_INTAKE_DIRECTION = 2;
 
@@ -40,10 +43,10 @@ public final class Constants {
     public static final double SECOND_CUBE_Y_POS_BLUE = -1.8;
 
     
-    public static final double FIRST_CUBE_X_POS_RED = FIRST_CUBE_X_POS_BLUE;
-    public static final double FIRST_CUBE_Y_POS_RED = (-FIRST_CUBE_Y_POS_BLUE) - 0.25;
-    public static final double SECOND_CUBE_X_POS_RED = SECOND_CUBE_X_POS_BLUE;
-    public static final double SECOND_CUBE_Y_POS_RED = (-SECOND_CUBE_Y_POS_BLUE) - 0.37;
+    public static final double FIRST_CUBE_X_POS_RED = 5.0;
+    public static final double FIRST_CUBE_Y_POS_RED = 0.45;
+    public static final double SECOND_CUBE_X_POS_RED = 6.0;
+    public static final double SECOND_CUBE_Y_POS_RED = 1.8;
     /*============================
                 Arm 
     ==============================*/

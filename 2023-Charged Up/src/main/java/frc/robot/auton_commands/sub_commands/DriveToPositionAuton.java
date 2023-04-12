@@ -77,6 +77,7 @@ public class DriveToPositionAuton extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //calculate timeout based on distance
     timeoutTime = Math.sqrt(Math.pow(m_targetX - m_drivetrain.getCTRSwerveDrivetrain().getPoseMeters().getX(), 2) 
     + Math.pow(m_targetY - m_drivetrain.getCTRSwerveDrivetrain().getPoseMeters().getY(), 2)) / 1.9;
 
@@ -90,17 +91,12 @@ public class DriveToPositionAuton extends CommandBase {
 
     double currentX = m_drivetrain.getCTRSwerveDrivetrain().getPoseMeters().getX();  //Just get these values from the odometry
     double currentY = m_drivetrain.getCTRSwerveDrivetrain().getPoseMeters().getY();
-    // m_targetX = SmartDashboard.getNumber("xTarget", 0.0);
-    // m_targetY = SmartDashboard.getNumber("yTarget", 0.0);
+
     double xSpeed = 0;
     double ySpeed = 0;
-    // m_xPid.setPID(SmartDashboard.getNumber("p", 0.0), SmartDashboard.getNumber("i", 0.0), SmartDashboard.getNumber("d", 0.0));
-    // m_yPid.setPID(SmartDashboard.getNumber("p", 0.0), SmartDashboard.getNumber("i", 0.0), SmartDashboard.getNumber("d", 0.0));
     
     xSpeed = m_xPid.calculate(currentX, m_targetX);
     ySpeed = m_yPid.calculate(currentY, m_targetY);
-
-    //SmartDashboard.putNumber("ySpeedOut", ySpeed);
 
     switch (point_to_direction) {
       case 0: // do nothing

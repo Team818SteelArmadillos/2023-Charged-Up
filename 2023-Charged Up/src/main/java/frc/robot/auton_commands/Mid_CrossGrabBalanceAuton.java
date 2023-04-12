@@ -23,10 +23,7 @@ import frc.robot.subsystems.ClawSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Mid_CrossGrabBalanceAuton extends SequentialCommandGroup {
-  /** Creates a new IWantToWinAuton. */
   public Mid_CrossGrabBalanceAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ScoreHighAuton(Constants.SCORE_CONE, armSubsystem, clawSubsystem),
       new ParallelCommandGroup(
