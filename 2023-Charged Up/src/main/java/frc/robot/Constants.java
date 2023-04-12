@@ -24,17 +24,26 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 public final class Constants {
 
     //Auton Values
+    public static final int CLAW_INTAKE_DIRECTION = 1;
+    public static final int SIDE_INTAKE_DIRECTION = 2;
+
+    public static final boolean IN = true;
+    public static final boolean OUT = true;
+
+    public static final String SCORE_CONE = "cone";
+    public static final String SCORE_CUBE = "cube";
+
+     // negative = right; positive = left
     public static final double FIRST_CUBE_X_POS_BLUE = 5.0;
     public static final double FIRST_CUBE_Y_POS_BLUE = -0.45;
-    public static final double SECOND_CUBE_X_POS_BLUE = 5.6;
-    public static final double SECOND_CUBE_Y_POS_BLUE = -1.75;
+    public static final double SECOND_CUBE_X_POS_BLUE = 6.0;
+    public static final double SECOND_CUBE_Y_POS_BLUE = -1.8;
 
     
     public static final double FIRST_CUBE_X_POS_RED = FIRST_CUBE_X_POS_BLUE;
-    public static final double FIRST_CUBE_Y_POS_RED = (-FIRST_CUBE_Y_POS_BLUE) - 0.15;
+    public static final double FIRST_CUBE_Y_POS_RED = (-FIRST_CUBE_Y_POS_BLUE) - 0.25;
     public static final double SECOND_CUBE_X_POS_RED = SECOND_CUBE_X_POS_BLUE;
-    public static final double SECOND_CUBE_Y_POS_RED = (-SECOND_CUBE_Y_POS_BLUE) - 0.25;
-
+    public static final double SECOND_CUBE_Y_POS_RED = (-SECOND_CUBE_Y_POS_BLUE) - 0.37;
     /*============================
                 Arm 
     ==============================*/
@@ -240,8 +249,8 @@ public final class Constants {
 
 
     /* Intake Constants */
-    public static final int INTAKE_EXTEND_MOTOR_PORT = 8; //repalce with acutal port on phoenix tuner
-    public static final int INTAKE_MOTOR_PORT = 9; //repalce with acutal port on phoenix tuner
+    public static final int INTAKE_EXTEND_MOTOR_PORT = 9; //repalce with acutal port on phoenix tuner
+    public static final int INTAKE_MOTOR_PORT = 8; //repalce with acutal port on phoenix tuner
     //public static final int IntakePistonPort = 27;
     public static final int[] intakePneumaticPorts = {28,29,30,31,32};
 

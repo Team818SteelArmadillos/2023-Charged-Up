@@ -7,42 +7,44 @@ package frc.robot.subsystems;
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPXConfiguration;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  VictorSPX IntakeExtendMotor, IntakeMotor;
+  TalonSRX IntakeExtendMotor;
+  CANSparkMax IntakeMotor;
   DoubleSolenoid IntakePistonLock;
 
-  private int lock_counter;
   private boolean intakeOut;
 
     /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
-    IntakeExtendMotor = new VictorSPX(Constants.INTAKE_EXTEND_MOTOR_PORT);
-    IntakeMotor = new VictorSPX(Constants.INTAKE_MOTOR_PORT);
-
-    VictorSPXConfiguration victorSPXConfiguration = new VictorSPXConfiguration();
-
-    IntakeExtendMotor.configAllSettings(victorSPXConfiguration);
-    IntakeMotor.configAllSettings(victorSPXConfiguration);
+    IntakeExtendMotor = new TalonSRX(Constants.INTAKE_EXTEND_MOTOR_PORT);
+    IntakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_PORT, MotorType.kBrushless);
 
     // IntakePistonLock = new DoubleSolenoid(Constants.IntakePistonPort, PneumaticsModuleType.CTREPCM, Constants.intakePneumaticPorts[2], Constants.intakePneumaticPorts[1]);
     // IntakePistonLock.set(DoubleSolenoid.Value.kReverse);
+    IntakeExtendMotor.setSelectedSensorPosition(0.0);
+    IntakeExtendMotor.config_kP(0, 0.025);
 
-    lock_counter = 0;
+    IntakeMotor.setSmartCurrentLimit(20);
+
     intakeOut = false;
 
   }
 
   public void setIntakeSpeed(double speed){
-    IntakeMotor.set(ControlMode.PercentOutput, speed);
+    IntakeMotor.set(speed);
   }
 
   public void intakeUnlock(){
@@ -56,7 +58,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void intakeExtend() {
-    IntakeExtendMotor.set(ControlMode.PercentOutput, -0.6);
+    IntakeExtendMotor.set(ControlMode.Position, -539000);
     
     //unlock the intake
     intakeUnlock();
@@ -64,7 +66,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void intakeRetract() {
-    IntakeExtendMotor.set(ControlMode.PercentOutput, 0.6);
+    IntakeExtendMotor.set(ControlMode.Position, 0);
 
     // wait a bit after we retact the intake to lock
     // lock_counter++;
@@ -88,13 +90,8 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   
-  // @Override
-  // public void periodic() {
-  //   if (isIntakeUnlocked()) {
-  //     SmartDashboard.putString("IntakePosition", "OUT");
-  //   } else {
-  //       SmartDashboard.putString("IntakePosition", "IN");
-  //   }
-  //   // This method will be called once per scheduler run
-  // }
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("Intake Encoder Val", IntakeExtendMotor.getSelectedSensorPosition());
+  }
 }

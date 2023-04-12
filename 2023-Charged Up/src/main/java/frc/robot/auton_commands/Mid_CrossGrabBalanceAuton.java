@@ -28,7 +28,7 @@ public class Mid_CrossGrabBalanceAuton extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ScoreHighAuton(armSubsystem, clawSubsystem),
+      new ScoreHighAuton(Constants.SCORE_CONE, armSubsystem, clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPlatformAuton(Constants.FORWARD_DIRECTION, swerveSubsystem)

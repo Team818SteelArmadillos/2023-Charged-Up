@@ -31,7 +31,7 @@ public class DriveToPositionAuton extends CommandBase {
   Rotation2d m_targetAngle;
   
   CTRSwerveSubsystem m_drivetrain;
-  boolean point_to_direction;
+  int point_to_direction;
   Timer timeout;
 
   PIDController m_xPid;
@@ -45,31 +45,24 @@ public class DriveToPositionAuton extends CommandBase {
     m_xPid = new PIDController(1.7, 0, 0.0);
     m_yPid = new PIDController(1.7, 0, 0.0);
 
-    m_xPid.setTolerance(0.01);
-    m_yPid.setTolerance(0.01);
+    m_xPid.setTolerance(0.05);
+    m_yPid.setTolerance(0.05);
     
     m_targetX = targetX;
     m_targetY = targetY;
     m_targetAngle = targetAngle;
     m_drivetrain = drivetrain;
 
-    point_to_direction = false;
-
-    // SmartDashboard.putNumber("xTarget", 0.0);
-    // SmartDashboard.putNumber("yTarget", 0.0);
-
-    // SmartDashboard.putNumber("p", 0.0);
-    // SmartDashboard.putNumber("i", 0.0);
-    // SmartDashboard.putNumber("d", 0.0);
+    point_to_direction = 0;
   }
 
-  public DriveToPositionAuton(double targetX, double targetY, CTRSwerveSubsystem drivetrain) {
+  public DriveToPositionAuton(int intakeDirection, double targetX, double targetY, CTRSwerveSubsystem drivetrain) {
     addRequirements(drivetrain);
 
     timeout = new Timer();
 
-    m_xPid = new PIDController(1.7, 0, 0.0);
-    m_yPid = new PIDController(1.7, 0, 0.0);
+    m_xPid = new PIDController(1.8, 0, 0.0);
+    m_yPid = new PIDController(1.8, 0, 0.0);
 
     m_xPid.setTolerance(0.01);
     m_yPid.setTolerance(0.01);
@@ -78,21 +71,14 @@ public class DriveToPositionAuton extends CommandBase {
     m_targetY = targetY;
     m_drivetrain = drivetrain;
 
-    point_to_direction = true;
-
-    // SmartDashboard.putNumber("xTarget", 0.0);
-    // SmartDashboard.putNumber("yTarget", 0.0);
-
-    // SmartDashboard.putNumber("p", 0.0);
-    // SmartDashboard.putNumber("i", 0.0);
-    // SmartDashboard.putNumber("d", 0.0);
+    point_to_direction = intakeDirection;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     timeoutTime = Math.sqrt(Math.pow(m_targetX - m_drivetrain.getCTRSwerveDrivetrain().getPoseMeters().getX(), 2) 
-    + Math.pow(m_targetY - m_drivetrain.getCTRSwerveDrivetrain().getPoseMeters().getY(), 2)) / 2.0;
+    + Math.pow(m_targetY - m_drivetrain.getCTRSwerveDrivetrain().getPoseMeters().getY(), 2)) / 1.9;
 
     timeout.reset();
     timeout.start();
@@ -116,8 +102,15 @@ public class DriveToPositionAuton extends CommandBase {
 
     //SmartDashboard.putNumber("ySpeedOut", ySpeed);
 
-    if (point_to_direction) {
-      m_targetAngle = new Rotation2d(-(m_targetX - currentX), -(m_targetY - currentY));
+    switch (point_to_direction) {
+      case 0: // do nothing
+        break;
+      case 1: 
+        m_targetAngle = new Rotation2d(-(m_targetX - currentX), -(m_targetY - currentY));
+        break;
+      case 2: 
+        m_targetAngle = new Rotation2d(-(m_targetX - currentX), -(m_targetY - currentY)).minus(new Rotation2d(0.0, 1.0));
+        break;
     }
 
     m_drivetrain.getCTRSwerveDrivetrain().driveFullyFieldCentric(xSpeed, ySpeed, m_targetAngle);

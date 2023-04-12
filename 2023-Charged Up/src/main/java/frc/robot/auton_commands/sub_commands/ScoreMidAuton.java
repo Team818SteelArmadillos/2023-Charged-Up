@@ -4,6 +4,7 @@
 
 package frc.robot.auton_commands.sub_commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -16,13 +17,24 @@ import frc.robot.subsystems.ClawSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ScoreMidAuton extends SequentialCommandGroup {
   /** Creates a new ScoreHighAuton. */
-  public ScoreMidAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem) {
+  public ScoreMidAuton(String gamePeice, ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      new ArmAuton(armSubsystem, Constants.ARM_MID_STATE),
-      new ClawModeToggleCommand(clawSubsystem),
-      new WaitCommand(0.2)
-    );
+    if (gamePeice.equalsIgnoreCase(Constants.SCORE_CONE)) {
+      addCommands(
+        new ArmAuton(armSubsystem, Constants.ARM_MID_STATE),
+        new ClawModeToggleCommand(clawSubsystem),
+        new WaitCommand(0.2)
+      );
+    } else if (gamePeice.equalsIgnoreCase(Constants.SCORE_CUBE)) {
+      addCommands(
+        new ParallelDeadlineGroup(
+          new WaitCommand(0.25),
+          new ClawWheelAuton(clawSubsystem, Constants.OUT)
+          )
+      );
+    } else {
+      //do nothing
+    }
   }
 }

@@ -14,15 +14,15 @@ import frc.robot.subsystems.ClawSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DriveToGroundIntakeAuton extends SequentialCommandGroup {
+public class DriveToSideIntakeAuton extends SequentialCommandGroup {
   /** Creates a new GroundIntakeAuton. */
-  public DriveToGroundIntakeAuton(double target_x, double target_y, ArmSubsystem armSubsystem, CTRSwerveSubsystem swerveSubsystem, ClawSubsystem clawSubsystem) {
+  public DriveToSideIntakeAuton(double target_x, double target_y, ArmSubsystem armSubsystem, CTRSwerveSubsystem swerveSubsystem, ClawSubsystem clawSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
       new ParallelDeadlineGroup(
-        new DriveToPositionAuton(Constants.CLAW_INTAKE_DIRECTION, target_x, target_y, swerveSubsystem),
+        new DriveToPositionAuton(Constants.SIDE_INTAKE_DIRECTION, target_x, target_y, swerveSubsystem),
         new ClawWheelAuton(clawSubsystem, true)
       )
     );

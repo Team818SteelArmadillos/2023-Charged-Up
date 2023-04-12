@@ -43,7 +43,11 @@ public class ClawWheelAuton extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     endTimer.stop();
-    m_ClawWheelsSubsystem.setIntakeSpeed(0);
+    if (in) {
+      m_ClawWheelsSubsystem.setIntakeSpeed(-0.1);
+    } else {
+      m_ClawWheelsSubsystem.setIntakeSpeed(0.0);
+    }
   }
 
   // Returns true when the command should end.

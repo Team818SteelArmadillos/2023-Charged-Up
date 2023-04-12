@@ -72,6 +72,6 @@ public class ArmAuton extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return  m_armSubsystem.PivotingPID.atSetpoint() && m_armSubsystem.onSetPoint(lengthSetpoint)|| timeout.hasElapsed(2.5) ;
+    return  m_armSubsystem.PivotingPID.atSetpoint() && m_armSubsystem.onSetPoint(lengthSetpoint)|| timeout.hasElapsed(1.5) ;
   }
 }

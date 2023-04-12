@@ -59,7 +59,11 @@ public class ClawWheelCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    clawWheelsSubsystem.setIntakeSpeed(0);
+    if (_state == 0) {
+      clawWheelsSubsystem.setIntakeSpeed(-0.1);
+    } else {
+      clawWheelsSubsystem.setIntakeSpeed(0.0);
+    }
   }
 
   // Returns true when the command should end.
