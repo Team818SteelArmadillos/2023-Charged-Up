@@ -4,6 +4,7 @@
 
 package frc.robot.auton_commands;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -13,46 +14,83 @@ import frc.robot.auton_commands.sub_commands.ArmAuton;
 import frc.robot.auton_commands.sub_commands.ClawWheelAuton;
 import frc.robot.auton_commands.sub_commands.DriveToGroundIntakeAuton;
 import frc.robot.auton_commands.sub_commands.DriveToPositionAuton;
+import frc.robot.auton_commands.sub_commands.IntakeDownAuton;
+import frc.robot.auton_commands.sub_commands.IntakeInAuton;
+import frc.robot.auton_commands.sub_commands.IntakeOutAuton;
 import frc.robot.auton_commands.sub_commands.ScoreHighAuton;
 import frc.robot.auton_commands.sub_commands.ScoreMidAuton;
 import frc.robot.auton_commands.sub_commands.SlowDriveCommand;
+import frc.robot.auton_commands.sub_commands.SpeedDriveCommand;
 import frc.robot.commands.ClawModeToggleCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class Wire_ScoreTwoCrossAuton extends SequentialCommandGroup {
   /** Creates a new IWantToWinAuton. */
-  public Wire_ScoreTwoCrossAuton(ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem) {
+  public Wire_ScoreTwoCrossAuton(String alliance, ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem, CTRSwerveSubsystem swerveSubsystem, IntakeSubsystem intakeSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+
+    double first_cube_x = 0;
+    double first_cube_y = 0;
+    double second_cube_x = 0;
+    double second_cube_y = 0;
+    int alliance_y_direction = 1;
+
+    if (alliance.equalsIgnoreCase("Blue")) {
+      first_cube_x = Constants.FIRST_CUBE_X_POS_BLUE;
+      first_cube_y = Constants.FIRST_CUBE_Y_POS_BLUE;
+      second_cube_x = Constants.SECOND_CUBE_X_POS_BLUE;
+      second_cube_y = Constants.SECOND_CUBE_Y_POS_BLUE;
+      alliance_y_direction = -1;
+    } else if (alliance.equalsIgnoreCase("Red")) {
+      first_cube_x = Constants.FIRST_CUBE_X_POS_RED;
+      first_cube_y = Constants.FIRST_CUBE_Y_POS_RED;
+      second_cube_x = Constants.SECOND_CUBE_X_POS_RED;
+      second_cube_y = Constants.SECOND_CUBE_Y_POS_RED;
+      alliance_y_direction = 1;
+    } else {
+
+    }
+
     addCommands(
       new ScoreHighAuton(Constants.SCORE_CONE, armSubsystem, clawSubsystem),
-      new ParallelCommandGroup(
-        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(2.0, 0.3, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
-      ),
-      new SlowDriveCommand(Constants.FORWARD_DIRECTION, 2.0, swerveSubsystem),
-      new DriveToGroundIntakeAuton(5.5, 0.5, armSubsystem, swerveSubsystem, clawSubsystem),
-      new ParallelCommandGroup(
-        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(2.1, 0.3, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
-      ),
-      new SlowDriveCommand(Constants.BACKWARD_DIRECTION, 2.0, swerveSubsystem),
-      new ParallelCommandGroup(
-        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(-0.5, 0.68, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
-      ),
-      new ScoreMidAuton(Constants.SCORE_CUBE, armSubsystem, clawSubsystem),
-      new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
       new ParallelDeadlineGroup(
-        new WaitCommand(0.2), 
-        new ClawWheelAuton(clawSubsystem, false)
+        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
+        new SpeedDriveCommand(Constants.FORWARD_DIRECTION, 0.6, swerveSubsystem)
       ),
-      new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE)
+      new DriveToPositionAuton(3.0, alliance_y_direction * -0.3, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
+      new ParallelDeadlineGroup(
+        new DriveToPositionAuton(Constants.SIDE_INTAKE_DIRECTION, first_cube_x + 1.0, -first_cube_y, swerveSubsystem),
+        new IntakeInAuton(intakeSubsystem)
+      ),
+      new ParallelDeadlineGroup(
+        new DriveToPositionAuton(0.0, alliance_y_direction * 0.2, new Rotation2d(0.0, -1.0), swerveSubsystem),
+        new SequentialCommandGroup(
+          new WaitCommand(2.0),
+          new IntakeOutAuton(0.3, intakeSubsystem)
+        )
+      ),
+      new DriveToPositionAuton(4.0, alliance_y_direction * -0.3, new Rotation2d(0.0, -1.0), swerveSubsystem),
+      new ParallelDeadlineGroup(
+        new DriveToPositionAuton(Constants.SIDE_INTAKE_DIRECTION, second_cube_x, -(second_cube_y + 0.2), swerveSubsystem),
+        new IntakeInAuton(intakeSubsystem)
+      ),
+      new DriveToPositionAuton(4.0, alliance_y_direction * 0.1, new Rotation2d(0.0, -1.0), swerveSubsystem),
+      //new DriveToPositionAuton(0.0, alliance_y_direction * 0.2, new Rotation2d(0.0, -1.0), swerveSubsystem),
+      new ParallelDeadlineGroup(
+        new DriveToPositionAuton(0.0, alliance_y_direction * -0.6, new Rotation2d(0.0, -1.0), swerveSubsystem),
+        new SequentialCommandGroup(
+          new WaitCommand(1.0),
+          new IntakeOutAuton(5.0, intakeSubsystem)
+        )
+      )
     );
   }
 }

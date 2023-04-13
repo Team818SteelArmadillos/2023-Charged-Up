@@ -80,7 +80,7 @@ public class Clear_ScoreThreeAuton extends SequentialCommandGroup {
       ),
       new DriveToPositionAuton(4.0, alliance_y_direction * 0.2, new Rotation2d(0.0, -1.0), swerveSubsystem),
       new DriveToPositionAuton(0.3, alliance_y_direction * 0.2, new Rotation2d(0.0, -1.0), swerveSubsystem),
-      new IntakeOutAuton(intakeSubsystem)
+      new IntakeOutAuton(1.0, intakeSubsystem)
     );
   }
 }

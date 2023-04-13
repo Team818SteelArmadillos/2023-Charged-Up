@@ -42,7 +42,8 @@ public class RobotContainer {
   private final Clear_ScoreThreeAuton mRClear_ScoreThreeAuton = new Clear_ScoreThreeAuton(Constants.RED_ALLIANCE, m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem, m_intakeSubsystem);
   private final Clear_ScoreTwoAndBalanceAuton mBClear_ScoreTwoAndBalanceAuton = new Clear_ScoreTwoAndBalanceAuton(Constants.BLUE_ALLIANCE, m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem, m_intakeSubsystem);
   private final Clear_ScoreTwoAndBalanceAuton mRClear_ScoreTwoAndBalanceAuton = new Clear_ScoreTwoAndBalanceAuton(Constants.RED_ALLIANCE, m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem, m_intakeSubsystem);
-  private final Wire_ScoreTwoCrossAuton mBWire_ScoreTwoCrossAuton = new Wire_ScoreTwoCrossAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
+  private final Wire_ScoreTwoCrossAuton mBWire_ScoreTwoCrossAuton = new Wire_ScoreTwoCrossAuton(Constants.BLUE_ALLIANCE, m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem, m_intakeSubsystem);
+  private final Wire_ScoreTwoCrossAuton mRWire_ScoreTwoCrossAuton = new Wire_ScoreTwoCrossAuton(Constants.RED_ALLIANCE, m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem, m_intakeSubsystem);
   private final Mid_CrossGrabBalanceAuton mCrossGrabBalanceAuton = new Mid_CrossGrabBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
 
 
@@ -77,6 +78,7 @@ public class RobotContainer {
     m_autoChooser.addOption("Blue Clear 2.5 Balance", mBClear_ScoreTwoAndBalanceAuton);
     m_autoChooser.addOption("Red Clear 2.5 Balance", mRClear_ScoreTwoAndBalanceAuton);
     m_autoChooser.addOption("Blue Wire Score 2", mBWire_ScoreTwoCrossAuton);
+    m_autoChooser.addOption("Red Wire Score 2", mRWire_ScoreTwoCrossAuton);
     SmartDashboard.putData("Auton Choices", m_autoChooser);
     
     /* Configure the button bindings */
