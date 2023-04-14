@@ -16,7 +16,6 @@ public class ArmAuton extends CommandBase {
   
   double angleSetpoint;
   double lengthSetpoint;
-  double last_lengthSetpoint;
   int state;
 
   /** Creates a new ArmAuton. */
@@ -24,7 +23,6 @@ public class ArmAuton extends CommandBase {
     addRequirements(pivotingArmSubsystem);
      m_armSubsystem = pivotingArmSubsystem;
      state = State;
-     last_lengthSetpoint = 0;
 
      timeout = new Timer();
   }

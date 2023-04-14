@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.auton_commands.Clear_ScoreTwoAndBalanceAuton;
+import frc.robot.auton_commands.Mid_CrossBalanceAuton;
 import frc.robot.auton_commands.Clear_ScoreThreeAuton;
 import frc.robot.auton_commands.Mid_CrossGrabBalanceAuton;
 import frc.robot.auton_commands.Wire_ScoreTwoCrossAuton;
@@ -45,7 +46,7 @@ public class RobotContainer {
   private final Wire_ScoreTwoCrossAuton mBWire_ScoreTwoCrossAuton = new Wire_ScoreTwoCrossAuton(Constants.BLUE_ALLIANCE, m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem, m_intakeSubsystem);
   private final Wire_ScoreTwoCrossAuton mRWire_ScoreTwoCrossAuton = new Wire_ScoreTwoCrossAuton(Constants.RED_ALLIANCE, m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem, m_intakeSubsystem);
   private final Mid_CrossGrabBalanceAuton mCrossGrabBalanceAuton = new Mid_CrossGrabBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
-
+  private final Mid_CrossBalanceAuton mCrossBalanceAuton = new Mid_CrossBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
 
   
   //arm command
@@ -73,12 +74,13 @@ public class RobotContainer {
     
     // Initializie auton chooser in smartdashboard
     m_autoChooser.setDefaultOption("Mid 1.5 Balance", mCrossGrabBalanceAuton);
+    m_autoChooser.setDefaultOption("Mid Cross Balance", mCrossBalanceAuton);
     m_autoChooser.addOption("Blue Clear 3", mBClear_ScoreThreeAuton);
     m_autoChooser.addOption("Red Clear 3", mRClear_ScoreThreeAuton);
     m_autoChooser.addOption("Blue Clear 2.5 Balance", mBClear_ScoreTwoAndBalanceAuton);
     m_autoChooser.addOption("Red Clear 2.5 Balance", mRClear_ScoreTwoAndBalanceAuton);
-    m_autoChooser.addOption("Blue Wire Score 2", mBWire_ScoreTwoCrossAuton);
-    m_autoChooser.addOption("Red Wire Score 2", mRWire_ScoreTwoCrossAuton);
+    m_autoChooser.addOption("Blue Wire Score 3", mBWire_ScoreTwoCrossAuton);
+    m_autoChooser.addOption("Red Wire Score 3", mRWire_ScoreTwoCrossAuton);
     SmartDashboard.putData("Auton Choices", m_autoChooser);
     
     /* Configure the button bindings */

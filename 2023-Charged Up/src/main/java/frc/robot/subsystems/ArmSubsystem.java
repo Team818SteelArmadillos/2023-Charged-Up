@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -174,11 +175,11 @@ public class ArmSubsystem extends SubsystemBase {
 
     //PERIODIC
 
-    // @Override
-    // public void periodic(){ 
-    //     SmartDashboard.putNumber("Arm Angle", getPivotAngle());
-    //     SmartDashboard.putNumber("Pivoting Arm Encoder RAW", encoder.get());
-    //     SmartDashboard.putNumber("Telescoping Arm Encoder", getTelescopingEncoder());
-    // }
+    @Override
+    public void periodic(){ 
+        SmartDashboard.putNumber("Arm Angle", getPivotAngle());
+        SmartDashboard.putNumber("Pivoting Arm Encoder RAW", encoder.get());
+        SmartDashboard.putNumber("Telescoping Arm Encoder", getTelescopingEncoder());
+    }
 
 }
