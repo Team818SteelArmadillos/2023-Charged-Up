@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -19,7 +20,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   TalonSRX IntakeExtendMotor;
   CANSparkMax IntakeMotor;
-  DoubleSolenoid IntakePistonLock;
+  DoubleSolenoid IntakePistonLock, IntakePistonUnused;
 
   private boolean intakeOut;
 
@@ -28,8 +29,10 @@ public class IntakeSubsystem extends SubsystemBase {
     IntakeExtendMotor = new TalonSRX(Constants.INTAKE_EXTEND_MOTOR_PORT);
     IntakeMotor = new CANSparkMax(Constants.INTAKE_MOTOR_PORT, MotorType.kBrushless);
 
-    // IntakePistonLock = new DoubleSolenoid(Constants.IntakePistonPort, PneumaticsModuleType.CTREPCM, Constants.intakePneumaticPorts[2], Constants.intakePneumaticPorts[1]);
-    // IntakePistonLock.set(DoubleSolenoid.Value.kReverse);
+    IntakePistonLock = new DoubleSolenoid(Constants.pneumaticPistonPort, PneumaticsModuleType.CTREPCM, Constants.pneumaticPorts[0], Constants.pneumaticPorts[1]);
+    IntakePistonLock.set(DoubleSolenoid.Value.kForward);
+    IntakePistonUnused = new DoubleSolenoid(Constants.pneumaticPistonPort, PneumaticsModuleType.CTREPCM, Constants.pneumaticPorts[2], Constants.pneumaticPorts[3]);
+    IntakePistonUnused.set(DoubleSolenoid.Value.kForward);
     IntakeExtendMotor.setSelectedSensorPosition(0.0);
     IntakeExtendMotor.config_kP(0, 0.025);
 
@@ -59,6 +62,10 @@ public class IntakeSubsystem extends SubsystemBase {
     //unlock the intake
     intakeUnlock();
     //lock_counter = 0;
+  }
+
+  public void firePistons(){
+
   }
 
   public void intakeRetract() {

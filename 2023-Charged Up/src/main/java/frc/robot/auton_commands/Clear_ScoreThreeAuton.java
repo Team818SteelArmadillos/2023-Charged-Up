@@ -75,7 +75,7 @@ public class Clear_ScoreThreeAuton extends SequentialCommandGroup {
         new DriveToPositionAuton(4.0, alliance_y_direction * 0.2, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
       new ParallelDeadlineGroup(
-        new DriveToPositionAuton(Constants.SIDE_INTAKE_DIRECTION, second_cube_x, second_cube_y, swerveSubsystem),
+        new DriveToPositionAuton(Constants.SIDE_INTAKE_DIRECTION, second_cube_x + 0.1, second_cube_y, swerveSubsystem),
         new IntakeInAuton(intakeSubsystem)
       ),
       new DriveToPositionAuton(4.0, alliance_y_direction * 0.2, new Rotation2d(0.0, -1.0), swerveSubsystem),
