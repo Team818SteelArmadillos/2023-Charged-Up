@@ -124,7 +124,7 @@ public class ArmSubsystem extends SubsystemBase {
         telescopingMotor.set(ControlMode.Position, setpointLength);
     }
     
-    public void setSpeed(double speed) {
+    public void setTelescopingSpeed(double speed) {
         telescopingMotor.set(ControlMode.PercentOutput, speed);
     }
 
@@ -165,6 +165,12 @@ public class ArmSubsystem extends SubsystemBase {
         bikeBreak.toggle();
     }
 
+    public void stop() {
+        pm1.set(ControlMode.PercentOutput, 0.0);
+        telescopingMotor.set(ControlMode.PercentOutput, 0.0);
+        setArmLocked();
+    }
+
     public boolean isBikeBreakEngaged() {
         if (bikeBreak.get().equals(DoubleSolenoid.Value.kReverse)) {
             return true;
@@ -177,6 +183,16 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic(){ 
+        if (getBottomLimitswitch()) {
+            resetTelescopingEncoder();
+        }
+
+        if (getTopLimitswitch()) {
+            telescopingMotor.setSelectedSensorPosition(Constants.ARM_LENGTH_MAX);
+        }
+
+        SmartDashboard.putBoolean("Bottom Arm Limit Switch", getBottomLimitswitch());
+        SmartDashboard.putBoolean("Top Arm Limit Switch", getTopLimitswitch());
         SmartDashboard.putNumber("Arm Angle", getPivotAngle());
         SmartDashboard.putNumber("Pivoting Arm Encoder RAW", encoder.get());
         SmartDashboard.putNumber("Telescoping Arm Encoder", getTelescopingEncoder());

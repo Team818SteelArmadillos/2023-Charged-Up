@@ -104,7 +104,7 @@ public final class Constants {
     public static final int armSetpointCounter = 20;
     public static final double controllerDeadzone = 0.1;
 
-    public static final double encoderOvershoot = 0.467;
+    public static final double encoderOvershoot = 0.663;
 
     public static final double CLAW_RUMBLE_AMP_THRESHOLD = 30.0; //amps
 

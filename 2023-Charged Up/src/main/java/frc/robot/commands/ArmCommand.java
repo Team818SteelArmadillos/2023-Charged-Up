@@ -2,6 +2,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.OI;
@@ -15,6 +17,9 @@ public class ArmCommand extends CommandBase {
   private SlewRateLimiter angleRateLimiter;
   private double rawLeftJoystickInput;
   private double leftJoystickInput;
+  private boolean manual_override;
+  private int a_press_counter;
+  private boolean manual_tripped;
 
   private double lengthSetpoint;
   private SlewRateLimiter lengthRateLimiter;
@@ -29,6 +34,10 @@ public class ArmCommand extends CommandBase {
     //limits the change of a given variable to never exceed Constants.armSlewRate per second
     angleRateLimiter = new SlewRateLimiter(Constants.angleSlewRate);
     lengthRateLimiter = new SlewRateLimiter(Constants.lengthSlewRate);
+
+    manual_override = false;
+    a_press_counter = 0;
+    manual_tripped = false;
   }
   
   // Called when the command is initially scheduled.
@@ -52,9 +61,21 @@ public class ArmCommand extends CommandBase {
     rawRightJoystickInput = OI.getOperator().getRightY();
 
     // Set setPoint values with buttons. only one at a time
-    if ( OI.getOperator().a().getAsBoolean() ) { //low position 
-      angleSetpoint = Constants.ARM_ANGLE_LOW;
-      lengthSetpoint = Constants.ARM_LENGTH_GROUND;
+    if ( OI.getOperator().start().getAsBoolean() ) { //Manual Overide
+      // angleSetpoint = Constants.ARM_ANGLE_LOW;
+      // lengthSetpoint = Constants.ARM_LENGTH_GROUND;
+      if (!manual_tripped) {
+        if (a_press_counter >= 40) {
+          manual_override = !manual_override;
+          armSubsystem.stop();
+          a_press_counter = 0;
+          manual_tripped = true;
+          OI.getXOperator().setRumble(RumbleType.kBothRumble, 0.5);
+        } else {
+          a_press_counter++;
+        }
+      }
+      
     } else if ( OI.getOperator().b().getAsBoolean() ) { //medium position
       angleSetpoint = Constants.ARM_ANGLE_MID;
       lengthSetpoint = Constants.ARM_LENGTH_MID;
@@ -65,29 +86,49 @@ public class ArmCommand extends CommandBase {
       angleSetpoint = Constants.ARM_ANGLE_NEUTRAL;
       lengthSetpoint = Constants.ARM_LENGTH_MIN;
     } else {
-      //do nothing
-    }
-
-    if (armSubsystem.getBottomLimitswitch()) {
-      armSubsystem.resetTelescopingEncoder();
+      a_press_counter = 0;
+      manual_tripped = false;
+      OI.getXOperator().setRumble(RumbleType.kBothRumble, 0.0);
     }
 
     //manual set angle
     if ( Math.abs( rawLeftJoystickInput ) > Constants.controllerDeadzone ) {
-      leftJoystickInput = rawLeftJoystickInput;
-      angleSetpoint = angleRateLimiter.calculate(angleSetpoint + leftJoystickInput);
+      if (manual_override) {
+        armSubsystem.setArmUnlocked();
+        armSubsystem.setPivotSpeed(rawLeftJoystickInput);
+      } else {
+        leftJoystickInput = rawLeftJoystickInput;
+        angleSetpoint = angleRateLimiter.calculate(angleSetpoint + leftJoystickInput);     
+      }
+    } else {
+      if (manual_override) {
+        armSubsystem.setPivotSpeed(0.0);
+        armSubsystem.setArmLocked();
+      }
     }
 
     //manual set length
     if ( Math.abs( rawRightJoystickInput ) > Constants.controllerDeadzone) {
-      rightJoystickInput = -rawRightJoystickInput;
-      lengthSetpoint = lengthRateLimiter.calculate(lengthSetpoint + 20000 * rightJoystickInput);
+      // if (manual_override) {
+      //   armSubsystem.setTelescopingSpeed(-rawRightJoystickInput);
+      // } else {
+        rightJoystickInput = -rawRightJoystickInput;
+        lengthSetpoint = lengthRateLimiter.calculate(lengthSetpoint + 20000 * rightJoystickInput);
+      //}
+    } else {
+      // if (manual_override) {
+      //   armSubsystem.setTelescopingSpeed(0.0);
+      // }
     }
 
     angleSetpoint = MathUtil.clamp(angleSetpoint, -Constants.pivotHardLimit, Constants.pivotHardLimit);
-    armSubsystem.setPivotAngle(angleSetpoint);
+    if (!manual_override) {
+      armSubsystem.setPivotAngle(angleSetpoint);
+    }
     armSubsystem.setArmLength(lengthSetpoint);
-  }
+    
+    SmartDashboard.putBoolean("Arm Manual Override Mode", manual_override);
+}
 
   private void zeroArm() {
     armSubsystem.resetTelescopingEncoder();
@@ -98,7 +139,7 @@ public class ArmCommand extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    //BikeBreakSubsystem.setArmLocked();
+    armSubsystem.stop();
     //bikeBreakSubsystem.setArmLocked();
   }
 

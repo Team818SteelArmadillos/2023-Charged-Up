@@ -57,7 +57,7 @@ public class CTRSwerveDrivetrain {
 
                 /* Get status of first element */
                 if (m_allSignals[0].getError().isOK()) {
-                    SuccessfulDaqs++;
+                    // SuccessfulDaqs++;
                 } else {
                     FailedDaqs++;
                 }
@@ -74,7 +74,7 @@ public class CTRSwerveDrivetrain {
                 m_odometry.update(Rotation2d.fromDegrees(yawDegrees), m_modulePositions);
                 m_field.setRobotPose(m_odometry.getPoseMeters());
 
-                SmartDashboard.putNumber("Successful Daqs", SuccessfulDaqs);
+                //SmartDashboard.putNumber("Successful Daqs", SuccessfulDaqs);
                 SmartDashboard.putNumber("Failed Daqs", FailedDaqs);
                 SmartDashboard.putNumber("X Pos", m_odometry.getPoseMeters().getX());
                 SmartDashboard.putNumber("Y Pos", m_odometry.getPoseMeters().getY());
