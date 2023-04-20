@@ -76,7 +76,10 @@ public class ArmCommand extends CommandBase {
         }
       }
       
-    } else if ( OI.getOperator().b().getAsBoolean() ) { //medium position
+    } else if ( OI.getOperator().a().getAsBoolean() ) { //low position
+      angleSetpoint = Constants.ARM_ANGLE_LOW;
+      lengthSetpoint = Constants.ARM_LENGTH_MIN;
+    }  else if ( OI.getOperator().b().getAsBoolean() ) { //medium position
       angleSetpoint = Constants.ARM_ANGLE_MID;
       lengthSetpoint = Constants.ARM_LENGTH_MID;
     } else if ( OI.getOperator().y().getAsBoolean() ) { // high position

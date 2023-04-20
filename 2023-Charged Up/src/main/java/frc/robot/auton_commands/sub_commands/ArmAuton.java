@@ -37,8 +37,8 @@ public class ArmAuton extends CommandBase {
   @Override
   public void execute() {
 
-    if (state == Constants.ARM_LOW_STATE) { //low position 
-      angleSetpoint = Constants.ARM_ANGLE_LOW;
+    if (state == Constants.ARM_LOW_STATE) { //l ground position 
+      angleSetpoint = Constants.ARM_ANGLE_GROUND;
       lengthSetpoint = Constants.ARM_LENGTH_GROUND;
     } else if (state == Constants.ARM_MID_STATE) { //medium position
       angleSetpoint = Constants.ARM_ANGLE_MID;

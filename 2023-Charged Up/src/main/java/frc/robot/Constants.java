@@ -96,15 +96,16 @@ public final class Constants {
 
     // Pivoting Arm Angles
     public static final int ARM_ANGLE_NEUTRAL = 0;
-    public static final int ARM_ANGLE_LOW = 115;
+    public static final int ARM_ANGLE_GROUND = 115;
+    public static final int ARM_ANGLE_LOW = -56;
     public static final int ARM_ANGLE_MID = -54;
-    public static final int ARM_ANGLE_HIGH = -54;
+    public static final int ARM_ANGLE_HIGH = -53;
     public static final int pivotHardLimit = 117; //this is the maximum angle in degrees that the arm should go (with 0 being vertical)
     public static final double angleSlewRate = 78;
     public static final int armSetpointCounter = 20;
     public static final double controllerDeadzone = 0.1;
 
-    public static final double encoderOvershoot = 0.663;
+    public static final double encoderOvershoot = 0.667;
 
     public static final double CLAW_RUMBLE_AMP_THRESHOLD = 30.0; //amps
 
