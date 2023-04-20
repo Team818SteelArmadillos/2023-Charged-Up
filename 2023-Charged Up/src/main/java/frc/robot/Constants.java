@@ -40,13 +40,13 @@ public final class Constants {
     public static final double FIRST_CUBE_X_POS_BLUE = 5.0;
     public static final double FIRST_CUBE_Y_POS_BLUE = -0.45;
     public static final double SECOND_CUBE_X_POS_BLUE = 6.0;
-    public static final double SECOND_CUBE_Y_POS_BLUE = -1.8;
+    public static final double SECOND_CUBE_Y_POS_BLUE = -2.1;
 
     
     public static final double FIRST_CUBE_X_POS_RED = 5.0;
     public static final double FIRST_CUBE_Y_POS_RED = 0.45;
     public static final double SECOND_CUBE_X_POS_RED = 6.0;
-    public static final double SECOND_CUBE_Y_POS_RED = 1.8;
+    public static final double SECOND_CUBE_Y_POS_RED = 2.1;
     /*============================
                 Arm 
     ==============================*/
@@ -91,7 +91,7 @@ public final class Constants {
     public static final double CONE_OUT_SPEED= 0.8;
     public static final double CONE_OUT_SPEED_AUTON= 1.0;
     public static final double CUBE_IN_SPEED = -0.5;
-    public static final double CUBE_OUT_SPEED = 0.7;
+    public static final double CUBE_OUT_SPEED = 0.35;
     public static final double CUBE_OUT_SPEED_AUTON = 1.0;
 
     // Pivoting Arm Angles
