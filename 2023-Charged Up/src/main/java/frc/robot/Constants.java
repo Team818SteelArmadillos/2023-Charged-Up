@@ -38,9 +38,9 @@ public final class Constants {
 
      // negative = right; positive = left
     public static final double FIRST_CUBE_X_POS_BLUE = 5.0;
-    public static final double FIRST_CUBE_Y_POS_BLUE = -0.45;
+    public static final double FIRST_CUBE_Y_POS_BLUE = 0.45;
     public static final double SECOND_CUBE_X_POS_BLUE = 6.0;
-    public static final double SECOND_CUBE_Y_POS_BLUE = -2.1;
+    public static final double SECOND_CUBE_Y_POS_BLUE = 2.1;
 
     
     public static final double FIRST_CUBE_X_POS_RED = 5.0;

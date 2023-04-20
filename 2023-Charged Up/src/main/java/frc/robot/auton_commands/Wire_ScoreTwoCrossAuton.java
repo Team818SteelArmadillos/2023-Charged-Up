@@ -67,7 +67,7 @@ public class Wire_ScoreTwoCrossAuton extends SequentialCommandGroup {
       ),
       new DriveToPositionAuton(3.0, alliance_y_direction * -0.3, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
       new ParallelDeadlineGroup(
-        new DriveToPositionAuton(Constants.SIDE_INTAKE_DIRECTION, first_cube_x + 1.0, -first_cube_y, swerveSubsystem),
+        new DriveToPositionAuton(Constants.SIDE_INTAKE_DIRECTION, first_cube_x + 1.0, -alliance_y_direction * first_cube_y, swerveSubsystem),
         new IntakeInAuton(intakeSubsystem)
       ),
       new ParallelDeadlineGroup(
@@ -79,7 +79,7 @@ public class Wire_ScoreTwoCrossAuton extends SequentialCommandGroup {
       ),
       new DriveToPositionAuton(4.0, alliance_y_direction * -0.3, new Rotation2d(0.0, -1.0), swerveSubsystem),
       new ParallelDeadlineGroup(
-        new DriveToPositionAuton(Constants.SIDE_INTAKE_DIRECTION, second_cube_x, -(second_cube_y + 0.2), swerveSubsystem),
+        new DriveToPositionAuton(Constants.SIDE_INTAKE_DIRECTION, second_cube_x, -alliance_y_direction * (second_cube_y - 0.1), swerveSubsystem),
         new IntakeInAuton(intakeSubsystem)
       ),
       new DriveToPositionAuton(4.0, alliance_y_direction * 0.1, new Rotation2d(0.0, -1.0), swerveSubsystem),

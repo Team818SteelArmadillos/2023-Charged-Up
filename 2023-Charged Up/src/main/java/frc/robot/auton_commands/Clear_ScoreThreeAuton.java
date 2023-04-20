@@ -60,7 +60,7 @@ public class Clear_ScoreThreeAuton extends SequentialCommandGroup {
         new ArmAuton(armSubsystem, Constants.ARM_LOW_STATE),
         new SpeedDriveCommand(Constants.FORWARD_DIRECTION, 0.4, swerveSubsystem)
       ),
-      new DriveToGroundIntakeAuton(first_cube_x, first_cube_y, armSubsystem, swerveSubsystem, clawSubsystem),
+      new DriveToGroundIntakeAuton(first_cube_x, alliance_y_direction *  first_cube_y, armSubsystem, swerveSubsystem, clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPositionAuton(0.1, alliance_y_direction * 0.67, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
@@ -75,7 +75,7 @@ public class Clear_ScoreThreeAuton extends SequentialCommandGroup {
         new DriveToPositionAuton(4.0, alliance_y_direction * 0.2, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
       new ParallelDeadlineGroup(
-        new DriveToPositionAuton(Constants.SIDE_INTAKE_DIRECTION, second_cube_x + 0.1, second_cube_y, swerveSubsystem),
+        new DriveToPositionAuton(Constants.SIDE_INTAKE_DIRECTION, second_cube_x + 0.1, alliance_y_direction * second_cube_y, swerveSubsystem),
         new IntakeInAuton(intakeSubsystem)
       ),
       new DriveToPositionAuton(4.0, alliance_y_direction * 0.2, new Rotation2d(0.0, -1.0), swerveSubsystem),
