@@ -36,6 +36,8 @@ public class Clear_ScoreThreeAuton extends SequentialCommandGroup {
     double first_cube_y = 0;
     double second_cube_x = 0;
     double second_cube_y = 0;
+    double return_1_y = 0;
+    double return_2_y = 0;
     int alliance_y_direction = 1;
 
     if (alliance.equalsIgnoreCase("Blue")) {
@@ -43,12 +45,16 @@ public class Clear_ScoreThreeAuton extends SequentialCommandGroup {
       first_cube_y = Constants.FIRST_CUBE_Y_POS_BLUE;
       second_cube_x = Constants.SECOND_CUBE_X_POS_BLUE;
       second_cube_y = Constants.SECOND_CUBE_Y_POS_BLUE;
+      return_1_y = 0.67;
+      return_2_y = 0.2;
       alliance_y_direction = -1;
     } else if (alliance.equalsIgnoreCase("Red")) {
       first_cube_x = Constants.FIRST_CUBE_X_POS_RED;
       first_cube_y = Constants.FIRST_CUBE_Y_POS_RED;
       second_cube_x = Constants.SECOND_CUBE_X_POS_RED;
       second_cube_y = Constants.SECOND_CUBE_Y_POS_RED;
+      return_1_y = 0.4;
+      return_2_y = -0.1;
       alliance_y_direction = 1;
     } else {
 
@@ -63,7 +69,7 @@ public class Clear_ScoreThreeAuton extends SequentialCommandGroup {
       new DriveToGroundIntakeAuton(first_cube_x, alliance_y_direction *  first_cube_y, armSubsystem, swerveSubsystem, clawSubsystem),
       new ParallelCommandGroup(
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPositionAuton(0.1, alliance_y_direction * 0.67, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
+        new DriveToPositionAuton(0.1, alliance_y_direction * return_1_y, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem)
       ),
       new ScoreHighAuton(Constants.SCORE_CUBE, armSubsystem, clawSubsystem),
       new ParallelDeadlineGroup(
@@ -78,7 +84,7 @@ public class Clear_ScoreThreeAuton extends SequentialCommandGroup {
         new DriveToPositionAuton(Constants.SIDE_INTAKE_DIRECTION, second_cube_x + 0.1, alliance_y_direction * second_cube_y, swerveSubsystem),
         new IntakeInAuton(intakeSubsystem)
       ),
-      new DriveToPositionAuton(4.0, alliance_y_direction * 0.2, new Rotation2d(0.0, -1.0), swerveSubsystem),
+      new DriveToPositionAuton(4.0, alliance_y_direction * return_2_y, new Rotation2d(0.0, -1.0), swerveSubsystem),
       new DriveToPositionAuton(0.3, alliance_y_direction * 0.2, new Rotation2d(0.0, -1.0), swerveSubsystem),
       new IntakeOutAuton(1.0, intakeSubsystem)
     );
