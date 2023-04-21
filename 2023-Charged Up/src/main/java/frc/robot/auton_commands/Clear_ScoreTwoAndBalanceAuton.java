@@ -82,9 +82,10 @@ public class Clear_ScoreTwoAndBalanceAuton extends SequentialCommandGroup {
       new DriveToPositionAuton(5.0, alliance_y_direction * 3.0, swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(), swerveSubsystem),
      // new DriveToPlatformAuton(Constants.BACKWARD_DIRECTION, swerveSubsystem),
       new ParallelDeadlineGroup(
-        new WaitCommand(0.7), 
+        new WaitCommand(0.6),
         new SpeedDriveCommand(Constants.BACKWARD_DIRECTION, 0.7, swerveSubsystem)
       ),
+        //new DriveToCenterOfPlatform(Constants.BACKWARD_DIRECTION, swerveSubsystem),
       new BalanceAuton(swerveSubsystem)
     );
   }

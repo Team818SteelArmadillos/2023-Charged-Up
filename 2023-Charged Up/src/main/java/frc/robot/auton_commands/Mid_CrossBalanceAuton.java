@@ -34,12 +34,9 @@ public class Mid_CrossBalanceAuton extends SequentialCommandGroup {
         new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
         new DriveToPlatformAuton(Constants.FORWARD_DIRECTION, currentAngle, swerveSubsystem)
       ),
-      new DriveToPositionAuton(6.0, 0, currentAngle, swerveSubsystem),
+      new DriveToPositionAuton(5.7, 0, currentAngle, swerveSubsystem),
       new WaitCommand(1.0),
-      new ParallelCommandGroup(
-        new ArmAuton(armSubsystem, Constants.ARM_NEUTRAL_STATE),
-        new DriveToPlatformAuton(Constants.BACKWARD_DIRECTION, currentAngle, swerveSubsystem)
-      ),
+      new DriveToPlatformAuton(Constants.BACKWARD_DIRECTION, currentAngle, swerveSubsystem),
       new ParallelDeadlineGroup(
         new WaitCommand(0.6),
         new SpeedDriveCommand(Constants.BACKWARD_DIRECTION, 0.7, swerveSubsystem)
