@@ -44,7 +44,7 @@ public final class Constants {
 
     
     public static final double FIRST_CUBE_X_POS_RED = 5.0;
-    public static final double FIRST_CUBE_Y_POS_RED = 0.45;
+    public static final double FIRST_CUBE_Y_POS_RED = 0.25;
     public static final double SECOND_CUBE_X_POS_RED = 6.0;
     public static final double SECOND_CUBE_Y_POS_RED = 2.1;
     /*============================
