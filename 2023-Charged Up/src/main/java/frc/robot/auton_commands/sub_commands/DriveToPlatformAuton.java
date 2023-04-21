@@ -20,19 +20,20 @@ public class DriveToPlatformAuton extends CommandBase {
   private Timer m_timeoutTimer;
 
   /** Creates a new BalanceAuton. */
-  public DriveToPlatformAuton(int direction, CTRSwerveSubsystem drivetrain) {
+  public DriveToPlatformAuton(int direction, Rotation2d rotation, CTRSwerveSubsystem drivetrain) {
     addRequirements(drivetrain);
 
     m_drivetrain = drivetrain.getCTRSwerveDrivetrain();
     m_direction = direction;
     m_timeoutTimer = new Timer();
     inlcine_counter = 0;
+    
+    m_lastCurrentAngle = rotation;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_lastCurrentAngle = m_drivetrain.getPoseMeters().getRotation();
     m_timeoutTimer.reset();
     m_timeoutTimer.start();
   }
