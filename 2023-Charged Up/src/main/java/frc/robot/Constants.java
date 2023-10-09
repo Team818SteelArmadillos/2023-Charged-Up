@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.pathplanner.lib.auto.PIDConstants;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
@@ -212,6 +213,9 @@ public final class Constants {
     public static final double DRIVE_S = (0.48665 / 12); //Values from SysId divided by 12 to convert to volts for CTRE
     public static final double DRIVE_V = (2.4132 / 12);
     public static final double DRIVE_A = (0.06921 / 12);
+
+    public static final PIDConstants AUTO_TRANSLATION_CONSTANTS = new PIDConstants(0.01, 0, 0);
+    public static final PIDConstants AUTO_ROTATION_CONSTANTS = new PIDConstants(2.8, 0, 0);
 
     /* Azimuth Current Limiting */
     public static final int AZIMUTH_CONTINUOUS_CURRENT_LIMIT = 10; // amps

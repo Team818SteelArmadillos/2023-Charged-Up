@@ -4,8 +4,14 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenixpro.configs.Slot0Configs;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.CTRSwerve.CTRSwerveDrivetrain;
@@ -24,6 +30,7 @@ public class CTRSwerveSubsystem extends SubsystemBase {
   private SwerveModuleConstants backRight;
   private SwerveModuleConstants backLeft;
   private CTRSwerveDrivetrain m_drivetrain;
+public Supplier<Pose2d> getPose2d;
 
   /** Creates a new CTRESwerveSubsystem. */
   public CTRSwerveSubsystem() {
@@ -90,7 +97,9 @@ public class CTRSwerveSubsystem extends SubsystemBase {
   public CTRSwerveDrivetrain getCTRSwerveDrivetrain() {
     return m_drivetrain;
   }
-
+  public Pose2d getPose(){
+    return m_drivetrain.getPose2d();
+  }
   // @Override
   // public void periodic() {
   //   // This method will be called once per scheduler run

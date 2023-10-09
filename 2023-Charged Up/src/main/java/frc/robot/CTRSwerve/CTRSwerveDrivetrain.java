@@ -82,7 +82,10 @@ public class CTRSwerveDrivetrain {
             }
         }
     }
-
+    public Pose2d getOdometry(){
+        return m_odometry.getPoseMeters();
+    }
+    
     public CTRSwerveDrivetrain(
             SwerveDriveTrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
         ModuleCount = modules.length;

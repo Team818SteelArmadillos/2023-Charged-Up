@@ -33,10 +33,10 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   /* Subsystems */
-  private final CTRSwerveSubsystem m_swerveSubsystem = new CTRSwerveSubsystem();
-  private final ClawSubsystem m_ClawSubsystem = new ClawSubsystem();
-  private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
-  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  public static final CTRSwerveSubsystem m_swerveSubsystem = new CTRSwerveSubsystem();
+  public static final ClawSubsystem m_ClawSubsystem = new ClawSubsystem();
+  public static final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  public static final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
   //autons
   private final Clear_ScoreThreeAuton mBClear_ScoreThreeAuton = new Clear_ScoreThreeAuton(Constants.BLUE_ALLIANCE, m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem, m_intakeSubsystem);
