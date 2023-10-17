@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,20 +21,19 @@ import java.util.Map;
 
 
 public class Auto {
-    private CTRSwerveDrivetrain m_drivetrain;
-    
-    m_drivetrain = drivetrain.getCTRSwerveDrivetrain();
+    //
+
     private static final Map<String, Command> eventMap = new HashMap<>(Map.ofEntries(
         
     ));
-    private static final SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-    CTRSwerveDrivetrain.m_odometry::getPoseMeters,
-    RobotContainer.m_swerveSubsystem::resetOdometry,
-    Constants.AUTO_TRANSLATION_CONSTANTS,
-    Constants.AUTO_ROTATION_CONSTANTS,
-    RobotContainer.m_swerveSubsystem::setChasisSpeeds,
-    eventMap,
-    true,
-    RobotContainer.m_swerveSubsystem);    
+    private static SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+        RobotContainer.m_swerveSubsystem::getPose,
+        RobotContainer.m_swerveSubsystem::setPose,
+        Constants.AUTO_TRANSLATION_CONSTANTS,
+        Constants.AUTO_ROTATION_CONSTANTS,
+        RobotContainer.m_swerveSubsystem::setChasisSpeeds,
+        eventMap,
+        RobotContainer.m_swerveSubsystem
+        );
     
 }

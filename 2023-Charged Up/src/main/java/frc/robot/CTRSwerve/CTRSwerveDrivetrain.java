@@ -85,6 +85,9 @@ public class CTRSwerveDrivetrain {
     public Pose2d getOdometry(){
         return m_odometry.getPoseMeters();
     }
+    public void setPose(Pose2d pose){
+        m_odometry.resetPosition(m_pigeon2.getRotation2d(), m_modulePositions, pose);
+    }
     
     public CTRSwerveDrivetrain(
             SwerveDriveTrainConstants driveTrainConstants, SwerveModuleConstants... modules) {

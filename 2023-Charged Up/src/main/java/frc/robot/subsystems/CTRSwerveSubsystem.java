@@ -97,8 +97,17 @@ public Supplier<Pose2d> getPose2d;
   public CTRSwerveDrivetrain getCTRSwerveDrivetrain() {
     return m_drivetrain;
   }
+
+  public void setPose(Pose2d pose){
+    m_drivetrain.setPose(pose);
+  }
+
+  public void setChasisSpeeds(ChassisSpeeds speeds){
+    m_drivetrain.driveFieldCentric(speeds);
+  }
+  
   public Pose2d getPose(){
-    return m_drivetrain.getPose2d();
+    return m_drivetrain.getPoseMeters();
   }
   // @Override
   // public void periodic() {
