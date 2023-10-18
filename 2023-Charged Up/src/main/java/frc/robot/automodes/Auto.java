@@ -26,6 +26,7 @@ public class Auto {
     private static final Map<String, Command> eventMap = new HashMap<>(Map.ofEntries(
         
     ));
+
     private static SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
         RobotContainer.m_swerveSubsystem::getPose,
         RobotContainer.m_swerveSubsystem::setPose,
@@ -35,5 +36,13 @@ public class Auto {
         eventMap,
         RobotContainer.m_swerveSubsystem
         );
+
+    public static Command onePointFiveBalance(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("1.5 Piece Balance", new PathConstraints(4, 3)));
+    }
+    public static Command threePieceOpen(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("3 Piece Open H-L", new PathConstraints(4, 3)));
+    }
+    
     
 }

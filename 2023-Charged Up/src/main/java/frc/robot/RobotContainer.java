@@ -19,6 +19,9 @@ import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
+
+import frc.robot.automodes.Auto;
+
  
 
 /**
@@ -48,6 +51,7 @@ public class RobotContainer {
   private final Mid_CrossGrabBalanceAuton mCrossGrabBalanceAuton = new Mid_CrossGrabBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
   private final Mid_CrossBalanceAuton mCrossBalanceAuton = new Mid_CrossBalanceAuton(m_armSubsystem, m_ClawSubsystem, m_swerveSubsystem);
 
+  //Test Auton
   
   //arm command
   public final ArmCommand m_ArmCommand = new ArmCommand(m_armSubsystem);
@@ -72,10 +76,11 @@ public class RobotContainer {
     m_armSubsystem.setDefaultCommand(m_ArmCommand);
     m_intakeSubsystem.setDefaultCommand(m_intakeCommand);
     
+    //onePointFiveBalance m_onePointFiveBalance = new onePointFiveBalance;
     // Initializie auton chooser in smartdashboard
-    m_autoChooser.setDefaultOption("Mid 1.5 Balance", mCrossGrabBalanceAuton);
+    m_autoChooser.setDefaultOption("Mid 1.5 Balance", Auto.onePointFiveBalance());
     m_autoChooser.setDefaultOption("Mid Cross Balance", mCrossBalanceAuton);
-    m_autoChooser.addOption("Blue Clear 3", mBClear_ScoreThreeAuton);
+    m_autoChooser.addOption("Blue Clear 3", Auto.threePieceOpen());
     m_autoChooser.addOption("Red Clear 3", mRClear_ScoreThreeAuton);
     m_autoChooser.addOption("Blue Clear 2.5 Balance", mBClear_ScoreTwoAndBalanceAuton);
     m_autoChooser.addOption("Red Clear 2.5 Balance", mRClear_ScoreTwoAndBalanceAuton);
