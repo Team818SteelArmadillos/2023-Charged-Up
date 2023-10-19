@@ -28,8 +28,8 @@ public class Auto {
     ));
 
     private static SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-        RobotContainer.m_swerveSubsystem::getPose,
-        RobotContainer.m_swerveSubsystem::setPose,
+        RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain()::getPoseMeters,
+        RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain()::setPose,
         Constants.AUTO_TRANSLATION_CONSTANTS,
         Constants.AUTO_ROTATION_CONSTANTS,
         RobotContainer.m_swerveSubsystem::setChasisSpeeds,
@@ -38,10 +38,10 @@ public class Auto {
         );
 
     public static Command onePointFiveBalance(){
-        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("1.5 Piece Balance", new PathConstraints(4, 3)));
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("1.5 Piece Balance", new PathConstraints(5.81, 5)));
     }
     public static Command threePieceOpen(){
-        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("3 Piece Open H-L", new PathConstraints(4, 3)));
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("3 Piece Open H-L", new PathConstraints(5.81, 5)));
     }
     
     

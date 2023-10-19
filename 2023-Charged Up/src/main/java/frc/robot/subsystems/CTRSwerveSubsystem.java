@@ -103,7 +103,7 @@ public Supplier<Pose2d> getPose2d;
   }
 
   public void setChasisSpeeds(ChassisSpeeds speeds){
-    m_drivetrain.driveFieldCentric(speeds);
+    m_drivetrain.driveRobotCentric(speeds);
   }
   
   public Pose2d getPose(){
