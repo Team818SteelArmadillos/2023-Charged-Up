@@ -6,13 +6,6 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.CTRSwerve.CTRSwerveDrivetrain;
-import frc.robot.auton_commands.sub_commands.BalanceAuton;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,12 +30,22 @@ public class Auto {
         RobotContainer.m_swerveSubsystem
         );
 
-    public static Command onePointFiveBalance(){
+    public static Command onePointFiveBalanceMid(){
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("1.5 Piece Balance", new PathConstraints(5.81, 5)));
     }
-    public static Command threePieceOpen(){
+    public static Command twoPointFiveBalanceOpen(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("2.5 Piece Open H Balance", new PathConstraints(5.81, 5)));
+    }
+    public static Command threePieceBumpLow(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("3 Piece Bump L-L", new PathConstraints(5.81, 5)));
+    }
+    public static Command threePieceOpenHigh(){
         return autoBuilder.fullAuto(PathPlanner.loadPathGroup("3 Piece Open H-L", new PathConstraints(5.81, 5)));
     }
-    
-    
+    public static Command threePieceOpenLow(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("3 Piece Open L-L", new PathConstraints(5.81, 5)));
+    }
+    public static Command mobilityBalance(){
+        return autoBuilder.fullAuto(PathPlanner.loadPathGroup("Mobility Balance", new PathConstraints(5.81, 5)));
+    }
 }

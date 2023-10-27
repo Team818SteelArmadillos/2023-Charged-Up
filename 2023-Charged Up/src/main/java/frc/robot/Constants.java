@@ -335,22 +335,8 @@ public final class Constants {
     public static final int telscopingMotorPort = 16;
     public static final int[] clawWheelMotorPort = {20, 21};
 
-    /*============================
-        Path Planner Constants
-    ==============================*/
-
-    //Characterization Values (NEED TO BE UPDATED WITH REAL VALUES)
-    public static final double ksVolts = 0.22;
-    public static final double kvVoltSecondsPerMeter = 1.98;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.2;
-
-    public static final double kPDriveVel = 8.5;
-    public static final DifferentialDriveKinematics kDriveKinematics =
-        new DifferentialDriveKinematics(DRIVETRAIN_WIDTH);
-        
-    public static final double kMaxSpeedMetersPerSecond = 3;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 1;
-    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
-    public static final double kRamseteB = 2;
-    public static final double kRamseteZeta = 0.7;
+    //Pipeline Constants
+    public static final int APRIL_TAG = 0;
+    public static final int CUBE_DETECTION = 1;
+    public static final int CONE_DETECTION = 2;
 }
