@@ -27,9 +27,6 @@ public class ClawWheelsSubsystem extends SubsystemBase {
 
     
     public void setIntakeSpeed(double intakeSpeed) {
-        //must calculate current length
-        double _intakeSpeed;
-
         cwm1.set(intakeSpeed);
         cwm2.set(intakeSpeed);
         SmartDashboard.putNumber("_IntakeSpeed", intakeSpeed);

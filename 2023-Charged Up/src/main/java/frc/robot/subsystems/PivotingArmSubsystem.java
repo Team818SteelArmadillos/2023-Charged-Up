@@ -2,13 +2,11 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,6 +20,7 @@ public class PivotingArmSubsystem extends SubsystemBase {
     public TalonSRX pm3;
     
     public PIDController PID;
+    public ArmFeedforward armFeedForward;
     public static DutyCycleEncoder encoder; // = new Encoder(0, 0, 0); // LETS CODE THIS THING!!
     //public double currentAngle; 
     public int armCounts;
@@ -40,8 +39,8 @@ public class PivotingArmSubsystem extends SubsystemBase {
 
         //pid stuff
         PID = new PIDController(Constants.pP, Constants.pivotI, Constants.pivotD);
-        PID.setTolerance(Constants.pPIDTolerance);
-        PID.reset();
+        armFeedForward = new ArmFeedforward(armCounts, armCounts, armCounts);
+
 
         //encoder stuff
         encoder = new DutyCycleEncoder(Constants.THROUGH_BORE_ENCODER); //these encoder paramters are undefined since
@@ -113,11 +112,7 @@ public class PivotingArmSubsystem extends SubsystemBase {
     }
 
     public boolean isBikeBreakEngaged() {
-        if (bikeBreak.get().equals(DoubleSolenoid.Value.kForward)) {
-            return true;
-        } else {
-            return false;
-        }
+        return bikeBreak.get().equals(DoubleSolenoid.Value.kForward);
     }
 
     @Override
