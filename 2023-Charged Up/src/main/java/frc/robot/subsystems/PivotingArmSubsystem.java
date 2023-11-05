@@ -39,6 +39,9 @@ public class PivotingArmSubsystem extends SubsystemBase {
 
         //pid stuff
         PID = new PIDController(Constants.pP, Constants.pivotI, Constants.pivotD);
+        PID.setTolerance(Constants.pPIDTolerance);
+        PID.reset();
+        
         armFeedForward = new ArmFeedforward(armCounts, armCounts, armCounts);
 
 

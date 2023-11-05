@@ -22,7 +22,6 @@
             "version": "2.2.2"
         }
     ],
-    "jniDependencies": [        
     "jniDependencies": [
         {
             "groupId": "org.littletonrobotics.akit.conduit",
