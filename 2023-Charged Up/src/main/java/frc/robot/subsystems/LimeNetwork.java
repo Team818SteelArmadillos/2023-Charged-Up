@@ -16,26 +16,46 @@ public class LimeNetwork extends SubsystemBase {
   // Limelight network entries
   private NetworkTableEntry tx;
   private NetworkTableEntry ty;
-  private NetworkTableEntry tBotPose;
+  private NetworkTableEntry ta;
+
+  //read values periodically
+  private double x = 0.0;    
+  private double y = 0.0;    
+  private double area = 0.0; 
 
   public LimeNetwork() {
     limeTable = NetworkTableInstance.getDefault().getTable("limelight");
 
     tx = limeTable.getEntry("tx");
     ty = limeTable.getEntry("ty");
-    tBotPose = limeTable.getEntry("botpose");
+    ta = limeTable.getEntry("ta");
+  }
+
+  public void updateValues() {
+    x = tx.getDouble(0.0);
+    y = ty.getDouble(0.0);
+    area = ta.getDouble(0.0);
   }
 
   public  double getTX() {
-    return tx.getDouble(0.0);
+    updateValues();
+    return x;
   }
   
   public  double getTY() {
-    return ty.getDouble(0.0);
+    updateValues();
+    return y;
   }
 
-  public double[] getRobotPose() {
-    return tBotPose.getDoubleArray( new double[] {0.0, 0.0, 0.0} );
+  public  double getTA() {
+    updateValues();
+    return area;
+  }
+
+  public  double[] values() {
+    updateValues();
+    double[] values = {x, y, area};
+    return values;
   }
 
 }

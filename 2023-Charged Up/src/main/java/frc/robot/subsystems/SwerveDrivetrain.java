@@ -9,11 +9,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.CTREConfigs;
 import frc.robot.Constants;
 
-import org.littletonrobotics.junction.Logger;
-
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.ctre.phoenix.sensors.WPI_PigeonIMU;
+
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SwerveDrivetrain extends SubsystemBase {
@@ -353,7 +356,6 @@ public class SwerveDrivetrain extends SubsystemBase {
         // SmartDashboard.putNumber("Back Left Voltage", m_swerveModules[2].getAzimuthVoltage());
         // SmartDashboard.putNumber("Back Right Votlage", m_swerveModules[3].getAzimuthVoltage());
 
-        Logger.getInstance().recordOutput("Robot Pose", getPose());
         SmartDashboard.putNumber("pose x", getPose().getX());
         SmartDashboard.putNumber("pose y", getPose().getY());
         SmartDashboard.putNumber("pose rot", getPose().getRotation().getDegrees());

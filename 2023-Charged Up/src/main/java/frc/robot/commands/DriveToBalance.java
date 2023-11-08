@@ -1,10 +1,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.SwerveDrivetrain;
+import frc.robot.subsystems.SwerveModule;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -12,12 +19,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class DriveToBalance extends CommandBase {
 
     private int balance_counter;
-    private boolean flip_flag;
 
     private double m_rotation;
-    private double m_incline;
 
-    //private double m_incline;
+    private double m_incline;
     private double m_speed;
     private double m_xAxis;
     private double m_yAxis;
@@ -32,7 +37,6 @@ public class DriveToBalance extends CommandBase {
     private SlewRateLimiter m_yAxisARateLimiter;
     
     public PIDController DrivePID;
-    public PIDController balancePID;
 
     private Timer timer;
 
@@ -69,12 +73,8 @@ public class DriveToBalance extends CommandBase {
         m_yAxisARateLimiter = new SlewRateLimiter(Constants.A_RATE_LIMITER);
 
         DrivePID = new PIDController(Constants.ROTATION_P, Constants.ROTATION_I, Constants.ROTATION_D);
-        balancePID = new PIDController(Constants.csP, Constants.csI, Constants.csD);
 
         DrivePID.setTolerance(Constants.ROTATION_TOLERANCE);
-        balancePID.setTolerance(Constants.csTolerance);
-
-        flip_flag = false;
         
     }
 
@@ -90,30 +90,16 @@ public class DriveToBalance extends CommandBase {
     public void execute() {
 
         double yAxis = 0;
+
         /* Set variables equal to their respective axis */
         if (m_swerveDrivetrain.getRoll() <= -Constants.MINIMUM_INCLINE_THRESHOLD) {
-            if (!flip_flag) {
-                m_speed = m_speed * 0.9;
-            }
             yAxis = m_yAxis;
-            flip_flag = true;
         } else if (m_swerveDrivetrain.getRoll() >= Constants.MINIMUM_INCLINE_THRESHOLD) {
-            if (flip_flag) {
-                m_speed = m_speed * 0.9;
-            }
             yAxis = -m_yAxis;
-            flip_flag = false;
         } else {
-            balance_counter++;
             m_swerveDrivetrain.holdPosition();
+            // do nothing
         }
-
-        // if ( !balancePID.atSetpoint() ) {
-        //     yAxis = balancePID.calculate(m_incline, 0);
-        // } else {
-        //     balance_counter++;
-        //     m_swerveDrivetrain.holdPosition();
-        // }
         
         double xAxis = -m_xAxis;
         double rAxis = -DrivePID.calculate(m_swerveDrivetrain.getAngle(), 0);
@@ -142,6 +128,13 @@ public class DriveToBalance extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return balance_counter >= 20;
+
+        if (Math.abs(m_swerveDrivetrain.getRoll()) <= Constants.MINIMUM_INCLINE_THRESHOLD) {
+            balance_counter++;
+        } else {
+            balance_counter = 0;
+        }
+
+        return balance_counter >= 5;
     }
 }
