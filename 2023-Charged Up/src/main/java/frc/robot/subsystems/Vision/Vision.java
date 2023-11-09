@@ -1,5 +1,7 @@
 package frc.robot.subsystems.Vision;
 
+import java.util.Arrays;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
@@ -17,7 +19,6 @@ public class Vision extends SubsystemBase{
         activePipeline = 0;
         Pose2d[] lastFiveOutputs = new Pose2d[5];
         int lastFiveOutputsIndex = 0;
-
     }
 
     public void setAprilTag(){
@@ -53,7 +54,6 @@ public class Vision extends SubsystemBase{
         double[] X = new double[5];
         double[] Y = new double[5];
         double[] R = new double[5];
-
         int i = 0;
         for(Pose2d p : lastFiveOutputs){
             X[i] = p.getX();
@@ -61,8 +61,10 @@ public class Vision extends SubsystemBase{
             R[i] = p.getRotation().getDegrees();
             i+=1;
         }
-
-        if((X[].max() - X[].min() < .2) && )
+        Arrays.sort(X);
+        Arrays.sort(Y);
+        Arrays.sort(R);
+        
+        return ((X[4] - X[0] < 0.2) && (Y[4] - Y[0] < 0.2) && (R[4] - R[0] < 0.5));
     }
-
 }
