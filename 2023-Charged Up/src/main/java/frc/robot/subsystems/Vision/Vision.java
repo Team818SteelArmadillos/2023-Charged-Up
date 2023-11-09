@@ -7,12 +7,17 @@ import frc.robot.LimelightHelpers;
 public class Vision extends SubsystemBase{
     Pose2d visionOdometry;
     int activePipeline;
+    Pose2d[] lastFiveOutputs;
+    int lastFiveOutputsIndex;
 
 
     public Vision(){
         visionOdometry = new Pose2d();
         LimelightHelpers.setPipelineIndex("", 0);
         activePipeline = 0;
+        Pose2d[] lastFiveOutputs = new Pose2d[5];
+        int lastFiveOutputsIndex = 0;
+
     }
 
     public void setAprilTag(){
@@ -32,12 +37,32 @@ public class Vision extends SubsystemBase{
 
     public void updateVisionOdometry(){
         visionOdometry = LimelightHelpers.getBotPose2d("");
+
+        //updating validvalue array
+        lastFiveOutputs[lastFiveOutputsIndex] = visionOdometry;
+        lastFiveOutputsIndex += 1;
+
     }
     public Pose2d getVisionOdometry(){
         return visionOdometry;
     }
     public int getActivePipeline(){
         return activePipeline;
+    }
+    public boolean validValue(){
+        double[] X = new double[5];
+        double[] Y = new double[5];
+        double[] R = new double[5];
+
+        int i = 0;
+        for(Pose2d p : lastFiveOutputs){
+            X[i] = p.getX();
+            Y[i] = p.getY();
+            R[i] = p.getRotation().getDegrees();
+            i+=1;
+        }
+
+        if((X[].max() - X[].min() < .2) && )
     }
 
 }

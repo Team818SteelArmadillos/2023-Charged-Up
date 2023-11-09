@@ -5,11 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.CTRSwerve.CTRSwerveDrivetrain;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 import frc.robot.subsystems.Vision.Vision;
 
@@ -21,7 +23,7 @@ public class OdometryMonitor extends CommandBase {
   public OdometryMonitor(Vision vision, CTRSwerveSubsystem ctrSwerveSubsystem) {
     addRequirements(vision, ctrSwerveSubsystem);
     m_Vision = vision;
-    m_CtrSwerveSubsystem = ctrSwerveSubsystem;
+    m_CtrSwerveSubsystem = ctrSwerveSubsystem; 
   }
 
   // Called when the command is initially scheduled.
@@ -38,11 +40,19 @@ public class OdometryMonitor extends CommandBase {
     }
     
     m_Vision.updateVisionOdometry();
-    visionOdometry = m_Vision.getVisionOdometry();
 
     //post to smart dashboard periodically
-    SmartDashboard.putNumber("Limelight BotPose X", visionOdometry.getX());
-    SmartDashboard.putNumber("Limelight BotPose X", visionOdometry.getY());
+    SmartDashboard.putNumber("Limelight BotPose X", m_Vision.getVisionOdometry().getX());
+    SmartDashboard.putNumber("Limelight BotPose Y", m_Vision.getVisionOdometry().getY());
+    SmartDashboard.putNumber("Limelight BotPose Rotation", m_Vision.getVisionOdometry().getRotation().getDegrees());
+
+    double deltaX = Math.abs(m_CtrSwerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getX() - m_Vision.getVisionOdometry().getX());
+    double deltaY = Math.abs(m_CtrSwerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getY() - m_Vision.getVisionOdometry().getY());
+    double deltaR = Math.abs(m_CtrSwerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation().getDegrees() - m_Vision.getVisionOdometry().getRotation().getDegrees());
+
+    if((deltaX < 0.1) && (deltaY < 0.1) && (deltaR < 0.5)){
+      m_CtrSwerveSubsystem.getCTRSwerveDrivetrain().setPose(m_Vision.getVisionOdometry());
+    }
   }
 
   // Called once the command ends or is interrupted.
