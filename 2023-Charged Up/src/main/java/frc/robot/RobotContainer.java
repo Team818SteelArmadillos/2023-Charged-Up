@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.Vision.Vision;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 
 import frc.robot.automodes.Auto;
+import frc.robot.auton_commands.sub_commands.ResetOdometry;
 
  
 
@@ -33,6 +35,7 @@ public class RobotContainer {
   public static final ClawSubsystem m_ClawSubsystem = new ClawSubsystem();
   public static final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   public static final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  public static final Vision m_visionSubsystem = new Vision();
 
   //autons
 
@@ -52,6 +55,8 @@ public class RobotContainer {
 
   //intake command
   public final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
+
+  public final ResetOdometry m_ResetOdometry = new ResetOdometry(m_visionSubsystem, m_swerveSubsystem);
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
   public RobotContainer() {
@@ -78,6 +83,7 @@ public class RobotContainer {
     OI.getOperator().leftBumper().whileTrue(m_ClawCommand);
     OI.getOperator().rightTrigger().whileTrue(m_IntakeOut);
     OI.getOperator().leftTrigger().whileTrue(m_IntakeIn);
+    OI.getOperator().leftStick().whileTrue(m_ResetOdometry);
   }
 
   /**
