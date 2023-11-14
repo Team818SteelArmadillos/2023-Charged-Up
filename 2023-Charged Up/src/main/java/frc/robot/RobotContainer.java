@@ -15,6 +15,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 
 import frc.robot.automodes.Auto;
+import frc.robot.auton_commands.sub_commands.IntakeInAuton;
 import frc.robot.auton_commands.sub_commands.ResetOdometry;
 
  
@@ -36,9 +37,6 @@ public class RobotContainer {
   public static final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   public static final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   public static final Vision m_visionSubsystem = new Vision();
-
-  //autons
-
 
   //Test Auton
   
@@ -85,6 +83,16 @@ public class RobotContainer {
     OI.getOperator().leftTrigger().whileTrue(m_IntakeIn);
     OI.getOperator().leftStick().whileTrue(m_ResetOdometry);
   }
+
+  //Commands for Auton
+  public void resetOdometry(){
+    m_ResetOdometry.schedule();
+  }
+
+  public void intakeIn(){
+    m_IntakeIn.schedule();
+  }
+
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by

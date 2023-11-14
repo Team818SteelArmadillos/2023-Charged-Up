@@ -4,9 +4,14 @@ import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.auton_commands.sub_commands.ResetOdometry;
+import frc.robot.auton_commands.sub_commands.IntakeInAuton;
 
+
+import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +22,8 @@ public class Auto {
     //
 
     private static final Map<String, Command> eventMap = new HashMap<>(Map.ofEntries(
-        
+        Map.entry("ResetAuton", new InstantCommand(() -> Robot.m_robotContainer.resetOdometry())),
+        Map.entry("IntakeCube", new InstantCommand(() -> Robot.m_robotContainer.intakeIn()))
     ));
 
     private static SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
