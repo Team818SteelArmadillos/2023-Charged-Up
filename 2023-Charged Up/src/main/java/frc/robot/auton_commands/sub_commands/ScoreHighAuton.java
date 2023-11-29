@@ -17,17 +17,18 @@ import frc.robot.subsystems.ClawSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ScoreHighAuton extends SequentialCommandGroup {
   /** Creates a new ScoreHighAuton. */
-  public ScoreHighAuton(String gamePeice, ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem) {
+  public ScoreHighAuton(String gamePiece, ArmSubsystem armSubsystem, ClawSubsystem clawSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     
-    if (gamePeice.equalsIgnoreCase(Constants.SCORE_CONE)) {
+    
+    if (gamePiece.equalsIgnoreCase(Constants.SCORE_CONE)) {
       addCommands(
         new ArmAuton(armSubsystem, Constants.ARM_HIGH_STATE),
         new ClawModeToggleCommand(clawSubsystem, Constants.CLAW_OPEN_STATE),
         new WaitCommand(0.2)
       );
-    } else if (gamePeice.equalsIgnoreCase(Constants.SCORE_CUBE)) {
+    } else if (gamePiece.equalsIgnoreCase(Constants.SCORE_CUBE)) {
       addCommands(
         new ArmAuton(armSubsystem, Constants.ARM_MID_STATE),
         new ParallelDeadlineGroup(

@@ -13,11 +13,11 @@ public class IntakeOutAuton extends CommandBase {
   private Timer timer;
   private double m_timeout;
 
-  public IntakeOutAuton(double time, IntakeSubsystem intakeSubsystem) {
+  public IntakeOutAuton( IntakeSubsystem intakeSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intakeSubsystem);
     m_IntakeSubsystem = intakeSubsystem;
-    m_timeout = time;
+    m_timeout = 2; //Might change depending on time needed to outtake.
     timer = new Timer();
   }
 

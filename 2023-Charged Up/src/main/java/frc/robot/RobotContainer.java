@@ -15,6 +15,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 
 import frc.robot.automodes.Auto;
+import frc.robot.auton_commands.sub_commands.AutonResetOdometry;
 import frc.robot.auton_commands.sub_commands.IntakeInAuton;
 import frc.robot.auton_commands.sub_commands.ResetOdometry;
 
@@ -38,16 +39,21 @@ public class RobotContainer {
   public static final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   public static final Vision m_visionSubsystem = new Vision();
 
+
   //Test Auton
   
   //arm command
   public final ArmCommand m_ArmCommand = new ArmCommand(m_armSubsystem);
 
+
+  public final OdometryMonitor m_odometrymonitor = new OdometryMonitor(m_visionSubsystem, m_swerveSubsystem);
   //claw commands
   public final ClawModeToggleCommand m_ClawCommand = new ClawModeToggleCommand(m_ClawSubsystem);
   public final ClawWheelCommand m_IntakeIn = new ClawWheelCommand(0, m_ClawSubsystem);
   public final ClawWheelCommand m_IntakeOut = new ClawWheelCommand(1, m_ClawSubsystem);
 
+  //Auton Instant Commands
+  public final AutonResetOdometry m_AutonResetOdometry = new AutonResetOdometry(m_visionSubsystem, m_swerveSubsystem);
   //server command
   public final SwerveDriveCommand m_swerveDriveCommand = new SwerveDriveCommand(m_swerveSubsystem);
 
@@ -57,20 +63,26 @@ public class RobotContainer {
   public final ResetOdometry m_ResetOdometry = new ResetOdometry(m_visionSubsystem, m_swerveSubsystem);
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
+
+  private final Auto m_Auto = new Auto();
+
   public RobotContainer() {
 
     m_swerveSubsystem.setDefaultCommand(m_swerveDriveCommand);
     m_armSubsystem.setDefaultCommand(m_ArmCommand);
     m_intakeSubsystem.setDefaultCommand(m_intakeCommand);
+    m_visionSubsystem.setDefaultCommand(m_odometrymonitor);
     
+
+
     //onePointFiveBalance m_onePointFiveBalance = new onePointFiveBalance;
     // Initializie auton chooser in smartdashboard
-    m_autoChooser.setDefaultOption("Mid 1.5 Balance", Auto.onePointFiveBalanceMid());
-    m_autoChooser.addOption("Mid Cross Balance", Auto.mobilityBalance());
-    m_autoChooser.addOption("Clear High 3", Auto.threePieceOpenHigh());
-    m_autoChooser.addOption("Clear Low 3", Auto.threePieceOpenLow());
-    m_autoChooser.addOption("Bump Low 3", Auto.threePieceBumpLow());
-    m_autoChooser.addOption("Blue Clear 2.5 Balance", Auto.twoPointFiveBalanceOpen());
+    m_autoChooser.setDefaultOption("Mid 1.5 Balance", m_Auto.onePointFiveBalanceMid());
+    m_autoChooser.addOption("Mid Cross Balance", m_Auto.mobilityBalance());
+    m_autoChooser.addOption("Clear High 3", m_Auto.threePieceOpenHigh());
+    m_autoChooser.addOption("Clear Low 3", m_Auto.threePieceOpenLow());
+    m_autoChooser.addOption("Bump Low 3", m_Auto.threePieceBumpLow());
+    m_autoChooser.addOption("Blue Clear 2.5 Balance", m_Auto.twoPointFiveBalanceOpen());
     SmartDashboard.putData("Auton Choices", m_autoChooser);
     
     /* Configure the button bindings */
@@ -81,6 +93,7 @@ public class RobotContainer {
     OI.getOperator().leftBumper().whileTrue(m_ClawCommand);
     OI.getOperator().rightTrigger().whileTrue(m_IntakeOut);
     OI.getOperator().leftTrigger().whileTrue(m_IntakeIn);
+    
     OI.getOperator().leftStick().whileTrue(m_ResetOdometry);
   }
 
