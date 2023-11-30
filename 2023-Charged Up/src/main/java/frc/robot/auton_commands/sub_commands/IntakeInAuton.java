@@ -6,9 +6,16 @@ package frc.robot.auton_commands.sub_commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+
 
 public class IntakeInAuton extends CommandBase {
   private IntakeSubsystem m_IntakeSubsystem;
+  private Timer timer;
+  private PowerDistribution intakepower;
+  private double normalPower;
 
   /** Creates a new IntakeAuton. */
   public IntakeInAuton(IntakeSubsystem intakeSubsystem) {
@@ -19,7 +26,12 @@ public class IntakeInAuton extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.start();
+    //need to figure out pdp port and type
+    intakepower = new PowerDistribution();
+    normalPower = intakepower.getCurrent(8);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -38,6 +50,9 @@ public class IntakeInAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(timer.hasElapsed(5)||intakepower.getCurrent(8) > (normalPower + 0.25) ){
+      return true;
+    }
     return false;
   }
 }
