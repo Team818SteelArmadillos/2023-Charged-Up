@@ -67,11 +67,10 @@ public class RobotContainer {
   private final Auto m_Auto = new Auto();
 
   public RobotContainer() {
-
     m_swerveSubsystem.setDefaultCommand(m_swerveDriveCommand);
     m_armSubsystem.setDefaultCommand(m_ArmCommand);
     m_intakeSubsystem.setDefaultCommand(m_intakeCommand);
-    m_visionSubsystem.setDefaultCommand(m_odometrymonitor);
+    //m_visionSubsystem.setDefaultCommand(m_odometrymonitor);
     
 
 
