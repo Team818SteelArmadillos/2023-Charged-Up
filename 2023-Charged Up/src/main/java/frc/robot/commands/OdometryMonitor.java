@@ -11,19 +11,16 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.CTRSwerve.CTRSwerveDrivetrain;
-import frc.robot.subsystems.CTRSwerveSubsystem;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Vision.Vision;
 
 public class OdometryMonitor extends CommandBase {
   Vision m_Vision;
-  CTRSwerveSubsystem m_CtrSwerveSubsystem;
   Pose2d visionOdometry;
   /** Creates a new OdometryMonitor. */
-  public OdometryMonitor(Vision vision, CTRSwerveSubsystem ctrSwerveSubsystem) {
-    addRequirements(vision, ctrSwerveSubsystem);
+  public OdometryMonitor(Vision vision) {
+    addRequirements(vision);
     m_Vision = vision;
-    m_CtrSwerveSubsystem = ctrSwerveSubsystem; 
   }
 
   // Called when the command is initially scheduled.
@@ -46,12 +43,12 @@ public class OdometryMonitor extends CommandBase {
     SmartDashboard.putNumber("Limelight BotPose Y", m_Vision.getVisionOdometry().getY());
     SmartDashboard.putNumber("Limelight BotPose Rotation", m_Vision.getVisionOdometry().getRotation().getDegrees());
 
-    double deltaX = Math.abs(m_CtrSwerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getX() - m_Vision.getVisionOdometry().getX());
-    double deltaY = Math.abs(m_CtrSwerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getY() - m_Vision.getVisionOdometry().getY());
-    double deltaR = Math.abs(m_CtrSwerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation().getDegrees() - m_Vision.getVisionOdometry().getRotation().getDegrees());
+    double deltaX = Math.abs(RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getX() - m_Vision.getVisionOdometry().getX());
+    double deltaY = Math.abs(RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getY() - m_Vision.getVisionOdometry().getY());
+    double deltaR = Math.abs(RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation().getDegrees() - m_Vision.getVisionOdometry().getRotation().getDegrees());
 
     if((deltaX < 0.1) && (deltaY < 0.1) && (deltaR < 0.5)){
-      m_CtrSwerveSubsystem.getCTRSwerveDrivetrain().setPose(m_Vision.getVisionOdometry());
+      RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().setPose(m_Vision.getVisionOdometry());
     }
   }
 

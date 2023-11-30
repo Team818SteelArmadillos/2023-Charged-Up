@@ -46,7 +46,7 @@ public class RobotContainer {
   public final ArmCommand m_ArmCommand = new ArmCommand(m_armSubsystem);
 
 
-  public final OdometryMonitor m_odometrymonitor = new OdometryMonitor(m_visionSubsystem, m_swerveSubsystem);
+  public final OdometryMonitor m_odometrymonitor = new OdometryMonitor(m_visionSubsystem);
   //claw commands
   public final ClawModeToggleCommand m_ClawCommand = new ClawModeToggleCommand(m_ClawSubsystem);
   public final ClawWheelCommand m_IntakeIn = new ClawWheelCommand(0, m_ClawSubsystem);
@@ -70,8 +70,7 @@ public class RobotContainer {
     m_swerveSubsystem.setDefaultCommand(m_swerveDriveCommand);
     m_armSubsystem.setDefaultCommand(m_ArmCommand);
     m_intakeSubsystem.setDefaultCommand(m_intakeCommand);
-
-    //m_visionSubsystem.setDefaultCommand(m_odometrymonitor);
+    m_visionSubsystem.setDefaultCommand(m_odometrymonitor);
     
 
 
