@@ -33,20 +33,13 @@ public class Vision extends SubsystemBase{
         activePipeline = 0;
     }
 
-    public void setCubeDetection(){
+    public void setPieceDetection(){
         LimelightHelpers.setPipelineIndex("", 1);
         activePipeline = 1;
     }
 
-    public void setConeDetection(){
-        LimelightHelpers.setPipelineIndex("", 2);
-        activePipeline = 2;
-    }
-
     public void updateVisionOdometry(){
-        visionOdometry = new Pose2d(
-            new Translation2d(LimelightHelpers.getTX(""), LimelightHelpers.getTY("")), 
-            new Rotation2d(LimelightHelpers.getTA("")));
+        visionOdometry = LimelightHelpers.getBotPose2d("");
 
         //updating validvalue array
         if(lastFiveOutputsIndex == 5){
