@@ -8,14 +8,19 @@ public class OI {
     private static XboxController driveController;
     private static XboxController xopController;
     private static CommandXboxController operatorController;
+    private static CommandXboxController testingController;
 
     //public OI () 
     static {
       operatorController = new CommandXboxController(Constants.operatorControllerPort);
       driveController = new XboxController(Constants.DRIVER_PORT);
       xopController = new XboxController(Constants.operatorControllerPort);
+      testingController = new CommandXboxController(3);
     }
 
+    public static CommandXboxController getTesting(){
+      return testingController;
+    }
     public static XboxController getDriver() {
       return driveController;
     }

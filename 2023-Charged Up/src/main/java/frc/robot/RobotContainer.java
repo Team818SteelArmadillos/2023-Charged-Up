@@ -70,6 +70,7 @@ public class RobotContainer {
     m_swerveSubsystem.setDefaultCommand(m_swerveDriveCommand);
     m_armSubsystem.setDefaultCommand(m_ArmCommand);
     m_intakeSubsystem.setDefaultCommand(m_intakeCommand);
+
     //m_visionSubsystem.setDefaultCommand(m_odometrymonitor);
     
 
@@ -92,8 +93,11 @@ public class RobotContainer {
     OI.getOperator().leftBumper().whileTrue(m_ClawCommand);
     OI.getOperator().rightTrigger().whileTrue(m_IntakeOut);
     OI.getOperator().leftTrigger().whileTrue(m_IntakeIn);
-    
+
     OI.getOperator().leftStick().whileTrue(m_ResetOdometry);
+
+    //testing button bindings
+    OI.getTesting().a().whileTrue(m_ResetOdometry);
   }
 
   //Commands for Auton
