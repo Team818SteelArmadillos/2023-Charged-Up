@@ -11,13 +11,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.LimelightHelpers;
 
 public class CTRSwerveDrivetrain {
     private final int ModuleCount;
@@ -38,7 +34,6 @@ public class CTRSwerveDrivetrain {
         private BaseStatusSignalValue[] m_allSignals;
         public int SuccessfulDaqs = 0;
         public int FailedDaqs = 0;
-        double tx = LimelightHelpers.getTX("");
 
         public OdometryThread() {
             super();
@@ -85,20 +80,6 @@ public class CTRSwerveDrivetrain {
                 SmartDashboard.putNumber("X Pos", m_odometry.getPoseMeters().getX());
                 SmartDashboard.putNumber("Y Pos", m_odometry.getPoseMeters().getY());
                 SmartDashboard.putNumber("Angle", m_odometry.getPoseMeters().getRotation().getDegrees());
-                NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-                NetworkTableEntry tx = table.getEntry("tx");
-                NetworkTableEntry ty = table.getEntry("ty");
-                NetworkTableEntry ta = table.getEntry("ta");
-
-                //read values periodically
-                double x = tx.getDouble(0.0);
-                double y = ty.getDouble(0.0);
-                double area = ta.getDouble(0.0);
-
-                //post to smart dashboard periodically
-                SmartDashboard.putNumber("LimelightX", x);
-                SmartDashboard.putNumber("LimelightY", y);
-                SmartDashboard.putNumber("LimelightArea", area);
             }
         }
     }
@@ -175,6 +156,8 @@ public class CTRSwerveDrivetrain {
         for (int i = 0; i < ModuleCount; ++i) {
             m_modules[i].apply(swerveStates[i]);
         }
+    
+        
     }
 
     public void driveStopMotion() {

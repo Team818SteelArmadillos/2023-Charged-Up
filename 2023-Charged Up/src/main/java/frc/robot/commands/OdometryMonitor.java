@@ -36,7 +36,7 @@ public class OdometryMonitor extends CommandBase {
       m_Vision.setAprilTag();
     }
     
-    m_Vision.updateVisionOdometry();
+    m_Vision.updateVisionOdometry(RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain());
 
     //post to smart dashboard periodically
     SmartDashboard.putNumber("Limelight BotPose X", m_Vision.getVisionOdometry().getX());

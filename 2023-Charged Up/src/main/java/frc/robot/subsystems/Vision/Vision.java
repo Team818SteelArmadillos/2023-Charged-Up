@@ -8,12 +8,14 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 import frc.robot.RobotContainer;
+import frc.robot.CTRSwerve.CTRSwerveDrivetrain;
 import frc.robot.commands.OdometryMonitor;
 
 public class Vision extends SubsystemBase{
     Pose2d visionOdometry;
     int activePipeline;
-    Pose2d[] lastFiveOutputs;
+    Pose2d[] lastFiveOutputsVision;
+    Pose2d[] lastFiveOutputsDrive;
     int lastFiveOutputsIndex;
 
 
@@ -21,11 +23,15 @@ public class Vision extends SubsystemBase{
         visionOdometry = new Pose2d();
         LimelightHelpers.setPipelineIndex("", 0);
         activePipeline = 0;
-        lastFiveOutputs = new Pose2d[5];
+        lastFiveOutputsVision = new Pose2d[5];
         for(int i=0; i<=4 ; i++){
-            lastFiveOutputs[i] = LimelightHelpers.getBotPose2d("");
+            lastFiveOutputsVision[i] = LimelightHelpers.getBotPose2d("");
+        }
+        for(int i=0; i<4; i++){
+            lastFiveOutputsDrive[i] = new Pose2d(0,0, new Rotation2d(0));
         }
         lastFiveOutputsIndex = 0;
+
     }
 
     public void setAprilTag(){
@@ -38,14 +44,15 @@ public class Vision extends SubsystemBase{
         activePipeline = 1;
     }
 
-    public void updateVisionOdometry(){
+    public void updateVisionOdometry(CTRSwerveDrivetrain drivetrain){
         visionOdometry = LimelightHelpers.getBotPose2d("");
 
         //updating validvalue array
         if(lastFiveOutputsIndex == 5){
             lastFiveOutputsIndex = 0;
         }
-        lastFiveOutputs[lastFiveOutputsIndex] = visionOdometry;
+        lastFiveOutputsVision[lastFiveOutputsIndex] = visionOdometry;
+        lastFiveOutputsDrive[lastFiveOutputsIndex] = drivetrain.getPoseMeters();
         lastFiveOutputsIndex += 1;
     }
 
@@ -58,20 +65,16 @@ public class Vision extends SubsystemBase{
     }
 
     public boolean validValue(){
-        double[] X = new double[5];
-        double[] Y = new double[5];
-        double[] R = new double[5];
-        int i = 0;
-        for(Pose2d p : lastFiveOutputs){
-            X[i] = p.getX();
-            Y[i] = p.getY();
-            R[i] = p.getRotation().getDegrees();
-            i+=1;
-        }
-        Arrays.sort(X);
-        Arrays.sort(Y);
-        Arrays.sort(R);
+        double deltax = 0;
+        double deltay = 0;
+        double deltaa = 0;
         
-        return ((Math.abs(X[4] - X[0]) < 0.2) && (Math.abs(Y[4] - Y[0]) < 0.2) && (Math.abs(R[4] - R[0]) < 0.5));
+        for(var i = 0; i < 5; i++){
+            deltax = deltax + Math.abs(lastFiveOutputsVision[i].getX() - lastFiveOutputsDrive[i].getX());
+            deltay = deltay + Math.abs(lastFiveOutputsVision[i].getY() - lastFiveOutputsDrive[i].getY());
+            deltaa = deltaa + Math.abs(lastFiveOutputsVision[i].getRotation().getDegrees() - lastFiveOutputsDrive[i].getRotation().getDegrees());
+        }
+        
+        return (deltax < 0.2 && deltay < 0.2 && deltaa < 5);
     }
 }
