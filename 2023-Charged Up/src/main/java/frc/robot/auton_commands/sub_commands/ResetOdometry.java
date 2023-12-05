@@ -4,6 +4,8 @@
 
 package frc.robot.auton_commands.sub_commands;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 import frc.robot.subsystems.Vision.Vision;
@@ -19,16 +21,16 @@ public class ResetOdometry extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_drive.getCTRSwerveDrivetrain().setPose(m_vision.getVisionOdometry());
+  public void initialize() {    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-  }
+    m_drive.getCTRSwerveDrivetrain().setPose(m_vision.getVisionOdometry());
 
-  
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
