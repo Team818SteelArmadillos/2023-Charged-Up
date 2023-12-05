@@ -24,6 +24,7 @@ public class Vision extends SubsystemBase{
         LimelightHelpers.setPipelineIndex("", 0);
         activePipeline = 0;
         lastFiveOutputsVision = new Pose2d[5];
+        lastFiveOutputsDrive = new Pose2d[5];
         for(int i=0; i<=4 ; i++){
             lastFiveOutputsVision[i] = LimelightHelpers.getBotPose2d("");
         }

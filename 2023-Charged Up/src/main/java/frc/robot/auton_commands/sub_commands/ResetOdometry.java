@@ -19,19 +19,13 @@ public class ResetOdometry extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_drive.getCTRSwerveDrivetrain().setPose(m_vision.getVisionOdometry());
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      boolean reset = false;
-      while(!reset){
-      if(m_vision.validValue()){
-        m_drive.getCTRSwerveDrivetrain().setPose(m_vision.getVisionOdometry());
-        reset = true;
-      }
-
-   }
   }
 
   
