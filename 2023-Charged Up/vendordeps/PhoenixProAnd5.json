@@ -1,7 +1,13 @@
 {
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
+    "fileName": "Phoenix.json",
+    "name": "CTRE-Phoenix (v5)",
+    "version": "5.30.4+23.0.11",
+========
     "fileName": "PhoenixProAnd5.json",
     "name": "CTRE-Phoenix (Pro And v5)",
-    "version": "23.0.11",
+    "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
     "frcYear": 2023,
     "uuid": "3fcf3402-e646-4fa6-971e-18afe8173b1a",
     "mavenUrls": [
@@ -22,7 +28,7 @@
         {
             "groupId": "com.ctre.phoenixpro",
             "artifactId": "wpiapi-java",
-            "version": "23.0.11"
+            "version": "23.0.12"
         }
     ],
     "jniDependencies": [
@@ -55,7 +61,11 @@
         {
             "groupId": "com.ctre.phoenixpro",
             "artifactId": "tools",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "isJar": false,
             "skipInvalidPlatforms": true,
             "validPlatforms": [
@@ -68,7 +78,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "tools-sim",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "isJar": false,
             "skipInvalidPlatforms": true,
             "validPlatforms": [
@@ -81,7 +95,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simTalonSRX",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "isJar": false,
             "skipInvalidPlatforms": true,
             "validPlatforms": [
@@ -94,7 +112,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simTalonFX",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "isJar": false,
             "skipInvalidPlatforms": true,
             "validPlatforms": [
@@ -107,7 +129,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simVictorSPX",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "isJar": false,
             "skipInvalidPlatforms": true,
             "validPlatforms": [
@@ -120,7 +146,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simPigeonIMU",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "isJar": false,
             "skipInvalidPlatforms": true,
             "validPlatforms": [
@@ -133,7 +163,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simCANCoder",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "isJar": false,
             "skipInvalidPlatforms": true,
             "validPlatforms": [
@@ -146,7 +180,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simProTalonFX",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "isJar": false,
             "skipInvalidPlatforms": true,
             "validPlatforms": [
@@ -159,7 +197,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simProCANcoder",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "isJar": false,
             "skipInvalidPlatforms": true,
             "validPlatforms": [
@@ -172,7 +214,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simProPigeon2",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "isJar": false,
             "skipInvalidPlatforms": true,
             "validPlatforms": [
@@ -232,7 +278,11 @@
         {
             "groupId": "com.ctre.phoenixpro",
             "artifactId": "tools",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "libName": "CTRE_PhoenixTools",
             "headerClassifier": "headers",
             "sharedLibrary": true,
@@ -292,7 +342,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "tools-sim",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "libName": "CTRE_PhoenixTools_Sim",
             "headerClassifier": "headers",
             "sharedLibrary": true,
@@ -307,7 +361,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simTalonSRX",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "libName": "CTRE_SimTalonSRX",
             "headerClassifier": "headers",
             "sharedLibrary": true,
@@ -322,7 +380,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simTalonFX",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "libName": "CTRE_SimTalonFX",
             "headerClassifier": "headers",
             "sharedLibrary": true,
@@ -337,7 +399,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simVictorSPX",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "libName": "CTRE_SimVictorSPX",
             "headerClassifier": "headers",
             "sharedLibrary": true,
@@ -352,7 +418,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simPigeonIMU",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "libName": "CTRE_SimPigeonIMU",
             "headerClassifier": "headers",
             "sharedLibrary": true,
@@ -367,7 +437,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simCANCoder",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "libName": "CTRE_SimCANCoder",
             "headerClassifier": "headers",
             "sharedLibrary": true,
@@ -382,7 +456,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simProTalonFX",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "libName": "CTRE_SimProTalonFX",
             "headerClassifier": "headers",
             "sharedLibrary": true,
@@ -397,7 +475,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simProCANcoder",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "libName": "CTRE_SimProCANcoder",
             "headerClassifier": "headers",
             "sharedLibrary": true,
@@ -412,7 +494,11 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "simProPigeon2",
+<<<<<<<< HEAD:2023-Charged Up/vendordeps/Phoenix.json
             "version": "23.0.11",
+========
+            "version": "23.0.12",
+>>>>>>>> origin/advantagekit:2023-Charged Up/vendordeps/PhoenixProAnd5.json
             "libName": "CTRE_SimProPigeon2",
             "headerClassifier": "headers",
             "sharedLibrary": true,
@@ -427,7 +513,7 @@
         {
             "groupId": "com.ctre.phoenixpro",
             "artifactId": "wpiapi-cpp",
-            "version": "23.0.11",
+            "version": "23.0.12",
             "libName": "CTRE_PhoenixPro_WPI",
             "headerClassifier": "headers",
             "sharedLibrary": true,
@@ -442,7 +528,7 @@
         {
             "groupId": "com.ctre.phoenixpro.sim",
             "artifactId": "wpiapi-cpp-sim",
-            "version": "23.0.11",
+            "version": "23.0.12",
             "libName": "CTRE_PhoenixPro_WPISim",
             "headerClassifier": "headers",
             "sharedLibrary": true,

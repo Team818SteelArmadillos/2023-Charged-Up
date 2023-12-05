@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -31,6 +33,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     // Initialize here
     public ArmSubsystem() {
+        
         // motor stuff
         pm1 = new TalonSRX(Constants.pivotingMotorPorts[0]);
         pm2 = new TalonSRX(Constants.pivotingMotorPorts[1]);
@@ -188,12 +191,14 @@ public class ArmSubsystem extends SubsystemBase {
         }
 
         if (getTopLimitswitch()) {
-            telescopingMotor.setSelectedSensorPosition(Constants.ARM_LENGTH_MAX);
+            telescopingMotor.setSelectedSensorPosition(Constants.maximumArmLength);
         }
 
+        Logger.getInstance().recordOutput("Arm Angle", getPivotAngle());
+        
         SmartDashboard.putBoolean("Bottom Arm Limit Switch", getBottomLimitswitch());
         SmartDashboard.putBoolean("Top Arm Limit Switch", getTopLimitswitch());
-        SmartDashboard.putNumber("Arm Angle", getPivotAngle());
+        //SmartDashboard.putNumber("Arm Angle", getPivotAngle());
         SmartDashboard.putNumber("Pivoting Arm Encoder RAW", encoder.get());
         SmartDashboard.putNumber("Telescoping Arm Encoder", getTelescopingEncoder());
     }

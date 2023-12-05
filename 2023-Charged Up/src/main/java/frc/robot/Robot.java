@@ -4,10 +4,15 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -15,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
   public static SendableChooser<Integer> m_chooser;
   //private Command m_autonInit;
   //private DriveDistance m_autonPeriodic;
@@ -30,6 +35,25 @@ public class Robot extends TimedRobot {
     
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+
+    Logger logger = Logger.getInstance();
+
+    logger.recordMetadata("Robot", "Beacon"); // Set a metadata value
+
+    if (isReal()) {
+        logger.addDataReceiver(new WPILOGWriter("/U")); // Log to a USB stick
+        logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+    } else {
+        setUseTiming(false); // Run as fast as possible
+        String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
+        logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
+        logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
+    }
+    
+    // Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in the "Understanding Data Flow" page
+    logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
+
+    ctreConfigs = new CTREConfigs();
     m_robotContainer = new RobotContainer();
     m_robotContainer.configureButtonBindings();
   }
