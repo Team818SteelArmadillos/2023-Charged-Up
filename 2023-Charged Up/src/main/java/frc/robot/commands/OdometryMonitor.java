@@ -4,7 +4,10 @@
 
 package frc.robot.commands;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -17,6 +20,7 @@ import frc.robot.subsystems.Vision.Vision;
 public class OdometryMonitor extends CommandBase {
   Vision m_Vision;
   Pose2d visionOdometry;
+
   /** Creates a new OdometryMonitor. */
   public OdometryMonitor(Vision vision) {
     addRequirements(vision);
@@ -38,6 +42,7 @@ public class OdometryMonitor extends CommandBase {
     
     m_Vision.updateVisionOdometry(RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain());
 
+
     //post to smart dashboard periodically
     SmartDashboard.putNumber("Limelight BotPose X", m_Vision.getVisionOdometry().getX());
     SmartDashboard.putNumber("Limelight BotPose Y", m_Vision.getVisionOdometry().getY());
@@ -47,6 +52,7 @@ public class OdometryMonitor extends CommandBase {
     double deltaY = Math.abs(RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getY() - m_Vision.getVisionOdometry().getY());
     double deltaR = Math.abs(RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation().getDegrees() - m_Vision.getVisionOdometry().getRotation().getDegrees());
 
+    Logger.getInstance().recordOutput("Vision2", new Pose2d(m_Vision.getVisionOdometry().getX(), m_Vision.getVisionOdometry().getY(), m_Vision.getVisionOdometry().getRotation()));
     if((deltaX < 0.1) && (deltaY < 0.1) && (deltaR < 0.5)){
       RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().setPose(m_Vision.getVisionOdometry());
     }

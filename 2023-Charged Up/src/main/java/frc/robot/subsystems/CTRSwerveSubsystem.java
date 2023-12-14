@@ -6,9 +6,12 @@ package frc.robot.subsystems;
 
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenixpro.configs.Slot0Configs;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -109,8 +112,13 @@ public Supplier<Pose2d> getPose2d;
   public Pose2d getPose(){
     return m_drivetrain.getPoseMeters();
   }
-  // @Override
-  // public void periodic() {
-  //   // This method will be called once per scheduler run
-  // }
+
+  public void resetPose() {
+    setPose(new Pose2d(0, 0, new Rotation2d(0)));
+  }
+
+  @Override
+  public void periodic() {
+    Logger.getInstance().recordOutput("OdometryPose", getPose());
+  }
 }

@@ -2,6 +2,8 @@ package frc.robot.subsystems.Vision;
 
 import java.util.Arrays;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -77,5 +79,10 @@ public class Vision extends SubsystemBase{
         }
         
         return (deltax < 0.2 && deltay < 0.2 && deltaa < 5);
+    }
+
+    @Override
+    public void periodic(){ 
+        Logger.getInstance().recordOutput("VisionPose", getVisionOdometry());
     }
 }
