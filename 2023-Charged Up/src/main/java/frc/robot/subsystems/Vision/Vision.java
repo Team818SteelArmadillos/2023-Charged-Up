@@ -1,17 +1,14 @@
 package frc.robot.subsystems.Vision;
 
-import java.util.Arrays;
-
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 import frc.robot.RobotContainer;
 import frc.robot.CTRSwerve.CTRSwerveDrivetrain;
-import frc.robot.commands.OdometryMonitor;
 
 public class Vision extends SubsystemBase{
     Pose2d visionOdometry;
@@ -19,21 +16,42 @@ public class Vision extends SubsystemBase{
     Pose2d[] lastFiveOutputsVision;
     Pose2d[] lastFiveOutputsDrive;
     int lastFiveOutputsIndex;
-
+    public SwerveDrivePoseEstimator swerveDrivePoseEstimator;
 
     public Vision(){
         visionOdometry = new Pose2d();
         LimelightHelpers.setPipelineIndex("", 0);
         activePipeline = 0;
-        lastFiveOutputsVision = new Pose2d[5];
-        lastFiveOutputsDrive = new Pose2d[5];
-        for(int i=0; i<=4 ; i++){
-            lastFiveOutputsVision[i] = LimelightHelpers.getBotPose2d("");
+
+        swerveDrivePoseEstimator = new SwerveDrivePoseEstimator(
+            RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().m_kinematics, 
+            RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters().getRotation(),
+            RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().getSwervePositions(),
+            RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters()
+            );
+    
+    }
+    
+    @Override
+    public void periodic(){
+        var pipelineResult = LimelightHelpers.getBotPose2d("");
+        var robotPosition = RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters();
+        var deltaX = Math.abs(robotPosition.getX() - pipelineResult.getX());
+        var deltaY = Math.abs(robotPosition.getY() - pipelineResult.getY());
+        var deltaR = Math.abs(robotPosition.getRotation().getDegrees() - pipelineResult.getRotation().getDegrees());
+
+        if(-8.4 < pipelineResult.getY() && pipelineResult.getY()< 8.4 //Y is within field range
+        && -4.2 < pipelineResult.getX() && pipelineResult.getX() < 4.2 //X is within field range
+        && deltaY < 1 //Vision value isn't complete garbage
+        && deltaX < 1 //Vision value isn't complete garbage
+        && deltaR < 10 //Vision value isn't complete garbage
+        ){
+        swerveDrivePoseEstimator.addVisionMeasurement(pipelineResult, Timer.getFPGATimestamp()); //Updating odometry model with vision measurements. 
         }
-        for(int i=0; i<4; i++){
-            lastFiveOutputsDrive[i] = new Pose2d(0,0, new Rotation2d(0));
-        }
-        lastFiveOutputsIndex = 0;
+
+        swerveDrivePoseEstimator.update(robotPosition.getRotation(),  RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().getSwervePositions()); //Updating odometry model with module positions
+        RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().setPose(swerveDrivePoseEstimator.getEstimatedPosition()); //Updating module odomtery based on filtered vision inputs
+        Logger.getInstance().recordOutput("VisionPose", swerveDrivePoseEstimator.getEstimatedPosition());
 
     }
 
@@ -49,14 +67,6 @@ public class Vision extends SubsystemBase{
 
     public void updateVisionOdometry(CTRSwerveDrivetrain drivetrain){
         visionOdometry = LimelightHelpers.getBotPose2d("");
-
-        //updating validvalue array
-        if(lastFiveOutputsIndex == 5){
-            lastFiveOutputsIndex = 0;
-        }
-        lastFiveOutputsVision[lastFiveOutputsIndex] = visionOdometry;
-        lastFiveOutputsDrive[lastFiveOutputsIndex] = drivetrain.getPoseMeters();
-        lastFiveOutputsIndex += 1;
     }
 
     public Pose2d getVisionOdometry(){
@@ -65,24 +75,5 @@ public class Vision extends SubsystemBase{
 
     public int getActivePipeline(){
         return activePipeline;
-    }
-
-    public boolean validValue(){
-        double deltax = 0;
-        double deltay = 0;
-        double deltaa = 0;
-        
-        for(var i = 0; i < 5; i++){
-            deltax = deltax + Math.abs(lastFiveOutputsVision[i].getX() - lastFiveOutputsDrive[i].getX());
-            deltay = deltay + Math.abs(lastFiveOutputsVision[i].getY() - lastFiveOutputsDrive[i].getY());
-            deltaa = deltaa + Math.abs(lastFiveOutputsVision[i].getRotation().getDegrees() - lastFiveOutputsDrive[i].getRotation().getDegrees());
-        }
-        
-        return (deltax < 0.2 && deltay < 0.2 && deltaa < 5);
-    }
-
-    @Override
-    public void periodic(){ 
-        Logger.getInstance().recordOutput("VisionPose", getVisionOdometry());
     }
 }

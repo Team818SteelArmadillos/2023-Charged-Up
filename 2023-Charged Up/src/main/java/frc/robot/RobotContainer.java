@@ -15,9 +15,8 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CTRSwerveSubsystem;
 
 import frc.robot.automodes.Auto;
-import frc.robot.auton_commands.sub_commands.AutonResetOdometry;
+import frc.robot.auton_commands.sub_commands.SetOdometry;
 import frc.robot.auton_commands.sub_commands.IntakeInAuton;
-import frc.robot.auton_commands.sub_commands.ResetOdometry;
 
  
 
@@ -53,15 +52,13 @@ public class RobotContainer {
   public final ClawWheelCommand m_IntakeOut = new ClawWheelCommand(1, m_ClawSubsystem);
 
   //Auton Instant Commands
-  public final AutonResetOdometry m_AutonResetOdometry = new AutonResetOdometry(m_visionSubsystem, m_swerveSubsystem);
+  public final SetOdometry m_AutonResetOdometry = new SetOdometry(m_visionSubsystem, m_swerveSubsystem);
   //server command
   public final SwerveDriveCommand m_swerveDriveCommand = new SwerveDriveCommand(m_swerveSubsystem);
 
   //intake command
   public final IntakeCommand m_intakeCommand = new IntakeCommand(m_intakeSubsystem);
 
-  public final ResetOdometry m_ResetOdometry = new ResetOdometry(m_visionSubsystem, m_swerveSubsystem);
-  
   // auton chooser
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
 
@@ -94,16 +91,10 @@ public class RobotContainer {
     OI.getOperator().rightTrigger().whileTrue(m_IntakeOut);
     OI.getOperator().leftTrigger().whileTrue(m_IntakeIn);
 
-    OI.getOperator().leftStick().whileTrue(m_ResetOdometry);
 
-    //testing button bindings
-    OI.getTesting().a().whileTrue(m_ResetOdometry);
+
   }
 
-  //Commands for Auton
-  public void resetOdometry(){
-    m_ResetOdometry.schedule();
-  }
 
   public void intakeIn(){
     m_IntakeIn.schedule();

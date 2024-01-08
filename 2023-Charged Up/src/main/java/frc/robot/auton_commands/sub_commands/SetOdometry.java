@@ -11,11 +11,11 @@ import frc.robot.subsystems.Vision.Vision;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutonResetOdometry extends InstantCommand {
+public class SetOdometry extends InstantCommand {
   Vision m_vision;
   CTRSwerveSubsystem m_drive;
 
-  public AutonResetOdometry(Vision vision, CTRSwerveSubsystem swerve) {
+  public SetOdometry(Vision vision, CTRSwerveSubsystem swerve) {
     addRequirements(vision, swerve);
 
     m_vision = vision;
@@ -25,15 +25,6 @@ public class AutonResetOdometry extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    boolean reset = false;
-      while(!reset){
-      if(m_vision.validValue()){
-        m_drive.getCTRSwerveDrivetrain().setPose(m_vision.getVisionOdometry());
-        reset = true;
-      }
-      else{
-        //do nothing
-      }
-  }
+    m_drive.setPose(m_vision.getVisionOdometry()); //Run on initialization to set starting pose
 }
 }
