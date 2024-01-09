@@ -34,6 +34,7 @@ public class Vision extends SubsystemBase{
     
     @Override
     public void periodic(){
+        var pipelineLatencyCapture = LimelightHelpers.getLatency_Capture("");
         var pipelineResult = LimelightHelpers.getBotPose2d("");
         var robotPosition = RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().getPoseMeters();
         var deltaX = Math.abs(robotPosition.getX() - pipelineResult.getX());
@@ -45,13 +46,13 @@ public class Vision extends SubsystemBase{
         && deltaY < 1 //Vision value isn't complete garbage
         && deltaX < 1 //Vision value isn't complete garbage
         && deltaR < 10 //Vision value isn't complete garbage
-        ){
-        swerveDrivePoseEstimator.addVisionMeasurement(pipelineResult, Timer.getFPGATimestamp()); //Updating odometry model with vision measurements. 
-        }
+        )
+        swerveDrivePoseEstimator.addVisionMeasurement(pipelineResult, pipelineLatencyCapture); //Updating odometry model with vision measurements. 
+        
 
         swerveDrivePoseEstimator.update(robotPosition.getRotation(),  RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().getSwervePositions()); //Updating odometry model with module positions
         RobotContainer.m_swerveSubsystem.getCTRSwerveDrivetrain().setPose(swerveDrivePoseEstimator.getEstimatedPosition()); //Updating module odomtery based on filtered vision inputs
-        Logger.getInstance().recordOutput("VisionPose", swerveDrivePoseEstimator.getEstimatedPosition());
+        Logger.getInstance().recordOutput("Fused Pose", swerveDrivePoseEstimator.getEstimatedPosition());
 
     }
 

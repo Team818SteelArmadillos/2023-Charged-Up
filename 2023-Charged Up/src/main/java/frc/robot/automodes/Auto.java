@@ -13,7 +13,6 @@ import frc.robot.auton_commands.sub_commands.BalanceAuton;
 import frc.robot.auton_commands.sub_commands.ClawWheelAuton;
 import frc.robot.auton_commands.sub_commands.IntakeInAuton;
 import frc.robot.auton_commands.sub_commands.IntakeOutAuton;
-import frc.robot.auton_commands.sub_commands.ResetOdometry;
 import frc.robot.auton_commands.sub_commands.ScoreHighAuton;
 import frc.robot.auton_commands.sub_commands.ScoreMidAuton;
 import frc.robot.subsystems.ArmSubsystem;
@@ -43,8 +42,6 @@ public class Auto {
         
     }
     private final Map<String, Command> eventMap = new HashMap<>(Map.ofEntries(
-
-        Map.entry("Reset Odometry", new ResetOdometry(m_visionSubsystem, m_swerveSubsystem)),
 
         Map.entry("Balance", new BalanceAuton(m_swerveSubsystem)),
 

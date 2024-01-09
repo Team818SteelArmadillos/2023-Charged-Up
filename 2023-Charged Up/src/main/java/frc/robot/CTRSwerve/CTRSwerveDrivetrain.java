@@ -20,10 +20,10 @@ public class CTRSwerveDrivetrain {
 
     private CTRSwerveModule[] m_modules;
     private Pigeon2 m_pigeon2;
-    private SwerveDriveKinematics m_kinematics;
+    public SwerveDriveKinematics m_kinematics;
     private SwerveDriveOdometry m_odometry;
     private SwerveModulePosition[] m_modulePositions;
-    private Translation2d[] m_moduleLocations;
+    public Translation2d[] m_moduleLocations;
     private OdometryThread m_odometryThread;
     private Field2d m_field;
     private PIDController m_turnPid;
@@ -125,7 +125,7 @@ public class CTRSwerveDrivetrain {
         m_odometryThread.start();
     }
 
-    private SwerveModulePosition[] getSwervePositions() {
+    public SwerveModulePosition[] getSwervePositions() {
         return m_modulePositions;
     }
 
